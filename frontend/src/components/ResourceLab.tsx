@@ -257,7 +257,7 @@ export const ResourceLab: React.FC<ResourceLabProps> = ({ activeAtmosphere, isDa
     {
       id: 'bio-music',
       title: 'Audio Visual Loop',
-      content: `•───────────────────•\n  ♩ now playing: ineffable loops\n  0:00 ───●────────── 3:45\n  ↻     ◄◄    ▍▍    ►►    ↺\n•───────────────────•`
+      content: `•───────────────────•\n  ♩ now playing: inefontop loops\n  0:00 ───●────────── 3:45\n  ↻     ◄◄    ▍▍    ►►    ↺\n•───────────────────•`
     },
     {
       id: 'bio-goth',
@@ -302,7 +302,7 @@ export const ResourceLab: React.FC<ResourceLabProps> = ({ activeAtmosphere, isDa
   const banners = [
     {
       id: 'banner-sakura',
-      title: 'Ineffable Drift Sakura',
+      title: 'Inefontop Drift Sakura',
       image: 'https://images.unsplash.com/photo-1522383225653-ed111181a951?q=80&w=600&auto=format&fit=crop'
     },
     {
@@ -831,7 +831,7 @@ export const ResourceLab: React.FC<ResourceLabProps> = ({ activeAtmosphere, isDa
                               : 'bg-white border-zinc-200 text-zinc-600 hover:border-zinc-300'
                         }`}
                       >
-                        {ban.title.replace('Ineffable Drift ', '')}
+                        {ban.title.replace('Inefontop Drift ', '')}
                       </button>
                     ))}
                   </div>

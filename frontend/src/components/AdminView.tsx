@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { AtmosphereConfig, PageId } from '../types';
 import { getThemeStyles } from '../lib/theme';
 import { Shield, Users, FileText, Trash2, RefreshCw, AlertTriangle, Key, ArrowLeft, Lock, CheckCircle, Database, Eye } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface JournalEntry {
   id: string;
@@ -47,84 +48,150 @@ export const AdminView: React.FC<AdminViewProps> = ({
   const [webhookUrl, setWebhookUrl] = useState('');
   const [showWebhook, setShowWebhook] = useState(false);
 
-  // Load Journals and Config from localStorage
+  // Load Journals and Config from localStorage or Supabase
   useEffect(() => {
-    const loadServerData = () => {
+    const loadServerData = async () => {
       try {
         // 1. Config
-        const configRaw = localStorage.getItem('ineffable_config');
+        const configRaw = localStorage.getItem('inefontop_config');
         if (configRaw) {
           const config = JSON.parse(configRaw);
           setAllowAnonymous(config.allowAnonymous);
           setWebhookUrl(config.discordWebhookUrl);
         } else {
           const defaultConfig = { allowAnonymous: true, discordWebhookUrl: '' };
-          localStorage.setItem('ineffable_config', JSON.stringify(defaultConfig));
+          localStorage.setItem('inefontop_config', JSON.stringify(defaultConfig));
           setAllowAnonymous(true);
           setWebhookUrl('');
         }
 
-        // 2. Journals
-        const journalsRaw = localStorage.getItem('ineffable_journals');
-        if (journalsRaw) {
-          setJournals(JSON.parse(journalsRaw));
-        } else {
-          const defaultJournals = [
-            {
-              id: 'journal-default-1',
-              author: 'Kaelen Vance',
-              title: 'The Cherry Blossom Particle Constant',
-              story: 'We observed the third calibration of our drift algorithms this evening. By tuning the windAngle parameter to exactly 120 degrees and injecting a gravity constant of 1.1 G, the virtual petals achieved what can only be described as dynamic suspension. They hover perfectly, riding waves of invisible thermals across the dark canvas of the container. It mimics a tactile reality we have long lost. All variables are syncing. The lattice remains secure.',
-              date: 'JULY 02, 2026',
-              mood: 'classic',
-              wordsCount: 78,
-              createdBy: 'Kaelen Vance'
-            },
-            {
-              id: 'journal-default-2',
-              author: 'Sora Tanaka',
-              title: 'Quantum Fabric & Neon Weaves',
-              story: 'Today the laboratory completed knitting tests for the oversized "Drift" physical print. Integrating reactive digital atmospheric APIs directly into organic heavy thread allows the ink to shift hue subtly when matching proximity to server boosters. In the daylight, it displays soft chalk gray equations. In ultraviolet community centers, the active mint dyes radiate. The cyber couture drop is nearly ready for general connection.',
-              date: 'JUNE 28, 2026',
-              mood: 'neon-mint',
-              wordsCount: 71,
-              createdBy: 'Sora Tanaka'
-            },
-            {
-              id: 'journal-default-3',
-              author: 'Elena Rostova',
-              title: 'Notes on Crimson Orbital Lattices',
-              story: 'The moon rose early in Reykjavík. Its reflection on the dark basalt sand felt remarkably analog. In the terminal, we locked the color theme to crimson-moon. Immediately, the sensory feed stabilized. It is fascinating how simple chromodynamic shifts change the anxiety curves of terminal operators. We must persist with this aesthetic calibration. Red light decreases cognitive friction during midnight packet compilation. Secure nodes logged.',
-              date: 'JUNE 15, 2026',
-              mood: 'crimson-moon',
-              wordsCount: 68,
-              createdBy: 'Elena Rostova'
-            }
-          ];
-          localStorage.setItem('ineffable_journals', JSON.stringify(defaultJournals));
-          setJournals(defaultJournals);
+        // 2. Journals (from Supabase if configured)
+        let loadedJournals = null;
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('journals')
+            .select('*')
+            .order('created_at', { ascending: false });
+          if (!error && data) {
+            loadedJournals = data.map((item: any) => ({
+              id: item.id,
+              author: item.author,
+              title: item.title,
+              story: item.story,
+              date: item.date,
+              mood: item.mood,
+              wordsCount: item.wordsCount || item.story.split(/\s+/).filter(Boolean).length,
+              createdBy: item.createdBy || item.author,
+            }));
+          }
         }
 
-        // 3. Tickets
-        const ticketsRaw = localStorage.getItem('ineffable_tickets');
-        if (ticketsRaw) {
-          setTickets(JSON.parse(ticketsRaw));
+        if (loadedJournals && loadedJournals.length > 0) {
+          setJournals(loadedJournals);
         } else {
-          localStorage.setItem('ineffable_tickets', JSON.stringify([]));
-          setTickets([]);
+          const journalsRaw = localStorage.getItem('inefontop_journals');
+          if (journalsRaw) {
+            setJournals(JSON.parse(journalsRaw));
+          } else {
+            const defaultJournals = [
+              {
+                id: 'journal-default-1',
+                author: 'Kaelen Vance',
+                title: 'The Cherry Blossom Particle Constant',
+                story: 'We observed the third calibration of our drift algorithms this evening. By tuning the windAngle parameter to exactly 120 degrees and injecting a gravity constant of 1.1 G, the virtual petals achieved what can only be described as dynamic suspension. They hover perfectly, riding waves of invisible thermals across the dark canvas of the container. It mimics a tactile reality we have long lost. All variables are syncing. The lattice remains secure.',
+                date: 'JULY 02, 2026',
+                mood: 'classic',
+                wordsCount: 78,
+                createdBy: 'Kaelen Vance'
+              },
+              {
+                id: 'journal-default-2',
+                author: 'Sora Tanaka',
+                title: 'Quantum Fabric & Neon Weaves',
+                story: 'Today the laboratory completed knitting tests for the oversized "Drift" physical print. Integrating reactive digital atmospheric APIs directly into organic heavy thread allows the ink to shift hue subtly when matching proximity to server boosters. In the daylight, it displays soft chalk gray equations. In ultraviolet community centers, the active mint dyes radiate. The cyber couture drop is nearly ready for general connection.',
+                date: 'JUNE 28, 2026',
+                mood: 'neon-mint',
+                wordsCount: 71,
+                createdBy: 'Sora Tanaka'
+              },
+              {
+                id: 'journal-default-3',
+                author: 'Elena Rostova',
+                title: 'Notes on Crimson Orbital Lattices',
+                story: 'The moon rose early in Reykjavík. Its reflection on the dark basalt sand felt remarkably analog. In the terminal, we locked the color theme to crimson-moon. Immediately, the sensory feed stabilized. It is fascinating how simple chromodynamic shifts change the anxiety curves of terminal operators. We must persist with this aesthetic calibration. Red light decreases cognitive friction during midnight packet compilation. Secure nodes logged.',
+                date: 'JUNE 15, 2026',
+                mood: 'crimson-moon',
+                wordsCount: 68,
+                createdBy: 'Elena Rostova'
+              }
+            ];
+            localStorage.setItem('inefontop_journals', JSON.stringify(defaultJournals));
+            setJournals(defaultJournals);
+          }
         }
 
-        // 4. Audit Logs
-        const logsRaw = localStorage.getItem('ineffable_audit_logs');
-        if (logsRaw) {
-          setAuditLogs(JSON.parse(logsRaw));
+        // 3. Tickets (from Supabase if configured)
+        let loadedTickets = null;
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('tickets')
+            .select('*')
+            .order('created_at', { ascending: false });
+          if (!error && data) {
+            loadedTickets = data.map((item: any) => ({
+              id: item.id,
+              subjectIdentity: item.subject_identity,
+              digitalAddress: item.digital_address,
+              inquiryNature: item.inquiry_nature,
+              messageVector: item.message_vector,
+              createdAt: item.created_at || new Date().toISOString(),
+              status: item.status || 'PENDING'
+            }));
+          }
+        }
+
+        if (loadedTickets && loadedTickets.length > 0) {
+          setTickets(loadedTickets);
         } else {
-          const defaultLogs = [
-            `[SYSTEM] BOOT SEQUENCE COMPLETED`,
-            '[SECURITY] SHIELD LEVEL 100% // ALL CLIENT-SIDE LOGS SYNCED'
-          ];
-          localStorage.setItem('ineffable_audit_logs', JSON.stringify(defaultLogs));
-          setAuditLogs(defaultLogs);
+          const ticketsRaw = localStorage.getItem('inefontop_tickets');
+          if (ticketsRaw) {
+            setTickets(JSON.parse(ticketsRaw));
+          } else {
+            localStorage.setItem('inefontop_tickets', JSON.stringify([]));
+            setTickets([]);
+          }
+        }
+
+        // 4. Audit Logs (from Supabase if configured)
+        let loadedLogs = null;
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('audit_logs')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(100);
+          if (!error && data) {
+            loadedLogs = data.map((item: any) => {
+              const dateStr = new Date(item.created_at).toLocaleTimeString();
+              return `[${dateStr}] ${item.message}`;
+            });
+          }
+        }
+
+        if (loadedLogs && loadedLogs.length > 0) {
+          setAuditLogs(loadedLogs);
+        } else {
+          const logsRaw = localStorage.getItem('inefontop_audit_logs');
+          if (logsRaw) {
+            setAuditLogs(JSON.parse(logsRaw));
+          } else {
+            const defaultLogs = [
+              `[SYSTEM] BOOT SEQUENCE COMPLETED`,
+              '[SECURITY] SHIELD LEVEL 100% // ALL CLIENT-SIDE LOGS SYNCED'
+            ];
+            localStorage.setItem('inefontop_audit_logs', JSON.stringify(defaultLogs));
+            setAuditLogs(defaultLogs);
+          }
         }
       } catch (err) {
         console.error('Failed to synchronise server data with node:', err);
@@ -136,13 +203,16 @@ export const AdminView: React.FC<AdminViewProps> = ({
     }
   }, [currentUser, bypassSuccess]);
 
-  const addAuditLog = (message: string) => {
+  const addAuditLog = async (message: string) => {
     try {
-      const logsRaw = localStorage.getItem('ineffable_audit_logs');
+      if (supabase) {
+        await supabase.from('audit_logs').insert([{ message }]);
+      }
+      const logsRaw = localStorage.getItem('inefontop_audit_logs');
       const existingLogs = logsRaw ? JSON.parse(logsRaw) : [];
       const formattedLog = `[${new Date().toLocaleTimeString()}] ${message}`;
       const updatedLogs = [formattedLog, ...existingLogs];
-      localStorage.setItem('ineffable_audit_logs', JSON.stringify(updatedLogs));
+      localStorage.setItem('inefontop_audit_logs', JSON.stringify(updatedLogs));
       setAuditLogs(updatedLogs);
     } catch (err) {
       console.error('Failed to dispatch audit log:', err);
@@ -152,10 +222,10 @@ export const AdminView: React.FC<AdminViewProps> = ({
   const handleSaveWebhook = (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const configRaw = localStorage.getItem('ineffable_config');
+      const configRaw = localStorage.getItem('inefontop_config');
       const config = configRaw ? JSON.parse(configRaw) : { allowAnonymous: true };
       config.discordWebhookUrl = webhookUrl;
-      localStorage.setItem('ineffable_config', JSON.stringify(config));
+      localStorage.setItem('inefontop_config', JSON.stringify(config));
       
       addAuditLog('[CONFIG] SECURE DISCORD WEBHOOK DESTINATION CONFIGURATION RE-MAPPED');
       alert('DISCORD WEBHOOK CONFIGURATION UPDATED SUCCESSFULLY.');
@@ -172,10 +242,10 @@ export const AdminView: React.FC<AdminViewProps> = ({
   const handleToggleAnonymous = () => {
     const newVal = !allowAnonymous;
     try {
-      const configRaw = localStorage.getItem('ineffable_config');
+      const configRaw = localStorage.getItem('inefontop_config');
       const config = configRaw ? JSON.parse(configRaw) : { discordWebhookUrl: webhookUrl };
       config.allowAnonymous = newVal;
-      localStorage.setItem('ineffable_config', JSON.stringify(config));
+      localStorage.setItem('inefontop_config', JSON.stringify(config));
       
       setAllowAnonymous(newVal);
       addAuditLog(`[CONFIG] TOGGLED ALLOW_ANONYMOUS TO: ${newVal.toString().toUpperCase()}`);
@@ -185,16 +255,23 @@ export const AdminView: React.FC<AdminViewProps> = ({
   };
 
   // Delete journal entry (Force as admin)
-  const handleDeleteJournal = (id: string, title: string, author: string) => {
+  const handleDeleteJournal = async (id: string, title: string, author: string) => {
     const confirmDel = window.confirm(`Force delete journal entry "${title}"?`);
     if (!confirmDel) return;
 
     try {
-      const cached = localStorage.getItem('ineffable_journals');
+      if (supabase) {
+        const { error } = await supabase
+          .from('journals')
+          .delete()
+          .eq('id', id);
+        if (error) console.error('Supabase delete journal error:', error);
+      }
+      const cached = localStorage.getItem('inefontop_journals');
       if (cached) {
         const existingJournals = JSON.parse(cached);
         const filtered = existingJournals.filter((j: any) => j.id !== id);
-        localStorage.setItem('ineffable_journals', JSON.stringify(filtered));
+        localStorage.setItem('inefontop_journals', JSON.stringify(filtered));
         setJournals(filtered);
       }
       addAuditLog(`[MODERATION] FORCE DELETED JOURNAL: "${title}" by ${author}`);
@@ -204,9 +281,16 @@ export const AdminView: React.FC<AdminViewProps> = ({
   };
 
   // Clear all journals
-  const handleClearAllJournals = () => {
+  const handleClearAllJournals = async () => {
     try {
-      localStorage.setItem('ineffable_journals', JSON.stringify([]));
+      if (supabase) {
+        const { error } = await supabase
+          .from('journals')
+          .delete()
+          .neq('id', '');
+        if (error) console.error('Supabase clear journals error:', error);
+      }
+      localStorage.setItem('inefontop_journals', JSON.stringify([]));
       setJournals([]);
       setShowClearConfirm(false);
       addAuditLog('[MODERATION] WIPE COMPLETE: ALL JOURNAL REGISTRY ENTRIES FLUSHED');
@@ -216,13 +300,20 @@ export const AdminView: React.FC<AdminViewProps> = ({
   };
 
   // Dismiss ticket (Force as admin)
-  const handleDismissTicket = (id: string, subjectIdentity: string) => {
+  const handleDismissTicket = async (id: string, subjectIdentity: string) => {
     try {
-      const cached = localStorage.getItem('ineffable_tickets');
+      if (supabase) {
+        const { error } = await supabase
+          .from('tickets')
+          .delete()
+          .eq('id', id);
+        if (error) console.error('Supabase delete ticket error:', error);
+      }
+      const cached = localStorage.getItem('inefontop_tickets');
       if (cached) {
         const existingTickets = JSON.parse(cached);
         const filtered = existingTickets.filter((t: any) => t.id !== id);
-        localStorage.setItem('ineffable_tickets', JSON.stringify(filtered));
+        localStorage.setItem('inefontop_tickets', JSON.stringify(filtered));
         setTickets(filtered);
       }
       addAuditLog(`[MODERATION] DISMISSED SUPPORT TICKET FROM "${subjectIdentity}"`);
@@ -232,10 +323,17 @@ export const AdminView: React.FC<AdminViewProps> = ({
   };
 
   // Clear Audit Logs Manual Buffer
-  const handleClearAuditLogs = () => {
+  const handleClearAuditLogs = async () => {
     try {
+      if (supabase) {
+        const { error } = await supabase
+          .from('audit_logs')
+          .delete()
+          .neq('id', '');
+        if (error) console.error('Supabase clear audit logs error:', error);
+      }
       const clearedLogs = [`[${new Date().toLocaleTimeString()}] [SYSTEM] AUDIT LOG BUFFER FLUSHED BY ADMINISTRATOR`];
-      localStorage.setItem('ineffable_audit_logs', JSON.stringify(clearedLogs));
+      localStorage.setItem('inefontop_audit_logs', JSON.stringify(clearedLogs));
       setAuditLogs(clearedLogs);
     } catch (err) {
       alert('Failed to clear manual buffer.');
@@ -274,7 +372,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
 
         <div className="space-y-3">
           <span className="font-mono text-[10px] tracking-[0.3em] text-rose-500 font-extrabold uppercase block">
-            INEFFABLE // SHIELD PROTOCOL
+            INEFONTOP // SHIELD PROTOCOL
           </span>
           <h2 className="text-3xl font-sans tracking-tight font-extrabold uppercase text-white">
             ADMIN ACCESS RESTRICTED
@@ -332,10 +430,10 @@ export const AdminView: React.FC<AdminViewProps> = ({
           </div>
           <h2 className="text-4xl font-sans tracking-tight font-extrabold uppercase text-white flex items-center space-x-3">
             <Shield className="w-9 h-9 text-rose-500" />
-            <span>INEFFABLE ADMIN CONTROL</span>
+            <span>INEFONTOP ADMIN CONTROL</span>
           </h2>
           <p className={`${themeStyles.textSecondary} text-xs font-light max-w-xl`}>
-            Authorized administrative gateway for Ineffable. Monitor user journals, manage metadata, view audit trails, and oversee secure systems.
+            Authorized administrative gateway for Inefontop. Monitor user journals, manage metadata, view audit trails, and oversee secure systems.
           </p>
         </div>
 

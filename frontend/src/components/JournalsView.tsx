@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
 import { PenTool, BookOpen, User, Calendar, Trash2, AlertCircle, CheckCircle2, ChevronDown, ChevronUp, Sparkles, Filter, Lock } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface JournalEntry {
   id: string;
@@ -97,15 +98,39 @@ export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, is
     }
   }, [currentUser, showForm]);
 
-  // Load Journals from localStorage
+  // Load Journals from Supabase or localStorage
   useEffect(() => {
-    const fetchJournals = () => {
+    const fetchJournals = async () => {
       try {
-        const cached = localStorage.getItem('ineffable_journals');
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('journals')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+          if (!error && data && data.length > 0) {
+            const mapped: JournalEntry[] = data.map((item: any) => ({
+              id: item.id,
+              author: item.author,
+              title: item.title,
+              story: item.story,
+              date: item.date,
+              mood: item.mood,
+              wordsCount: item.wordsCount || item.story.split(/\s+/).filter(Boolean).length,
+              createdBy: item.createdBy || item.author,
+            }));
+            setJournals(mapped);
+            return;
+          } else if (error) {
+            console.warn('Supabase journal fetch failed or empty, using localStorage:', error);
+          }
+        }
+
+        const cached = localStorage.getItem('inefontop_journals');
         if (cached) {
           setJournals(JSON.parse(cached));
         } else {
-          localStorage.setItem('ineffable_journals', JSON.stringify(INITIAL_JOURNALS));
+          localStorage.setItem('inefontop_journals', JSON.stringify(INITIAL_JOURNALS));
           setJournals(INITIAL_JOURNALS);
         }
       } catch (err) {
@@ -154,9 +179,6 @@ export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, is
     if (!author.trim() || !title.trim() || !story.trim() || isOverLimit) return;
 
     try {
-      const cached = localStorage.getItem('ineffable_journals');
-      const existingJournals: JournalEntry[] = cached ? JSON.parse(cached) : INITIAL_JOURNALS;
-
       const wordsCount = story.trim().split(/\s+/).filter(w => w.length > 0).length;
       const newEntry: JournalEntry = {
         id: 'journal-' + Date.now(),
@@ -169,15 +191,42 @@ export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, is
         createdBy: currentUser || 'anonymous'
       };
 
+      // 1. Save to Supabase if configured
+      if (supabase) {
+        const { error } = await supabase
+          .from('journals')
+          .insert([{
+            id: newEntry.id,
+            author: newEntry.author,
+            title: newEntry.title,
+            story: newEntry.story,
+            date: newEntry.date,
+            mood: newEntry.mood,
+            wordsCount: newEntry.wordsCount,
+            createdBy: newEntry.createdBy
+          }]);
+        if (error) {
+          console.error('Supabase write error, using fallback:', error);
+        }
+      }
+
+      // 2. Replication write to local cache
+      const cached = localStorage.getItem('inefontop_journals');
+      const existingJournals: JournalEntry[] = cached ? JSON.parse(cached) : INITIAL_JOURNALS;
       const updatedJournals = [newEntry, ...existingJournals];
-      localStorage.setItem('ineffable_journals', JSON.stringify(updatedJournals));
+      localStorage.setItem('inefontop_journals', JSON.stringify(updatedJournals));
       setJournals(updatedJournals);
 
       // Log to audit log
-      const existingLogsRaw = localStorage.getItem('ineffable_audit_logs');
+      const existingLogsRaw = localStorage.getItem('inefontop_audit_logs');
       const existingLogs = existingLogsRaw ? JSON.parse(existingLogsRaw) : [];
       existingLogs.push(`[JOURNAL] NEW ENTRY TRANSMITTED: "${title.trim().toUpperCase()}" BY ${author.trim().toUpperCase()}`);
-      localStorage.setItem('ineffable_audit_logs', JSON.stringify(existingLogs));
+      localStorage.setItem('inefontop_audit_logs', JSON.stringify(existingLogs));
+
+      // Also push audit log to Supabase if configured
+      if (supabase) {
+        await supabase.from('audit_logs').insert([{ message: `[JOURNAL] NEW ENTRY TRANSMITTED: "${title.trim().toUpperCase()}" BY ${author.trim().toUpperCase()}` }]);
+      }
 
       // Update session IDs
       const updatedSessionIds = [...sessionCreatedIds, newEntry.id];
@@ -216,19 +265,35 @@ export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, is
     if (!confirmDel) return;
 
     try {
-      const cached = localStorage.getItem('ineffable_journals');
+      // 1. Delete from Supabase
+      if (supabase) {
+        const { error } = await supabase
+          .from('journals')
+          .delete()
+          .eq('id', id);
+        if (error) {
+          console.error('Supabase delete error:', error);
+        }
+      }
+
+      // 2. Replicate locally
+      const cached = localStorage.getItem('inefontop_journals');
       if (cached) {
         const existingJournals: JournalEntry[] = JSON.parse(cached);
         const filtered = existingJournals.filter(j => j.id !== id);
-        localStorage.setItem('ineffable_journals', JSON.stringify(filtered));
+        localStorage.setItem('inefontop_journals', JSON.stringify(filtered));
         setJournals(filtered);
       }
 
       // Log to audit log
-      const existingLogsRaw = localStorage.getItem('ineffable_audit_logs');
+      const existingLogsRaw = localStorage.getItem('inefontop_audit_logs');
       const existingLogs = existingLogsRaw ? JSON.parse(existingLogsRaw) : [];
       existingLogs.push(`[JOURNAL] REMOVED ENTRY: "${journal.title.toUpperCase()}" BY ${journal.author.toUpperCase()}`);
-      localStorage.setItem('ineffable_audit_logs', JSON.stringify(existingLogs));
+      localStorage.setItem('inefontop_audit_logs', JSON.stringify(existingLogs));
+
+      if (supabase) {
+        await supabase.from('audit_logs').insert([{ message: `[JOURNAL] REMOVED ENTRY: "${journal.title.toUpperCase()}" BY ${journal.author.toUpperCase()}` }]);
+      }
 
       setSuccessToast('REMOVED JOURNAL ENTRY');
       setTimeout(() => setSuccessToast(null), 3000);
@@ -258,7 +323,7 @@ export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, is
           ARCHIVE // COMMUNITY TRANSMISSIONS
         </span>
         <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-extrabold uppercase">
-          INEFFABLE JOURNALS
+          INEFONTOP JOURNALS
         </h2>
         <p className={`${themeStyles.textSecondary} font-sans text-sm md:text-base font-light leading-relaxed`}>
           A space to record thoughts, digital logs, sensory studies, and custom server experiences. Every entry is persistent and structured with high-contrast tactical framing.

@@ -50,7 +50,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
     'vanguard-rank': 'utilities',
     'elite-rank': 'utilities',
     'overlord-rank': 'utilities',
-    'ineffable-rank': 'utilities'
+    'inefontop-rank': 'utilities'
   });
 
   const setCardTab = (cardId: string, tab: 'utilities' | 'kits' | 'cosmetics') => {
@@ -230,8 +230,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
       }
     },
     {
-      id: 'ineffable-rank',
-      name: 'Ineffable Rank',
+      id: 'inefontop-rank',
+      name: 'Inefontop Rank',
       price: 59.99,
       period: 'lifetime',
       description: 'The legendary ultimate rank of the SMP network. Keep-inventory protection, unlimited homes, triple vaults, rideable mounts, and permanent fame.',
@@ -258,7 +258,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
           'Ultimate supply: 32x Enchanted Golden Apples & 64x Emerald Blocks'
         ],
         cosmetics: [
-          'Legendary custom "[Ineffable]" chromatic gradient cycling chat prefix',
+          'Legendary custom "[Inefontop]" chromatic gradient cycling chat prefix',
           'Exclusive rideable mounts: summon and ride Dragons, Griffins, or Wyverns',
           'Access to all trails: block trails, music notes, lightning sparkles',
           'Permanent custom monument engraving on the Spawn Lobby Hall of Fame'
@@ -282,8 +282,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
   const pageTitle = activeTab === 'discord' ? 'COMMUNITY MEMBERSHIPS' : 'MINECRAFT SERVER RANKS';
   const pageTagline = activeTab === 'discord' ? 'UPGRADES // MEMBERSHIP PLANS' : 'SERVER STORE // LIFETIME DONATIONS';
   const pageSub = activeTab === 'discord'
-    ? 'Support Ineffable hosting nodes and fund active development. Gain immediate, automated premium roles, custom cosmetic permissions, and exclusive Discord perks linked to your account.'
-    : 'Enhance your survival gameplay on the Ineffable SMP server with premium donor ranks. Experience fully customizable glassy cards featuring tabbed sub-sections for commands, kits, and cosmetics.';
+    ? 'Support Inefontop hosting nodes and fund active development. Gain immediate, automated premium roles, custom cosmetic permissions, and exclusive Discord perks linked to your account.'
+    : 'Enhance your survival gameplay on the Inefontop SMP server with premium donor ranks. Experience fully customizable glassy cards featuring tabbed sub-sections for commands, kits, and cosmetics.';
 
   return (
     <div id="membership-view-container" className={`max-w-7xl mx-auto px-6 py-24 pt-32 ${themeStyles.textPrimary}`}>
@@ -477,7 +477,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                       {tier.tag}
                     </span>
                     <span className={`px-2 py-0.5 rounded-full font-mono text-[7px] tracking-wider font-semibold border ${
-                      tier.id === 'ineffable-rank'
+                      tier.id === 'inefontop-rank'
                         ? 'border-emerald-500/30 text-emerald-400 bg-emerald-950/20 shadow-[0_0_10px_rgba(16,185,129,0.2)] animate-pulse'
                         : `bg-zinc-500/5 ${glowAccent}`
                     }`}>

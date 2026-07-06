@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PageId, AtmosphereConfig, CartItem } from './types';
 import { PetalDriftCanvas } from './components/PetalDriftCanvas';
 import { Navbar } from './components/Navbar';
@@ -19,6 +19,7 @@ import { GamingView } from './components/GamingView';
 import { AboutView } from './components/AboutView';
 import { getThemeStyles } from './lib/theme';
 import { Disc, Sparkles, MapPin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
+import { supabase, isSupabaseConfigured, getDBWishlist, toggleDBWishlist, getDBCart, saveDBCart } from './lib/supabase';
 
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -41,22 +42,133 @@ export default function App() {
   });
   const [isDarkMode, setIsDarkMode] = useState(true);
   
-  // Global cart & login state
+  // Global cart, wishlist, & login state
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [wishlist, setWishlist] = useState<string[]>([]);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
+
+  // Supabase Auth and Iframe/Popup Management
+  useEffect(() => {
+    // 1. Detect if we are running inside an OAuth popup
+    const isOAuthPopup = window.opener && window.opener !== window && (
+      window.location.hash.includes('access_token') || 
+      window.location.hash.includes('error') ||
+      window.location.search.includes('code=')
+    );
+
+    if (isOAuthPopup) {
+      // Send success signal to parent window and close popup
+      setTimeout(() => {
+        window.opener.postMessage({ type: 'SUPABASE_AUTH_SUCCESS' }, window.location.origin);
+        window.close();
+      }, 800);
+      return;
+    }
+
+    // 2. Listen for auth messages from the popup on the parent window
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === 'SUPABASE_AUTH_SUCCESS') {
+        if (supabase) {
+          supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session?.user) {
+              const username = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User';
+              setCurrentUser(username);
+              loadUserData(session.user.id);
+            }
+          });
+        }
+      }
+    };
+    window.addEventListener('message', handleMessage);
+
+    // 3. Subscribe to Supabase Session Changes
+    let unsubscribeAuth: (() => void) | undefined;
+    if (supabase) {
+      // Get current session
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          const username = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User';
+          setCurrentUser(username);
+          loadUserData(session.user.id);
+        }
+      });
+
+      // Subscribe to session transitions
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (session?.user) {
+          const username = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User';
+          setCurrentUser(username);
+          loadUserData(session.user.id);
+        } else {
+          setCurrentUser(null);
+          setWishlist([]);
+          setCart([]);
+        }
+      });
+      unsubscribeAuth = () => subscription.unsubscribe();
+    }
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+      if (unsubscribeAuth) unsubscribeAuth();
+    };
+  }, []);
+
+  const loadUserData = async (uid: string) => {
+    try {
+      const dbWishlist = await getDBWishlist(uid);
+      setWishlist(dbWishlist);
+
+      const dbCart = await getDBCart(uid);
+      if (dbCart && dbCart.length > 0) {
+        setCart(dbCart);
+      }
+    } catch (err) {
+      console.warn('Error loading user data from DB:', err);
+    }
+  };
+
+  // Sync cart updates to Supabase
+  useEffect(() => {
+    if (supabase && currentUser) {
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        if (user) {
+          saveDBCart(user.id, cart);
+        }
+      });
+    }
+  }, [cart, currentUser]);
 
   const themeStyles = getThemeStyles(atmosphere.colorTheme, isDarkMode);
 
+  // Secure navigation guard
+  const navigateToPage = (page: PageId) => {
+    const protectedPages: PageId[] = ['journals', 'cart', 'admin'];
+    if (!currentUser && protectedPages.includes(page)) {
+      setCurrentPage('login');
+      return;
+    }
+    setCurrentPage(page);
+  };
+
   // Cart actions
-  const handleAddToCart = (newItem: Omit<CartItem, 'quantity'>) => {
+  const handleAddToCart = (newItem: Omit<CartItem, 'quantity'> & { quantity?: number; size?: string }) => {
+    if (!currentUser) {
+      setCurrentPage('login');
+      return;
+    }
+    const qtyToAdd = newItem.quantity || 1;
     setCart((prev) => {
-      const existing = prev.find((item) => item.id === newItem.id);
+      const existing = prev.find((item) => item.id === newItem.id && item.size === newItem.size);
       if (existing) {
         return prev.map((item) =>
-          item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item
+          (item.id === newItem.id && item.size === newItem.size) 
+            ? { ...item, quantity: item.quantity + qtyToAdd } 
+            : item
         );
       }
-      return [...prev, { ...newItem, quantity: 1 }];
+      return [...prev, { ...newItem, quantity: qtyToAdd }];
     });
   };
 
@@ -80,14 +192,43 @@ export default function App() {
     setCart([]);
   };
 
+  // Wishlist actions
+  const handleToggleWishlist = async (productId: string) => {
+    if (!currentUser) {
+      setCurrentPage('login');
+      return;
+    }
+
+    if (supabase) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await toggleDBWishlist(user.id, productId);
+        const updatedList = await getDBWishlist(user.id);
+        setWishlist(updatedList);
+      }
+    } else {
+      setWishlist((prev) => {
+        if (prev.includes(productId)) {
+          return prev.filter((id) => id !== productId);
+        }
+        return [...prev, productId];
+      });
+    }
+  };
+
   // Auth actions
   const handleLogin = (username: string) => {
     setCurrentUser(username);
     setCurrentPage('home'); // Redirect to home after login
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
     setCurrentUser(null);
+    setWishlist([]);
+    setCart([]);
   };
 
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -153,7 +294,7 @@ export default function App() {
 
   return (
     <div 
-      id="ineffable-root-canvas" 
+      id="inefontop-root-canvas" 
       className={`min-h-screen ${getBackgroundGradientClass()} font-sans ${getSelectionClass()} relative overflow-x-hidden transition-all duration-1000 ease-in-out`}
     >
       
@@ -188,7 +329,7 @@ export default function App() {
       {/* Global Navigation Header with Glassmorphism blur */}
       <Navbar 
         currentPage={currentPage} 
-        setCurrentPage={setCurrentPage} 
+        setCurrentPage={navigateToPage} 
         activeAtmosphere={atmosphere}
         isDarkMode={isDarkMode}
         onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
@@ -197,24 +338,32 @@ export default function App() {
       />
 
       {/* Main Render Views */}
-      <main id="ineffable-main-view" className="relative z-20">
+      <main id="inefontop-main-view" className="relative z-20">
         {currentPage === 'home' && (
-          <HomeView setCurrentPage={setCurrentPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} />
+          <HomeView setCurrentPage={navigateToPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} />
         )}
         {currentPage === 'gaming' && (
           <GamingView activeAtmosphere={{ ...themeStyles, ...atmosphere }} isDarkMode={isDarkMode} />
         )}
         {currentPage === 'membership' && (
-          <MembershipView setCurrentPage={setCurrentPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} onAddToCart={handleAddToCart} />
+          <MembershipView setCurrentPage={navigateToPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} onAddToCart={handleAddToCart} />
         )}
         {currentPage === 'shop' && (
-          <ShopView setCurrentPage={setCurrentPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} onAddToCart={handleAddToCart} />
+          <ShopView 
+            setCurrentPage={navigateToPage} 
+            activeAtmosphere={atmosphere} 
+            isDarkMode={isDarkMode} 
+            onAddToCart={handleAddToCart}
+            wishlist={wishlist}
+            onToggleWishlist={handleToggleWishlist}
+            currentUser={currentUser}
+          />
         )}
         {currentPage === 'journals' && (
           <JournalsView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} />
         )}
         {currentPage === 'admin' && (
-          <AdminView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} setCurrentPage={setCurrentPage} />
+          <AdminView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} setCurrentPage={navigateToPage} />
         )}
         {currentPage === 'contact' && (
           <ContactView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} />
@@ -224,13 +373,14 @@ export default function App() {
         )}
         {currentPage === 'cart' && (
           <CartView 
-            setCurrentPage={setCurrentPage} 
+            setCurrentPage={navigateToPage} 
             activeAtmosphere={atmosphere} 
             isDarkMode={isDarkMode} 
             cart={cart}
             onUpdateQuantity={handleUpdateQuantity}
             onRemoveItem={handleRemoveItem}
             onClearCart={handleClearCart}
+            currentUser={currentUser}
           />
         )}
         {currentPage === 'login' && (
@@ -240,13 +390,16 @@ export default function App() {
             currentUser={currentUser}
             onLogin={handleLogin}
             onLogout={handleLogout}
+            wishlist={wishlist}
+            onToggleWishlist={handleToggleWishlist}
+            onAddToCart={handleAddToCart}
           />
         )}
       </main>
 
       {/* Corporate Luxury Footer */}
       <footer 
-        id="ineffable-footer" 
+        id="inefontop-footer" 
         className={`relative z-30 ${themeStyles.bgFooter} border-t ${themeStyles.borderMuted} py-16 px-6 backdrop-blur-md transition-all duration-1000`}
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 font-sans font-light">
@@ -256,16 +409,16 @@ export default function App() {
             <div className="flex items-center space-x-3">
               <img 
                 src="/img.png" 
-                alt="Ineffable Logo" 
+                alt="Inefontop Logo" 
                 className="w-6 h-6 object-contain rounded-md"
                 referrerPolicy="no-referrer"
               />
               <h4 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} uppercase`}>
-                INEFFABLE
+                INEFONTOP
               </h4>
             </div>
             <p className={`${themeStyles.textSecondary} text-xs max-w-sm leading-relaxed`}>
-              INEFFABLE is an open-ended digital experimental brand blurring the boundary of cyber couture clothing, brutalist architecture, and dynamic physics loops.
+              INEFONTOP is an open-ended digital experimental brand blurring the boundary of cyber couture clothing, brutalist architecture, and dynamic physics loops.
             </p>
             <div className={`flex items-center space-x-3 ${themeStyles.textMuted} font-mono text-[9px] tracking-wider`}>
               <MapPin className={`w-3.5 h-3.5 ${themeStyles.accentTextMuted}`} />
@@ -397,7 +550,7 @@ export default function App() {
 
         {/* Legal block */}
         <div className={`max-w-7xl mx-auto border-t ${themeStyles.borderMuted} mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between font-mono text-[9px] ${themeStyles.textMuted} space-y-4 sm:space-y-0`}>
-          <span>© 2026 INEFFABLE INC. ALL CHANNELS RESERVED.</span>
+          <span>© 2026 INEFONTOP INC. ALL CHANNELS RESERVED.</span>
           <div className="flex space-x-6">
             <span className="hover:text-zinc-400 transition-colors cursor-pointer">PRIVACY PROTOCOL</span>
             <span className="hover:text-zinc-400 transition-colors cursor-pointer">SECURITY SCHEMAS</span>

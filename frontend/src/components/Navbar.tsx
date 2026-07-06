@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav 
-      id="ineffable-navbar"
+      id="inefontop-navbar"
       className={`fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl z-50 rounded-2xl border ${themeStyles.borderMuted} ${themeStyles.bgHeader} backdrop-blur-xl transition-all duration-300 shadow-xl`}
     >
       <div className="px-6 h-20 flex items-center justify-between">
@@ -61,14 +61,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             <img 
               id="nav-logo-img"
               src="/img.png" 
-              alt="Ineffable Logo" 
+              alt="Inefontop Logo" 
               className="w-7 h-7 object-contain rounded-md"
               referrerPolicy="no-referrer"
             />
           </div>
           <div>
             <h1 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} leading-none ${themeStyles.groupTextHover} transition-colors`}>
-              INEFFABLE
+              INEFONTOP
             </h1>
             <span className={`font-sans text-[10px] tracking-[0.25em] ${themeStyles.textSecondary} block mt-1`}>
               DIVISION
@@ -254,14 +254,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <span className="flex items-center space-x-2">
                 <Radio className="w-3.5 h-3.5 text-zinc-950 animate-pulse" />
-                <span>JOIN INEFFABLE SERVER</span>
+                <span>JOIN INEFONTOP SERVER</span>
               </span>
               <ExternalLink className="w-3.5 h-3.5 opacity-80" />
             </a>
 
             <div className={`pt-3 flex items-center space-x-2 font-mono text-[9px] tracking-wider ${themeStyles.textMuted}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${isDarkMode ? 'bg-emerald-400' : 'bg-emerald-600'}`} />
-              <span>INEFFABLE // ACTIVE NODE</span>
+              <span>INEFONTOP // ACTIVE NODE</span>
             </div>
           </div>
         </div>

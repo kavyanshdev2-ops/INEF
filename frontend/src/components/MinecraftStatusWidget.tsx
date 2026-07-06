@@ -45,15 +45,15 @@ export function MinecraftStatusWidget({ isDarkMode, activeAtmosphere }: Minecraf
     const fetchStatus = () => {
       const mockStatus: MinecraftStatus = {
         online: true,
-        ip: 'ineffable.mc-play.org',
+        ip: 'inefontop.mc-play.org',
         players: {
           online: 18,
           max: 100,
-          list: ['Kavyansh', 'Ineffable_Dev', 'Notch_Cyber', 'Xero_G', 'Zenith_A', 'NovaFlow']
+          list: ['Kavyansh', 'Inefontop_Dev', 'Notch_Cyber', 'Xero_G', 'Zenith_A', 'NovaFlow']
         },
         version: '1.20.4',
-        motd: ['§d§lINEFFABLE§r §7// §bDIGITAL EXPERIENCE', '§e[OFFICIAL LAUNCH] §fJoin our physical-virtual convergence!'],
-        hostname: 'ineffable.mc-play.org',
+        motd: ['§d§lINEFONTOP§r §7// §bDIGITAL EXPERIENCE', '§e[OFFICIAL LAUNCH] §fJoin our physical-virtual convergence!'],
+        hostname: 'inefontop.mc-play.org',
         port: 25565,
         isFallback: false
       };
@@ -81,7 +81,7 @@ export function MinecraftStatusWidget({ isDarkMode, activeAtmosphere }: Minecraf
 
   // Copy IP handler
   const handleCopyIP = () => {
-    navigator.clipboard.writeText('ineffable.mc-play.org');
+    navigator.clipboard.writeText('inefontop.mc-play.org');
     setCopied(true);
     setShowToast(true);
   };
@@ -128,7 +128,7 @@ export function MinecraftStatusWidget({ isDarkMode, activeAtmosphere }: Minecraf
           </div>
           <div className="flex flex-col">
             <span className="text-[10px] font-bold text-zinc-100 tracking-wider">REGISTRY UPDATED</span>
-            <span className="text-[9px] text-emerald-400 font-mono">ineffable.mc-play.org copied!</span>
+            <span className="text-[9px] text-emerald-400 font-mono">inefontop.mc-play.org copied!</span>
           </div>
         </motion.div>
       )}
@@ -145,7 +145,7 @@ export function MinecraftStatusWidget({ isDarkMode, activeAtmosphere }: Minecraf
             <div className="flex items-center space-x-4">
               <div className="relative shrink-0">
                 <img 
-                  src="https://api.mcsrvstat.us/icon/ineffable.mc-play.org" 
+                  src="https://api.mcsrvstat.us/icon/inefontop.mc-play.org" 
                   alt="Server Icon" 
                   className="w-12 h-12 rounded-xl border border-emerald-500/30 bg-zinc-950 p-1 [image-rendering:pixelated] shadow-[0_0_15px_rgba(16,185,129,0.15)]"
                   onError={(e) => {
@@ -159,9 +159,9 @@ export function MinecraftStatusWidget({ isDarkMode, activeAtmosphere }: Minecraf
                 </span>
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] tracking-[0.2em] text-zinc-500 uppercase">Ineffable Multiplayer Node</span>
+                <span className="text-[10px] tracking-[0.2em] text-zinc-500 uppercase">Inefontop Multiplayer Node</span>
                 <h3 className={`text-sm tracking-[0.3em] font-bold ${activeAtmosphere.textPrimary} uppercase`}>
-                  INEFFABLE SANDBOX GRID
+                  INEFONTOP SANDBOX GRID
                 </h3>
               </div>
             </div>
@@ -204,7 +204,7 @@ export function MinecraftStatusWidget({ isDarkMode, activeAtmosphere }: Minecraf
                   <Gamepad2 className="w-4 h-4 text-emerald-500" />
                   <div className="flex flex-col">
                     <span className="text-[8px] text-zinc-500 uppercase tracking-widest">MINECRAFT SERVER ADDRESS</span>
-                    <span className={`text-xs font-bold ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'} tracking-wider`}>ineffable.mc-play.org</span>
+                    <span className={`text-xs font-bold ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'} tracking-wider`}>inefontop.mc-play.org</span>
                   </div>
                 </div>
                 
@@ -314,7 +314,7 @@ export function MinecraftStatusWidget({ isDarkMode, activeAtmosphere }: Minecraf
                   </span>
                 ))
               ) : (
-                ['KavyanshShakya', 'Ineffable_Operative', 'cyber_fleur', 'VoxelSovereign', 'brutalist_builder'].map((player) => (
+                ['KavyanshShakya', 'Inefontop_Operative', 'cyber_fleur', 'VoxelSovereign', 'brutalist_builder'].map((player) => (
                   <span 
                     key={player}
                     className={`px-2 py-0.5 border text-[8px] rounded uppercase font-mono tracking-wider hover:text-emerald-400 hover:border-emerald-900 transition-colors ${

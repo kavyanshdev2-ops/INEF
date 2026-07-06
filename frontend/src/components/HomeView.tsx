@@ -41,9 +41,10 @@ interface HomeViewProps {
   setCurrentPage: (page: PageId) => void;
   activeAtmosphere: AtmosphereConfig;
   isDarkMode: boolean;
+  currentUser?: string | null;
 }
 
-export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosphere, isDarkMode }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosphere, isDarkMode, currentUser }) => {
   const [selectedProduct, setSelectedProduct] = useState<ApparelItem | null>(null);
   const [acquiredSuccess, setAcquiredSuccess] = useState<boolean>(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -121,10 +122,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       }
       if (theme === 'monochrome') {
         const colors = [
-          { bg: 'bg-zinc-100/10', border: 'hover:border-zinc-400/40 border-zinc-850', text: 'text-zinc-200', hoverText: 'group-hover:text-zinc-200' },
-          { bg: 'bg-zinc-200/10', border: 'hover:border-zinc-400/40 border-zinc-850', text: 'text-zinc-300', hoverText: 'group-hover:text-zinc-300' },
-          { bg: 'bg-zinc-300/10', border: 'hover:border-zinc-400/40 border-zinc-850', text: 'text-zinc-400', hoverText: 'group-hover:text-zinc-400' },
-          { bg: 'bg-zinc-100/10', border: 'hover:border-zinc-400/40 border-zinc-850', text: 'text-zinc-200', hoverText: 'group-hover:text-zinc-200' }
+          { bg: 'bg-zinc-100/10', border: 'hover:border-zinc-400/40 border-zinc-800', text: 'text-zinc-200', hoverText: 'group-hover:text-zinc-200' },
+          { bg: 'bg-zinc-200/10', border: 'hover:border-zinc-400/40 border-zinc-800', text: 'text-zinc-300', hoverText: 'group-hover:text-zinc-300' },
+          { bg: 'bg-zinc-300/10', border: 'hover:border-zinc-400/40 border-zinc-800', text: 'text-zinc-400', hoverText: 'group-hover:text-zinc-400' },
+          { bg: 'bg-zinc-100/10', border: 'hover:border-zinc-400/40 border-zinc-800', text: 'text-zinc-200', hoverText: 'group-hover:text-zinc-200' }
         ];
         return colors[index];
       }
@@ -260,8 +261,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
 
   const faqs = [
     {
-      q: "What is INEFFABLE?",
-      a: "INEFFABLE is a premium, legendary community server running strong for over 6 years. It is built on friendships, loyalty, fun, and unforgettable memories, providing members with highly active voice rooms, secure text channels, and regular community events."
+      q: "What is INEFONTOP?",
+      a: "INEFONTOP is a premium, legendary community server running strong for over 6 years. It is built on friendships, loyalty, fun, and unforgettable memories, providing members with highly active voice rooms, secure text channels, and regular community events."
     },
     {
       q: "How do I upgrade to Platinum, Diamond, or Titanium Access?",
@@ -272,12 +273,17 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       a: "Yes! All verified server members can join our survival Minecraft server, movie nights, gaming tournaments, and LFG chats at zero cost. Premium tiers simply add awesome optional customization options to show off your support."
     },
     {
-      q: "How can I partner or promote my brand within Ineffable?",
+      q: "How can I partner or promote my brand within Inefontop?",
       a: "We offer dedicated promotion slots, spotlight text announcements, and event sponsorship opportunities. Click on 'PREVIEW' under the Premium Promotions node above or contact our administration team through the Connect page."
     }
   ];
 
   const handleAcquire = () => {
+    if (!currentUser) {
+      setSelectedProduct(null);
+      setCurrentPage('login');
+      return;
+    }
     setAcquiredSuccess(true);
     setTimeout(() => {
       setAcquiredSuccess(false);
@@ -312,7 +318,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
               id="hero-main-title"
               className={`text-6xl md:text-8xl xl:text-9xl font-sans tracking-tight font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 ${getGradientToClass()} leading-[0.9] uppercase filter drop-shadow-2xl`}
             >
-              INEFFABLE
+              INEFONTOP
             </h1>
             
             <h2 
@@ -416,7 +422,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                 
                 <motion.img 
                   src="/img.png"
-                  alt="Ineffable Brand Logo"
+                  alt="Inefontop Brand Logo"
                   className="w-48 h-48 md:w-64 md:h-64 object-contain select-none transition-transform duration-700 group-hover:scale-105"
                   referrerPolicy="no-referrer"
                   animate={{ 
@@ -669,7 +675,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
         </div>
       </section>
 
-      {/* Ineffable Tiers */}
+      {/* Inefontop Tiers */}
       <section 
         id="home-tiers-section"
         className={`max-w-7xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
@@ -679,7 +685,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
             03 // DONATE / BOOST
           </span>
           <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${themeStyles.textPrimary}`}>
-            Support Ineffable
+            Support Inefontop
           </h2>
           <p className={`${themeStyles.textSecondary} font-sans text-sm md:text-base leading-relaxed font-light`}>
             Support our hosting and secure exclusive customized roles, extra reactions, external stickers permissions, global custom color roles, and elite voice privileges.

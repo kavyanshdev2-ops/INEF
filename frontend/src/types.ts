@@ -12,6 +12,7 @@ export interface CartItem {
   image: string;
   quantity: number;
   type: 'membership' | 'shop';
+  size?: string;
 }
 
 export interface AtmosphereConfig {

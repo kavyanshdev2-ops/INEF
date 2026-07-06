@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { PageId, InquiryForm, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
 import { Send, Terminal, ShieldAlert, Cpu, CheckCircle } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface ContactViewProps {
   activeAtmosphere: AtmosphereConfig;
@@ -43,7 +44,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
     setTerminalLogs([]);
 
     const logLines = [
-      'INITIATING HANDSHAKE WITH INEFFABLE NODE TOKYO...',
+      'INITIATING HANDSHAKE WITH INEFONTOP NODE TOKYO...',
       'ESTABLISHING SECURE TLS_1.3 CHANNEL...',
       'PACKAGING SUBJECT DATA PACKETS...',
       `SUBJECT IDENTITY: "${form.subjectIdentity.toUpperCase()}"`,
@@ -56,13 +57,10 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
     }
 
     try {
-      setTerminalLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] DISPATCHING STREAM TO LOCAL COMPARTMENT STORAGE...`]);
+      setTerminalLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] DISPATCHING STREAM TO SECURE CLOUD GATEWAY...`]);
       
       await new Promise((resolve) => setTimeout(resolve, 600));
 
-      const existingTicketsRaw = localStorage.getItem('ineffable_tickets');
-      const existingTickets = existingTicketsRaw ? JSON.parse(existingTicketsRaw) : [];
-      
       const newTicket = {
         id: 'ticket-' + Date.now(),
         subjectIdentity: form.subjectIdentity.trim(),
@@ -73,13 +71,39 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
         status: 'PENDING'
       };
 
-      existingTickets.push(newTicket);
-      localStorage.setItem('ineffable_tickets', JSON.stringify(existingTickets));
+      // 1. Save to Supabase PostgreSQL if configured
+      if (supabase) {
+        const { error } = await supabase
+          .from('tickets')
+          .insert([{
+            id: newTicket.id,
+            subject_identity: newTicket.subjectIdentity,
+            digital_address: newTicket.digitalAddress,
+            inquiry_nature: newTicket.inquiryNature,
+            message_vector: newTicket.messageVector,
+            created_at: newTicket.createdAt,
+          }]);
+        if (error) {
+          console.error('Supabase ticket insert error, using local fallback:', error);
+        }
+      }
 
-      const existingLogsRaw = localStorage.getItem('ineffable_audit_logs');
+      // 2. Replication write to local storage
+      const existingTicketsRaw = localStorage.getItem('inefontop_tickets');
+      const existingTickets = existingTicketsRaw ? JSON.parse(existingTicketsRaw) : [];
+      existingTickets.push(newTicket);
+      localStorage.setItem('inefontop_tickets', JSON.stringify(existingTickets));
+
+      const existingLogsRaw = localStorage.getItem('inefontop_audit_logs');
       const existingLogs = existingLogsRaw ? JSON.parse(existingLogsRaw) : [];
-      existingLogs.push(`[CONTACT] NEW SUPPORT TICKET DISPATCHED BY "${form.subjectIdentity.toUpperCase()}"`);
-      localStorage.setItem('ineffable_audit_logs', JSON.stringify(existingLogs));
+      const auditLogMessage = `[CONTACT] NEW SUPPORT TICKET DISPATCHED BY "${form.subjectIdentity.toUpperCase()}"`;
+      existingLogs.push(auditLogMessage);
+      localStorage.setItem('inefontop_audit_logs', JSON.stringify(existingLogs));
+
+      // Push audit log to Supabase
+      if (supabase) {
+        await supabase.from('audit_logs').insert([{ message: auditLogMessage }]);
+      }
 
       setTerminalLogs((prev) => [
         ...prev,
