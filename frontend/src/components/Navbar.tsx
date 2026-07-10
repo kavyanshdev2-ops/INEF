@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { PageId, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
 import { Menu, X, Sun, Moon, Radio, ExternalLink, ShoppingCart, Bell } from 'lucide-react';
+import { LanguageTranslator } from './LanguageTranslator';
 
 interface NavbarProps {
   currentPage: PageId;
@@ -58,17 +59,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center space-x-3 group text-left cursor-pointer"
         >
           <div className="relative w-8 h-8 flex items-center justify-center">
-            <img 
-              id="nav-logo-img"
-              src="/img.png" 
-              alt="Inefontop Logo" 
-              className="w-7 h-7 object-contain rounded-md"
-              referrerPolicy="no-referrer"
-            />
+            {/* Spinning background decorative compass/radial */}
+            <svg viewBox="0 0 100 100" className={`absolute w-8 h-8 ${themeStyles.accentText} opacity-30 animate-[spin_12s_linear_infinite]`} fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5 5" />
+              <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            {/* Solid modern central logo mark */}
+            <svg viewBox="0 0 100 100" className={`w-6 h-6 ${themeStyles.accentText} drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]`} fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="3" />
+              <path d="M50 25 V75" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" />
+              <path d="M35 50 H65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="50" cy="50" r="4.5" fill="currentColor" />
+            </svg>
           </div>
           <div>
             <h1 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} leading-none ${themeStyles.groupTextHover} transition-colors`}>
-              INEFONTOP
+              INEFFABLE
             </h1>
             <span className={`font-sans text-[10px] tracking-[0.25em] ${themeStyles.textSecondary} block mt-1`}>
               DIVISION
@@ -112,6 +118,11 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* System Info & Theme Switcher Cluster */}
         <div id="system-status-cluster" className="hidden xl:flex items-center space-y-0 space-x-2.5">
+          {/* Custom Language Translator Dropdown */}
+          <LanguageTranslator themeStyles={themeStyles} isDarkMode={isDarkMode} />
+
+          <div className={`h-6 w-[1px] ${themeStyles.borderMuted} hidden lg:block`} />
+
           {/* Notification Icon Button - Placed beside Cart */}
           <button
             id="nav-notification-btn-desktop"
@@ -141,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Discord direct link button - styled like inef.cc but matching active theme, sized smaller */}
           <a
-            href="https://discord.gg/inefontop"
+            href="https://discord.gg/ineffable"
             target="_blank"
             rel="noopener noreferrer"
             className={`flex items-center space-x-1.5 ${themeStyles.accentBg} ${themeStyles.accentBgHover} hover:shadow-[0_0_12px_rgba(255,255,255,0.12)] text-zinc-950 px-3.5 py-1.5 rounded-lg font-mono text-[9px] tracking-widest transition-all cursor-pointer border ${themeStyles.borderHighlight} shrink-0`}
@@ -247,21 +258,27 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
             {/* Mobile Discord direct link */}
             <a
-              href="https://discord.gg/inefontop"
+              href="https://discord.gg/ineffable"
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center justify-between ${themeStyles.accentBg} ${themeStyles.accentBgHover} border ${themeStyles.borderHighlight} px-4 py-3 rounded-lg font-mono text-xs tracking-widest text-zinc-950 transition-all cursor-pointer mt-2`}
             >
               <span className="flex items-center space-x-2">
                 <Radio className="w-3.5 h-3.5 text-zinc-950 animate-pulse" />
-                <span>JOIN INEFONTOP SERVER</span>
+                <span>JOIN INEFFABLE SERVER</span>
               </span>
               <ExternalLink className="w-3.5 h-3.5 opacity-80" />
             </a>
 
+            {/* Mobile Custom Language Translator */}
+            <div className={`py-3.5 border-b ${themeStyles.borderMuted} flex justify-between items-center`}>
+              <span className={`font-mono text-xs tracking-[0.2em] ${themeStyles.textSecondary}`}>LANGUAGE</span>
+              <LanguageTranslator themeStyles={themeStyles} isDarkMode={isDarkMode} />
+            </div>
+
             <div className={`pt-3 flex items-center space-x-2 font-mono text-[9px] tracking-wider ${themeStyles.textMuted}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${isDarkMode ? 'bg-emerald-400' : 'bg-emerald-600'}`} />
-              <span>INEFONTOP // ACTIVE NODE</span>
+              <span>INEFFABLE // ACTIVE NODE</span>
             </div>
           </div>
         </div>

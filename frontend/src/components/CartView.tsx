@@ -168,7 +168,7 @@ export const CartView: React.FC<CartViewProps> = ({
     setCouponSuccess(null);
 
     const formattedCode = couponCode.trim().toUpperCase();
-    if (formattedCode === 'INEFONTOP20') {
+    if (formattedCode === 'INEFFABLE20') {
       setAppliedDiscount(20);
       setCouponSuccess('20% DISCOUNT APPLIED SUCCESSFULLY.');
     } else if (formattedCode === 'CYBERCOUTURE') {
@@ -325,7 +325,7 @@ export const CartView: React.FC<CartViewProps> = ({
               ORDER DISPATCHED!
             </h2>
             <p className={`${themeStyles.textSecondary} text-xs font-light max-w-md mx-auto leading-relaxed`}>
-              Thank you for acquiring Inefontop cyber couture. Your order has cleared, and premium tracked shipping manifests are being constructed.
+              Thank you for acquiring Ineffable cyber couture. Your order has cleared, and premium tracked shipping manifests are being constructed.
             </p>
           </div>
 
@@ -787,7 +787,7 @@ export const CartView: React.FC<CartViewProps> = ({
                         <div className="bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-2xl p-6 h-[170px] flex flex-col justify-between shadow-lg max-w-sm mx-auto font-mono text-xs text-white relative">
                           <div className="flex justify-between items-start">
                             <div>
-                              <span className="text-[8px] text-zinc-500 block tracking-widest uppercase">INEFONTOP CARD</span>
+                              <span className="text-[8px] text-zinc-500 block tracking-widest uppercase">INEFFABLE CARD</span>
                               <span className="text-[10px] font-bold tracking-widest uppercase">{paymentForm.cardName || 'CLIENT USER'}</span>
                             </div>
                             <CreditCard className="w-6 h-6 text-rose-500" />
@@ -994,7 +994,7 @@ export const CartView: React.FC<CartViewProps> = ({
                       type="text"
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
-                      placeholder="e.g. INEFONTOP20"
+                      placeholder="e.g. INEFFABLE20"
                       className={`flex-grow px-3 py-2 text-xs font-mono rounded-lg border ${isDarkMode ? 'bg-zinc-950 border-zinc-900 text-zinc-200 placeholder-zinc-600 focus:border-rose-500/50' : 'bg-white border-zinc-200 text-zinc-900 placeholder-zinc-400 focus:border-rose-500/50'} focus:outline-none transition-colors`}
                     />
                     <button

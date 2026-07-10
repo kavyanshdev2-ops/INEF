@@ -194,7 +194,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
           }
         }
       } catch (err) {
-        console.error('Failed to synchronise server data with node:', err);
+        console.warn('Failed to synchronise server data with node:', err);
       }
     };
 
@@ -215,7 +215,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
       localStorage.setItem('inefontop_audit_logs', JSON.stringify(updatedLogs));
       setAuditLogs(updatedLogs);
     } catch (err) {
-      console.error('Failed to dispatch audit log:', err);
+      console.warn('Failed to dispatch audit log:', err);
     }
   };
 
@@ -265,7 +265,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
           .from('journals')
           .delete()
           .eq('id', id);
-        if (error) console.error('Supabase delete journal error:', error);
+        if (error) console.warn('Supabase delete journal error:', error);
       }
       const cached = localStorage.getItem('inefontop_journals');
       if (cached) {
@@ -288,7 +288,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
           .from('journals')
           .delete()
           .neq('id', '');
-        if (error) console.error('Supabase clear journals error:', error);
+        if (error) console.warn('Supabase clear journals error:', error);
       }
       localStorage.setItem('inefontop_journals', JSON.stringify([]));
       setJournals([]);
@@ -307,7 +307,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
           .from('tickets')
           .delete()
           .eq('id', id);
-        if (error) console.error('Supabase delete ticket error:', error);
+        if (error) console.warn('Supabase delete ticket error:', error);
       }
       const cached = localStorage.getItem('inefontop_tickets');
       if (cached) {
@@ -330,7 +330,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
           .from('audit_logs')
           .delete()
           .neq('id', '');
-        if (error) console.error('Supabase clear audit logs error:', error);
+        if (error) console.warn('Supabase clear audit logs error:', error);
       }
       const clearedLogs = [`[${new Date().toLocaleTimeString()}] [SYSTEM] AUDIT LOG BUFFER FLUSHED BY ADMINISTRATOR`];
       localStorage.setItem('inefontop_audit_logs', JSON.stringify(clearedLogs));
@@ -372,7 +372,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
 
         <div className="space-y-3">
           <span className="font-mono text-[10px] tracking-[0.3em] text-rose-500 font-extrabold uppercase block">
-            INEFONTOP // SHIELD PROTOCOL
+            INEFFABLE // SHIELD PROTOCOL
           </span>
           <h2 className="text-3xl font-sans tracking-tight font-extrabold uppercase text-white">
             ADMIN ACCESS RESTRICTED
@@ -430,10 +430,10 @@ export const AdminView: React.FC<AdminViewProps> = ({
           </div>
           <h2 className="text-4xl font-sans tracking-tight font-extrabold uppercase text-white flex items-center space-x-3">
             <Shield className="w-9 h-9 text-rose-500" />
-            <span>INEFONTOP ADMIN CONTROL</span>
+            <span>INEFFABLE ADMIN CONTROL</span>
           </h2>
           <p className={`${themeStyles.textSecondary} text-xs font-light max-w-xl`}>
-            Authorized administrative gateway for Inefontop. Monitor user journals, manage metadata, view audit trails, and oversee secure systems.
+            Authorized administrative gateway for Ineffable. Monitor user journals, manage metadata, view audit trails, and oversee secure systems.
           </p>
         </div>
 

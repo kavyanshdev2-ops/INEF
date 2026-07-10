@@ -70,27 +70,7 @@ const MEMBERS_DATA: MemberProfile[] = [
       specialty: 'System Director'
     },
     badges: ['staff', 'booster', 'supporter'],
-    description: 'Supreme founder and architect of the Inefontop node. Directs global branding, long-term server infrastructure, and strategic digital drops.'
-  },
-  {
-    id: 'arya',
-    name: 'Arya',
-    discordTag: 'arya_inefontop',
-    role: 'Founder',
-    category: 'founder',
-    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=800&auto=format&fit=crop',
-    status: '🌀 mapping the void pathways...',
-    onlineStatus: 'idle',
-    joinedDate: 'JULY 18, 2020',
-    aboutMe: {
-      name: 'arya',
-      age: 'twenty-two',
-      status: 'visionary',
-      specialty: 'Global Strategist'
-    },
-    badges: ['staff', 'booster', 'developer'],
-    description: 'Co-founder and lead designer of digital horizons. Crafts brand philosophies and bridges physical realities with our virtual sandbox.'
+    description: 'Supreme founder and architect of the Ineffable node. Directs global branding, long-term server infrastructure, and strategic digital drops.'
   },
   {
     id: 'harshil',
@@ -150,7 +130,7 @@ const MEMBERS_DATA: MemberProfile[] = [
       specialty: 'Lattice Security'
     },
     badges: ['staff', 'developer', 'booster'],
-    description: 'Architects decentralized routing systems. Establishes firewall perimeters and manages the integrity of Inefontop\'s digital network.'
+    description: 'Architects decentralized routing systems. Establishes firewall perimeters and manages the integrity of Ineffable\'s digital network.'
   },
   {
     id: 'abhi',
@@ -739,7 +719,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
       case 'founder':
         return {
           song: "Convergence Gateway",
-          artist: "Inefontop Beats",
+          artist: "Ineffable Beats",
           album: "Lattice Overdrive",
           album_art_url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=150&auto=format&fit=crop",
           track_id: ""
@@ -755,7 +735,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
       case 'techlead':
         return {
           song: "Petal Drift in C Minor",
-          artist: "Inefontop Synthesizer",
+          artist: "Ineffable Synthesizer",
           album: "Canvas Engine Blueprints",
           album_art_url: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=150&auto=format&fit=crop",
           track_id: ""
@@ -773,11 +753,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
   // Mock server lists for Mutual Servers tab
   const MUTUAL_SERVERS = [
-    { id: '1', name: 'Inefontop Hub 🌐', members: '14,204', icon: 'IH', bgColor: 'bg-indigo-600', inviteUrl: 'https://discord.gg/inefontop' },
-    { id: '2', name: 'Developer Sanctuary 💻', members: '8,409', icon: 'DS', bgColor: 'bg-emerald-600', inviteUrl: 'https://discord.gg/inefontop' },
-    { id: '3', name: 'Cyber Couture Atelier 🪡', members: '3,212', icon: 'CC', bgColor: 'bg-pink-600', inviteUrl: 'https://discord.gg/inefontop' },
-    { id: '4', name: 'Quantum Esports 🎮', members: '5,022', icon: 'QE', bgColor: 'bg-orange-600', inviteUrl: 'https://discord.gg/inefontop' },
-    { id: '5', name: 'Lanyard Gateway 🔌', members: '18,504', icon: 'LY', bgColor: 'bg-sky-600', inviteUrl: 'https://discord.gg/inefontop' },
+    { id: '1', name: 'Ineffable Hub 🌐', members: '14,204', icon: 'IH', bgColor: 'bg-indigo-600', inviteUrl: 'https://discord.gg/ineffable' },
+    { id: '2', name: 'Developer Sanctuary 💻', members: '8,409', icon: 'DS', bgColor: 'bg-emerald-600', inviteUrl: 'https://discord.gg/ineffable' },
+    { id: '3', name: 'Cyber Couture Atelier 🪡', members: '3,212', icon: 'CC', bgColor: 'bg-pink-600', inviteUrl: 'https://discord.gg/ineffable' },
+    { id: '4', name: 'Quantum Esports 🎮', members: '5,022', icon: 'QE', bgColor: 'bg-orange-600', inviteUrl: 'https://discord.gg/ineffable' },
+    { id: '5', name: 'Lanyard Gateway 🔌', members: '18,504', icon: 'LY', bgColor: 'bg-sky-600', inviteUrl: 'https://discord.gg/ineffable' },
   ];
 
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
@@ -828,7 +808,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
         </div>
         
         <h1 className={`font-mono text-3xl md:text-5xl tracking-widest font-extrabold ${themeStyles.textPrimary} uppercase`}>
-          ABOUT INEFONTOP
+          ABOUT INEFFABLE
         </h1>
         
         <p className={`font-sans text-xs md:text-sm leading-relaxed ${themeStyles.textSecondary} max-w-xl mx-auto font-light`}>
@@ -840,7 +820,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
         <div className="flex items-center space-x-3">
           <Users className={`w-5 h-5 ${themeStyles.accentText}`} />
           <h2 className={`font-mono text-sm tracking-widest font-bold ${themeStyles.textPrimary} uppercase`}>
-            INEFONTOP ROSTER
+            INEFFABLE ROSTER
           </h2>
         </div>
 
@@ -1086,7 +1066,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 <div className="flex justify-end items-center h-10 space-x-1 pt-1.5">
                   <div className="flex bg-[#1e1f22] px-2 py-1 rounded-lg space-x-1.5 border border-zinc-900 shadow-inner">
                     {selectedMember.badges.includes('staff') && (
-                      <div className="cursor-help" title="Inefontop Staff Team">
+                      <div className="cursor-help" title="Ineffable Staff Team">
                         <Shield className="w-3.5 h-3.5 text-[#5865f2]" />
                       </div>
                     )}
@@ -1506,7 +1486,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               {/* AUTHENTIC CHAT INPUT FOOTER BOX */}
               <div className="bg-[#111214] p-3 border-t border-zinc-800/30 shrink-0">
                 <a 
-                  href="https://discord.gg/inefontop"
+                  href="https://discord.gg/ineffable"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-[#383a40] text-[#b5bac1] hover:text-[#f2f3f5] rounded-md py-2.5 px-3.5 text-[11px] font-sans flex items-center justify-between transition-colors duration-200 cursor-pointer shadow-inner border border-zinc-800/10"

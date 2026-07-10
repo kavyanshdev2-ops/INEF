@@ -357,111 +357,38 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
             </div>
           </motion.div>
 
-          {/* RIGHT COLUMN: HIGH-POLISHED TERMINAL CARD WITH VIDEO */}
+          {/* RIGHT COLUMN: TRANSPARENT LOGO GIF */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="lg:col-span-5 flex justify-center items-center w-full"
           >
-            <div 
-              id="hero-video-frame-container"
-              className={`relative w-full max-w-[360px] aspect-square rounded-3xl border p-4 flex flex-col items-center justify-center overflow-hidden shadow-2xl backdrop-blur-xl ${
-                isDarkMode 
-                  ? 'bg-zinc-950/45 border-zinc-800/80 shadow-black/80' 
-                  : 'bg-white/45 border-zinc-200/80 shadow-zinc-200/50'
-              }`}
+            {/* Precision SVG filter to cleanly key out black background and eliminate compression box artifacts */}
+            <svg width="0" height="0" className="absolute pointer-events-none" style={{ position: 'absolute', width: 0, height: 0 }}>
+              <defs>
+                <filter id="ultra-clean-remove-black" colorInterpolationFilters="sRGB">
+                  <feColorMatrix 
+                    type="matrix" 
+                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2.4 2.4 2.4 0 -0.15" 
+                  />
+                </filter>
+              </defs>
+            </svg>
+
+            <motion.div
+              className="w-80 h-80 md:w-[480px] md:h-[480px] relative flex items-center justify-center select-none"
+              animate={{ 
+                y: [0, -15, 0],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }}
             >
-              {/* Glowing target-like aesthetic corners matching theme border highlight */}
-              {/* Top-Left L Bracket */}
-              <div className={`absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 ${
-                activeAtmosphere.colorTheme === 'neon-mint' ? 'border-emerald-400/80' :
-                activeAtmosphere.colorTheme === 'crimson-moon' ? 'border-red-400/80' :
-                activeAtmosphere.colorTheme === 'monochrome' ? 'border-zinc-400/80' :
-                'border-rose-400/80' // classic
-              } pointer-events-none`} />
-              
-              {/* Top-Right L Bracket */}
-              <div className={`absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 ${
-                activeAtmosphere.colorTheme === 'neon-mint' ? 'border-emerald-400/80' :
-                activeAtmosphere.colorTheme === 'crimson-moon' ? 'border-red-400/80' :
-                activeAtmosphere.colorTheme === 'monochrome' ? 'border-zinc-400/80' :
-                'border-rose-400/80' // classic
-              } pointer-events-none`} />
-
-              {/* Bottom-Left L Bracket */}
-              <div className={`absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 ${
-                activeAtmosphere.colorTheme === 'neon-mint' ? 'border-emerald-400/80' :
-                activeAtmosphere.colorTheme === 'crimson-moon' ? 'border-red-400/80' :
-                activeAtmosphere.colorTheme === 'monochrome' ? 'border-zinc-400/80' :
-                'border-rose-400/80' // classic
-              } pointer-events-none`} />
-
-              {/* Bottom-Right L Bracket */}
-              <div className={`absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 ${
-                activeAtmosphere.colorTheme === 'neon-mint' ? 'border-emerald-400/80' :
-                activeAtmosphere.colorTheme === 'crimson-moon' ? 'border-red-400/80' :
-                activeAtmosphere.colorTheme === 'monochrome' ? 'border-zinc-400/80' :
-                'border-rose-400/80' // classic
-              } pointer-events-none`} />
-
-              {/* Brand Logo Display wrapper with theme glow */}
-              <div 
-                className="w-full h-full rounded-2xl overflow-hidden relative flex items-center justify-center bg-zinc-950/85 border border-zinc-900/60 p-12 md:p-20 group"
-                style={{
-                  boxShadow: `0 0 45px ${
-                    activeAtmosphere.colorTheme === 'neon-mint' ? 'rgba(16, 185, 129, 0.12)' :
-                    activeAtmosphere.colorTheme === 'crimson-moon' ? 'rgba(239, 68, 68, 0.12)' :
-                    activeAtmosphere.colorTheme === 'monochrome' ? 'rgba(161, 161, 170, 0.08)' :
-                    'rgba(251, 113, 133, 0.12)' // classic
-                  }`
-                }}
-              >
-                {/* Subtle cyber grid background in the card */}
-                <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
-                
-                <motion.img 
-                  src="/img.png"
-                  alt="Inefontop Brand Logo"
-                  className="w-48 h-48 md:w-64 md:h-64 object-contain select-none transition-transform duration-700 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                  animate={{ 
-                    y: [0, -6, 0],
-                  }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </div>
-
-              {/* Pulse Indicator badge inside the frame */}
-              <div className={`absolute bottom-6 right-6 flex items-center space-x-2 px-3 py-1.5 rounded-lg border backdrop-blur-md shadow-lg pointer-events-none ${
-                activeAtmosphere.colorTheme === 'neon-mint' ? 'border-emerald-500/20 bg-emerald-950/40 text-emerald-300' :
-                activeAtmosphere.colorTheme === 'crimson-moon' ? 'border-red-500/20 bg-red-950/40 text-red-300' :
-                activeAtmosphere.colorTheme === 'monochrome' ? 'border-zinc-700/20 bg-zinc-900/40 text-zinc-300' :
-                'border-rose-500/20 bg-rose-950/40 text-rose-300' // classic
-              }`}>
-                <span className="relative flex h-2 w-2">
-                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                    activeAtmosphere.colorTheme === 'neon-mint' ? 'bg-emerald-400' :
-                    activeAtmosphere.colorTheme === 'crimson-moon' ? 'bg-red-400' :
-                    activeAtmosphere.colorTheme === 'monochrome' ? 'bg-zinc-300' :
-                    'bg-rose-400' // classic
-                  }`}></span>
-                  <span className={`relative inline-flex rounded-full h-2 w-2 ${
-                    activeAtmosphere.colorTheme === 'neon-mint' ? 'bg-emerald-400' :
-                    activeAtmosphere.colorTheme === 'crimson-moon' ? 'bg-red-400' :
-                    activeAtmosphere.colorTheme === 'monochrome' ? 'bg-zinc-300' :
-                    'bg-rose-400' // classic
-                  }`}></span>
-                </span>
-                <span className="text-[8px] font-mono tracking-[0.2em] font-bold uppercase">
-                  COMMUNITY ACTIVE
-                </span>
-              </div>
-            </div>
+            </motion.div>
           </motion.div>
 
         </div>

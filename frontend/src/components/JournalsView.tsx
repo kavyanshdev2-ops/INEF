@@ -206,7 +206,7 @@ export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, is
             createdBy: newEntry.createdBy
           }]);
         if (error) {
-          console.error('Supabase write error, using fallback:', error);
+          console.warn('Supabase write error, using fallback:', error);
         }
       }
 
@@ -272,7 +272,7 @@ export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, is
           .delete()
           .eq('id', id);
         if (error) {
-          console.error('Supabase delete error:', error);
+          console.warn('Supabase delete error:', error);
         }
       }
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PageId, AtmosphereConfig, CartItem } from './types';
 import { PetalDriftCanvas } from './components/PetalDriftCanvas';
 import { Navbar } from './components/Navbar';
@@ -32,6 +32,7 @@ const DiscordIcon = ({ className }: { className?: string }) => (
 );
 
 export default function App() {
+  const bgRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [atmosphere, setAtmosphere] = useState<AtmosphereConfig>({
     petalCount: 80,
@@ -41,6 +42,54 @@ export default function App() {
     colorTheme: 'classic'
   });
   const [isDarkMode, setIsDarkMode] = useState(true);
+  
+  // Background smooth mouse parallax effect (high performance, bypasses react renders)
+  useEffect(() => {
+    const bgElement = bgRef.current;
+    if (!bgElement) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let animationFrameId: number;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      targetX = (e.clientX / window.innerWidth) - 0.5;
+      targetY = (e.clientY / window.innerHeight) - 0.5;
+    };
+
+    const handleMouseLeave = () => {
+      targetX = 0;
+      targetY = 0;
+    };
+
+    const updateParallax = () => {
+      currentX += (targetX - currentX) * 0.05;
+      currentY += (targetY - currentY) * 0.05;
+
+      const moveX = currentX * -25;
+      const moveY = currentY * -25;
+      const rotateX = currentY * 2.5;
+      const rotateY = currentX * -2.5;
+
+      if (bgElement) {
+        bgElement.style.transform = `scale(1.06) translate3d(${moveX}px, ${moveY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      }
+
+      animationFrameId = requestAnimationFrame(updateParallax);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
+    updateParallax();
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
   
   // Global cart, wishlist, & login state
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -59,7 +108,7 @@ export default function App() {
     if (isOAuthPopup) {
       // Send success signal to parent window and close popup
       setTimeout(() => {
-        window.opener.postMessage({ type: 'SUPABASE_AUTH_SUCCESS' }, window.location.origin);
+        window.opener.postMessage({ type: 'SUPABASE_AUTH_SUCCESS' }, '*');
         window.close();
       }, 800);
       return;
@@ -67,7 +116,12 @@ export default function App() {
 
     // 2. Listen for auth messages from the popup on the parent window
     const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== window.location.origin) return;
+      const allowedOrigins = [
+        window.location.origin,
+        'https://inef-52b.pages.dev',
+        'https://ineffable-52b.pages.dev'
+      ];
+      if (!allowedOrigins.includes(event.origin)) return;
       if (event.data?.type === 'SUPABASE_AUTH_SUCCESS') {
         if (supabase) {
           supabase.auth.getSession().then(({ data: { session } }) => {
@@ -294,12 +348,16 @@ export default function App() {
 
   return (
     <div 
-      id="inefontop-root-canvas" 
+      id="ineffable-root-canvas" 
       className={`min-h-screen ${getBackgroundGradientClass()} font-sans ${getSelectionClass()} relative overflow-x-hidden transition-all duration-1000 ease-in-out`}
     >
       
       {/* Dynamic photographic background matching the active theme */}
-      <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none select-none z-0">
+      <div 
+        ref={bgRef} 
+        className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none select-none z-0"
+        style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden', willChange: 'transform' }}
+      >
         <img 
           src={getBackgroundImageUrl()} 
           alt="Atmospheric Theme Background" 
@@ -338,7 +396,7 @@ export default function App() {
       />
 
       {/* Main Render Views */}
-      <main id="inefontop-main-view" className="relative z-20">
+      <main id="ineffable-main-view" className="relative z-20">
         {currentPage === 'home' && (
           <HomeView setCurrentPage={navigateToPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} />
         )}
@@ -399,7 +457,7 @@ export default function App() {
 
       {/* Corporate Luxury Footer */}
       <footer 
-        id="inefontop-footer" 
+        id="ineffable-footer" 
         className={`relative z-30 ${themeStyles.bgFooter} border-t ${themeStyles.borderMuted} py-16 px-6 backdrop-blur-md transition-all duration-1000`}
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 font-sans font-light">
@@ -407,18 +465,26 @@ export default function App() {
           {/* Column 1 - Brand Identity */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center space-x-3">
-              <img 
-                src="/img.png" 
-                alt="Inefontop Logo" 
-                className="w-6 h-6 object-contain rounded-md"
-                referrerPolicy="no-referrer"
-              />
+              <div className="relative w-7 h-7 flex items-center justify-center">
+                {/* Spinning background decorative compass/radial */}
+                <svg viewBox="0 0 100 100" className={`absolute w-7 h-7 ${themeStyles.accentTextMuted || themeStyles.accentText} opacity-30 animate-[spin_12s_linear_infinite]`} fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5 5" />
+                  <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                {/* Solid modern central logo mark */}
+                <svg viewBox="0 0 100 100" className={`w-5 h-5 ${themeStyles.accentTextMuted || themeStyles.accentText} drop-shadow-[0_0_6px_rgba(244,63,94,0.25)]`} fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="3" />
+                  <path d="M50 25 V75" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" />
+                  <path d="M35 50 H65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <circle cx="50" cy="50" r="4.5" fill="currentColor" />
+                </svg>
+              </div>
               <h4 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} uppercase`}>
-                INEFONTOP
+                INEFFABLE
               </h4>
             </div>
             <p className={`${themeStyles.textSecondary} text-xs max-w-sm leading-relaxed`}>
-              INEFONTOP is an open-ended digital experimental brand blurring the boundary of cyber couture clothing, brutalist architecture, and dynamic physics loops.
+              INEFFABLE is an open-ended digital experimental brand blurring the boundary of cyber couture clothing, brutalist architecture, and dynamic physics loops.
             </p>
             <div className={`flex items-center space-x-3 ${themeStyles.textMuted} font-mono text-[9px] tracking-wider`}>
               <MapPin className={`w-3.5 h-3.5 ${themeStyles.accentTextMuted}`} />
@@ -520,7 +586,7 @@ export default function App() {
                 <Youtube className="w-4 h-4" />
               </a>
               <a 
-                href="https://discord.gg/inefontop" 
+                href="https://discord.gg/ineffable" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-zinc-600 hover:text-[#5865F2] transition-colors duration-300"
@@ -550,7 +616,7 @@ export default function App() {
 
         {/* Legal block */}
         <div className={`max-w-7xl mx-auto border-t ${themeStyles.borderMuted} mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between font-mono text-[9px] ${themeStyles.textMuted} space-y-4 sm:space-y-0`}>
-          <span>© 2026 INEFONTOP INC. ALL CHANNELS RESERVED.</span>
+          <span>© 2026 INEFFABLE INC. ALL CHANNELS RESERVED.</span>
           <div className="flex space-x-6">
             <span className="hover:text-zinc-400 transition-colors cursor-pointer">PRIVACY PROTOCOL</span>
             <span className="hover:text-zinc-400 transition-colors cursor-pointer">SECURITY SCHEMAS</span>

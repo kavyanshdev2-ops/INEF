@@ -35,9 +35,9 @@ export async function uploadAvatar(userId: string, file: File): Promise<string |
     const fileExt = file.name.split('.').pop();
     const fileName = `avatars/${userId}-${Date.now()}.${fileExt}`;
 
-    // Upload file to 'inefontop-assets' bucket
+    // Upload file to 'ineffable-assets' bucket
     const { data, error } = await supabase.storage
-      .from('inefontop-assets')
+      .from('ineffable-assets')
       .upload(fileName, file, {
         cacheControl: '3600',
         upsert: true,
@@ -49,7 +49,7 @@ export async function uploadAvatar(userId: string, file: File): Promise<string |
 
     // Get public URL
     const { data: { publicUrl } } = supabase.storage
-      .from('inefontop-assets')
+      .from('ineffable-assets')
       .getPublicUrl(fileName);
 
     return publicUrl;
@@ -71,7 +71,7 @@ export async function uploadProductImage(productId: string, file: File): Promise
     const fileName = `products/${productId}-${Date.now()}.${fileExt}`;
 
     const { data, error } = await supabase.storage
-      .from('inefontop-assets')
+      .from('ineffable-assets')
       .upload(fileName, file, {
         cacheControl: '3600',
         upsert: true,
@@ -82,7 +82,7 @@ export async function uploadProductImage(productId: string, file: File): Promise
     }
 
     const { data: { publicUrl } } = supabase.storage
-      .from('inefontop-assets')
+      .from('ineffable-assets')
       .getPublicUrl(fileName);
 
     return publicUrl;

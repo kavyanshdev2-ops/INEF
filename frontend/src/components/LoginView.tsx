@@ -288,10 +288,18 @@ export const LoginView: React.FC<LoginViewProps> = ({
     ]);
 
     try {
+      const getRedirectUrl = () => {
+        const origin = window.location.origin;
+        if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+          return `${origin}/`;
+        }
+        return 'https://inef-52b.pages.dev/';
+      };
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin,
+          redirectTo: getRedirectUrl(),
           skipBrowserRedirect: true,
         },
       });
@@ -314,7 +322,12 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
           try {
             const popupUrl = popup.location.href;
-            if (popupUrl && popupUrl.includes(window.location.origin)) {
+            const isMatchingOrigin = popupUrl && (
+              popupUrl.includes(window.location.origin) ||
+              popupUrl.includes('inef-52b.pages.dev') ||
+              popupUrl.includes('inefontop-52b.pages.dev')
+            );
+            if (isMatchingOrigin) {
               const hash = popup.location.hash || '';
               const search = popup.location.search || '';
 
@@ -498,8 +511,16 @@ export const LoginView: React.FC<LoginViewProps> = ({
     }
 
     try {
+      const getResetRedirectUrl = () => {
+        const origin = window.location.origin;
+        if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+          return `${origin}/`;
+        }
+        return 'https://inef-52b.pages.dev/';
+      };
+
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin,
+        redirectTo: getResetRedirectUrl(),
       });
 
       if (error) throw error;
@@ -681,7 +702,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
           <div className={`lg:col-span-8 ${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-3xl p-6 md:p-8 flex flex-col justify-between min-h-[400px]`}>
             <div>
               {/* Tab Nav Menu */}
-              <div className="flex border-b border-zinc-800/80 mb-6 overflow-x-auto gap-2 scrollbar-none pb-1">
+              <div className={`flex border-b ${themeStyles.borderMuted} mb-6 overflow-x-auto gap-2 scrollbar-none pb-1`}>
                 {[
                   { id: 'roles', label: 'Synced Roles', icon: Award },
                   { id: 'wishlist', label: 'Wishlist', icon: Heart },
@@ -697,7 +718,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                       className={`flex items-center space-x-2 px-4 py-2.5 font-mono text-[9px] tracking-widest uppercase transition-all border-b-2 rounded-t-lg cursor-pointer whitespace-nowrap ${
                         isActive 
                           ? `${themeStyles.accentText} border-rose-500 font-bold bg-zinc-500/5` 
-                          : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-500/2'
+                          : `border-transparent text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'} hover:bg-zinc-500/2`
                       }`}
                     >
                       <TabIcon className="w-3.5 h-3.5" />
@@ -828,7 +849,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   </div>
 
                   {showAddressForm ? (
-                    <form onSubmit={handleSaveAddress} className="grid grid-cols-2 gap-3 p-4 border border-zinc-800/80 rounded-xl bg-zinc-950/30">
+                    <form onSubmit={handleSaveAddress} className={`grid grid-cols-2 gap-3 p-4 border rounded-xl ${isDarkMode ? 'border-zinc-800/80 bg-zinc-950/30' : 'border-zinc-200 bg-zinc-50'}`}>
                       <div className="col-span-2 space-y-1">
                         <label className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block">Recipient Full Name</label>
                         <input
@@ -836,7 +857,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                           required
                           value={addressForm.full_name}
                           onChange={(e) => setAddressForm({ ...addressForm, full_name: e.target.value })}
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 font-sans text-xs text-zinc-200 focus:outline-none"
+                          className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded px-3 py-2 font-sans text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                           placeholder="e.g. Kavyansh Shakya"
                         />
                       </div>
@@ -847,7 +868,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                           required
                           value={addressForm.street}
                           onChange={(e) => setAddressForm({ ...addressForm, street: e.target.value })}
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 font-sans text-xs text-zinc-200 focus:outline-none"
+                          className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded px-3 py-2 font-sans text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                           placeholder="e.g. 104 Cyber Ridge Rd"
                         />
                       </div>
@@ -858,7 +879,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                           required
                           value={addressForm.city}
                           onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 font-sans text-xs text-zinc-200 focus:outline-none"
+                          className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded px-3 py-2 font-sans text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                           placeholder="e.g. Tokyo"
                         />
                       </div>
@@ -868,7 +889,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                           type="text"
                           value={addressForm.state}
                           onChange={(e) => setAddressForm({ ...addressForm, state: e.target.value })}
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 font-sans text-xs text-zinc-200 focus:outline-none"
+                          className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded px-3 py-2 font-sans text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                           placeholder="e.g. Kanto"
                         />
                       </div>
@@ -879,7 +900,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                           required
                           value={addressForm.zip_code}
                           onChange={(e) => setAddressForm({ ...addressForm, zip_code: e.target.value })}
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 font-sans text-xs text-zinc-200 focus:outline-none"
+                          className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded px-3 py-2 font-sans text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                           placeholder="e.g. 150-0001"
                         />
                       </div>
@@ -890,7 +911,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                           required
                           value={addressForm.country}
                           onChange={(e) => setAddressForm({ ...addressForm, country: e.target.value })}
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 font-sans text-xs text-zinc-200 focus:outline-none"
+                          className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded px-3 py-2 font-sans text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                         />
                       </div>
                       <div className="col-span-2 pt-2">
@@ -915,7 +936,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                           className={`flex items-center justify-between p-4 border ${themeStyles.borderMuted} ${themeStyles.bgCard} rounded-xl`}
                         >
                           <div className="space-y-1">
-                            <h5 className="font-sans font-bold text-xs uppercase text-white">{addr.full_name}</h5>
+                            <h5 className={`font-sans font-bold text-xs uppercase ${themeStyles.textPrimary}`}>{addr.full_name}</h5>
                             <p className="font-mono text-[9px] text-zinc-400">{addr.street}</p>
                             <p className="font-mono text-[9px] text-zinc-500">{addr.city}, {addr.state} {addr.zip_code}, {addr.country}</p>
                           </div>
@@ -949,7 +970,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                           key={order.id}
                           className={`border ${themeStyles.borderMuted} ${themeStyles.bgCard} rounded-xl p-4 space-y-3`}
                         >
-                          <div className="flex justify-between items-center border-b border-zinc-800/80 pb-2">
+                          <div className={`flex justify-between items-center border-b ${themeStyles.borderMuted} pb-2`}>
                             <div>
                               <span className="font-mono text-[9px] text-zinc-400 uppercase font-bold block">ORDER #{order.id.substring(0, 8).toUpperCase()}</span>
                               <span className="font-mono text-[8px] text-zinc-500">{new Date(order.created_at).toLocaleDateString()}</span>
@@ -960,7 +981,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                             </div>
                           </div>
 
-                          <div className="space-y-1.5 pl-2 border-l border-zinc-800">
+                          <div className={`space-y-1.5 pl-2 border-l ${isDarkMode ? 'border-zinc-850' : 'border-zinc-200'}`}>
                             {order.order_items?.map((item: any) => (
                               <div key={item.id} className="flex justify-between font-mono text-[9px] text-zinc-400">
                                 <span className="uppercase">{item.name} (x{item.quantity})</span>
@@ -1053,11 +1074,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
         {/* Credentials Form column (Login, Signup, Forgot password toggle) */}
         <div className={`col-span-12 md:col-span-6 ${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-3xl p-6 space-y-5 flex flex-col justify-between`}>
           <div>
-            <div className="flex border-b border-zinc-800/80 mb-4 pb-0.5 justify-start">
+            <div className={`flex border-b ${isDarkMode ? 'border-zinc-800/80' : 'border-zinc-200'} mb-4 pb-0.5 justify-start`}>
               <button
                 onClick={() => setAuthMode('login')}
                 className={`flex-1 pb-2 font-mono text-[10px] tracking-widest uppercase transition-colors cursor-pointer text-center ${
-                  authMode === 'login' ? 'text-rose-400 font-bold border-b-2 border-rose-500' : 'text-zinc-500 hover:text-zinc-300'
+                  authMode === 'login' ? 'text-rose-400 font-bold border-b-2 border-rose-500' : `text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'}`
                 }`}
               >
                 LOG IN
@@ -1065,7 +1086,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
               <button
                 onClick={() => setAuthMode('signup')}
                 className={`flex-1 pb-2 font-mono text-[10px] tracking-widest uppercase transition-colors cursor-pointer text-center ${
-                  authMode === 'signup' ? 'text-rose-400 font-bold border-b-2 border-rose-500' : 'text-zinc-500 hover:text-zinc-300'
+                  authMode === 'signup' ? 'text-rose-400 font-bold border-b-2 border-rose-500' : `text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'}`
                 }`}
               >
                 SIGN UP
@@ -1074,7 +1095,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
             {authMode === 'forgot' ? (
               <form onSubmit={handleForgotPassword} className="space-y-4">
-                <h4 className="font-sans font-bold text-sm uppercase text-white">Forgot Access Passkey</h4>
+                <h4 className={`font-sans font-bold text-sm uppercase ${themeStyles.textPrimary}`}>Forgot Access Passkey</h4>
                 <p className="font-sans text-[10.5px] text-zinc-500 leading-normal">Enter your email and we will broadcast a key recovery link immediately to restore your portal session.</p>
                 <div className="space-y-1.5">
                   <label className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest block">Account Email</label>
@@ -1084,7 +1105,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isAuthenticating}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 font-mono text-xs focus:outline-none"
+                    className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded-lg px-4 py-3 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                     placeholder="e.g. pilot@inef.cc"
                   />
                 </div>
@@ -1092,7 +1113,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   <button
                     type="button"
                     onClick={() => setAuthMode('login')}
-                    className="font-mono text-[9px] text-zinc-500 hover:text-zinc-300 uppercase tracking-widest"
+                    className={`font-mono text-[9px] text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'} uppercase tracking-widest`}
                   >
                     Back to Log In
                   </button>
@@ -1119,7 +1140,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                         onChange={(e) => setSignupUsername(e.target.value)}
                         disabled={isAuthenticating}
                         placeholder="e.g. kavyanshshakya"
-                        className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 font-mono text-xs focus:outline-none"
+                        className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded-lg px-4 py-3 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                       />
                     </div>
                   )}
@@ -1134,7 +1155,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                       onChange={(e) => setEmail(e.target.value)}
                       disabled={isAuthenticating}
                       placeholder="e.g. kavyansh@inef.cc"
-                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 font-mono text-xs focus:outline-none"
+                      className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded-lg px-4 py-3 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                     />
                   </div>
 
@@ -1159,7 +1180,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={isAuthenticating}
                       placeholder="••••••••"
-                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 font-mono text-xs focus:outline-none"
+                      className={`w-full ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-zinc-100 placeholder-zinc-600' : 'bg-white border-zinc-300 text-zinc-900 placeholder-zinc-400'} border rounded-lg px-4 py-3 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-rose-500`}
                     />
                   </div>
                 </div>
@@ -1168,7 +1189,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   id="btn-credentials-submit"
                   type="submit"
                   disabled={isAuthenticating || !email || !password}
-                  className="w-full py-3.5 bg-zinc-100 hover:bg-white text-zinc-950 font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer disabled:bg-zinc-800 disabled:text-zinc-600 disabled:cursor-not-allowed"
+                  className={`w-full py-3.5 font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer ${
+                    isDarkMode 
+                      ? 'bg-zinc-100 hover:bg-white text-zinc-950 disabled:bg-zinc-850 disabled:text-zinc-600' 
+                      : 'bg-zinc-900 hover:bg-zinc-800 text-white disabled:bg-zinc-100 disabled:text-zinc-450 disabled:border disabled:border-zinc-200'
+                  } disabled:cursor-not-allowed`}
                 >
                   <KeyRound className="w-4 h-4" />
                   <span>{authMode === 'login' ? 'TRANSMIT SECURITY PASS' : 'PROVISION ACCOUNT NODE'}</span>

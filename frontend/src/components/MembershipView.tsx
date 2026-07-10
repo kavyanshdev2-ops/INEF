@@ -47,10 +47,10 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
 
   // Interactive tab state for each Minecraft card
   const [activeCardTabs, setActiveCardTabs] = useState<Record<string, 'utilities' | 'kits' | 'cosmetics'>>({
-    'vanguard-rank': 'utilities',
-    'elite-rank': 'utilities',
-    'overlord-rank': 'utilities',
-    'inefontop-rank': 'utilities'
+    'diamond-rank': 'utilities',
+    'titanium-rank': 'utilities',
+    'mystical-rank': 'utilities',
+    'ineffable-rank': 'utilities'
   });
 
   const setCardTab = (cardId: string, tab: 'utilities' | 'kits' | 'cosmetics') => {
@@ -123,48 +123,44 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
   // Minecraft Donor Tiers (Lifetime Purchases, fully split and custom styled)
   const minecraftTiers = [
     {
-      id: 'vanguard-rank',
-      name: 'Vanguard Rank',
-      price: 9.99,
+      id: 'diamond-rank',
+      name: 'Diamond Rank',
+      price: 10.00,
       period: 'lifetime',
-      description: 'The solid foundation for survival builders. Unlock essential kits, land-claim utilities, and gray-iron chat cosmetics.',
-      icon: Pickaxe,
-      tag: 'STONE & IRON',
-      badgeBg: 'bg-zinc-500/10 border-zinc-500/20 text-zinc-400',
-      color: 'from-slate-500/15 via-zinc-500/5 to-transparent',
-      border: 'hover:border-zinc-400/60',
-      glow: 'shadow-zinc-500/5',
-      accentColor: 'text-zinc-400',
+      description: 'Step up your game with Diamond perks: Backpack capacity, multiple sethomes, daily currency allowances, and boat keys.',
+      icon: Gem,
+      tag: 'DIAMOND',
+      badgeBg: 'bg-teal-500/10 border-teal-500/20 text-teal-400',
+      color: 'from-teal-500/15 via-emerald-500/5 to-transparent',
+      border: 'hover:border-teal-400/60',
+      glow: 'shadow-teal-500/5',
+      accentColor: 'text-teal-400',
       image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop',
       parts: {
         utilities: [
-          'Set up to 3 teleport home locations via /sethome',
-          'Access to /back command to return to previous death point',
-          'Access to /workbench command (portable virtual crafting table)',
-          'Priority queue slot during peak SMP server traffic hours'
+          '/sit and /crawl utility commands',
+          'Set up to 10 Unique Homes via /sethome',
+          'Virtual portable enderchest via /ec anywhere',
+          'Gain 2500 Land Claim Blocks to protect builds'
         ],
         kits: [
-          'Full set of Protection II / Unbreaking II Iron Armor',
-          'Iron Tools: Efficiency III Pickaxe, Axe, and Shovel',
-          'Food Supply: 64x Cooked Beef & 16x Golden Apples',
-          'Resource starter kit: 64x Stone Bricks & 32x Oak Logs'
+          'Daily starter budget: $100 allowance',
+          '2x Boat Keys (one-time claim)'
         ],
         cosmetics: [
-          'Permanent custom "[Vanguard]" chat prefix (Sleek Gray)',
-          'Access to /hat cosmetic command (wear any block as a hat)',
-          'Custom gray and white chat message coloring options',
-          'Unique join chime sound effect in the server hub area'
+          'Backpack virtual storage with 2 active rows',
+          'Sleek Diamond-White styled custom chat prefix'
         ]
       }
     },
     {
-      id: 'elite-rank',
-      name: 'Elite Rank',
-      price: 24.99,
+      id: 'titanium-rank',
+      name: 'Titanium Rank',
+      price: 15.00,
       period: 'lifetime',
-      description: 'Command the skies and stand out in the wilderness. Includes claim flight, virtual portable utilities, and premium item kits.',
-      icon: Swords,
-      tag: 'GOLD & LAPIS',
+      description: 'Gain the power of Titanium: all Diamond benefits, larger virtual backpack, more homes, item repairs, and virtual smoker/grindstone access.',
+      icon: Shield,
+      tag: 'TITANIUM',
       badgeBg: 'bg-sky-500/10 border-sky-500/20 text-sky-400',
       color: 'from-sky-500/15 via-blue-500/5 to-transparent',
       border: 'hover:border-sky-400/60',
@@ -173,95 +169,90 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
       image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop',
       parts: {
         utilities: [
-          'Set up to 8 teleport home locations via /sethome',
-          'Global flight mechanics: toggle /fly inside all safe build claims',
-          'Virtual portable utilities: /craft and /anvil anywhere instantly',
-          'Access to /feed command (saturate hunger, 5-minute cooldown)',
-          'EXP Safe: Suffer 50% less experience level loss upon death'
+          'Includes all utility perks of Diamond Rank',
+          'Set up to 15 Unique Homes via /sethome',
+          '/fix command (Repair Your Item - 12hr Cooldown)',
+          'Virtual portable /smoker command access anywhere',
+          'Virtual portable /grindstone command access anywhere'
         ],
         kits: [
-          'Full set of Protection III / Unbreaking II Diamond Armor',
-          'Diamond Tools: Efficiency IV, Fortune II Pickaxe & Sword',
-          'Food Supply: 64x Golden Carrots & 32x Glistering Melons',
-          'Elite kit bonus: 8x Lapis Lazuli Blocks & 16x Glowstone'
+          'Daily titanium budget: $200 allowance',
+          '2x Vote Keys (one-time claim)',
+          'Additional 2500 Land Claim Blocks (stacked)'
         ],
         cosmetics: [
-          'Radiant custom "[Elite]" gold & cyan chat prefix',
-          'Access to /trails particle menu (Flame, Hearts, Notes effects)',
-          'Custom chat message formatting: Gold & Aqua text options',
-          'Custom join notification broadcasted to all online survival players'
+          'Backpack virtual storage with 3 active rows',
+          'Sleek Titanium-Blue styled custom chat prefix'
         ]
       }
     },
     {
-      id: 'overlord-rank',
-      name: 'Overlord Rank',
-      price: 39.99,
+      id: 'mystical-rank',
+      name: 'Mystical Rank',
+      price: 25.00,
       period: 'lifetime',
-      description: 'The supreme conqueror of the nether and overworld. Gain virtual storage vault control, bypass cooldowns, and command absolute power.',
-      icon: Hammer,
-      tag: 'DIAMOND & OBSIDIAN',
-      badgeBg: 'bg-purple-500/10 border-purple-500/20 text-purple-400',
-      color: 'from-purple-500/15 via-fuchsia-500/5 to-transparent',
-      border: 'hover:border-purple-400/60',
-      glow: 'shadow-purple-500/5',
-      accentColor: 'text-purple-400',
+      description: 'Ascend to the Mystical Tier: all Diamond & Titanium benefits, 4-row backpack, item renaming, virtual anvil, and feed command.',
+      icon: Sparkles,
+      tag: 'MYSTICAL',
+      badgeBg: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
+      color: 'from-amber-500/15 via-yellow-500/5 to-transparent',
+      border: 'hover:border-amber-400/60',
+      glow: 'shadow-amber-500/5',
+      accentColor: 'text-amber-400',
       image: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=400&auto=format&fit=crop',
       parts: {
         utilities: [
-          'Set up to 15 teleport home locations via /sethome',
-          'Full wilderness flight: toggle /fly anywhere except PVP zones',
-          'Portable storage: open virtual enderchests anywhere via /enderchest',
-          'Access to /heal command (restore health, 10-minute cooldown)',
-          'Zero teleport cooldowns: instantly warp to friends via /tpa'
+          'Includes all utility perks of Diamond & Titanium',
+          'Set up to 17 Unique Homes via /sethome',
+          '/rename command (Rename any item in hand)',
+          'Virtual /Anvil command access anywhere',
+          'Virtual /brewingstand command access anywhere',
+          '/feed command (Saturate hunger - 3hr Cooldown)'
         ],
         kits: [
-          'Full set of Protection III / Unbreaking III Netherite Armor',
-          'Netherite Tools: Efficiency V, Fortune III, Unbreaking III tools',
-          'Elite traversal gear: 1x Elytra & 64x Firework Rockets (Duration 3)',
-          'Resource bonus: 32x Obsidian Blocks & 4x Netherite Scrap'
+          'Daily mythical budget: $350 allowance',
+          '1x Rare Keys!! (one-time claim)',
+          'Gain 4500 Land Claim Blocks to protect builds'
         ],
         cosmetics: [
-          'Menacing custom "[Overlord]" violet & crimson chat prefix',
-          'Full companion pets menu access: spawn wolves, slimes, or cats',
-          'Aura trail pack: toggle Smoke, Lava drip, and Bubble particle trails',
-          'Custom join message with deep purple layout style and alert sounds'
+          'Backpack virtual storage with 4 active rows',
+          '/sit, /crawl, and /spin command animations',
+          'Mystical-Yellow styled custom chat prefix'
         ]
       }
     },
     {
-      id: 'inefontop-rank',
-      name: 'Inefontop Rank',
-      price: 59.99,
+      id: 'ineffable-rank',
+      name: 'Ineffable Rank',
+      price: 41.00,
       period: 'lifetime',
-      description: 'The legendary ultimate rank of the SMP network. Keep-inventory protection, unlimited homes, triple vaults, rideable mounts, and permanent fame.',
+      description: 'Our ultimate Custom-grade tier of the network. All perks of Diamond, Titanium & Mystical with a massive 6-row backpack, 20 homes, reduced cooldowns, and custom Discord/Server roles.',
       icon: Crown,
-      tag: 'EMERALD & COSMIC',
-      badgeBg: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
-      color: 'from-emerald-500/15 via-teal-500/5 to-transparent',
-      border: 'hover:border-emerald-400/60',
-      glow: 'shadow-emerald-500/5',
-      accentColor: 'text-emerald-400',
+      tag: 'CUSTOM',
+      badgeBg: 'bg-rose-500/10 border-rose-500/20 text-rose-400',
+      color: 'from-rose-500/15 via-pink-500/5 to-transparent',
+      border: 'hover:border-rose-400/60',
+      glow: 'shadow-rose-500/5',
+      accentColor: 'text-rose-400',
       image: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=400&auto=format&fit=crop',
       parts: {
         utilities: [
-          'Set unlimited sethomes & access instant cross-dimension warp channels',
-          'Unrestricted flight access: /fly toggles everywhere across all dimensions',
-          'Keep-Inventory Protection: Keep 100% of armor, items, and XP on death',
-          'Triple private storage vaults: expand inventory via /vault 1, 2, 3',
-          'Instant /heal & /feed commands with absolutely no cooldown duration'
+          'All utility perks of Diamond, Titanium & Mystical',
+          'Set up to 20 Unique Homes via /sethome',
+          '/fix command (Repair Your Item - reduced 7hr Cooldown)',
+          '/feed command (Saturate hunger - reduced 1hr Cooldown)',
+          '/tp commands access for instant teleportation'
         ],
         kits: [
-          'Fully Enchanted Netherite Overgod Armor (Protection IV, Mending, Thorns)',
-          'Fully Enchanted God Tools (Efficiency V, Fortune III, Mending, Silk Touch)',
-          'Cosmic travel: 2x Elytras & 128x Firework Rockets (Duration 3)',
-          'Ultimate supply: 32x Enchanted Golden Apples & 64x Emerald Blocks'
+          'Daily supreme budget: $1000 allowance',
+          '2x Rare Keys!! (one-time claim)',
+          'Gain 7000 Land Claim Blocks to protect builds'
         ],
         cosmetics: [
-          'Legendary custom "[Inefontop]" chromatic gradient cycling chat prefix',
-          'Exclusive rideable mounts: summon and ride Dragons, Griffins, or Wyverns',
-          'Access to all trails: block trails, music notes, lightning sparkles',
-          'Permanent custom monument engraving on the Spawn Lobby Hall of Fame'
+          'Backpack virtual storage with 6 active rows',
+          'Special Opportunity: Custom Role Name and Colour',
+          'Custom role in Discord Server linked automatically',
+          'Can apply to change the role name & color after a month'
         ]
       }
     }
@@ -282,8 +273,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
   const pageTitle = activeTab === 'discord' ? 'COMMUNITY MEMBERSHIPS' : 'MINECRAFT SERVER RANKS';
   const pageTagline = activeTab === 'discord' ? 'UPGRADES // MEMBERSHIP PLANS' : 'SERVER STORE // LIFETIME DONATIONS';
   const pageSub = activeTab === 'discord'
-    ? 'Support Inefontop hosting nodes and fund active development. Gain immediate, automated premium roles, custom cosmetic permissions, and exclusive Discord perks linked to your account.'
-    : 'Enhance your survival gameplay on the Inefontop SMP server with premium donor ranks. Experience fully customizable glassy cards featuring tabbed sub-sections for commands, kits, and cosmetics.';
+    ? 'Support Ineffable hosting nodes and fund active development. Gain immediate, automated premium roles, custom cosmetic permissions, and exclusive Discord perks linked to your account.'
+    : 'Enhance your survival gameplay on the Ineffable SMP server with premium donor ranks. Experience fully customizable glassy cards featuring tabbed sub-sections for commands, kits, and cosmetics.';
 
   return (
     <div id="membership-view-container" className={`max-w-7xl mx-auto px-6 py-24 pt-32 ${themeStyles.textPrimary}`}>
@@ -442,10 +433,10 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
             const activePerkList = tier.parts[currentSubTab];
 
             // Define custom badge and icon colors based on rank tier
-            let glowAccent = 'text-emerald-400 border-emerald-500/20';
-            if (tier.id === 'vanguard-rank') glowAccent = 'text-zinc-400 border-zinc-500/20';
-            else if (tier.id === 'elite-rank') glowAccent = 'text-sky-400 border-sky-500/20';
-            else if (tier.id === 'overlord-rank') glowAccent = 'text-purple-400 border-purple-500/20';
+            let glowAccent = 'text-rose-400 border-rose-500/20';
+            if (tier.id === 'diamond-rank') glowAccent = 'text-teal-400 border-teal-500/20';
+            else if (tier.id === 'titanium-rank') glowAccent = 'text-sky-400 border-sky-500/20';
+            else if (tier.id === 'mystical-rank') glowAccent = 'text-amber-400 border-amber-500/20';
 
             return (
               <div
@@ -477,8 +468,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                       {tier.tag}
                     </span>
                     <span className={`px-2 py-0.5 rounded-full font-mono text-[7px] tracking-wider font-semibold border ${
-                      tier.id === 'inefontop-rank'
-                        ? 'border-emerald-500/30 text-emerald-400 bg-emerald-950/20 shadow-[0_0_10px_rgba(16,185,129,0.2)] animate-pulse'
+                      tier.id === 'ineffable-rank'
+                        ? 'border-rose-500/30 text-rose-400 bg-rose-950/20 shadow-[0_0_10px_rgba(244,63,94,0.2)] animate-pulse'
                         : `bg-zinc-500/5 ${glowAccent}`
                     }`}>
                       PERMANENT
@@ -565,9 +556,9 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                       {activePerkList.map((perk, idx) => (
                         <div key={idx} className="flex items-start space-x-2">
                           <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${
-                            tier.id === 'vanguard-rank' ? 'text-zinc-400' :
-                            tier.id === 'elite-rank' ? 'text-sky-400' :
-                            tier.id === 'overlord-rank' ? 'text-purple-400' : 'text-emerald-400'
+                            tier.id === 'diamond-rank' ? 'text-teal-400' :
+                            tier.id === 'titanium-rank' ? 'text-sky-400' :
+                            tier.id === 'mystical-rank' ? 'text-amber-400' : 'text-rose-400'
                           }`} />
                           <span className={`${themeStyles.textSecondary} text-[11px] font-light leading-snug`}>
                             {perk}

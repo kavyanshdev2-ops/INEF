@@ -142,7 +142,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
   }, [miningFeed]);
 
   const handleCopyIP = () => {
-    navigator.clipboard.writeText('inefontop.mc-play.org');
+    navigator.clipboard.writeText('ineffable.mc-play.org');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -151,9 +151,9 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
     {
       id: 'minecraft' as const,
       title: 'MINECRAFT',
-      subtitle: 'INEFONTOP ANARCHY GRID',
+      subtitle: 'INEFFABLE ANARCHY GRID',
       desc: 'Connect to our dedicated cyber-couture survival sandbox. Built for brutalist architects, designers, and block-builders alike.',
-      ip: 'inefontop.mc-play.org',
+      ip: 'ineffable.mc-play.org',
       tags: ['Anarchy', 'SMP', '1.20-1.21.x'],
       img: 'https://images.unsplash.com/photo-1605899435973-ca2d1a8861cf?q=80&w=800&auto=format&fit=crop',
       accentColor: 'text-emerald-400 border-emerald-500/30'
@@ -161,7 +161,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
     {
       id: 'roblox' as const,
       title: 'ROBLOX',
-      subtitle: 'INEFONTOP METAVERSE',
+      subtitle: 'INEFFABLE METAVERSE',
       desc: 'Our decentralized fashion runaways, high-fashion clothing catalog, and interactive social gathering grid.',
       tags: ['Fashion Runaway', 'Hangout', 'Interactive'],
       img: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&w=800&auto=format&fit=crop',
@@ -211,13 +211,13 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
           >
             <div className="inline-flex items-center space-x-2 bg-rose-500/10 border border-rose-500/20 px-3 py-1 rounded-full text-[10px] text-rose-400 font-mono uppercase tracking-widest">
               <Gamepad2 className="w-3.5 h-3.5" />
-              <span>Inefontop Gaming Terminal</span>
+              <span>Ineffable Gaming Terminal</span>
             </div>
             <h2 className={`font-mono text-3xl tracking-[0.25em] ${activeAtmosphere.textPrimary} uppercase`}>
               THE GRID ARCADE
             </h2>
             <p className={`${activeAtmosphere.textSecondary} text-xs font-sans font-light leading-relaxed max-w-xl mx-auto`}>
-              Interact with custom digital playgrounds, multiplayer sandboxes, and retro simulators configured exclusively for members of the Inefontop cyber matrix.
+              Interact with custom digital playgrounds, multiplayer sandboxes, and retro simulators configured exclusively for members of the Ineffable cyber matrix.
             </p>
           </motion.div>
         ) : (
@@ -509,7 +509,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                   }`}>
                     {/* Floating server logo */}
                     <img 
-                      src="https://api.mcsrvstat.us/icon/inefontop.mc-play.org" 
+                      src="https://api.mcsrvstat.us/icon/ineffable.mc-play.org" 
                       alt="Server Icon"
                       className="w-20 h-20 md:w-28 md:h-28 [image-rendering:pixelated] drop-shadow-2xl animate-float-slow z-10"
                       onError={(e) => {
@@ -794,7 +794,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
           >
             <div className={`flex flex-col md:flex-row items-center justify-between gap-6 border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'} pb-6`}>
               <div className="space-y-2 text-center md:text-left">
-                <span className="text-[9px] text-rose-400 uppercase font-mono tracking-wider">INEFONTOP EXPERIENCE NODE</span>
+                <span className="text-[9px] text-rose-400 uppercase font-mono tracking-wider">INEFFABLE EXPERIENCE NODE</span>
                 <h2 className={`font-mono text-2xl tracking-widest ${activeAtmosphere.textPrimary} font-bold`}>
                   ROBLOX FASHION SANCTUARY
                 </h2>
@@ -826,7 +826,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                 <div className="grid grid-cols-3 gap-3 pt-2">
                   {[
                     { id: 'classic', label: 'Classic Robux Hoodie', price: 'Free' },
-                    { id: 'cyber_punk', label: 'Inefontop Mech Cloak', price: '500 R$' },
+                    { id: 'cyber_punk', label: 'Ineffable Mech Cloak', price: '500 R$' },
                     { id: 'voxel_couture', label: 'Neon Pixel Shell', price: '1200 R$' }
                   ].map((skin) => (
                     <button

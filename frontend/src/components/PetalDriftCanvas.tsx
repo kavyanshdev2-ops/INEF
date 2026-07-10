@@ -144,12 +144,21 @@ export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDa
       initPetals();
     };
 
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
+      targetX = (e.clientX / width) - 0.5;
+      targetY = (e.clientY / height) - 0.5;
     };
 
     const handleMouseLeave = () => {
       mouseRef.current = { x: -1000, y: -1000 };
+      targetX = 0;
+      targetY = 0;
     };
 
     let lastScrollY = window.scrollY;
@@ -170,6 +179,10 @@ export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDa
     // Main animation loop
     const render = () => {
       ctx.clearRect(0, 0, width, height);
+
+      // Smooth interpolation of mouse offset for parallax feel
+      currentX += (targetX - currentX) * 0.06;
+      currentY += (targetY - currentY) * 0.06;
 
       const radAngle = (config.windAngle * Math.PI) / 180;
       const baseWindX = Math.cos(radAngle) * config.driftVelocity;
@@ -212,21 +225,30 @@ export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDa
         p.y += p.vy;
         p.angle += p.angleSpeed;
 
-        // Reset petal if off screen
-        const padding = 80;
+        // Calculate dynamic parallax translation shift based on depth 'p.z'
+        // Closer layers (larger z) shift slightly MORE.
+        // Far layers (smaller z) shift slightly LESS, or shift in opposite directions to create a 3D split.
+        const parallaxOffsetX = currentX * width * 0.045 * (p.z - 0.85);
+        const parallaxOffsetY = currentY * height * 0.045 * (p.z - 0.85);
+        const renderX = p.x + parallaxOffsetX;
+        const renderY = p.y + parallaxOffsetY;
+
+        // Reset petal if off screen (using its actual rendered position!)
+        const padding = 100;
         if (
-          p.y > height + padding ||
-          p.x < -padding ||
-          p.x > width + padding
+          renderY > height + padding ||
+          renderX < -padding ||
+          renderX > width + padding
         ) {
           petals[i] = createPetal(false);
           // Distribute new petals across the top screen
           petals[i].x = Math.random() * width;
+          petals[i].y = -20; // reset to top
         }
 
         // Draw petal
         ctx.save();
-        ctx.translate(p.x, p.y);
+        ctx.translate(renderX, renderY);
         ctx.rotate(p.angle);
 
         // Simulated blur for back layers
