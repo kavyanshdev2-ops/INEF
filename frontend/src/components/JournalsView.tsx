@@ -323,7 +323,7 @@ export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, is
           ARCHIVE // COMMUNITY TRANSMISSIONS
         </span>
         <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-extrabold uppercase">
-          INEFONTOP JOURNALS
+          INEFFABLE JOURNALS
         </h2>
         <p className={`${themeStyles.textSecondary} font-sans text-sm md:text-base font-light leading-relaxed`}>
           A space to record thoughts, digital logs, sensory studies, and custom server experiences. Every entry is persistent and structured with high-contrast tactical framing.

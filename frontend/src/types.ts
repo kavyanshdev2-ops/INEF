@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export type PageId = 'home' | 'gaming' | 'membership' | 'shop' | 'journals' | 'contact' | 'cart' | 'login' | 'admin' | 'about';
+export type PageId = 'home' | 'gaming' | 'membership' | 'shop' | 'journals' | 'contact' | 'cart' | 'login' | 'admin' | 'about' | 'payment-success' | 'payment-failed';
 
 export interface CartItem {
   id: string;

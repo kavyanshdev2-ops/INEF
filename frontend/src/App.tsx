@@ -17,6 +17,8 @@ import { CartView } from './components/CartView';
 import { LoginView } from './components/LoginView';
 import { GamingView } from './components/GamingView';
 import { AboutView } from './components/AboutView';
+import { PaymentSuccessView } from './components/PaymentSuccessView';
+import { PaymentFailedView } from './components/PaymentFailedView';
 import { getThemeStyles } from './lib/theme';
 import { Disc, Sparkles, MapPin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
 import { supabase, isSupabaseConfigured, getDBWishlist, toggleDBWishlist, getDBCart, saveDBCart } from './lib/supabase';
@@ -193,6 +195,15 @@ export default function App() {
       });
     }
   }, [cart, currentUser]);
+
+  // Handle URL params on initial load
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get('order_id');
+    if (orderId) {
+      setCurrentPage('payment-success');
+    }
+  }, []);
 
   const themeStyles = getThemeStyles(atmosphere.colorTheme, isDarkMode);
 
@@ -453,6 +464,20 @@ export default function App() {
             onAddToCart={handleAddToCart}
           />
         )}
+        {currentPage === 'payment-success' && (
+          <PaymentSuccessView 
+            activeAtmosphere={atmosphere} 
+            isDarkMode={isDarkMode}
+            setCurrentPage={navigateToPage}
+          />
+        )}
+        {currentPage === 'payment-failed' && (
+          <PaymentFailedView 
+            activeAtmosphere={atmosphere} 
+            isDarkMode={isDarkMode}
+            setCurrentPage={navigateToPage}
+          />
+        )}
       </main>
 
       {/* Corporate Luxury Footer */}
@@ -466,18 +491,12 @@ export default function App() {
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center space-x-3">
               <div className="relative w-7 h-7 flex items-center justify-center">
-                {/* Spinning background decorative compass/radial */}
-                <svg viewBox="0 0 100 100" className={`absolute w-7 h-7 ${themeStyles.accentTextMuted || themeStyles.accentText} opacity-30 animate-[spin_12s_linear_infinite]`} fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5 5" />
-                  <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-                {/* Solid modern central logo mark */}
-                <svg viewBox="0 0 100 100" className={`w-5 h-5 ${themeStyles.accentTextMuted || themeStyles.accentText} drop-shadow-[0_0_6px_rgba(244,63,94,0.25)]`} fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="3" />
-                  <path d="M50 25 V75" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" />
-                  <path d="M35 50 H65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  <circle cx="50" cy="50" r="4.5" fill="currentColor" />
-                </svg>
+                {/* Your logo image with transparent background */}
+                <img 
+                  src="/img.png" 
+                  alt="INEFFABLE Logo" 
+                  className="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(244,63,94,0.25)]"
+                />
               </div>
               <h4 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} uppercase`}>
                 INEFFABLE

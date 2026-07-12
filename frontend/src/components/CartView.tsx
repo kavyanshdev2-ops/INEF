@@ -36,6 +36,10 @@ import {
   getDBAddresses, 
   saveDBAddress 
 } from '../lib/supabase';
+import { 
+  createPaymentOrder, 
+  initiateCashfreeCheckout 
+} from '../lib/payment';
 
 interface CartViewProps {
   activeAtmosphere: AtmosphereConfig;
@@ -179,7 +183,7 @@ export const CartView: React.FC<CartViewProps> = ({
     }
   };
 
-  // Submit Order Integration
+  // Submit Order Integration with Cashfree
   const handleCompleteOrder = async () => {
     if (!currentUser) {
       setCurrentPage('login');
@@ -189,7 +193,6 @@ export const CartView: React.FC<CartViewProps> = ({
     setIsProcessingOrder(true);
     setCheckoutTerminalLogs([]);
 
-    // Sequential premium console logging simulation for technical streetwear immersion
     const addLog = (msg: string, delay: number) => {
       return new Promise<void>((resolve) => {
         setTimeout(() => {
@@ -200,16 +203,13 @@ export const CartView: React.FC<CartViewProps> = ({
     };
 
     await addLog('> INITIATING ENCRYPTED TLS SSL BANK HANDSHAKE...', 300);
-    await addLog('> ENCRYPTING SENSITIVE DEBIT/CREDIT DATA PACKETS...', 500);
-    await addLog('> CONNECTING TO STRIPE GLOBAL PAYMENT NETWORK...', 400);
-    await addLog('> TRANSACTION STATUS: APPROVED (SECURED CAP)...', 600);
-    await addLog('> COMMUNICATING DISPATCH INSTRUCTIONS TO ROBOTIC STACK...', 400);
+    await addLog('> CONNECTING TO CASHFREE GLOBAL PAYMENT NETWORK...', 400);
 
     try {
       if (supabase) {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
-          // If customer entered a new address and wanted to save it
+          // Save address if new
           if (selectedAddressId === 'new') {
             await saveDBAddress(user.id, {
               full_name: shippingForm.fullName,
@@ -222,49 +222,68 @@ export const CartView: React.FC<CartViewProps> = ({
             });
           }
 
-          // Create the real order in database
-          const selectedAddr = selectedAddressId === 'new' 
-            ? shippingForm 
-            : savedAddresses.find(a => a.id === selectedAddressId);
-          
-          const deliveryNote = `SHIPPED TO ${selectedAddr?.fullName?.toUpperCase()} VIA ${deliveryMethod.toUpperCase()} DELIVERY`;
-          
-          const order = await createDBOrder(
-            user.id, 
-            totalBill, 
-            currentUser, // passing username or default target
-            cart
-          );
+          // Create order in Cashfree
+          await addLog('> CREATING PAYMENT ORDER...', 300);
 
-          if (order) {
-            // Log local audit record
-            const existingLogsRaw = localStorage.getItem('inefontop_audit_logs') || '[]';
-            const existingLogs = JSON.parse(existingLogsRaw);
-            existingLogs.push(`[STREETWEAR CHECKOUT] ORDER PROVISIONED | ORDER_ID: ${order.id} | TOTAL: $${totalBill.toFixed(2)}`);
-            localStorage.setItem('inefontop_audit_logs', JSON.stringify(existingLogs));
+          const { paymentSessionId, orderId } = await createPaymentOrder({
+            customerName: shippingForm.fullName || 'Customer',
+            customerEmail: user.email || 'customer@example.com',
+            customerPhone: '9999999999', // TODO: Add phone input field in shipping form
+            userId: user.id,
+            cartItems: cart.map(item => ({
+              id: item.id,
+              name: item.name,
+              price: item.price,
+              quantity: item.quantity
+            }))
+          });
 
-            await addLog(`> REAL-TIME DATABASE SYNC COMPLETED SUCCESSFULLY. ORDER ID: INF-${order.id.slice(0, 8).toUpperCase()}`, 300);
-            setOrderCompleteData({
-              orderId: `INF-${order.id.slice(0, 8).toUpperCase()}`,
-              discordUser: currentUser,
-              finalTotal: totalBill
-            });
-          }
+          await addLog('> ORDER CREATED, OPENING PAYMENT GATEWAY...', 300);
+
+          // Initiate Cashfree checkout
+          initiateCashfreeCheckout({
+            paymentSessionId,
+            onSuccess: async (returnedOrderId) => {
+              addLog(`> PAYMENT SUCCESSFUL! ORDER ID: ${returnedOrderId}`, 300);
+              
+              // Now create the order in Supabase
+              const selectedAddr = selectedAddressId === 'new' 
+                ? shippingForm 
+                : savedAddresses.find(a => a.id === selectedAddressId);
+              
+              createDBOrder(
+                user.id, 
+                totalBill, 
+                currentUser, 
+                cart
+              ).then(order => {
+                if (order) {
+                  const existingLogsRaw = localStorage.getItem('inefontop_audit_logs') || '[]';
+                  const existingLogs = JSON.parse(existingLogsRaw);
+                  existingLogs.push(`[STREETWEAR CHECKOUT] ORDER PROVISIONED | ORDER_ID: ${order.id} | TOTAL: $${totalBill.toFixed(2)}`);
+                  localStorage.setItem('inefontop_audit_logs', JSON.stringify(existingLogs));
+                }
+
+                setIsProcessingOrder(false);
+                onClearCart();
+                // Redirect to success page with order ID
+                window.location.href = `${window.location.origin}/payment-success?order_id=${returnedOrderId}`;
+              });
+            },
+            onFailure: (error) => {
+              console.error('Payment failed:', error);
+              addLog('> PAYMENT FAILED!', 300);
+              setIsProcessingOrder(false);
+              setCurrentPage('payment-failed');
+            },
+          });
         }
       }
     } catch (err) {
-      console.warn('Real order creation bypassed or failed, using simulation:', err);
-      // Fallback
-      setOrderCompleteData({
-        orderId: `INF-${Math.floor(100000 + Math.random() * 900000)}`,
-        discordUser: currentUser || 'User',
-        finalTotal: totalBill
-      });
-    } finally {
-      await addLog('> DISPATCH METRICS SYNC COMPLETED WITH PORTAL.', 350);
+      console.warn('Error in payment flow:', err);
+      addLog('> ERROR OCCURRED IN PAYMENT FLOW!', 300);
       setIsProcessingOrder(false);
-      setActiveStep(5); // Complete
-      onClearCart();
+      setCurrentPage('payment-failed');
     }
   };
 

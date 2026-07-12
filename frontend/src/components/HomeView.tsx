@@ -261,8 +261,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
 
   const faqs = [
     {
-      q: "What is INEFONTOP?",
-      a: "INEFONTOP is a premium, legendary community server running strong for over 6 years. It is built on friendships, loyalty, fun, and unforgettable memories, providing members with highly active voice rooms, secure text channels, and regular community events."
+      q: "What is INEFFABLE?",
+      a: "INEFFABLE is a premium, legendary community server running strong for over 6 years. It is built on friendships, loyalty, fun, and unforgettable memories, providing members with highly active voice rooms, secure text channels, and regular community events."
     },
     {
       q: "How do I upgrade to Platinum, Diamond, or Titanium Access?",
@@ -316,9 +316,9 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
 
             <h1 
               id="hero-main-title"
-              className={`text-6xl md:text-8xl xl:text-9xl font-sans tracking-tight font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 ${getGradientToClass()} leading-[0.9] uppercase filter drop-shadow-2xl`}
+              className={`text-6xl md:text-8xl xl:text-9xl font-benguiat tracking-[0.1em] font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 ${getGradientToClass()} leading-[0.9] uppercase filter drop-shadow-2xl`}
             >
-              INEFONTOP
+              INEFFABLE
             </h1>
             
             <h2 
@@ -357,25 +357,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
             </div>
           </motion.div>
 
-          {/* RIGHT COLUMN: TRANSPARENT LOGO GIF */}
+          {/* RIGHT COLUMN: LOGO */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="lg:col-span-5 flex justify-center items-center w-full"
           >
-            {/* Precision SVG filter to cleanly key out black background and eliminate compression box artifacts */}
-            <svg width="0" height="0" className="absolute pointer-events-none" style={{ position: 'absolute', width: 0, height: 0 }}>
-              <defs>
-                <filter id="ultra-clean-remove-black" colorInterpolationFilters="sRGB">
-                  <feColorMatrix 
-                    type="matrix" 
-                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2.4 2.4 2.4 0 -0.15" 
-                  />
-                </filter>
-              </defs>
-            </svg>
-
             <motion.div
               className="w-80 h-80 md:w-[480px] md:h-[480px] relative flex items-center justify-center select-none"
               animate={{ 
@@ -388,6 +376,15 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                 ease: "easeInOut"
               }}
             >
+              {/* Glassy background */}
+              <div className={`absolute inset-0 rounded-3xl backdrop-blur-xl border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} shadow-xl transition-all duration-300`} />
+              
+              {/* Your logo image with transparent background */}
+              <img 
+                src="/img.png" 
+                alt="INEFFABLE Logo" 
+                className="w-[90%] h-[90%] z-10 object-contain drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]"
+              />
             </motion.div>
           </motion.div>
 
@@ -612,7 +609,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
             03 // DONATE / BOOST
           </span>
           <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${themeStyles.textPrimary}`}>
-            Support Inefontop
+            Support INEFFABLE
           </h2>
           <p className={`${themeStyles.textSecondary} font-sans text-sm md:text-base leading-relaxed font-light`}>
             Support our hosting and secure exclusive customized roles, extra reactions, external stickers permissions, global custom color roles, and elite voice privileges.

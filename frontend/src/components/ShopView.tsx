@@ -371,7 +371,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
             {/* Elegant Header */}
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
               <span className={`font-mono text-xs tracking-[0.4em] ${themeStyles.accentText} uppercase block`}>
-                INEFONTOP // APPAREL
+                INEFFABLE // APPAREL
               </span>
               <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-black uppercase text-glow">
                 CYBER COUTURE
@@ -807,7 +807,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
                 <div className="space-y-3">
                   <div className="flex items-center space-x-2 text-rose-500">
                     <Sparkles className="w-4 h-4 animate-pulse" />
-                    <span className="font-mono text-[9px] tracking-[0.3em] font-extrabold uppercase">INEFONTOP DIVISION // BRAND ORIGINAL</span>
+                    <span className="font-mono text-[9px] tracking-[0.3em] font-extrabold uppercase">INEFFABLE DIVISION // BRAND ORIGINAL</span>
                   </div>
                   <h1 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tight leading-none">
                     {activeProduct?.name}

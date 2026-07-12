@@ -32,6 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
   const isAdmin = currentUser?.toLowerCase() === 'kavyanshshakya' || currentUser?.toLowerCase() === 'admin';
+  // This can be enhanced later to check via API/Supabase
 
   const menuItems = [
     { id: 'home' as PageId, label: 'HOME' },
@@ -59,18 +60,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center space-x-3 group text-left cursor-pointer"
         >
           <div className="relative w-8 h-8 flex items-center justify-center">
-            {/* Spinning background decorative compass/radial */}
-            <svg viewBox="0 0 100 100" className={`absolute w-8 h-8 ${themeStyles.accentText} opacity-30 animate-[spin_12s_linear_infinite]`} fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5 5" />
-              <path d="M50 5 L50 15 M50 85 L50 95 M5 50 L15 50 M85 50 L95 50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-            {/* Solid modern central logo mark */}
-            <svg viewBox="0 0 100 100" className={`w-6 h-6 ${themeStyles.accentText} drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]`} fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="3" />
-              <path d="M50 25 V75" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" />
-              <path d="M35 50 H65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              <circle cx="50" cy="50" r="4.5" fill="currentColor" />
-            </svg>
+            {/* Your logo image with transparent background */}
+            <img 
+              src="/img.png" 
+              alt="INEFFABLE Logo" 
+              className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]"
+            />
           </div>
           <div>
             <h1 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} leading-none ${themeStyles.groupTextHover} transition-colors`}>

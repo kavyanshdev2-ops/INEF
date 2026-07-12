@@ -293,7 +293,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
         if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
           return `${origin}/`;
         }
-        return 'https://inef-52b.pages.dev/';
+        return 'https://inef.cc/';
       };
 
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -324,8 +324,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
             const popupUrl = popup.location.href;
             const isMatchingOrigin = popupUrl && (
               popupUrl.includes(window.location.origin) ||
-              popupUrl.includes('inef-52b.pages.dev') ||
-              popupUrl.includes('inefontop-52b.pages.dev')
+              popupUrl.includes('inef.cc')
             );
             if (isMatchingOrigin) {
               const hash = popup.location.hash || '';
@@ -516,7 +515,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
         if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
           return `${origin}/`;
         }
-        return 'https://inef-52b.pages.dev/';
+        return 'https://inef.cc/';
       };
 
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
