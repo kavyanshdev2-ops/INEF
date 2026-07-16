@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { 
-  Users, 
-  Shield, 
-  Crown, 
-  Code, 
-  Sparkles, 
-  Calendar, 
-  X, 
-  ExternalLink, 
-  MessageSquare, 
-  Award, 
+import {
+  Users,
+  Shield,
+  Crown,
+  Code,
+  Sparkles,
+  Calendar,
+  X,
+  ExternalLink,
+  MessageSquare,
+  Award,
   Heart,
   UserCheck,
   Flame,
@@ -64,7 +64,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     onlineStatus: 'online',
     joinedDate: 'JULY 14, 2020',
     aboutMe: {
-      name: 'akarsh',
+      name: 'Akarsh Arya',
       age: 'twenty-one',
       status: 'pioneering',
       specialty: 'System Director'
@@ -75,7 +75,7 @@ const MEMBERS_DATA: MemberProfile[] = [
   {
     id: 'harshil',
     name: 'Harshil Joshi',
-    discordTag: 'harshil_joshi',
+    discordTag: 'Harshil_joshi',
     role: 'Co founder',
     category: 'cofounder',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
@@ -84,7 +84,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     onlineStatus: 'online',
     joinedDate: 'AUGUST 12, 2020',
     aboutMe: {
-      name: 'harshil',
+      name: 'Harshil',
       age: 'twenty-one',
       status: 'deploying',
       specialty: 'Network Pipeline'
@@ -536,7 +536,7 @@ const MEMBERS_DATA: MemberProfile[] = [
 ];
 
 export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMode }) => {
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'founder' | 'cofounder' | 'owner' | 'coowner' | 'techlead' | 'executive' | 'admin'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'founder' | 'co-founder' | 'owner' | 'co-owner' | 'techlead' | 'executive' | 'admin'>('all');
   const [hoveredMember, setHoveredMember] = useState<string | null>(null);
   const [selectedMember, setSelectedMember] = useState<MemberProfile | null>(null);
 
@@ -579,7 +579,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
     }
     // Handle modern Discord username/id resolution
     const defaultIndex = user.discriminator === '0' || !user.discriminator
-      ? Number(BigInt(user.id) >> 22n) % 6 
+      ? Number(BigInt(user.id) >> 22n) % 6
       : Number(user.discriminator) % 5;
     return `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
   };
@@ -684,7 +684,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
   React.useEffect(() => {
     let interval: NodeJS.Timeout;
     const hasRealSpotify = lanyardData?.listening_to_spotify && lanyardData?.spotify;
-    
+
     const updateProgress = () => {
       if (hasRealSpotify) {
         const now = Date.now();
@@ -696,10 +696,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
         setSpotifyProgress({ elapsed, duration, percentage });
       } else if (selectedMember) {
         // Simulated Spotify progression
-        const totalDuration = selectedMember.category === 'founder' ? 214000 
-                            : selectedMember.category === 'cofounder' ? 180000
-                            : selectedMember.category === 'techlead' ? 245000 
-                            : 195000;
+        const totalDuration = selectedMember.category === 'founder' ? 214000
+          : selectedMember.category === 'cofounder' ? 180000
+            : selectedMember.category === 'techlead' ? 245000
+              : 195000;
         const elapsedSinceOpen = Date.now() - simulatedTimeOffset;
         const elapsed = elapsedSinceOpen % totalDuration;
         const percentage = (elapsed / totalDuration) * 100;
@@ -709,13 +709,13 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
     updateProgress();
     interval = setInterval(updateProgress, 1000);
-    
+
     return () => clearInterval(interval);
   }, [lanyardData, selectedMember, simulatedTimeOffset]);
 
   // Simulated Spotify info helper
   const getSimulatedSpotify = (member: MemberProfile) => {
-    switch(member.category) {
+    switch (member.category) {
       case 'founder':
         return {
           song: "Convergence Gateway",
@@ -792,10 +792,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
   return (
     <div className="max-w-7xl mx-auto px-6 pt-32 pb-24 relative">
-      
+
       {/* Decorative Cyber Grid Overlay */}
-      <div className="absolute top-0 left-0 w-full h-[300px] bg-linear-to-b from-transparent to-transparent pointer-events-none opacity-5 z-0" 
-           style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+      <div className="absolute top-0 left-0 w-full h-[300px] bg-linear-to-b from-transparent to-transparent pointer-events-none opacity-5 z-0"
+        style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
 
       {/* Header Section */}
       <div className="relative z-10 text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -806,11 +806,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
           </span>
           <div className={`h-[1px] w-8 ${themeStyles.accentLine} bg-linear-to-l`} />
         </div>
-        
+
         <h1 className={`font-mono text-3xl md:text-5xl tracking-widest font-extrabold ${themeStyles.textPrimary} uppercase`}>
           ABOUT INEFFABLE
         </h1>
-        
+
         <p className={`font-sans text-xs md:text-sm leading-relaxed ${themeStyles.textSecondary} max-w-xl mx-auto font-light`}>
           A historical community ledger charting our founders, owners, developers, coordinators, and administrators that maintain our digital convergence.
         </p>
@@ -841,11 +841,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               <button
                 key={tab.id}
                 onClick={() => setSelectedCategory(tab.id as any)}
-                className={`px-4 py-1.5 font-mono text-[9px] tracking-wider rounded-lg border transition-all duration-300 cursor-pointer ${
-                  isActive
-                    ? `${themeStyles.accentBg} text-zinc-950 font-bold ${themeStyles.borderHighlight} shadow-sm`
-                    : `border-transparent ${themeStyles.textSecondary} hover:${themeStyles.textPrimary} hover:bg-zinc-500/5`
-                }`}
+                className={`px-4 py-1.5 font-mono text-[9px] tracking-wider rounded-lg border transition-all duration-300 cursor-pointer ${isActive
+                  ? `${themeStyles.accentBg} text-zinc-950 font-bold ${themeStyles.borderHighlight} shadow-sm`
+                  : `border-transparent ${themeStyles.textSecondary} hover:${themeStyles.textPrimary} hover:bg-zinc-500/5`
+                  }`}
               >
                 {tab.label} ({categoryCounts[tab.id as keyof typeof categoryCounts]})
               </button>
@@ -908,18 +907,17 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                           onMouseEnter={() => setHoveredMember(member.id)}
                           onMouseLeave={() => setHoveredMember(null)}
                           onClick={() => setSelectedMember(member)}
-                          className={`group relative p-3.5 rounded-md border ${themeStyles.borderMuted} ${themeStyles.bgCard} hover:border-zinc-500/30 transition-all duration-300 overflow-hidden flex items-center space-x-3.5 cursor-pointer ${
-                            isHovered ? 'shadow-lg translate-y-[-2px]' : ''
-                          }`}
+                          className={`group relative p-3.5 rounded-md border ${themeStyles.borderMuted} ${themeStyles.bgCard} hover:border-zinc-500/30 transition-all duration-300 overflow-hidden flex items-center space-x-3.5 cursor-pointer ${isHovered ? 'shadow-lg translate-y-[-2px]' : ''
+                            }`}
                         >
                           {/* Background Card Hover Accent */}
                           <div className="absolute inset-0 bg-linear-to-tr from-transparent via-transparent to-zinc-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                          
+
                           {/* Avatar Section */}
                           <div className="relative shrink-0">
-                            <img 
-                              src={member.avatar} 
-                              alt={member.name} 
+                            <img
+                              src={member.avatar}
+                              alt={member.name}
                               referrerPolicy="no-referrer"
                               className="w-10 h-10 object-cover rounded-md border border-zinc-500/15"
                             />
@@ -933,20 +931,19 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                               <h4 className={`font-mono text-[12px] tracking-wider font-extrabold ${themeStyles.textPrimary} truncate`}>
                                 {member.name}
                               </h4>
-                              <span className={`font-mono text-[6px] tracking-wider px-1.5 py-0.5 rounded-sm font-bold uppercase shrink-0 ${
-                                member.category === 'founder' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
+                              <span className={`font-mono text-[6px] tracking-wider px-1.5 py-0.5 rounded-sm font-bold uppercase shrink-0 ${member.category === 'founder' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
                                 member.category === 'cofounder' ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20' :
-                                member.category === 'owner' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' :
-                                member.category === 'coowner' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' :
-                                member.category === 'techlead' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                                member.category === 'executive' ? 'bg-pink-500/10 text-pink-400 border border-pink-500/20' :
-                                member.category === 'admin' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
-                                'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20'
-                              }`}>
+                                  member.category === 'owner' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' :
+                                    member.category === 'coowner' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' :
+                                      member.category === 'techlead' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                                        member.category === 'executive' ? 'bg-pink-500/10 text-pink-400 border border-pink-500/20' :
+                                          member.category === 'admin' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                            'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20'
+                                }`}>
                                 {member.category === 'cofounder' ? 'co founder' : member.category === 'coowner' ? 'co owner' : member.category === 'techlead' ? 'tech lead' : member.category}
                               </span>
                             </div>
-                            
+
                             <div className="flex items-center justify-between gap-2 mt-0.5">
                               <p className="font-sans text-[10px] text-zinc-500 truncate">
                                 {member.role}
@@ -979,7 +976,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
         {selectedMember && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             {/* Smooth dark glass backdrop */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -998,16 +995,15 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               {/* LIVE DISCORD GATEWAY CONNECTION HEADER BAR */}
               <div className="bg-[#1e1f22] border-b border-[#111214] px-3.5 py-1.5 flex items-center justify-between shrink-0 select-none">
                 <div className="flex items-center space-x-2">
-                  <span className={`w-1.5 h-1.5 rounded-full ${
-                    isLanyardLoading ? 'bg-amber-400 animate-pulse' :
+                  <span className={`w-1.5 h-1.5 rounded-full ${isLanyardLoading ? 'bg-amber-400 animate-pulse' :
                     isLanyardError ? 'bg-rose-500' : 'bg-emerald-500 animate-pulse'
-                  }`} />
+                    }`} />
                   <span className="font-mono text-[8px] font-black tracking-widest text-[#949ba4] uppercase">
                     {isLanyardLoading ? 'GATEWAY // LINKING...' :
-                     isLanyardError ? 'OFFLINE // SIMULATED MODE' : 'GATEWAY // LIVE CONNECTED'}
+                      isLanyardError ? 'OFFLINE // SIMULATED MODE' : 'GATEWAY // LIVE CONNECTED'}
                   </span>
                 </div>
-                <button 
+                <button
                   onClick={() => selectedMember.discordId && fetchLanyardData(selectedMember.discordId)}
                   className="p-1 rounded text-[#949ba4] hover:text-[#dbdee1] hover:bg-zinc-800/40 transition-colors cursor-pointer"
                   title="Force Reload Gateway Node"
@@ -1018,18 +1014,17 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* BANNER WITH BACKGROUND IMAGE */}
               <div className="relative h-28 w-full overflow-hidden shrink-0 bg-zinc-900">
-                <img 
-                  src={selectedMember.banner} 
-                  alt="Discord Banner" 
+                <img
+                  src={selectedMember.banner}
+                  alt="Discord Banner"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover select-none pointer-events-none filter brightness-90"
                 />
-                
+
                 {/* Authentic Black-Background Badge Overlay for Discord Name on the Banner */}
                 <div className="absolute bottom-2.5 left-2.5 bg-black/85 text-white font-mono text-[9px] tracking-[0.2em] px-3 py-1.5 rounded-md border border-zinc-800/80 flex items-center space-x-2 shadow-lg backdrop-blur-md">
-                  <span className={`w-1.5 h-1.5 rounded-full ${
-                    lanyardData ? 'bg-emerald-500 animate-pulse' : 'bg-[#5865f2] animate-pulse'
-                  }`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${lanyardData ? 'bg-emerald-500 animate-pulse' : 'bg-[#5865f2] animate-pulse'
+                    }`} />
                   <span className="font-extrabold">
                     {lanyardData?.discord_user ? lanyardData.discord_user.username : selectedMember.discordTag}
                   </span>
@@ -1049,9 +1044,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               <div className="relative px-4 pb-1 shrink-0 bg-[#111214]">
                 <div className="absolute top-[-44px] left-4">
                   <div className="relative">
-                    <img 
-                      src={lanyardData?.discord_user ? getDiscordAvatarUrl(lanyardData.discord_user, selectedMember.avatar) : selectedMember.avatar} 
-                      alt="Avatar" 
+                    <img
+                      src={lanyardData?.discord_user ? getDiscordAvatarUrl(lanyardData.discord_user, selectedMember.avatar) : selectedMember.avatar}
+                      alt="Avatar"
                       referrerPolicy="no-referrer"
                       className="w-[80px] h-[80px] rounded-full ring-[6px] ring-[#111214] object-cover bg-[#111214]"
                     />
@@ -1099,11 +1094,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
-                    className={`pb-2 pt-1 text-[11px] font-bold px-1 border-b-2 transition-all duration-150 cursor-pointer ${
-                      activeTab === tab.id 
-                        ? 'border-[#5865f2] text-white' 
-                        : 'border-transparent text-[#949ba4] hover:text-[#dbdee1]'
-                    }`}
+                    className={`pb-2 pt-1 text-[11px] font-bold px-1 border-b-2 transition-all duration-150 cursor-pointer ${activeTab === tab.id
+                      ? 'border-[#5865f2] text-white'
+                      : 'border-transparent text-[#949ba4] hover:text-[#dbdee1]'
+                      }`}
                   >
                     {tab.label}
                   </button>
@@ -1112,7 +1106,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* DISCORD INNER CONTAINER PANEL - Styled exactly like Discord client */}
               <div className="flex-1 overflow-y-auto scrollbar-none p-4 pt-3 pb-3 bg-[#111214] flex flex-col space-y-4">
-                
+
                 {/* 1. USER PROFILE TAB */}
                 {activeTab === 'profile' && (
                   <>
@@ -1130,10 +1124,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       {/* CUSTOM STATUS */}
                       {(() => {
                         const customStatusActivity = lanyardData?.activities?.find((act: any) => act.type === 4);
-                        const statusText = customStatusActivity 
+                        const statusText = customStatusActivity
                           ? `${customStatusActivity.emoji ? customStatusActivity.emoji.name + ' ' : ''}${customStatusActivity.state || ''}`
                           : selectedMember.status;
-                        
+
                         return statusText ? (
                           <div className="bg-[#2b2d31]/50 border border-zinc-800/10 rounded-lg p-2.5 flex items-center space-x-2 text-[11px] leading-relaxed text-[#f2f3f5] font-light">
                             <span className="italic">{statusText}</span>
@@ -1146,10 +1140,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     {(() => {
                       const isSpotifyActive = lanyardData ? lanyardData.listening_to_spotify : true;
                       const spotifyData = lanyardData?.spotify || getSimulatedSpotify(selectedMember);
-                      
+
                       // Find any active game (type 0)
                       const activeGame = lanyardData?.activities?.find((act: any) => act.type === 0);
-                      
+
                       return (
                         <div className="space-y-4">
                           {/* 1. SPOTIFY ACTIVITY PLAYER */}
@@ -1160,18 +1154,18 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                   <span className="w-1.5 h-1.5 rounded-full bg-[#1db954] animate-ping" />
                                   Listening to Spotify
                                 </h4>
-                                <img 
-                                  src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" 
-                                  alt="Spotify Logo" 
+                                <img
+                                  src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"
+                                  alt="Spotify Logo"
                                   className="w-4 h-4 opacity-80"
                                 />
                               </div>
-                              
+
                               <div className="flex items-center space-x-3.5">
                                 <div className="relative shrink-0">
-                                  <img 
-                                    src={spotifyData.album_art_url} 
-                                    alt="Album Art" 
+                                  <img
+                                    src={spotifyData.album_art_url}
+                                    alt="Album Art"
                                     className="w-16 h-16 rounded-md object-cover border border-zinc-800/40 shadow-md animate-[spin_20s_linear_infinite]"
                                   />
                                   <div className="absolute -bottom-1 -right-1 bg-[#1e1f22] p-0.5 rounded-full border border-zinc-800">
@@ -1180,12 +1174,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                     </div>
                                   </div>
                                 </div>
-                                
+
                                 <div className="flex-1 min-w-0">
-                                  <a 
-                                    href={spotifyData.track_id ? `https://open.spotify.com/track/${spotifyData.track_id}` : "https://open.spotify.com"} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
+                                  <a
+                                    href={spotifyData.track_id ? `https://open.spotify.com/track/${spotifyData.track_id}` : "https://open.spotify.com"}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="text-white hover:underline text-xs font-bold font-sans truncate block hover:text-[#1db954] transition-colors"
                                   >
                                     {spotifyData.song}
@@ -1202,8 +1196,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                               {/* Progress bar */}
                               <div className="space-y-1">
                                 <div className="relative w-full h-1 bg-[#2b2d31] rounded-full overflow-hidden">
-                                  <div 
-                                    className="absolute left-0 top-0 h-full bg-[#1db954] rounded-full transition-all duration-1000 ease-linear" 
+                                  <div
+                                    className="absolute left-0 top-0 h-full bg-[#1db954] rounded-full transition-all duration-1000 ease-linear"
                                     style={{ width: `${spotifyProgress.percentage}%` }}
                                   />
                                 </div>
@@ -1224,15 +1218,15 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                               <div className="flex space-x-3.5">
                                 {activeGame.assets?.large_image ? (
                                   <div className="relative shrink-0">
-                                    <img 
-                                      src={getGameImageUrl(activeGame.application_id, activeGame.assets.large_image)} 
-                                      alt="Game Asset" 
+                                    <img
+                                      src={getGameImageUrl(activeGame.application_id, activeGame.assets.large_image)}
+                                      alt="Game Asset"
                                       className="w-14 h-14 rounded-lg object-cover border border-zinc-800/30 shadow-inner"
                                     />
                                     {activeGame.assets.small_image && (
-                                      <img 
-                                        src={getGameImageUrl(activeGame.application_id, activeGame.assets.small_image)} 
-                                        alt="Small Game Asset" 
+                                      <img
+                                        src={getGameImageUrl(activeGame.application_id, activeGame.assets.small_image)}
+                                        alt="Small Game Asset"
                                         className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-[3px] border-[#1e1f22] object-cover"
                                       />
                                     )}
@@ -1242,7 +1236,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                     <Tv className="w-6 h-6" />
                                   </div>
                                 )}
-                                
+
                                 <div className="flex-1 min-w-0 space-y-0.5">
                                   <h5 className="text-white text-xs font-bold font-sans truncate">
                                     {activeGame.name}
@@ -1276,35 +1270,35 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         <h4 className="text-[10px] font-extrabold tracking-wider text-[#949ba4] uppercase font-mono">
                           ABOUT ME
                         </h4>
-                        
+
                         <div className="bg-[#111214] border border-[#232428] rounded-lg p-3.5 font-mono text-[10px] text-[#f2f3f5] space-y-2.5 shadow-inner">
                           <p className="text-zinc-600 text-center select-none tracking-widest font-extrabold">
                             ╭ ── · ✦ · ── ╮
                           </p>
                           <div className="space-y-1.5 pl-3">
                             <p className="flex items-center space-x-2">
-                              <span className="text-pink-400 font-bold">★</span> 
-                              <span className="text-zinc-500 italic font-semibold">Name</span> 
-                              <span className="text-zinc-600">:</span> 
+                              <span className="text-pink-400 font-bold">★</span>
+                              <span className="text-zinc-500 italic font-semibold">Name</span>
+                              <span className="text-zinc-600">:</span>
                               <span className="text-white font-medium">{selectedMember.aboutMe.name}</span>
                             </p>
                             <p className="flex items-center space-x-2">
-                              <span className="text-pink-400 font-bold">✦</span> 
-                              <span className="text-zinc-500 italic font-semibold">Age</span> 
-                              <span className="text-zinc-600">:</span> 
+                              <span className="text-pink-400 font-bold">✦</span>
+                              <span className="text-zinc-500 italic font-semibold">Age</span>
+                              <span className="text-zinc-600">:</span>
                               <span className="text-white font-medium">{selectedMember.aboutMe.age}</span>
                             </p>
                             <p className="flex items-center space-x-2">
-                              <span className="text-pink-400 font-bold">✧</span> 
-                              <span className="text-zinc-500 italic font-semibold">Status</span> 
-                              <span className="text-zinc-600">:</span> 
+                              <span className="text-pink-400 font-bold">✧</span>
+                              <span className="text-zinc-500 italic font-semibold">Status</span>
+                              <span className="text-zinc-600">:</span>
                               <span className="text-emerald-400 font-medium">{selectedMember.aboutMe.status}</span>
                             </p>
                             {selectedMember.aboutMe.specialty && (
                               <p className="flex items-center space-x-2">
-                                <span className="text-pink-400 font-bold">⬩</span> 
-                                <span className="text-zinc-500 italic font-semibold">Special</span> 
-                                <span className="text-zinc-600">:</span> 
+                                <span className="text-pink-400 font-bold">⬩</span>
+                                <span className="text-zinc-500 italic font-semibold">Special</span>
+                                <span className="text-zinc-600">:</span>
                                 <span className="text-indigo-300 font-medium">{selectedMember.aboutMe.specialty}</span>
                               </p>
                             )}
@@ -1312,7 +1306,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                           <p className="text-zinc-600 text-center select-none tracking-widest font-extrabold">
                             ╰ ── · ✦ · ── ╯
                           </p>
-                          
+
                           <p className="font-sans text-[11px] text-[#b5bac1] leading-relaxed pt-2.5 border-t border-zinc-800/40">
                             {selectedMember.description}
                           </p>
@@ -1326,15 +1320,14 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         </h4>
                         <div className="flex flex-wrap gap-1.5">
                           <span className="bg-[#2b2d31] text-[10px] text-[#dbdee1] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border border-zinc-800/30">
-                            <span className={`w-2 h-2 rounded-full ${
-                              selectedMember.category === 'founder' ? 'bg-[#f1c40f]' :
+                            <span className={`w-2 h-2 rounded-full ${selectedMember.category === 'founder' ? 'bg-[#f1c40f]' :
                               selectedMember.category === 'cofounder' ? 'bg-[#e67e22]' :
-                              selectedMember.category === 'owner' ? 'bg-[#9b59b6]' :
-                              selectedMember.category === 'coowner' ? 'bg-[#34495e]' :
-                              selectedMember.category === 'techlead' ? 'bg-[#1abc9c]' :
-                              selectedMember.category === 'executive' ? 'bg-[#e91e63]' :
-                              selectedMember.category === 'admin' ? 'bg-[#3498db]' : 'bg-[#2ecc71]'
-                            }`} />
+                                selectedMember.category === 'owner' ? 'bg-[#9b59b6]' :
+                                  selectedMember.category === 'coowner' ? 'bg-[#34495e]' :
+                                    selectedMember.category === 'techlead' ? 'bg-[#1abc9c]' :
+                                      selectedMember.category === 'executive' ? 'bg-[#e91e63]' :
+                                        selectedMember.category === 'admin' ? 'bg-[#3498db]' : 'bg-[#2ecc71]'
+                              }`} />
                             <span className="text-white">{selectedMember.role}</span>
                           </span>
                           <span className="bg-[#2b2d31] text-[10px] text-[#dbdee1] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border border-zinc-800/30">
@@ -1386,9 +1379,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         </button>
                       </div>
                       {syncFeedback && (
-                        <p className={`text-[9px] font-mono ${
-                          syncFeedback.includes('successfully') || syncFeedback.includes('connected') ? 'text-emerald-400' : 'text-amber-400'
-                        } mt-1 font-semibold`}>
+                        <p className={`text-[9px] font-mono ${syncFeedback.includes('successfully') || syncFeedback.includes('connected') ? 'text-emerald-400' : 'text-amber-400'
+                          } mt-1 font-semibold`}>
                           {syncFeedback}
                         </p>
                       )}
@@ -1420,9 +1412,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                 </p>
                               </div>
                             </div>
-                            <a 
-                              href={server.inviteUrl} 
-                              target="_blank" 
+                            <a
+                              href={server.inviteUrl}
+                              target="_blank"
                               rel="noopener noreferrer"
                               className="text-[9px] bg-[#2b2d31] hover:bg-[#5865f2] hover:text-white text-[#dbdee1] font-sans font-bold px-3 py-1.5 rounded-md transition-all duration-150 shadow-sm"
                             >
@@ -1446,7 +1438,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         {MEMBERS_DATA
                           .filter(friend => friend.id !== selectedMember.id)
                           .map(friend => (
-                            <button 
+                            <button
                               key={friend.id}
                               onClick={() => {
                                 setSelectedMember(friend);
@@ -1455,9 +1447,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                             >
                               <div className="flex items-center space-x-3.5 min-w-0">
                                 <div className="relative shrink-0">
-                                  <img 
-                                    src={friend.avatar} 
-                                    alt={friend.name} 
+                                  <img
+                                    src={friend.avatar}
+                                    alt={friend.name}
                                     className="w-8 h-8 rounded-full object-cover border border-zinc-800/30 bg-[#111214]"
                                   />
                                   <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-[#111214] ${getOnlineDotClass(friend.onlineStatus)}`} />
@@ -1485,7 +1477,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* AUTHENTIC CHAT INPUT FOOTER BOX */}
               <div className="bg-[#111214] p-3 border-t border-zinc-800/30 shrink-0">
-                <a 
+                <a
                   href="https://discord.gg/ineffable"
                   target="_blank"
                   rel="noopener noreferrer"

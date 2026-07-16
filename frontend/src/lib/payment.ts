@@ -1,12 +1,4 @@
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
-}
-
-interface ImportMetaEnv {
-  readonly VITE_API_URL?: string;
-}
-
-const API_BASE_URL = (import.meta as unknown as ImportMeta).env.VITE_API_URL || 'https://backend.inef.cc';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 interface CreateOrderRequest {
   customerName: string;

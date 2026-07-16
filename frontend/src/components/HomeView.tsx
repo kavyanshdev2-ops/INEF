@@ -316,7 +316,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
 
             <h1 
               id="hero-main-title"
-              className={`text-6xl md:text-8xl xl:text-9xl font-benguiat tracking-[0.1em] font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 ${getGradientToClass()} leading-[0.9] uppercase filter drop-shadow-2xl`}
+              className={`text-6xl md:text-8xl xl:text-9xl font-sans tracking-tight font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 ${getGradientToClass()} leading-[0.9] uppercase filter drop-shadow-2xl`}
             >
               INEFFABLE
             </h1>
@@ -381,7 +381,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
               
               {/* Your logo image with transparent background */}
               <img 
-                src="/img.png" 
+                src="/inefwebsitegif.gif" 
                 alt="INEFFABLE Logo" 
                 className="w-[90%] h-[90%] z-10 object-contain drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]"
               />

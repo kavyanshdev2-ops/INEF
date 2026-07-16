@@ -17,21 +17,25 @@ interface NavbarProps {
   onToggleDarkMode: () => void;
   cartCount: number;
   currentUser: any;
+  websiteSettings?: Record<string, any>;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ 
-  currentPage, 
-  setCurrentPage, 
+export const Navbar: React.FC<NavbarProps> = ({
+  currentPage,
+  setCurrentPage,
   activeAtmosphere,
   isDarkMode,
   onToggleDarkMode,
   cartCount,
-  currentUser
+  currentUser,
+  websiteSettings = {}
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
-  const isAdmin = currentUser?.toLowerCase() === 'kavyanshshakya' || currentUser?.toLowerCase() === 'admin';
+  const isAdmin = currentUser?.toLowerCase() === 'kavyanshshakya' || 
+                   currentUser?.toLowerCase() === 'admin' || 
+                   currentUser?.toLowerCase() === 'kavyashakya251';
   // This can be enhanced later to check via API/Supabase
 
   const menuItems = [
@@ -47,12 +51,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <nav 
+    <nav
       id="inefontop-navbar"
       className={`fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl z-50 rounded-2xl border ${themeStyles.borderMuted} ${themeStyles.bgHeader} backdrop-blur-xl transition-all duration-300 shadow-xl`}
     >
       <div className="px-6 h-20 flex items-center justify-between">
-        
+
         {/* Brand Logo */}
         <button
           id="nav-logo-btn"
@@ -61,18 +65,18 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <div className="relative w-8 h-8 flex items-center justify-center">
             {/* Your logo image with transparent background */}
-            <img 
-              src="/img.png" 
-              alt="INEFFABLE Logo" 
-              className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]"
-            />
+            <img
+                      src={websiteSettings.logo_url || "/image.png"}
+                      alt="INEFFABLE Logo"
+                      className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]"
+                    />
           </div>
           <div>
             <h1 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} leading-none ${themeStyles.groupTextHover} transition-colors`}>
               INEFFABLE
             </h1>
             <span className={`font-sans text-[10px] tracking-[0.25em] ${themeStyles.textSecondary} block mt-1`}>
-              DIVISION
+              inefontop
             </span>
           </div>
         </button>
@@ -86,11 +90,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 id={`nav-item-${item.id}`}
                 key={item.id}
                 onClick={() => setCurrentPage(item.id)}
-                className={`relative px-4 py-2 font-mono text-xs tracking-[0.2em] transition-all duration-300 cursor-pointer flex items-center space-x-1.5 ${
-                  isActive 
-                    ? `${themeStyles.textPrimary} font-bold` 
-                    : `${themeStyles.textSecondary} hover:${themeStyles.textPrimary}`
-                }`}
+                className={`relative px-4 py-2 font-mono text-xs tracking-[0.2em] transition-all duration-300 cursor-pointer flex items-center space-x-1.5 ${isActive
+                  ? `${themeStyles.textPrimary} font-bold`
+                  : `${themeStyles.textSecondary} hover:${themeStyles.textPrimary}`
+                  }`}
               >
                 {item.id === 'login' && currentUser ? (
                   <span className="text-emerald-400 font-extrabold uppercase">
@@ -99,11 +102,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 ) : (
                   <span>{item.label}</span>
                 )}
-                
+
                 {isActive && (
-                  <span 
+                  <span
                     id={`active-indicator-${item.id}`}
-                    className={`absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-4 h-[2px] ${themeStyles.indicatorBg} rounded-full`} 
+                    className={`absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-4 h-[2px] ${themeStyles.indicatorBg} rounded-full`}
                   />
                 )}
               </button>
@@ -147,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Discord direct link button - styled like inef.cc but matching active theme, sized smaller */}
           <a
-            href="https://discord.gg/ineffable"
+            href="https://discord.gg/inefontop"
             target="_blank"
             rel="noopener noreferrer"
             className={`flex items-center space-x-1.5 ${themeStyles.accentBg} ${themeStyles.accentBgHover} hover:shadow-[0_0_12px_rgba(255,255,255,0.12)] text-zinc-950 px-3.5 py-1.5 rounded-lg font-mono text-[9px] tracking-widest transition-all cursor-pointer border ${themeStyles.borderHighlight} shrink-0`}
@@ -158,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </a>
 
           <div className={`h-6 w-[1px] ${themeStyles.borderMuted}`} />
-          
+
           {/* Animated Light/Dark Mode Toggle Button */}
           <button
             id="desktop-theme-toggle"
@@ -214,7 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div 
+        <div
           id="mobile-drawer-container"
           className={`xl:hidden absolute top-24 left-0 w-full rounded-2xl ${themeStyles.drawerOverlay} backdrop-blur-2xl border ${themeStyles.borderMuted} transition-all duration-300 py-6 shadow-2xl z-40`}
         >
@@ -229,9 +232,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setCurrentPage(item.id);
                     setIsOpen(false);
                   }}
-                  className={`w-full py-3 text-left font-mono text-xs tracking-[0.2em] border-b ${themeStyles.borderMuted} flex justify-between items-center ${
-                    isActive ? `${themeStyles.accentText} font-bold` : themeStyles.textSecondary
-                  }`}
+                  className={`w-full py-3 text-left font-mono text-xs tracking-[0.2em] border-b ${themeStyles.borderMuted} flex justify-between items-center ${isActive ? `${themeStyles.accentText} font-bold` : themeStyles.textSecondary
+                    }`}
                 >
                   {item.id === 'cart' ? (
                     <span className="flex items-center space-x-2">
@@ -253,7 +255,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
             {/* Mobile Discord direct link */}
             <a
-              href="https://discord.gg/ineffable"
+              href="https://discord.gg/inefontop"
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center justify-between ${themeStyles.accentBg} ${themeStyles.accentBgHover} border ${themeStyles.borderHighlight} px-4 py-3 rounded-lg font-mono text-xs tracking-widest text-zinc-950 transition-all cursor-pointer mt-2`}
@@ -269,11 +271,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className={`py-3.5 border-b ${themeStyles.borderMuted} flex justify-between items-center`}>
               <span className={`font-mono text-xs tracking-[0.2em] ${themeStyles.textSecondary}`}>LANGUAGE</span>
               <LanguageTranslator themeStyles={themeStyles} isDarkMode={isDarkMode} />
-            </div>
-
-            <div className={`pt-3 flex items-center space-x-2 font-mono text-[9px] tracking-wider ${themeStyles.textMuted}`}>
-              <span className={`w-1.5 h-1.5 rounded-full ${isDarkMode ? 'bg-emerald-400' : 'bg-emerald-600'}`} />
-              <span>INEFFABLE // ACTIVE NODE</span>
             </div>
           </div>
         </div>

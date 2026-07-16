@@ -21,7 +21,8 @@ import { PaymentSuccessView } from './components/PaymentSuccessView';
 import { PaymentFailedView } from './components/PaymentFailedView';
 import { getThemeStyles } from './lib/theme';
 import { Disc, Sparkles, MapPin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
-import { supabase, isSupabaseConfigured, getDBWishlist, toggleDBWishlist, getDBCart, saveDBCart } from './lib/supabase';
+import { supabase, isSupabaseConfigured, getDBWishlist, toggleDBWishlist, getDBCart, saveDBCart, getWebsiteSettings } from './lib/supabase';
+import cherryBlossomBg from './assets/images/cherry_blossom_bg_1782902853761.jpg';
 
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -44,6 +45,9 @@ export default function App() {
     colorTheme: 'classic'
   });
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [websiteSettings, setWebsiteSettings] = useState<Record<string, any>>({});
+
+
   
   // Background smooth mouse parallax effect (high performance, bypasses react renders)
   useEffect(() => {
@@ -98,6 +102,19 @@ export default function App() {
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
 
+  // Fetch website settings
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const settings = await getWebsiteSettings();
+        setWebsiteSettings(settings || {});
+      } catch (err) {
+        console.error('Error fetching website settings:', err);
+      }
+    };
+    fetchSettings();
+  }, []);
+
   // Supabase Auth and Iframe/Popup Management
   useEffect(() => {
     // 1. Detect if we are running inside an OAuth popup
@@ -121,7 +138,8 @@ export default function App() {
       const allowedOrigins = [
         window.location.origin,
         'https://inef-52b.pages.dev',
-        'https://ineffable-52b.pages.dev'
+        'https://ineffable-52b.pages.dev',
+        'https://inef.cc'
       ];
       if (!allowedOrigins.includes(event.origin)) return;
       if (event.data?.type === 'SUPABASE_AUTH_SUCCESS') {
@@ -209,7 +227,7 @@ export default function App() {
 
   // Secure navigation guard
   const navigateToPage = (page: PageId) => {
-    const protectedPages: PageId[] = ['journals', 'cart', 'admin'];
+    const protectedPages: PageId[] = ['journals', 'cart'];
     if (!currentUser && protectedPages.includes(page)) {
       setCurrentPage('login');
       return;
@@ -344,6 +362,9 @@ export default function App() {
 
   // Get dynamic background photographic image according to the color theme
   const getBackgroundImageUrl = () => {
+    if (websiteSettings.background_url) {
+      return websiteSettings.background_url;
+    }
     switch (atmosphere.colorTheme) {
       case 'neon-mint':
         return 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop'; // Premium organic neon-mint curves
@@ -353,7 +374,7 @@ export default function App() {
         return 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop'; // Brutalist modern concrete structures
       case 'classic':
       default:
-        return '/src/assets/images/cherry_blossom_bg_1782902853761.jpg'; // Soft dynamic cherry blossom branches
+        return cherryBlossomBg; // Soft dynamic cherry blossom branches
     }
   };
 
@@ -404,6 +425,7 @@ export default function App() {
         onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
         cartCount={totalCartCount}
         currentUser={currentUser}
+        websiteSettings={websiteSettings}
       />
 
       {/* Main Render Views */}
@@ -459,6 +481,7 @@ export default function App() {
             currentUser={currentUser}
             onLogin={handleLogin}
             onLogout={handleLogout}
+            setCurrentPage={navigateToPage}
             wishlist={wishlist}
             onToggleWishlist={handleToggleWishlist}
             onAddToCart={handleAddToCart}
@@ -493,10 +516,10 @@ export default function App() {
               <div className="relative w-7 h-7 flex items-center justify-center">
                 {/* Your logo image with transparent background */}
                 <img 
-                  src="/img.png" 
-                  alt="INEFFABLE Logo" 
-                  className="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(244,63,94,0.25)]"
-                />
+                    src="/img.jpg" 
+                    alt="INEFFABLE Logo" 
+                    className="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(244,63,94,0.25)]"
+                  />
               </div>
               <h4 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} uppercase`}>
                 INEFFABLE

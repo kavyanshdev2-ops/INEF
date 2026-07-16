@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Gamepad2, Swords, Users, Shield, Compass, ChevronLeft, 
-  Sparkles, ExternalLink, Activity, Terminal, Copy, Check, 
-  Layers, Cpu, Trophy, Target, Box, Flame, RefreshCw 
+import {
+  Gamepad2, Swords, Users, Shield, Compass, ChevronLeft,
+  Sparkles, ExternalLink, Activity, Terminal, Copy, Check,
+  Layers, Cpu, Trophy, Target, Box, Flame, RefreshCw
 } from 'lucide-react';
 import { MinecraftStatusWidget } from './MinecraftStatusWidget';
 
@@ -43,7 +43,7 @@ interface Spark {
 export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
   const [selectedGame, setSelectedGame] = useState<'list' | 'minecraft' | 'roblox' | 'amongus' | 'mechachameleon' | 'krunker'>('list');
   const [copied, setCopied] = useState(false);
-  
+
   // Custom Minecraft States
   const [inventory, setInventory] = useState({
     diamonds: 3,
@@ -154,7 +154,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       subtitle: 'INEFFABLE ANARCHY GRID',
       desc: 'Connect to our dedicated cyber-couture survival sandbox. Built for brutalist architects, designers, and block-builders alike.',
       ip: 'ineffable.mc-play.org',
-      tags: ['Anarchy', 'SMP', '1.20-1.21.x'],
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
       img: 'https://images.unsplash.com/photo-1605899435973-ca2d1a8861cf?q=80&w=800&auto=format&fit=crop',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
@@ -198,11 +198,11 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-28 relative min-h-screen">
-      
+
       {/* Dynamic atmospheric header when listing */}
       <AnimatePresence mode="wait">
         {selectedGame === 'list' ? (
-          <motion.div 
+          <motion.div
             key="list-header"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -237,7 +237,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       <AnimatePresence mode="wait">
         {/* GAME CARDS LIST VIEW */}
         {selectedGame === 'list' && (
-          <motion.div 
+          <motion.div
             key="games-grid"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -254,14 +254,14 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
               >
                 {/* Card Header Image */}
                 <div className="relative h-64 overflow-hidden bg-zinc-950">
-                  <img 
-                    src={g.img} 
-                    alt={g.title} 
+                  <img
+                    src={g.img}
+                    alt={g.title}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-90 group-hover:brightness-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60" />
-                  
+
                   {/* Floating Badges */}
                   <div className="absolute top-4 left-4 flex flex-wrap gap-1.5">
                     {g.tags.map(tag => (
@@ -297,11 +297,10 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                   {/* Interactive Launch Button */}
                   <button
                     onClick={() => setSelectedGame(g.id)}
-                    className={`w-full py-3.5 mt-4 border font-mono text-[10px] tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer ${
-                      isDarkMode
+                    className={`w-full py-3.5 mt-4 border font-mono text-[10px] tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer ${isDarkMode
                         ? `bg-zinc-900/60 border-zinc-800/80 text-white group-hover:bg-zinc-100 group-hover:border-white group-hover:text-zinc-950`
                         : `bg-zinc-900 border-zinc-900 text-white group-hover:bg-zinc-800 group-hover:border-zinc-800 group-hover:text-white`
-                    }`}
+                      }`}
                   >
                     <span>LAUNCH PORTAL</span>
                     <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -322,7 +321,8 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             className="space-y-12 relative"
           >
             {/* Custom Google Fonts & Minecraft Styling Rule injection */}
-            <style dangerouslySetInnerHTML={{ __html: `
+            <style dangerouslySetInnerHTML={{
+              __html: `
               @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
               .font-minecraft {
                 font-family: 'Press Start 2P', monospace;
@@ -365,27 +365,27 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                 {petals.map((petal) => (
                   <motion.div
                     key={petal.id}
-                    initial={{ 
-                      x: `${petal.x}%`, 
-                      y: `${petal.y}%`, 
+                    initial={{
+                      x: `${petal.x}%`,
+                      y: `${petal.y}%`,
                       rotate: petal.rotate,
-                      opacity: 0 
+                      opacity: 0
                     }}
-                    animate={{ 
-                      y: ['-5%', '105%'], 
+                    animate={{
+                      y: ['-5%', '105%'],
                       x: [`${petal.x}%`, `${petal.x + (petal.id % 2 === 0 ? 10 : -10)}%`],
                       rotate: [petal.rotate, petal.rotate + 360],
                       opacity: [0, 1, 1, 0]
                     }}
-                    transition={{ 
-                      duration: petal.duration, 
-                      repeat: Infinity, 
+                    transition={{
+                      duration: petal.duration,
+                      repeat: Infinity,
                       delay: petal.delay,
                       ease: 'linear'
                     }}
                     className="absolute rounded-full bg-pink-300/60 blur-[0.5px] border border-pink-400/30"
-                    style={{ 
-                      width: petal.size, 
+                    style={{
+                      width: petal.size,
                       height: petal.size * 0.7,
                       boxShadow: '0 0 8px rgba(244, 114, 182, 0.3)'
                     }}
@@ -400,27 +400,27 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                 {sparks.map((spark) => (
                   <motion.div
                     key={spark.id}
-                    initial={{ 
-                      x: `${spark.x}%`, 
-                      y: `${spark.y}%`, 
+                    initial={{
+                      x: `${spark.x}%`,
+                      y: `${spark.y}%`,
                       scale: 0.5,
-                      opacity: 0 
+                      opacity: 0
                     }}
-                    animate={{ 
-                      y: ['105%', '-5%'], 
+                    animate={{
+                      y: ['105%', '-5%'],
                       x: [`${spark.x}%`, `${spark.x + (spark.id % 2 === 0 ? 6 : -6)}%`],
                       scale: [0.5, 1.2, 0.5],
                       opacity: [0, 0.8, 0]
                     }}
-                    transition={{ 
-                      duration: spark.duration, 
-                      repeat: Infinity, 
+                    transition={{
+                      duration: spark.duration,
+                      repeat: Infinity,
                       delay: spark.delay,
                       ease: 'easeOut'
                     }}
                     className="absolute rounded"
-                    style={{ 
-                      width: '4px', 
+                    style={{
+                      width: '4px',
                       height: '4px',
                       backgroundColor: spark.color,
                       boxShadow: `0 0 10px ${spark.color}`
@@ -431,15 +431,14 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             )}
 
             {/* Immersive Minecraft Aesthetic Banner */}
-            <div className={`relative border-4 rounded-3xl overflow-hidden transition-all duration-700 shadow-2xl p-8 lg:p-12 ${
-              isDarkMode 
-                ? 'border-[#12161a] bg-gradient-to-br from-[#0c0f12] via-[#14191f] to-[#07090b]' 
+            <div className={`relative border-4 rounded-3xl overflow-hidden transition-all duration-700 shadow-2xl p-8 lg:p-12 ${isDarkMode
+                ? 'border-[#12161a] bg-gradient-to-br from-[#0c0f12] via-[#14191f] to-[#07090b]'
                 : 'border-pink-200 bg-gradient-to-br from-[#fff0f5] via-[#ffe4e1] to-[#fcfcfc]'
-            }`}>
-              
+              }`}>
+
               {/* Background specific mesh */}
               <div className={`absolute inset-0 pointer-events-none opacity-40 ${isDarkMode ? 'bg-cave-mesh' : 'bg-cherry-mesh'}`} />
-              
+
               {/* Top thematic block border */}
               {isDarkMode ? (
                 <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-cyan-600 via-purple-600 to-cyan-600 border-b-4 border-cyan-950" />
@@ -449,52 +448,46 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
 
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 pt-4">
                 <div className="space-y-4 text-center md:text-left flex-1">
-                  <div className={`inline-flex items-center space-x-2 px-3 py-1 rounded text-[9px] font-mono uppercase tracking-widest border ${
-                    isDarkMode 
-                      ? 'bg-cyan-950/30 border-cyan-500/40 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.15)]' 
+                  <div className={`inline-flex items-center space-x-2 px-3 py-1 rounded text-[9px] font-mono uppercase tracking-widest border ${isDarkMode
+                      ? 'bg-cyan-950/30 border-cyan-500/40 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.15)]'
                       : 'bg-pink-100 border-pink-300 text-pink-600'
-                  }`}>
+                    }`}>
                     <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
                     <span>{isDarkMode ? 'UNDERGROUND CAVE BIOME' : 'CHERRY BLOSSOM CANOPY'}</span>
                   </div>
-                  
-                  <h1 className={`text-4xl lg:text-5xl font-bold tracking-wider font-minecraft uppercase select-none ${
-                    isDarkMode 
-                      ? 'text-cyan-400 text-shadow-glow-cyan' 
+
+                  <h1 className={`text-4xl lg:text-5xl font-bold tracking-wider font-minecraft uppercase select-none ${isDarkMode
+                      ? 'text-cyan-400 text-shadow-glow-cyan'
                       : 'text-pink-500 text-shadow-glow-pink'
-                  }`}>
+                    }`}>
                     {isDarkMode ? 'DEEPSLATE GRID' : 'SAKURA SHORES'}
                   </h1>
 
-                  <p className={`text-xs font-sans font-light max-w-xl leading-relaxed ${
-                    isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-                  }`}>
-                    {isDarkMode 
-                      ? 'Deep within the underground deepslate matrix. Minecraft ores glow intensely under ancient stone vaults. Harness cybernetic extraction vectors, harvest glowing resources, and reinforce your base terminal.' 
+                  <p className={`text-xs font-sans font-light max-w-xl leading-relaxed ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+                    }`}>
+                    {isDarkMode
+                      ? 'Deep within the underground deepslate matrix. Minecraft ores glow intensely under ancient stone vaults. Harness cybernetic extraction vectors, harvest glowing resources, and reinforce your base terminal.'
                       : 'Wander beneath a shower of elegant cherry blossoms. The Sakura Canopy is safe, filled with light, fresh air, and delicate resources. Gather petals to craft high-fashion armor sets and cosmic jewelry.'}
                   </p>
-                  
+
                   {/* Real-time Dynamic coordinates and Biome details */}
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 font-mono text-[10px] select-none pt-2">
-                    <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${
-                      isDarkMode 
-                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400' 
+                    <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${isDarkMode
+                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
                         : 'bg-white/60 border-pink-300/30 text-pink-500'
-                    }`}>
+                      }`}>
                       📍 X: <span className="font-bold">432</span> Y: <span className="font-bold">{isDarkMode ? '-58' : '72'}</span> Z: <span className="font-bold">1024</span>
                     </span>
-                    <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${
-                      isDarkMode 
-                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400' 
+                    <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${isDarkMode
+                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
                         : 'bg-white/60 border-pink-300/30 text-pink-500'
-                    }`}>
+                      }`}>
                       💎 MULTIPLIER: <span className="font-bold">2.5x</span>
                     </span>
-                    <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${
-                      isDarkMode 
-                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400' 
+                    <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${isDarkMode
+                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
                         : 'bg-white/60 border-pink-300/30 text-pink-500'
-                    }`}>
+                      }`}>
                       🌀 TPS: <span className="font-bold text-emerald-400">20.0</span>
                     </span>
                   </div>
@@ -502,14 +495,13 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
 
                 {/* Cyber block design */}
                 <div className="w-36 h-36 md:w-44 md:h-44 flex-shrink-0 relative group select-none">
-                  <div className={`w-full h-full relative border-4 rounded-3xl [image-rendering:pixelated] overflow-hidden flex items-center justify-center transition-all duration-700 ${
-                    isDarkMode 
-                      ? 'border-[#1a2128] bg-[#0f1318] shadow-[0_0_30px_rgba(34,211,238,0.2)]' 
+                  <div className={`w-full h-full relative border-4 rounded-3xl [image-rendering:pixelated] overflow-hidden flex items-center justify-center transition-all duration-700 ${isDarkMode
+                      ? 'border-[#1a2128] bg-[#0f1318] shadow-[0_0_30px_rgba(34,211,238,0.2)]'
                       : 'border-pink-300 bg-pink-100 shadow-[0_0_25px_rgba(244,114,182,0.25)]'
-                  }`}>
+                    }`}>
                     {/* Floating server logo */}
-                    <img 
-                      src="https://api.mcsrvstat.us/icon/ineffable.mc-play.org" 
+                    <img
+                      src="https://api.mcsrvstat.us/icon/ineffable.mc-play.org"
                       alt="Server Icon"
                       className="w-20 h-20 md:w-28 md:h-28 [image-rendering:pixelated] drop-shadow-2xl animate-float-slow z-10"
                       onError={(e) => {
@@ -529,15 +521,14 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             </div>
 
             {/* INTERACTIVE ORE EXTRACTION / SAKURA HARVEST GRID */}
-            <div 
+            <div
               id="mining-outer-container"
-              className={`border-2 rounded-3xl p-6 lg:p-8 space-y-6 transition-all duration-700 relative overflow-hidden ${
-                isDarkMode 
-                  ? 'border-cyan-500/20 bg-zinc-950/20 shadow-[0_0_50px_rgba(34,211,238,0.1)] backdrop-blur-xl' 
+              className={`border-2 rounded-3xl p-6 lg:p-8 space-y-6 transition-all duration-700 relative overflow-hidden ${isDarkMode
+                  ? 'border-cyan-500/20 bg-zinc-950/20 shadow-[0_0_50px_rgba(34,211,238,0.1)] backdrop-blur-xl'
                   : 'border-pink-300/20 bg-white/40 shadow-[0_0_40px_rgba(244,114,182,0.1)] backdrop-blur-md'
-              }`}
+                }`}
             >
-              
+
               {/* Floating particles clicked by user */}
               <AnimatePresence>
                 {miningFeed.map((feed) => (
@@ -563,37 +554,10 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                     </h3>
                   </div>
                   <p className="text-[10px] text-zinc-500 font-sans mt-1">
-                    {isDarkMode 
-                      ? 'Click on the glowing deepslate ores below to extract resources and load them directly into your cyber transceiver.' 
+                    {isDarkMode
+                      ? 'Click on the glowing deepslate ores below to extract resources and load them directly into your cyber transceiver.'
                       : 'Gather beautiful sakura petals and enchant them into cosmic clothing. Click the cherry blossom foliage to harvest petals!'}
                   </p>
-                </div>
-
-                {/* Resource Inventory */}
-                <div className={`p-3 border rounded-2xl flex flex-wrap gap-4 font-mono text-[10px] ${
-                  isDarkMode ? 'bg-zinc-950/80 border-cyan-500/20' : 'bg-white/80 border-pink-200'
-                }`}>
-                  <span className="text-zinc-500 border-r border-zinc-800/10 pr-2 block select-none">INVENTORY:</span>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="text-sky-400 font-bold">💎 {inventory.diamonds}</span>
-                    <span className="text-zinc-500 text-[8px]">DIAMOND</span>
-                  </div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="text-red-500 font-bold">🔴 {inventory.redstone}</span>
-                    <span className="text-zinc-500 text-[8px]">REDSTONE</span>
-                  </div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="text-emerald-400 font-bold">💚 {inventory.emeralds}</span>
-                    <span className="text-zinc-500 text-[8px]">EMERALD</span>
-                  </div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="text-pink-400 font-bold">🌸 {inventory.sakuraPetals}</span>
-                    <span className="text-zinc-500 text-[8px]">PETAL</span>
-                  </div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="text-amber-400 font-bold">🪙 {inventory.gold}</span>
-                    <span className="text-zinc-500 text-[8px]">GOLD</span>
-                  </div>
                 </div>
               </div>
 
@@ -616,7 +580,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                     >
                       {/* Pixelated core texture backing */}
                       <div className="absolute inset-0.5 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] bg-[size:4px_4px] rounded-xl pointer-events-none" />
-                      
+
                       {/* Floating glow aura in back */}
                       <div className="absolute inset-4 bg-current opacity-5 blur-2xl group-hover:scale-125 transition-transform" />
 
@@ -644,7 +608,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                   {/* Cherry blossom tree Canopy clicker */}
                   <div className="md:col-span-6 flex flex-col justify-between p-6 rounded-2xl bg-gradient-to-br from-pink-50 to-pink-100 border border-pink-200 shadow-lg relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(#f472b610_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none" />
-                    
+
                     <div className="space-y-2 relative z-10">
                       <span className="text-[9px] font-minecraft text-pink-600 block uppercase">Foliage Canopy</span>
                       <h4 className="font-minecraft text-sm text-pink-700 tracking-wide">
@@ -712,7 +676,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                           const isCrafted = craftedItems.includes(recipe.id);
 
                           return (
-                            <div 
+                            <div
                               key={recipe.id}
                               className="p-3 bg-pink-50/50 border border-pink-100 rounded-xl flex items-center justify-between"
                             >
@@ -737,13 +701,12 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                                   }));
                                   setCraftedItems(prev => [...prev, recipe.id]);
                                 }}
-                                className={`px-3 py-1.5 font-minecraft text-[8px] rounded border-b-2 transition-all cursor-pointer ${
-                                  isCrafted
+                                className={`px-3 py-1.5 font-minecraft text-[8px] rounded border-b-2 transition-all cursor-pointer ${isCrafted
                                     ? 'bg-zinc-100 border-zinc-200 text-zinc-400 cursor-not-allowed border-b-0'
                                     : canCraft
                                       ? 'bg-pink-500 border-pink-600 text-white hover:bg-pink-600'
                                       : 'bg-zinc-100 border-zinc-200 text-zinc-400 cursor-not-allowed border-b-0'
-                                }`}
+                                  }`}
                               >
                                 {isCrafted ? 'SYNTHESIZED' : 'SYNTHESIZE'}
                               </button>
@@ -771,12 +734,11 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             </div>
 
             {/* Direct Connection Info & Voxel terminal */}
-            <div className={`border-4 rounded-3xl overflow-hidden transition-all duration-700 p-1 relative ${
-              isDarkMode ? 'border-cyan-500/20 bg-zinc-950/80 shadow-[0_0_40px_rgba(34,211,238,0.15)]' : 'border-pink-300 bg-white/40 shadow-[0_0_30px_rgba(244,114,182,0.15)]'
-            }`}>
+            <div className={`border-4 rounded-3xl overflow-hidden transition-all duration-700 p-1 relative ${isDarkMode ? 'border-cyan-500/20 bg-zinc-950/80 shadow-[0_0_40px_rgba(34,211,238,0.15)]' : 'border-pink-300 bg-white/40 shadow-[0_0_30px_rgba(244,114,182,0.15)]'
+              }`}>
               {/* Retro digital matrix grid lines in back */}
               <div className={`absolute inset-0 pointer-events-none opacity-[0.03] ${isDarkMode ? 'bg-zinc-100' : 'bg-pink-500'}`} style={{ backgroundImage: 'linear-gradient(0deg, currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
-              
+
               <MinecraftStatusWidget isDarkMode={isDarkMode} activeAtmosphere={activeAtmosphere} />
             </div>
 
@@ -807,7 +769,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                   <span className={`text-[8px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>YOUR METAVERSE ROBUX</span>
                   <span className={`text-xs font-bold font-mono ${isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}`}>{robloxRobux}</span>
                 </div>
-                <button 
+                <button
                   onClick={() => setRobloxRobux(prev => prev + 100)}
                   className={`p-1.5 ${isDarkMode ? 'bg-zinc-900 border-zinc-800 hover:border-zinc-700' : 'bg-amber-50 border-amber-200 hover:border-amber-300'} text-amber-500 text-[10px] font-mono rounded cursor-pointer border`}
                 >
@@ -832,11 +794,10 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                     <button
                       key={skin.id}
                       onClick={() => setRobloxSkins(skin.id as any)}
-                      className={`p-3.5 border rounded-xl text-left flex flex-col justify-between h-28 cursor-pointer transition-all ${
-                        robloxSkins === skin.id 
-                          ? 'border-rose-500/40 bg-rose-500/10 text-rose-500 font-bold shadow-[0_0_15px_rgba(244,114,182,0.15)]' 
+                      className={`p-3.5 border rounded-xl text-left flex flex-col justify-between h-28 cursor-pointer transition-all ${robloxSkins === skin.id
+                          ? 'border-rose-500/40 bg-rose-500/10 text-rose-500 font-bold shadow-[0_0_15px_rgba(244,114,182,0.15)]'
                           : `${isDarkMode ? 'border-zinc-800 hover:border-zinc-700 bg-zinc-950/20 text-zinc-400' : 'border-zinc-200 hover:border-zinc-300 bg-white text-zinc-600'}`
-                      }`}
+                        }`}
                     >
                       <span className="text-[10px] font-bold tracking-wider">{skin.label}</span>
                       <span className="text-[9px] font-mono text-zinc-500">{skin.price}</span>
@@ -892,7 +853,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                   <p className={`${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'} text-[11px] leading-relaxed`}>
                     Audit real-time spaceship parameters. Click the emergency action terminal to simulate network alert states.
                   </p>
-                  
+
                   <div className="grid grid-cols-2 gap-4 pt-2">
                     <div className={`p-3 ${isDarkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-zinc-50 border-zinc-200'} border rounded-xl`}>
                       <span className="text-[8px] text-zinc-500 block">CREWMATE RATIO</span>
@@ -908,7 +869,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                 </div>
 
                 <div className="flex space-x-2 pt-4">
-                  <button 
+                  <button
                     onClick={() => {
                       setAmongUsStatus('impostor_alert');
                       setCrewCount(c => Math.max(1, c - 1));
@@ -917,7 +878,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                   >
                     🚨 IMPOSTOR ALARM
                   </button>
-                  <button 
+                  <button
                     onClick={() => {
                       setAmongUsStatus('safe');
                       setCrewCount(10);
@@ -932,7 +893,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
               {/* Big Emergency Button */}
               <div className={`flex flex-col items-center justify-center p-8 ${isDarkMode ? 'bg-zinc-950 border-zinc-900' : 'bg-white/80 border-zinc-200'} border rounded-2xl relative overflow-hidden group shadow-sm`}>
                 <div className="absolute inset-0 bg-red-600/[0.02] group-hover:bg-red-600/[0.04] transition-all" />
-                <button 
+                <button
                   onClick={() => setAmongUsStatus(p => p === 'safe' ? 'sabotage' : 'safe')}
                   className="w-32 h-32 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 transition-all shadow-[0_0_20px_rgba(220,38,38,0.4)] border-4 border-red-800 flex items-center justify-center text-white font-mono font-extrabold text-xs text-center p-3 cursor-pointer"
                 >
@@ -994,19 +955,19 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
 
               {/* Holographic Chameleon Render */}
               <div className="lg:col-span-5 flex justify-center">
-                <div 
+                <div
                   className="w-full max-w-sm rounded-2xl p-8 border-2 text-center space-y-4 transition-all duration-700 relative overflow-hidden"
-                  style={{ 
-                    borderColor: `${chameleonColor}30`, 
-                    backgroundColor: `${chameleonColor}05` 
+                  style={{
+                    borderColor: `${chameleonColor}30`,
+                    backgroundColor: `${chameleonColor}05`
                   }}
                 >
                   {/* Hologram visual glitch */}
                   <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none" />
-                  
-                  <div 
+
+                  <div
                     className="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-4xl transition-all duration-700 shadow-2xl"
-                    style={{ 
+                    style={{
                       backgroundColor: `${chameleonColor}20`,
                       boxShadow: `0 0 30px ${chameleonColor}25`
                     }}
@@ -1062,11 +1023,10 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                     <button
                       key={weapon.id}
                       onClick={() => setKrunkerWeapon(weapon.id)}
-                      className={`p-4 border rounded-xl text-left flex flex-col justify-between h-24 cursor-pointer transition-all ${
-                        krunkerWeapon === weapon.id 
-                          ? 'border-sky-500/40 bg-sky-500/10 text-sky-500 font-bold' 
+                      className={`p-4 border rounded-xl text-left flex flex-col justify-between h-24 cursor-pointer transition-all ${krunkerWeapon === weapon.id
+                          ? 'border-sky-500/40 bg-sky-500/10 text-sky-500 font-bold'
                           : `${isDarkMode ? 'border-zinc-800 hover:border-zinc-700 bg-zinc-950/20 text-zinc-400' : 'border-zinc-200 hover:border-zinc-300 bg-white text-zinc-600'}`
-                      }`}
+                        }`}
                     >
                       <span className="text-[10px] font-bold uppercase font-mono tracking-wider">{weapon.class}</span>
                       <span className="text-[9px] text-zinc-500 font-sans mt-1">{weapon.id}</span>

@@ -238,6 +238,24 @@ export async function deleteDBAddress(userId: string, addressId: string) {
   }
 }
 
+// List all tables in the database (for audit)
+export async function listTables() {
+  if (!supabase) return [];
+  try {
+    // Query information_schema to get table names
+    const { data, error } = await supabase
+      .from('information_schema.tables')
+      .select('table_name')
+      .eq('table_schema', 'public');
+    
+    if (error) throw error;
+    return data?.map(row => row.table_name) || [];
+  } catch (err) {
+    console.error('Error listing tables:', err);
+    return [];
+  }
+}
+
 // Orders table
 export async function getDBOrders(userId: string) {
   if (!supabase) return [];
@@ -281,6 +299,350 @@ export async function createDBOrder(userId: string, total: number, discordUserna
     return orderData;
   } catch (err) {
     console.warn('Error creating order in DB:', err);
+    return null;
+  }
+}
+
+// =============================================
+// ADMIN PANEL DATABASE HELPERS
+// =============================================
+
+// Products
+export async function getProducts(): Promise<any[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching products:', err);
+    return [];
+  }
+}
+
+export async function createProduct(product: any): Promise<any> {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .insert({
+        ...product,
+        slug: product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        updated_at: new Date().toISOString()
+      })
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error creating product:', err);
+    return null;
+  }
+}
+
+export async function updateProduct(id: string, product: any): Promise<any> {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .update({ ...product, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error updating product:', err);
+    return null;
+  }
+}
+
+export async function deleteProduct(id: string): Promise<boolean> {
+  if (!supabase) return false;
+  try {
+    const { error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+    return true;
+  } catch (err) {
+    console.error('Error deleting product:', err);
+    return false;
+  }
+}
+
+// Categories
+export async function getCategories(): Promise<any[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('display_order');
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching categories:', err);
+    return [];
+  }
+}
+
+// Orders (admin view)
+export async function getAdminOrders(): Promise<any[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select(`
+        *,
+        customer:customers(*),
+        order_items(*)
+      `)
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching admin orders:', err);
+    return [];
+  }
+}
+
+export async function updateOrderStatus(id: string, status: string, paymentStatus?: string): Promise<any> {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .update({ status, payment_status: paymentStatus, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error updating order status:', err);
+    return null;
+  }
+}
+
+// Customers
+export async function getCustomers(): Promise<any[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('customers')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching customers:', err);
+    return [];
+  }
+}
+
+// Media Library
+export async function getMedia(): Promise<any[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('media_library')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching media:', err);
+    return [];
+  }
+}
+
+export async function uploadMedia(file: File, adminId?: string): Promise<any> {
+  if (!supabase) return null;
+  try {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `media/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from('ineffable-assets')
+      .upload(fileName, file, { cacheControl: '3600', upsert: true });
+    if (storageError) throw storageError;
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('ineffable-assets')
+      .getPublicUrl(fileName);
+
+    const { data, error } = await supabase
+      .from('media_library')
+      .insert({
+        file_name: file.name,
+        original_name: file.name,
+        file_url: publicUrl,
+        file_type: file.type,
+        file_size: file.size,
+        mime_type: file.type,
+        created_by: adminId
+      })
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error uploading media:', err);
+    return null;
+  }
+}
+
+export async function deleteMedia(id: string): Promise<boolean> {
+  if (!supabase) return false;
+  try {
+    const { error } = await supabase
+      .from('media_library')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+    return true;
+  } catch (err) {
+    console.error('Error deleting media:', err);
+    return false;
+  }
+}
+
+// Settings
+export async function getWebsiteSettings(): Promise<Record<string, any>> {
+  if (!supabase) return {};
+  try {
+    const { data, error } = await supabase
+      .from('website_settings')
+      .select('*');
+    if (error) throw error;
+    const settings: Record<string, any> = {};
+    (data || []).forEach((row: any) => {
+      settings[row.key] = row.value;
+    });
+    return settings;
+  } catch (err) {
+    console.error('Error fetching settings:', err);
+    return {};
+  }
+}
+
+export async function updateWebsiteSettings(key: string, value: any, adminId?: string): Promise<any> {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('website_settings')
+      .upsert({
+        key,
+        value,
+        updated_at: new Date().toISOString(),
+        updated_by: adminId
+      }, { onConflict: 'key' })
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error updating setting:', err);
+    return null;
+  }
+}
+
+// Announcements
+export async function getAnnouncements(): Promise<any[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('announcements')
+      .select('*')
+      .order('display_order')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching announcements:', err);
+    return [];
+  }
+}
+
+// Admin Management
+export async function getProfiles(): Promise<any[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching profiles:', err);
+    return [];
+  }
+}
+
+export async function updateProfileIsAdmin(userId: string, isAdmin: boolean): Promise<any> {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ is_admin: isAdmin, updated_at: new Date().toISOString() })
+      .eq('id', userId)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error updating profile admin status:', err);
+    return null;
+  }
+}
+
+export async function inviteAdmin(email: string): Promise<any> {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
+      redirectTo: window.location.origin,
+      data: { is_admin: true }
+    });
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error inviting admin:', err);
+    throw err;
+  }
+}
+
+// Analytics
+export async function getAnalytics(): Promise<any> {
+  if (!supabase) return null;
+  try {
+    // Simple analytics - count orders, calculate totals
+    const [orders, customers] = await Promise.all([
+      getAdminOrders(),
+      getCustomers()
+    ]);
+
+    const totalRevenue = orders.reduce((sum: number, o: any) => sum + (o.total_amount || 0), 0);
+    const pendingOrders = orders.filter((o: any) => o.status === 'pending').length;
+    const failedPayments = orders.filter((o: any) => o.payment_status === 'failed').length;
+
+    return {
+      today_sales: 0,
+      week_sales: 0,
+      month_revenue: totalRevenue,
+      total_orders: orders.length,
+      pending_orders: pendingOrders,
+      failed_payments: failedPayments,
+      total_customers: customers.length,
+      low_stock_products: [],
+      recent_orders: orders.slice(0, 5)
+    };
+  } catch (err) {
+    console.error('Error fetching analytics:', err);
     return null;
   }
 }
