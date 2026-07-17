@@ -148,170 +148,174 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
   };
 
   const games = [
-    {
-      id: 'minecraft' as const,
-      title: 'MINECRAFT',
-      subtitle: 'INEFFABLE SMP',
-      desc: 'Connect to our dedicated survival sandbox. Built for brutalist architects, designers, and block-builders alike.',
-      ip: 'ineffable.mc-play.org',
-      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: 'minecraftinefbanner.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'bgmi' as const,
-      title: 'BGMI',
-      subtitle: 'INEFFABLE ',
-      desc: 'Even if I use 2 claws finger setup i will still be recognized guess who I am??',
-      ip: 'INEFFABLE BGMI TOURNAMENT',
-      tags: ['PATT', 'SE', 'HEADSHOT'],
-      img: 'bgmiinef.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'codenames' as const,
-      title: 'CODENAMES',
-      subtitle: 'INEFFABLE ',
-      desc: 'LETS SEE WHO CATHES WHOM EAGLE OR ROBOT ',
-      ip: 'HEHEHE....',
-      img: 'codenames.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'freefire' as const,
-      title: 'FREE FIRE',
-      subtitle: 'INEFFABLE',
-      desc: 'ONE TAP FOR THE WIN , ',
-      ip: 'ineffable.mc-play.org',
-      tags: ['khelega', 'freefire', 'INEFFABLE'],
-      img: 'freefire.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'valorant' as const,
-      title: 'VALORANT',
-      subtitle: 'INEFFABLE',
-      desc: 'Are you Jett or Phoenix or what whatever lets duo ',
-      ip: 'ineffable.mc-play.org',
-      tags: ['INEFFABLE', 'VALO', 'come quities'],
-      img: 'valo.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'csgo' as const,
-      title: 'CSGO',
-      subtitle: 'INEFFABLE ',
-      desc: 'SUKAA !! LETS PLAYYY',
-      ip: 'come lets have a talk',
-      img: 'csgo.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'brawhalla' as const,
-      title: 'BRAWHALLA',
-      subtitle: 'INEFFABLE ',
-      desc: 'lets fly and still get fall damage',
-      ip: 'BRAWHALLA FOR A WIN',
-      tags: ['INEFFABLE', 'BRAWHALLA'],
-      img: 'brawhalla.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'smash kart' as const,
-      title: 'SMASH KART',
-      subtitle: 'INEFFABLE SMP',
-      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
-      ip: 'ineffable.mc-play.org',
-      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: '/minecraftinefbanner.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'rocket league' as const,
-      title: 'ROCKET LEAGUE',
-      subtitle: 'INEFFABLE ',
-      desc: 'KABOOM!!! SUIII GOAL FOR A WIN ',
-      ip: 'ineffable rocket on our car',
-      tags: ['INEFFABLE', 'ROCKET LEAGUE'],
-      img: 'rocketleague.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'ludo' as const,
-      title: 'LUDO',
-      subtitle: 'INEFFABLE ',
-      desc: 'Even if you are old or child , its still nostalgia',
-      ip: 'LUDO AAO BACHO TUMHE SIKHAU !!',
-      tags: ['CHILD/old', 'INEFFABLE', 'LUDO'],
-      img: 'ludo.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'chess' as const,
-      title: 'CHESS',
-      subtitle: 'INEFFABLE ',
-      desc: 'If you think you are the best lets duo then....',
-      ip: 'LETS PLAY CHESS TOGEOTHER',
-      tags: ['INEFFABLE', 'CHESS', '500elo - 2500elo'],
-      img: 'chessinef.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'monopoly' as const,
-      title: 'MONOPOLY',
-      subtitle: 'INEFFABLE SMP',
-      desc: 'Business Men/Women or Entrepreneur ?? lets see who will be the best',
-      ip: 'BUSINESS INEFFABLE ',
-      tags: ['INEFFABLE', 'MONOPOLY', 'MONEYYYY!!'],
-      img: 'monopoly.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'skribble' as const,
-      title: 'SKRIBBLE',
-      subtitle: 'INEFFABLE SMP',
-      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
-      ip: 'ineffable.mc-play.org',
-      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: '/minecraftinefbanner.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'roblox' as const,
-      title: 'ROBLOX',
-      subtitle: 'INEFFABLE METAVERSE',
-      desc: 'Our decentralized fashion runaways, high-fashion clothing catalog, and interactive social gathering grid.',
-      tags: ['Fashion Runaway', 'Hangout', 'Interactive'],
-      img: 'roblox.png',
-      accentColor: 'text-rose-400 border-rose-500/30'
-    },
-    {
-      id: 'amongus' as const,
-      title: 'AMONG US',
-      subtitle: 'DEEP SPACE DETECTOR',
-      desc: 'Unmask the digital saboteur lurking in the ventilation ducts. Optimized with high-contrast UI overlays and proximity voice logs.',
-      tags: ['Social Deduction', 'Co-op', 'Skins'],
-      img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-red-400 border-red-500/30'
-    },
-    {
-      id: 'mechachameleon' as const,
-      title: 'MECHA CHAMELEON',
-      subtitle: 'COLOR STEALTH COUPLER',
-      desc: 'ARE YOU AN ARTIST LETS SEEE',
-      tags: ['Color Shifting', 'Puzzle', 'Stealth'],
-      img: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-amber-400 border-amber-500/30'
-    },
-    {
-      id: 'krunker' as const,
-      title: 'KRUNKER',
-      subtitle: 'VOXEL STRIKE TERMINAL',
-      desc: 'High-octane client-side first-person voxel shooter. Load custom weapon wrappers, view match metrics, and launch custom servers.',
-      tags: ['FPS', 'Fast-paced', 'Custom Loadout'],
-      img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-sky-400 border-sky-500/30'
-    }
+    [
+      {
+        id: 'minecraft' as const,
+        title: 'MINECRAFT',
+        subtitle: 'INEFFABLE SMP',
+        desc: 'Join our Lifesteal SMP and build, survive, raid, and dominate with the INEFFABLE community.',
+        ip: 'ineffable.mc-play.org',
+        tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+        img: '/minecraftinefbanner.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'bgmi' as const,
+        title: 'BGMI',
+        subtitle: 'INEFFABLE',
+        desc: 'Whether you play 2-finger, 4-finger, or claw, drop in and squad up with us.',
+        ip: 'INEFFABLE BGMI',
+        tags: ['CLAW', 'RANKED', 'HEADSHOTS'],
+        img: '/bgmiinef.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'codenames' as const,
+        title: 'CODENAMES',
+        subtitle: 'INEFFABLE',
+        desc: 'Can your team decode every clue before the opponent? Let the mind games begin.',
+        ip: 'Team Strategy',
+        tags: ['PUZZLE', 'TEAMWORK', 'FUN'],
+        img: '/codenames.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'freefire' as const,
+        title: 'FREE FIRE',
+        subtitle: 'INEFFABLE',
+        desc: 'One Tap. Booyah. Queue up with the community and chase every victory.',
+        ip: 'Community Matches',
+        tags: ['BOOYAH', 'RANKED', 'SQUAD'],
+        img: '/freefire.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'valorant' as const,
+        title: 'VALORANT',
+        subtitle: 'INEFFABLE',
+        desc: 'Looking for a duo or a full stack? Jump into ranked or customs with us.',
+        ip: '5 Stack Ready',
+        tags: ['VALORANT', 'COMP', 'DUO'],
+        img: '/valo.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'csgo' as const,
+        title: 'CS2',
+        subtitle: 'INEFFABLE',
+        desc: 'Smoke, flash, and clutch your way to victory with the community.',
+        ip: 'Competitive Queue',
+        tags: ['CS2', 'FACEIT', 'PREMIER'],
+        img: '/csgo.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'brawlhalla' as const,
+        title: 'BRAWLHALLA',
+        subtitle: 'INEFFABLE',
+        desc: 'Fast-paced platform fighting with friends. Every match is chaos.',
+        ip: 'Friendly Matches',
+        tags: ['FIGHTING', '2V2', 'CASUAL'],
+        img: '/brawhalla.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'smash-kart' as const,
+        title: 'SMASH KART',
+        subtitle: 'INEFFABLE',
+        desc: 'Race, drift, and blast your friends off the track.',
+        ip: 'Browser Party',
+        tags: ['RACING', 'KART', 'MULTIPLAYER'],
+        img: '/smashkart.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'rocket-league' as const,
+        title: 'ROCKET LEAGUE',
+        subtitle: 'INEFFABLE',
+        desc: 'Hit insane aerials and score the winning goal with your teammates.',
+        ip: 'Ranked & Casual',
+        tags: ['GOALS', '3V3', 'AERIALS'],
+        img: '/rocketleague.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'ludo' as const,
+        title: 'LUDO',
+        subtitle: 'INEFFABLE',
+        desc: 'Classic fun with friends. Pure nostalgia, endless laughs.',
+        ip: 'Party Game',
+        tags: ['CASUAL', 'FRIENDS', 'CLASSIC'],
+        img: '/ludo.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'chess' as const,
+        title: 'CHESS',
+        subtitle: 'INEFFABLE',
+        desc: 'From beginners to masters, everyone is welcome at the board.',
+        ip: '500–2500 Elo',
+        tags: ['CHESS', 'RATED', 'STRATEGY'],
+        img: '/chessinef.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'monopoly' as const,
+        title: 'MONOPOLY',
+        subtitle: 'INEFFABLE',
+        desc: 'Buy, trade, negotiate, and bankrupt your friends in the ultimate board game.',
+        ip: 'Game Night',
+        tags: ['BOARD GAME', 'FUN', 'MULTIPLAYER'],
+        img: '/monopoly.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'skribbl' as const,
+        title: 'SKRIBBL.IO',
+        subtitle: 'INEFFABLE',
+        desc: 'Draw anything. Guess everything. Prepare for hilarious moments.',
+        ip: 'Drawing Party',
+        tags: ['DRAWING', 'PARTY', 'FUN'],
+        img: '/skribbl.png',
+        accentColor: 'text-emerald-400 border-emerald-500/30'
+      },
+      {
+        id: 'roblox' as const,
+        title: 'ROBLOX',
+        subtitle: 'INEFFABLE',
+        desc: 'Explore thousands of experiences with the community and hang out together.',
+        tags: ['ROLEPLAY', 'MINIGAMES', 'COMMUNITY'],
+        img: '/roblox.png',
+        accentColor: 'text-rose-400 border-rose-500/30'
+      },
+      {
+        id: 'among-us' as const,
+        title: 'AMONG US',
+        subtitle: 'INEFFABLE',
+        desc: 'Trust no one. Complete tasks or expose the impostor before it is too late.',
+        tags: ['SOCIAL', 'VOICE CHAT', 'DEDUCTION'],
+        img: '/amongus.png',
+        accentColor: 'text-red-400 border-red-500/30'
+      },
+      {
+        id: 'mecha-chameleon' as const,
+        title: 'MECHA CHAMELEON',
+        subtitle: 'INEFFABLE',
+        desc: 'Test your creativity and puzzle-solving skills in colorful challenges.',
+        tags: ['PUZZLE', 'ART', 'CREATIVE'],
+        img: '/mechachameleon.png',
+        accentColor: 'text-amber-400 border-amber-500/30'
+      },
+      {
+        id: 'krunker' as const,
+        title: 'KRUNKER',
+        subtitle: 'INEFFABLE',
+        desc: 'Fast-paced browser FPS with custom maps, clans, and competitive gameplay.',
+        tags: ['FPS', 'VOXEL', 'COMPETITIVE'],
+        img: '/krunker.png',
+        accentColor: 'text-sky-400 border-sky-500/30'
+      }
+    ]
   ];
 
 
