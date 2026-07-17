@@ -753,7 +753,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
   // Mock server lists for Mutual Servers tab
   const MUTUAL_SERVERS = [
-    { id: '1', name: 'Ineffable 🌐', members: '14,204', icon: 'IH', bgColor: 'bg-indigo-600', inviteUrl: 'https://discord.gg/inefontop' },
+    { id: '1', name: 'Ineffable Hub 🌐', members: '14,204', icon: 'IH', bgColor: 'bg-indigo-600', inviteUrl: 'https://discord.gg/ineffable' },
+    { id: '2', name: 'Developer Sanctuary 💻', members: '8,409', icon: 'DS', bgColor: 'bg-emerald-600', inviteUrl: 'https://discord.gg/ineffable' },
+    { id: '3', name: 'Cyber Couture Atelier 🪡', members: '3,212', icon: 'CC', bgColor: 'bg-pink-600', inviteUrl: 'https://discord.gg/ineffable' },
+    { id: '4', name: 'Quantum Esports 🎮', members: '5,022', icon: 'QE', bgColor: 'bg-orange-600', inviteUrl: 'https://discord.gg/ineffable' },
+    { id: '5', name: 'Lanyard Gateway 🔌', members: '18,504', icon: 'LY', bgColor: 'bg-sky-600', inviteUrl: 'https://discord.gg/ineffable' },
   ];
 
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);

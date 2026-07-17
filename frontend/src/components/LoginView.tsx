@@ -6,12 +6,12 @@
 import React, { useState, useEffect } from 'react';
 import { AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import {
-  LogIn, LogOut, KeyRound, CheckCircle, Flame, Shield, Award, Terminal,
+import { 
+  LogIn, LogOut, KeyRound, CheckCircle, Flame, Shield, Award, Terminal, 
   Chrome, Upload, Check, Heart, MapPin, ClipboardList, Trash2, ShoppingCart,
   ArrowRight, ShieldAlert, Sparkles, RefreshCw
 } from 'lucide-react';
-import {
+import { 
   supabase, isSupabaseConfigured, uploadAvatar,
   getDBAddresses, saveDBAddress, deleteDBAddress,
   getDBOrders, createDBOrder
@@ -164,18 +164,19 @@ export const LoginView: React.FC<LoginViewProps> = ({
   currentUser,
   onLogin,
   onLogout,
+  setCurrentPage,
   wishlist = [],
   onToggleWishlist,
   onAddToCart,
 }) => {
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
-
+  
   // Credentials and forms
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupUsername, setSignupUsername] = useState('');
   const [authMode, setAuthMode] = useState<'login' | 'signup' | 'forgot'>('login');
-
+  
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [authLogs, setAuthLogs] = useState<string[]>([]);
   const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null);
@@ -260,7 +261,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
           data: { avatar_url: publicUrl }
         });
         if (error) throw error;
-
+        
         setAvatarUrl(publicUrl);
         setUploadSuccess(true);
         setTimeout(() => setUploadSuccess(false), 3000);
@@ -434,7 +435,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
         const username = data.user?.user_metadata?.full_name || data.user?.email?.split('@')[0] || 'User';
         setAuthLogs(prev => [...prev, `[SUPABASE] USER AUTHENTICATED SUCCESSFULLY: @${username.toUpperCase()}`]);
-
+        
         setTimeout(() => {
           onLogin(username);
           setIsAuthenticating(false);
@@ -629,13 +630,14 @@ export const LoginView: React.FC<LoginViewProps> = ({
   if (currentUser) {
     return (
       <div id="logged-in-profile-view" className={`max-w-4xl mx-auto px-6 py-24 pt-32 ${themeStyles.textPrimary}`}>
-
+        
         {/* Toast notifications */}
         {notification && (
-          <div className={`fixed bottom-6 right-6 z-50 px-6 py-4 rounded-xl border font-mono text-[10px] tracking-widest shadow-2xl flex items-center space-x-3 animate-slide-in ${notification.type === 'success'
-              ? 'bg-emerald-950 border-emerald-500/30 text-emerald-300'
+          <div className={`fixed bottom-6 right-6 z-50 px-6 py-4 rounded-xl border font-mono text-[10px] tracking-widest shadow-2xl flex items-center space-x-3 animate-slide-in ${
+            notification.type === 'success' 
+              ? 'bg-emerald-950 border-emerald-500/30 text-emerald-300' 
               : 'bg-rose-950 border-rose-500/30 text-rose-300'
-            }`}>
+          }`}>
             {notification.type === 'success' ? (
               <CheckCircle className="w-4 h-4 text-emerald-400" />
             ) : (
@@ -665,22 +667,22 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   referrerPolicy="no-referrer"
                   className={`w-full h-full object-cover rounded-full border-2 ${themeStyles.borderMuted} transition-opacity duration-300 group-hover:opacity-70`}
                 />
-
-                <label
-                  htmlFor="avatar-upload"
+                
+                <label 
+                  htmlFor="avatar-upload" 
                   className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-white font-mono text-[8px] tracking-widest p-1 text-center"
                 >
                   <Upload className="w-4 h-4 mb-0.5" />
                   <span>{isUploading ? 'SAVING...' : 'UPLOAD'}</span>
                 </label>
 
-                <input
-                  id="avatar-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleAvatarChange}
+                <input 
+                  id="avatar-upload" 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleAvatarChange} 
                   disabled={isUploading}
-                  className="hidden"
+                  className="hidden" 
                 />
 
                 <span className={`absolute bottom-1 right-1 w-4 h-4 bg-emerald-500 border-2 ${isDarkMode ? 'border-zinc-950' : 'border-white'} rounded-full ${isUploading ? 'animate-ping' : 'animate-pulse'}`} />
@@ -733,10 +735,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
                     <button
                       key={tab.id}
                       onClick={() => setProfileTab(tab.id as any)}
-                      className={`flex items-center space-x-2 px-4 py-2.5 font-mono text-[9px] tracking-widest uppercase transition-all border-b-2 rounded-t-lg cursor-pointer whitespace-nowrap ${isActive
-                          ? `${themeStyles.accentText} border-rose-500 font-bold bg-zinc-500/5`
+                      className={`flex items-center space-x-2 px-4 py-2.5 font-mono text-[9px] tracking-widest uppercase transition-all border-b-2 rounded-t-lg cursor-pointer whitespace-nowrap ${
+                        isActive 
+                          ? `${themeStyles.accentText} border-rose-500 font-bold bg-zinc-500/5` 
                           : `border-transparent text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'} hover:bg-zinc-500/2`
-                        }`}
+                      }`}
                     >
                       <TabIcon className="w-3.5 h-3.5" />
                       <span>{tab.label}</span>
@@ -796,14 +799,14 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[350px] overflow-y-auto pr-2">
                       {products.filter(p => wishlist.includes(p.id)).map(product => (
-                        <div
+                        <div 
                           key={product.id}
                           className={`flex items-center space-x-3 p-3 border ${themeStyles.borderMuted} ${themeStyles.bgCard} rounded-xl justify-between`}
                         >
                           <div className="flex items-center space-x-3 min-w-0">
-                            <img
-                              src={product.image}
-                              alt={product.name}
+                            <img 
+                              src={product.image} 
+                              alt={product.name} 
                               className="w-10 h-10 object-cover rounded-lg border border-zinc-800"
                             />
                             <div className="min-w-0">
@@ -855,10 +858,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
                     <span className="font-mono text-[9px] text-zinc-500 tracking-wider uppercase">Saved Addresses</span>
                     <button
                       onClick={() => setShowAddressForm(!showAddressForm)}
-                      className={`px-3 py-1 rounded border font-mono text-[9px] tracking-wider uppercase transition-colors cursor-pointer ${showAddressForm
-                          ? 'border-rose-950 text-rose-400 hover:bg-rose-950/20'
+                      className={`px-3 py-1 rounded border font-mono text-[9px] tracking-wider uppercase transition-colors cursor-pointer ${
+                        showAddressForm 
+                          ? 'border-rose-950 text-rose-400 hover:bg-rose-950/20' 
                           : `${themeStyles.accentBg} text-zinc-950 font-bold border-transparent`
-                        }`}
+                      }`}
                     >
                       {showAddressForm ? 'Cancel Form' : 'Add Address'}
                     </button>
@@ -1020,13 +1024,14 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
   return (
     <div id="login-view-container" className={`max-w-4xl mx-auto px-6 py-24 pt-32 ${themeStyles.textPrimary}`}>
-
+      
       {/* Toast notification panel */}
       {notification && (
-        <div className={`fixed bottom-6 right-6 z-50 px-6 py-4 rounded-xl border font-mono text-[10px] tracking-widest shadow-2xl flex items-center space-x-3 animate-slide-in ${notification.type === 'success'
-            ? 'bg-emerald-950 border-emerald-500/30 text-emerald-300'
+        <div className={`fixed bottom-6 right-6 z-50 px-6 py-4 rounded-xl border font-mono text-[10px] tracking-widest shadow-2xl flex items-center space-x-3 animate-slide-in ${
+          notification.type === 'success' 
+            ? 'bg-emerald-950 border-emerald-500/30 text-emerald-300' 
             : 'bg-rose-950 border-rose-500/30 text-rose-300'
-          }`}>
+        }`}>
           {notification.type === 'success' ? (
             <CheckCircle className="w-4 h-4 text-emerald-400" />
           ) : (
@@ -1050,7 +1055,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-3xl mx-auto items-stretch">
-
+        
         {/* Google Supabase Login - Full Width in OAuth column */}
         <div className={`col-span-12 md:col-span-6 ${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-3xl p-6 space-y-6 text-center relative overflow-hidden flex flex-col justify-between`}>
           {isSupabaseConfigured && (
@@ -1058,14 +1063,14 @@ export const LoginView: React.FC<LoginViewProps> = ({
               ● SECURE GATEWAY
             </span>
           )}
-
+          
           <div className="space-y-2">
             <h3 className={`font-sans text-lg font-bold ${themeStyles.textPrimary} uppercase tracking-wider flex items-center justify-center gap-2`}>
               <Chrome className="w-5 h-5 text-rose-400" />
               <span>Google Cloud Sync</span>
             </h3>
             <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed`}>
-              {isSupabaseConfigured
+              {isSupabaseConfigured 
                 ? 'Primary secure oauth link. Synchronize your account automatically, load active server badges, and unlock custom vanity roles.'
                 : 'Supabase credentials missing. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to activate Google cloud sync features.'}
             </p>
@@ -1075,10 +1080,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
             id="btn-google-oauth"
             onClick={handleGoogleLogin}
             disabled={isAuthenticating || !isSupabaseConfigured}
-            className={`w-full py-4 ${isSupabaseConfigured
-                ? 'bg-rose-500 hover:bg-rose-600 text-white cursor-pointer shadow-lg shadow-rose-500/10'
+            className={`w-full py-4 ${
+              isSupabaseConfigured 
+                ? 'bg-rose-500 hover:bg-rose-600 text-white cursor-pointer shadow-lg shadow-rose-500/10' 
                 : 'bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700/50'
-              } font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2.5 disabled:opacity-50`}
+            } font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2.5 disabled:opacity-50`}
           >
             <Chrome className="w-4.5 h-4.5" />
             <span>LOG IN WITH GOOGLE</span>
@@ -1091,15 +1097,17 @@ export const LoginView: React.FC<LoginViewProps> = ({
             <div className={`flex border-b ${isDarkMode ? 'border-zinc-800/80' : 'border-zinc-200'} mb-4 pb-0.5 justify-start`}>
               <button
                 onClick={() => setAuthMode('login')}
-                className={`flex-1 pb-2 font-mono text-[10px] tracking-widest uppercase transition-colors cursor-pointer text-center ${authMode === 'login' ? 'text-rose-400 font-bold border-b-2 border-rose-500' : `text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'}`
-                  }`}
+                className={`flex-1 pb-2 font-mono text-[10px] tracking-widest uppercase transition-colors cursor-pointer text-center ${
+                  authMode === 'login' ? 'text-rose-400 font-bold border-b-2 border-rose-500' : `text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'}`
+                }`}
               >
                 LOG IN
               </button>
               <button
                 onClick={() => setAuthMode('signup')}
-                className={`flex-1 pb-2 font-mono text-[10px] tracking-widest uppercase transition-colors cursor-pointer text-center ${authMode === 'signup' ? 'text-rose-400 font-bold border-b-2 border-rose-500' : `text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'}`
-                  }`}
+                className={`flex-1 pb-2 font-mono text-[10px] tracking-widest uppercase transition-colors cursor-pointer text-center ${
+                  authMode === 'signup' ? 'text-rose-400 font-bold border-b-2 border-rose-500' : `text-zinc-500 hover:${isDarkMode ? 'text-zinc-300' : 'text-zinc-800'}`
+                }`}
               >
                 SIGN UP
               </button>
@@ -1202,10 +1210,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
                     id="btn-credentials-submit"
                     type="submit"
                     disabled={isAuthenticating || !email || !password}
-                    className={`w-full py-3.5 font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer ${isDarkMode
-                        ? 'bg-zinc-100 hover:bg-white text-zinc-950 disabled:bg-zinc-850 disabled:text-zinc-600'
+                    className={`w-full py-3.5 font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer ${
+                      isDarkMode 
+                        ? 'bg-zinc-100 hover:bg-white text-zinc-950 disabled:bg-zinc-850 disabled:text-zinc-600' 
                         : 'bg-zinc-900 hover:bg-zinc-800 text-white disabled:bg-zinc-100 disabled:text-zinc-450 disabled:border disabled:border-zinc-200'
-                      } disabled:cursor-not-allowed`}
+                    } disabled:cursor-not-allowed`}
                   >
                     <KeyRound className="w-4 h-4" />
                     <span>{authMode === 'login' ? 'TRANSMIT SECURITY PASS' : 'PROVISION ACCOUNT NODE'}</span>

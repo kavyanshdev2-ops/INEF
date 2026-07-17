@@ -41,7 +41,7 @@ interface Spark {
 }
 
 export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
-  const [selectedGame, setSelectedGame] = useState<'list' | 'minecraft' | 'roblox' | 'amongus' | 'mechachameleon' | 'krunker'>('list');
+  const [selectedGame, setSelectedGame] = useState<'list' | 'minecraft' | 'roblox' | 'bgmi' | 'codenames' | 'freefire' | 'valorant' | 'csgo' | 'rocketleague' | 'ludo' | 'chess'>('list');
   const [copied, setCopied] = useState(false);
 
   // Custom Minecraft States
@@ -155,125 +155,87 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       desc: 'Connect to our dedicated survival sandbox. Built for brutalist architects, designers, and block-builders alike.',
       ip: 'ineffable.mc-play.org',
       tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: 'minecraftinefbanner.png',
+      img: '/minecraftinefbanner.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
       id: 'bgmi' as const,
       title: 'BGMI',
-      subtitle: 'INEFFABLE ',
-      desc: 'Even if I use 2 claws finger setup i will still be recognized guess who I am??',
+      subtitle: 'INEFFABLE',
+      desc: 'Even if I use 2 claws finger setup I will still be recognized guess who I am??',
       ip: 'INEFFABLE BGMI TOURNAMENT',
       tags: ['PATT', 'SE', 'HEADSHOT'],
-      img: 'bgmiinef.png',
+      img: '/bgmiinef.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
       id: 'codenames' as const,
       title: 'CODENAMES',
-      subtitle: 'INEFFABLE ',
-      desc: 'LETS SEE WHO CATHES WHOM EAGLE OR ROBOT ',
+      subtitle: 'INEFFABLE',
+      desc: 'LETS SEE WHO CATHCES WHOM EAGLE OR ROBOT',
       ip: 'HEHEHE....',
-      img: 'codenames.png',
+      tags: [],
+      img: '/codenames.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
       id: 'freefire' as const,
       title: 'FREE FIRE',
       subtitle: 'INEFFABLE',
-      desc: 'ONE TAP FOR THE WIN , ',
+      desc: 'ONE TAP FOR THE WIN,',
       ip: 'ineffable.mc-play.org',
       tags: ['khelega', 'freefire', 'INEFFABLE'],
-      img: 'freefire.png',
+      img: '/freefire.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
       id: 'valorant' as const,
       title: 'VALORANT',
       subtitle: 'INEFFABLE',
-      desc: 'Are you Jett or Phoenix or what whatever lets duo ',
+      desc: 'Are you Jett or Phoenix or what whatever lets duo',
       ip: 'ineffable.mc-play.org',
       tags: ['INEFFABLE', 'VALO', 'come quities'],
-      img: 'valo.png',
+      img: '/valo.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
       id: 'csgo' as const,
       title: 'CSGO',
-      subtitle: 'INEFFABLE ',
-      desc: 'SUKAA !! LETS PLAYYY',
+      subtitle: 'INEFFABLE',
+      desc: 'SUKAA!! LETS PLAYYY',
       ip: 'come lets have a talk',
-      img: 'csgo.png',
+      tags: [],
+      img: '/csgo.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
-      id: 'brawhalla' as const,
-      title: 'BRAWHALLA',
-      subtitle: 'INEFFABLE ',
-      desc: 'lets fly and still get fall damage',
-      ip: 'BRAWHALLA FOR A WIN',
-      tags: ['INEFFABLE', 'BRAWHALLA'],
-      img: 'brawhalla.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'smash kart' as const,
-      title: 'SMASH KART',
-      subtitle: 'INEFFABLE SMP',
-      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
-      ip: 'ineffable.mc-play.org',
-      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: '/minecraftinefbanner.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'rocket league' as const,
+      id: 'rocketleague' as const,
       title: 'ROCKET LEAGUE',
-      subtitle: 'INEFFABLE ',
-      desc: 'KABOOM!!! SUIII GOAL FOR A WIN ',
+      subtitle: 'INEFFABLE',
+      desc: 'KABOOM!!! SUIII GOAL FOR A WIN',
       ip: 'ineffable rocket on our car',
       tags: ['INEFFABLE', 'ROCKET LEAGUE'],
-      img: 'rocketleague.png',
+      img: '/rocketleague.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
       id: 'ludo' as const,
       title: 'LUDO',
-      subtitle: 'INEFFABLE ',
-      desc: 'Even if you are old or child , its still nostalgia',
-      ip: 'LUDO AAO BACHO TUMHE SIKHAU !!',
+      subtitle: 'INEFFABLE',
+      desc: 'Even if you are old or child, its still nostalgia',
+      ip: 'LUDO AAO BACHO TUMHE SIKHAU!!',
       tags: ['CHILD/old', 'INEFFABLE', 'LUDO'],
-      img: 'ludo.png',
+      img: '/ludo.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
       id: 'chess' as const,
       title: 'CHESS',
-      subtitle: 'INEFFABLE ',
+      subtitle: 'INEFFABLE',
       desc: 'If you think you are the best lets duo then....',
-      ip: 'LETS PLAY CHESS TOGEOTHER',
+      ip: 'LETS PLAY CHESS TOGETHER',
       tags: ['INEFFABLE', 'CHESS', '500elo - 2500elo'],
-      img: 'chessinef.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'monopoly' as const,
-      title: 'MONOPOLY',
-      subtitle: 'INEFFABLE SMP',
-      desc: 'Business Men/Women or Entrepreneur ?? lets see who will be the best',
-      ip: 'BUSINESS INEFFABLE ',
-      tags: ['INEFFABLE', 'MONOPOLY', 'MONEYYYY!!'],
-      img: 'monopoly.png',
-      accentColor: 'text-emerald-400 border-emerald-500/30'
-    },
-    {
-      id: 'skribble' as const,
-      title: 'SKRIBBLE',
-      subtitle: 'INEFFABLE SMP',
-      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
-      ip: 'ineffable.mc-play.org',
-      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: '/minecraftinefbanner.png',
+      img: '/chessinef.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
@@ -282,38 +244,10 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       subtitle: 'INEFFABLE METAVERSE',
       desc: 'Our decentralized fashion runaways, high-fashion clothing catalog, and interactive social gathering grid.',
       tags: ['Fashion Runaway', 'Hangout', 'Interactive'],
-      img: 'roblox.png',
+      img: '/roblox.png',
       accentColor: 'text-rose-400 border-rose-500/30'
-    },
-    {
-      id: 'amongus' as const,
-      title: 'AMONG US',
-      subtitle: 'DEEP SPACE DETECTOR',
-      desc: 'Unmask the digital saboteur lurking in the ventilation ducts. Optimized with high-contrast UI overlays and proximity voice logs.',
-      tags: ['Social Deduction', 'Co-op', 'Skins'],
-      img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-red-400 border-red-500/30'
-    },
-    {
-      id: 'mechachameleon' as const,
-      title: 'MECHA CHAMELEON',
-      subtitle: 'COLOR STEALTH COUPLER',
-      desc: 'ARE YOU AN ARTIST LETS SEEE',
-      tags: ['Color Shifting', 'Puzzle', 'Stealth'],
-      img: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-amber-400 border-amber-500/30'
-    },
-    {
-      id: 'krunker' as const,
-      title: 'KRUNKER',
-      subtitle: 'VOXEL STRIKE TERMINAL',
-      desc: 'High-octane client-side first-person voxel shooter. Load custom weapon wrappers, view match metrics, and launch custom servers.',
-      tags: ['FPS', 'Fast-paced', 'Custom Loadout'],
-      img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-sky-400 border-sky-500/30'
     }
   ];
-
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-28 relative min-h-screen">
@@ -417,8 +351,8 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                   <button
                     onClick={() => setSelectedGame(g.id)}
                     className={`w-full py-3.5 mt-4 border font-mono text-[10px] tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer ${isDarkMode
-                      ? `bg-zinc-900/60 border-zinc-800/80 text-white group-hover:bg-zinc-100 group-hover:border-white group-hover:text-zinc-950`
-                      : `bg-zinc-900 border-zinc-900 text-white group-hover:bg-zinc-800 group-hover:border-zinc-800 group-hover:text-white`
+                        ? `bg-zinc-900/60 border-zinc-800/80 text-white group-hover:bg-zinc-100 group-hover:border-white group-hover:text-zinc-950`
+                        : `bg-zinc-900 border-zinc-900 text-white group-hover:bg-zinc-800 group-hover:border-zinc-800 group-hover:text-white`
                       }`}
                   >
                     <span>LAUNCH PORTAL</span>
@@ -551,8 +485,8 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
 
             {/* Immersive Minecraft Aesthetic Banner */}
             <div className={`relative border-4 rounded-3xl overflow-hidden transition-all duration-700 shadow-2xl p-8 lg:p-12 ${isDarkMode
-              ? 'border-[#12161a] bg-gradient-to-br from-[#0c0f12] via-[#14191f] to-[#07090b]'
-              : 'border-pink-200 bg-gradient-to-br from-[#fff0f5] via-[#ffe4e1] to-[#fcfcfc]'
+                ? 'border-[#12161a] bg-gradient-to-br from-[#0c0f12] via-[#14191f] to-[#07090b]'
+                : 'border-pink-200 bg-gradient-to-br from-[#fff0f5] via-[#ffe4e1] to-[#fcfcfc]'
               }`}>
 
               {/* Background specific mesh */}
@@ -568,16 +502,16 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 pt-4">
                 <div className="space-y-4 text-center md:text-left flex-1">
                   <div className={`inline-flex items-center space-x-2 px-3 py-1 rounded text-[9px] font-mono uppercase tracking-widest border ${isDarkMode
-                    ? 'bg-cyan-950/30 border-cyan-500/40 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.15)]'
-                    : 'bg-pink-100 border-pink-300 text-pink-600'
+                      ? 'bg-cyan-950/30 border-cyan-500/40 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.15)]'
+                      : 'bg-pink-100 border-pink-300 text-pink-600'
                     }`}>
                     <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
                     <span>{isDarkMode ? 'UNDERGROUND CAVE BIOME' : 'CHERRY BLOSSOM CANOPY'}</span>
                   </div>
 
                   <h1 className={`text-4xl lg:text-5xl font-bold tracking-wider font-minecraft uppercase select-none ${isDarkMode
-                    ? 'text-cyan-400 text-shadow-glow-cyan'
-                    : 'text-pink-500 text-shadow-glow-pink'
+                      ? 'text-cyan-400 text-shadow-glow-cyan'
+                      : 'text-pink-500 text-shadow-glow-pink'
                     }`}>
                     {isDarkMode ? 'DEEPSLATE GRID' : 'SAKURA SHORES'}
                   </h1>
@@ -592,20 +526,20 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                   {/* Real-time Dynamic coordinates and Biome details */}
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 font-mono text-[10px] select-none pt-2">
                     <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${isDarkMode
-                      ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
-                      : 'bg-white/60 border-pink-300/30 text-pink-500'
+                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
+                        : 'bg-white/60 border-pink-300/30 text-pink-500'
                       }`}>
                       📍 X: <span className="font-bold">432</span> Y: <span className="font-bold">{isDarkMode ? '-58' : '72'}</span> Z: <span className="font-bold">1024</span>
                     </span>
                     <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${isDarkMode
-                      ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
-                      : 'bg-white/60 border-pink-300/30 text-pink-500'
+                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
+                        : 'bg-white/60 border-pink-300/30 text-pink-500'
                       }`}>
                       💎 MULTIPLIER: <span className="font-bold">2.5x</span>
                     </span>
                     <span className={`px-2.5 py-1 border rounded backdrop-blur-md ${isDarkMode
-                      ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
-                      : 'bg-white/60 border-pink-300/30 text-pink-500'
+                        ? 'bg-zinc-950/60 border-cyan-500/20 text-cyan-400'
+                        : 'bg-white/60 border-pink-300/30 text-pink-500'
                       }`}>
                       🌀 TPS: <span className="font-bold text-emerald-400">20.0</span>
                     </span>
@@ -615,8 +549,8 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                 {/* Cyber block design */}
                 <div className="w-36 h-36 md:w-44 md:h-44 flex-shrink-0 relative group select-none">
                   <div className={`w-full h-full relative border-4 rounded-3xl [image-rendering:pixelated] overflow-hidden flex items-center justify-center transition-all duration-700 ${isDarkMode
-                    ? 'border-[#1a2128] bg-[#0f1318] shadow-[0_0_30px_rgba(34,211,238,0.2)]'
-                    : 'border-pink-300 bg-pink-100 shadow-[0_0_25px_rgba(244,114,182,0.25)]'
+                      ? 'border-[#1a2128] bg-[#0f1318] shadow-[0_0_30px_rgba(34,211,238,0.2)]'
+                      : 'border-pink-300 bg-pink-100 shadow-[0_0_25px_rgba(244,114,182,0.25)]'
                     }`}>
                     {/* Floating server logo */}
                     <img
@@ -643,8 +577,8 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             <div
               id="mining-outer-container"
               className={`border-2 rounded-3xl p-6 lg:p-8 space-y-6 transition-all duration-700 relative overflow-hidden ${isDarkMode
-                ? 'border-cyan-500/20 bg-zinc-950/20 shadow-[0_0_50px_rgba(34,211,238,0.1)] backdrop-blur-xl'
-                : 'border-pink-300/20 bg-white/40 shadow-[0_0_40px_rgba(244,114,182,0.1)] backdrop-blur-md'
+                  ? 'border-cyan-500/20 bg-zinc-950/20 shadow-[0_0_50px_rgba(34,211,238,0.1)] backdrop-blur-xl'
+                  : 'border-pink-300/20 bg-white/40 shadow-[0_0_40px_rgba(244,114,182,0.1)] backdrop-blur-md'
                 }`}
             >
 
@@ -821,10 +755,10 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                                   setCraftedItems(prev => [...prev, recipe.id]);
                                 }}
                                 className={`px-3 py-1.5 font-minecraft text-[8px] rounded border-b-2 transition-all cursor-pointer ${isCrafted
-                                  ? 'bg-zinc-100 border-zinc-200 text-zinc-400 cursor-not-allowed border-b-0'
-                                  : canCraft
-                                    ? 'bg-pink-500 border-pink-600 text-white hover:bg-pink-600'
-                                    : 'bg-zinc-100 border-zinc-200 text-zinc-400 cursor-not-allowed border-b-0'
+                                    ? 'bg-zinc-100 border-zinc-200 text-zinc-400 cursor-not-allowed border-b-0'
+                                    : canCraft
+                                      ? 'bg-pink-500 border-pink-600 text-white hover:bg-pink-600'
+                                      : 'bg-zinc-100 border-zinc-200 text-zinc-400 cursor-not-allowed border-b-0'
                                   }`}
                               >
                                 {isCrafted ? 'SYNTHESIZED' : 'SYNTHESIZE'}
@@ -914,8 +848,8 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                       key={skin.id}
                       onClick={() => setRobloxSkins(skin.id as any)}
                       className={`p-3.5 border rounded-xl text-left flex flex-col justify-between h-28 cursor-pointer transition-all ${robloxSkins === skin.id
-                        ? 'border-rose-500/40 bg-rose-500/10 text-rose-500 font-bold shadow-[0_0_15px_rgba(244,114,182,0.15)]'
-                        : `${isDarkMode ? 'border-zinc-800 hover:border-zinc-700 bg-zinc-950/20 text-zinc-400' : 'border-zinc-200 hover:border-zinc-300 bg-white text-zinc-600'}`
+                          ? 'border-rose-500/40 bg-rose-500/10 text-rose-500 font-bold shadow-[0_0_15px_rgba(244,114,182,0.15)]'
+                          : `${isDarkMode ? 'border-zinc-800 hover:border-zinc-700 bg-zinc-950/20 text-zinc-400' : 'border-zinc-200 hover:border-zinc-300 bg-white text-zinc-600'}`
                         }`}
                     >
                       <span className="text-[10px] font-bold tracking-wider">{skin.label}</span>
@@ -1105,71 +1039,63 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
           </motion.div>
         )}
 
-        {/* KRUNKER VIEW */}
-        {selectedGame === 'krunker' && (
-          <motion.div
-            key="krunker-page"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            className={`border ${activeAtmosphere.borderMuted} ${activeAtmosphere.bgCard} rounded-3xl p-8 space-y-8`}
-          >
-            <div className={`flex flex-col md:flex-row items-center justify-between gap-6 border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'} pb-6`}>
-              <div className="space-y-2 text-center md:text-left">
-                <span className="text-[9px] text-sky-400 uppercase font-mono tracking-wider">TACTICAL ARENA INTERFACE</span>
-                <h2 className={`font-mono text-2xl tracking-widest ${activeAtmosphere.textPrimary} font-bold`}>
-                  KRUNKER VOXEL TERMINAL
-                </h2>
-              </div>
-              <div className={`flex items-center space-x-2 ${isDarkMode ? 'bg-zinc-950 border-zinc-900 text-zinc-400' : 'bg-zinc-50 border-zinc-200 text-zinc-600'} px-3 py-1.5 rounded-lg text-[10px] border`}>
-                <span>ACTIVE MATCHMAKING CLIENT</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-7 space-y-4">
-                <h3 className={`font-mono text-xs uppercase ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>Class & Loadout customization</h3>
-                <p className={`${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'} text-[11px] leading-relaxed`}>
-                  Choose your voxel operative class and weapon wraps. Synchronize tactical loadouts directly to browser game instances.
-                </p>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-                  {[
-                    { id: 'Sniper Rifle', class: 'Hunter', skin: 'Voxel Cosmic' },
-                    { id: 'Assault Rifle', class: 'Triggerman', skin: 'Redstone Camo' },
-                    { id: 'Shotgun', class: 'Vince', skin: 'Monochrome Matte' }
-                  ].map((weapon) => (
-                    <button
-                      key={weapon.id}
-                      onClick={() => setKrunkerWeapon(weapon.id)}
-                      className={`p-4 border rounded-xl text-left flex flex-col justify-between h-24 cursor-pointer transition-all ${krunkerWeapon === weapon.id
-                        ? 'border-sky-500/40 bg-sky-500/10 text-sky-500 font-bold'
-                        : `${isDarkMode ? 'border-zinc-800 hover:border-zinc-700 bg-zinc-950/20 text-zinc-400' : 'border-zinc-200 hover:border-zinc-300 bg-white text-zinc-600'}`
-                        }`}
-                    >
-                      <span className="text-[10px] font-bold uppercase font-mono tracking-wider">{weapon.class}</span>
-                      <span className="text-[9px] text-zinc-500 font-sans mt-1">{weapon.id}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="lg:col-span-5 flex justify-center">
-                <div className={`w-full max-w-sm ${isDarkMode ? 'bg-zinc-950/60 border-zinc-900' : 'bg-white/80 border-zinc-200'} border rounded-2xl p-6 text-center space-y-4 shadow-sm`}>
-                  <div className={`w-12 h-12 rounded-xl ${isDarkMode ? 'bg-sky-500/10 border-sky-500/30' : 'bg-sky-50 border-sky-100'} border flex items-center justify-center text-sky-500 text-xl mx-auto`}>
-                    🔫
+        {/* KRUNKER VIEW (kept for reference, removed since not in new games list) */}
+        {/* GENERIC GAME FALLBACK VIEW */}
+        {selectedGame !== 'list' && selectedGame !== 'minecraft' && selectedGame !== 'roblox' && (
+          (() => {
+            const game = games.find(g => g.id === selectedGame);
+            if (!game) return null;
+            return (
+              <motion.div
+                key={`${selectedGame}-page`}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                className={`border ${activeAtmosphere.borderMuted} ${activeAtmosphere.bgCard} rounded-3xl p-8 space-y-8`}
+              >
+                <div className={`flex flex-col md:flex-row items-center justify-between gap-6 border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'} pb-6`}>
+                  <div className="space-y-2 text-center md:text-left">
+                    <span className={`text-[9px] uppercase font-mono tracking-wider ${game.accentColor.split(' ')[0]}`}>{game.subtitle}</span>
+                    <h2 className={`font-mono text-2xl tracking-widest ${activeAtmosphere.textPrimary} font-bold`}>{game.title}</h2>
                   </div>
-                  <div>
-                    <span className={`text-[8px] uppercase tracking-wider ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'} block`}>CURRENT TACTICAL SELECTION</span>
-                    <span className={`text-xs font-bold ${isDarkMode ? 'text-zinc-200' : 'text-zinc-800'} uppercase font-mono block mt-1`}>{krunkerWeapon}</span>
-                  </div>
-                  <button className="w-full py-2.5 bg-sky-500 hover:bg-sky-600 text-black font-mono text-[10px] font-bold uppercase tracking-widest rounded-xl transition-all cursor-pointer">
-                    DEPLOY TO LIVE TERMINAL
-                  </button>
                 </div>
-              </div>
-            </div>
-          </motion.div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                  <div className="lg:col-span-7 space-y-4">
+                    <div className="relative h-64 w-full overflow-hidden rounded-2xl">
+                      <img src={game.img} alt={game.title} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop'; }} />
+                    </div>
+                    <p className={`${activeAtmosphere.textSecondary} text-xs font-sans leading-relaxed`}>{game.desc}</p>
+                    {game.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {game.tags.map(tag => (
+                          <span key={tag} className="bg-zinc-950/80 backdrop-blur-md text-white border border-zinc-800/80 px-3 py-1 rounded-full font-mono text-[8px] tracking-widest font-bold uppercase">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="lg:col-span-5 flex justify-center">
+                    <div className={`w-full max-w-sm ${isDarkMode ? 'bg-zinc-950/60 border-zinc-900' : 'bg-white/80 border-zinc-200'} border rounded-2xl p-6 text-center space-y-4 shadow-sm`}>
+                      <div className={`w-16 h-16 rounded-xl ${game.accentColor.split(' ')[1].replace('border-', 'bg-').replace('/30', '/10')} border ${game.accentColor.split(' ')[1]} flex items-center justify-center text-3xl mx-auto`}>🎮</div>
+                      <div>
+                        <span className={`text-[8px] uppercase tracking-wider ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'} block`}>SERVER/ACCESS INFO</span>
+                        <span className={`text-sm font-bold ${activeAtmosphere.textPrimary} font-mono block mt-2`}>{game.ip}</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(game.ip);
+                          setCopied(true);
+                          setTimeout(() => setCopied(false), 2000);
+                        }}
+                        className="w-full py-3 bg-rose-500 hover:bg-rose-600 text-white font-mono text-[10px] font-bold uppercase tracking-widest rounded-xl transition-all cursor-pointer"
+                      >
+                        {copied ? 'COPIED!' : 'COPY ACCESS INFO'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })()
         )}
       </AnimatePresence>
     </div>
