@@ -245,33 +245,6 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       img: 'roblox.png',
       accentColor: 'text-rose-400 border-rose-500/30'
     },
-    {
-      id: 'amongus' as const,
-      title: 'AMONG US',
-      subtitle: 'DEEP SPACE DETECTOR',
-      desc: 'Unmask the digital saboteur lurking in the ventilation ducts. Optimized with high-contrast UI overlays and proximity voice logs.',
-      tags: ['Social Deduction', 'Co-op', 'Skins'],
-      img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-red-400 border-red-500/30'
-    },
-    {
-      id: 'mechachameleon' as const,
-      title: 'MECHA CHAMELEON',
-      subtitle: 'COLOR STEALTH COUPLER',
-      desc: 'ARE YOU AN ARTIST LETS SEEE',
-      tags: ['Color Shifting', 'Puzzle', 'Stealth'],
-      img: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-amber-400 border-amber-500/30'
-    },
-    {
-      id: 'krunker' as const,
-      title: 'KRUNKER',
-      subtitle: 'VOXEL STRIKE TERMINAL',
-      desc: 'High-octane client-side first-person voxel shooter. Load custom weapon wrappers, view match metrics, and launch custom servers.',
-      tags: ['FPS', 'Fast-paced', 'Custom Loadout'],
-      img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop',
-      accentColor: 'text-sky-400 border-sky-500/30'
-    }
   ];
 
 
