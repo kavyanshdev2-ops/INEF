@@ -155,7 +155,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       desc: 'Connect to our dedicated survival sandbox. Built for brutalist architects, designers, and block-builders alike.',
       ip: 'ineffable.mc-play.org',
       tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: '/minecraftinefbanner.png',
+      img: 'minecraftinefbanner.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
