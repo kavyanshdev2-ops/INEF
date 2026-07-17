@@ -55,7 +55,7 @@ export const LanguageTranslator: React.FC<LanguageTranslatorProps> = ({ themeSty
         if (!optionExists && currentCookieLang === 'en') {
           targetValue = ''; // default fallback for original page language (English)
         }
-        
+
         if (select.value !== targetValue) {
           select.value = targetValue;
           select.dispatchEvent(new Event('change'));
@@ -178,17 +178,16 @@ export const LanguageTranslator: React.FC<LanguageTranslatorProps> = ({ themeSty
                 <button
                   key={lang.code}
                   onClick={() => handleLanguageSelect(lang.code)}
-                  className={`w-full px-3 py-2 rounded-lg text-left transition-all duration-200 flex items-center justify-between group cursor-pointer ${
-                    isActive
+                  className={`w-full px-3 py-2 rounded-lg text-left transition-all duration-200 flex items-center justify-between group cursor-pointer ${isActive
                       ? `${themeStyles.accentBg} text-zinc-950 font-bold`
                       : `${themeStyles.textSecondary} hover:${themeStyles.textPrimary} hover:bg-zinc-500/10`
-                  }`}
+                    }`}
                 >
                   <span className="flex items-center space-x-3.5 font-sans text-xs">
                     <span className="text-lg leading-none shrink-0 group-hover:scale-110 transition-transform duration-200">{lang.flag}</span>
                     <span className="flex flex-col">
                       <span className="font-medium">{lang.name}</span>
-                      <span className={`text-[10px] leading-none ${isActive ? 'text-zinc-950/70' : themeStyles.textMuted}`}>
+                      <span className={`text-[10px] leading-none ${isActive ? 'text-zinc-600/70' : themeStyles.textMuted}`}>
                         {lang.localName}
                       </span>
                     </span>

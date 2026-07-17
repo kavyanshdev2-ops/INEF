@@ -25,8 +25,8 @@ import { supabase, isSupabaseConfigured, getDBWishlist, toggleDBWishlist, getDBC
 import cherryBlossomBg from './assets/images/cherry_blossom_bg_1782902853761.jpg';
 
 const DiscordIcon = ({ className }: { className?: string }) => (
-  <svg 
-    viewBox="0 0 127.14 96.36" 
+  <svg
+    viewBox="0 0 127.14 96.36"
     className={className}
     fill="currentColor"
   >
@@ -48,7 +48,7 @@ export default function App() {
   const [websiteSettings, setWebsiteSettings] = useState<Record<string, any>>({});
 
 
-  
+
   // Background smooth mouse parallax effect (high performance, bypasses react renders)
   useEffect(() => {
     const bgElement = bgRef.current;
@@ -96,7 +96,7 @@ export default function App() {
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
-  
+
   // Global cart, wishlist, & login state
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
@@ -119,7 +119,7 @@ export default function App() {
   useEffect(() => {
     // 1. Detect if we are running inside an OAuth popup
     const isOAuthPopup = window.opener && window.opener !== window && (
-      window.location.hash.includes('access_token') || 
+      window.location.hash.includes('access_token') ||
       window.location.hash.includes('error') ||
       window.location.search.includes('code=')
     );
@@ -246,8 +246,8 @@ export default function App() {
       const existing = prev.find((item) => item.id === newItem.id && item.size === newItem.size);
       if (existing) {
         return prev.map((item) =>
-          (item.id === newItem.id && item.size === newItem.size) 
-            ? { ...item, quantity: item.quantity + qtyToAdd } 
+          (item.id === newItem.id && item.size === newItem.size)
+            ? { ...item, quantity: item.quantity + qtyToAdd }
             : item
         );
       }
@@ -379,47 +379,44 @@ export default function App() {
   };
 
   return (
-    <div 
-      id="ineffable-root-canvas" 
+    <div
+      id="ineffable-root-canvas"
       className={`min-h-screen ${getBackgroundGradientClass()} font-sans ${getSelectionClass()} relative overflow-x-hidden transition-all duration-1000 ease-in-out`}
     >
-      
+
       {/* Dynamic photographic background matching the active theme */}
-      <div 
-        ref={bgRef} 
+      <div
+        ref={bgRef}
         className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none select-none z-0"
         style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden', willChange: 'transform' }}
       >
-        <img 
-          src={getBackgroundImageUrl()} 
-          alt="Atmospheric Theme Background" 
+        <img
+          src={getBackgroundImageUrl()}
+          alt="Atmospheric Theme Background"
           referrerPolicy="no-referrer"
-          className={`w-full h-full object-cover transition-all duration-1000 ease-in-out ${
-            isDarkMode 
-              ? 'opacity-20 md:opacity-30 filter brightness-[0.7] contrast-[1.0]' 
-              : 'opacity-35 md:opacity-55 filter brightness-[0.95] contrast-[0.95]'
-          }`}
+          className={`w-full h-full object-cover transition-all duration-1000 ease-in-out ${isDarkMode
+            ? 'opacity-20 md:opacity-30 filter brightness-[0.7] contrast-[1.0]'
+            : 'opacity-35 md:opacity-55 filter brightness-[0.95] contrast-[0.95]'
+            }`}
         />
         {/* Soft overlays to ensure contrast and readability */}
-        <div className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-          isDarkMode 
-            ? 'bg-gradient-to-b from-transparent via-zinc-900/40 to-zinc-900/90' 
-            : 'bg-gradient-to-b from-transparent via-zinc-300/45 to-zinc-300/90'
-        }`} />
-        <div className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-          isDarkMode 
-            ? 'bg-gradient-to-r from-zinc-900/15 via-transparent to-zinc-900/15' 
-            : 'bg-gradient-to-r from-zinc-300/15 via-transparent to-zinc-300/15'
-        }`} />
+        <div className={`absolute inset-0 transition-all duration-1000 ease-in-out ${isDarkMode
+          ? 'bg-gradient-to-b from-transparent via-zinc-900/40 to-zinc-900/90'
+          : 'bg-gradient-to-b from-transparent via-zinc-300/45 to-zinc-300/90'
+          }`} />
+        <div className={`absolute inset-0 transition-all duration-1000 ease-in-out ${isDarkMode
+          ? 'bg-gradient-to-r from-zinc-900/15 via-transparent to-zinc-900/15'
+          : 'bg-gradient-to-r from-zinc-300/15 via-transparent to-zinc-300/15'
+          }`} />
       </div>
-      
+
       {/* Background Interactive Canvas Particle simulation */}
       <PetalDriftCanvas config={atmosphere} isDarkMode={isDarkMode} />
 
       {/* Global Navigation Header with Glassmorphism blur */}
-      <Navbar 
-        currentPage={currentPage} 
-        setCurrentPage={navigateToPage} 
+      <Navbar
+        currentPage={currentPage}
+        setCurrentPage={navigateToPage}
         activeAtmosphere={atmosphere}
         isDarkMode={isDarkMode}
         onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
@@ -440,10 +437,10 @@ export default function App() {
           <MembershipView setCurrentPage={navigateToPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} onAddToCart={handleAddToCart} />
         )}
         {currentPage === 'shop' && (
-          <ShopView 
-            setCurrentPage={navigateToPage} 
-            activeAtmosphere={atmosphere} 
-            isDarkMode={isDarkMode} 
+          <ShopView
+            setCurrentPage={navigateToPage}
+            activeAtmosphere={atmosphere}
+            isDarkMode={isDarkMode}
             onAddToCart={handleAddToCart}
             wishlist={wishlist}
             onToggleWishlist={handleToggleWishlist}
@@ -463,10 +460,10 @@ export default function App() {
           <AboutView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} />
         )}
         {currentPage === 'cart' && (
-          <CartView 
-            setCurrentPage={navigateToPage} 
-            activeAtmosphere={atmosphere} 
-            isDarkMode={isDarkMode} 
+          <CartView
+            setCurrentPage={navigateToPage}
+            activeAtmosphere={atmosphere}
+            isDarkMode={isDarkMode}
             cart={cart}
             onUpdateQuantity={handleUpdateQuantity}
             onRemoveItem={handleRemoveItem}
@@ -475,9 +472,9 @@ export default function App() {
           />
         )}
         {currentPage === 'login' && (
-          <LoginView 
-            activeAtmosphere={atmosphere} 
-            isDarkMode={isDarkMode} 
+          <LoginView
+            activeAtmosphere={atmosphere}
+            isDarkMode={isDarkMode}
             currentUser={currentUser}
             onLogin={handleLogin}
             onLogout={handleLogout}
@@ -488,15 +485,15 @@ export default function App() {
           />
         )}
         {currentPage === 'payment-success' && (
-          <PaymentSuccessView 
-            activeAtmosphere={atmosphere} 
+          <PaymentSuccessView
+            activeAtmosphere={atmosphere}
             isDarkMode={isDarkMode}
             setCurrentPage={navigateToPage}
           />
         )}
         {currentPage === 'payment-failed' && (
-          <PaymentFailedView 
-            activeAtmosphere={atmosphere} 
+          <PaymentFailedView
+            activeAtmosphere={atmosphere}
             isDarkMode={isDarkMode}
             setCurrentPage={navigateToPage}
           />
@@ -504,22 +501,22 @@ export default function App() {
       </main>
 
       {/* Corporate Luxury Footer */}
-      <footer 
-        id="ineffable-footer" 
+      <footer
+        id="ineffable-footer"
         className={`relative z-30 ${themeStyles.bgFooter} border-t ${themeStyles.borderMuted} py-16 px-6 backdrop-blur-md transition-all duration-1000`}
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 font-sans font-light">
-          
+
           {/* Column 1 - Brand Identity */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center space-x-3">
               <div className="relative w-7 h-7 flex items-center justify-center">
                 {/* Your logo image with transparent background */}
-                <img 
-                    src="/img.jpg" 
-                    alt="INEFFABLE Logo" 
-                    className="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(244,63,94,0.25)]"
-                  />
+                <img
+                  src="/img.jpg"
+                  alt="INEFFABLE Logo"
+                  className="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(244,63,94,0.25)]"
+                />
               </div>
               <h4 className={`font-mono text-sm tracking-[0.3em] ${themeStyles.textPrimary} uppercase`}>
                 INEFFABLE
@@ -530,7 +527,7 @@ export default function App() {
             </p>
             <div className={`flex items-center space-x-3 ${themeStyles.textMuted} font-mono text-[9px] tracking-wider`}>
               <MapPin className={`w-3.5 h-3.5 ${themeStyles.accentTextMuted}`} />
-              <span>MULTIPLE NODES: TOKYO // REYKJAVIK // OSAKA</span>
+              <span>IN UR HEAR AND ALWAYS LOVING</span>
             </div>
           </div>
 
@@ -539,14 +536,14 @@ export default function App() {
             <h5 className={`${themeStyles.textSecondary} tracking-[0.2em] font-medium uppercase px-4`}>SYSTEM ARCHIVE</h5>
             <div className="flex flex-col space-y-1">
               {[
-                { id: 'home' as PageId, label: 'LOBBY DESK' },
+                { id: 'home' as PageId, label: 'HOME' },
                 { id: 'about' as PageId, label: 'ABOUT US' },
-                { id: 'membership' as PageId, label: 'MEMBERSHIP UPGRADES' },
-                { id: 'shop' as PageId, label: 'STORE MARKET' },
+                { id: 'membership' as PageId, label: 'MEMBERSHIP' },
+                { id: 'shop' as PageId, label: 'SHOP' },
                 { id: 'journals' as PageId, label: 'COMMUNITY JOURNALS' },
-                { id: 'contact' as PageId, label: 'CONNECT CHASSIS' },
-                { id: 'cart' as PageId, label: 'CART SUMMARY' },
-                { id: 'login' as PageId, label: 'MEMBER PORTAL' },
+                { id: 'contact' as PageId, label: 'CONTACT' },
+                { id: 'cart' as PageId, label: 'CART' },
+                { id: 'login' as PageId, label: 'LOGIN' },
               ].map((lnk) => {
                 const isActive = currentPage === lnk.id;
                 return (
@@ -557,17 +554,16 @@ export default function App() {
                       setCurrentPage(lnk.id);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className={`relative px-4 py-2 font-mono text-[10px] tracking-[0.2em] transition-all duration-300 cursor-pointer flex items-center space-x-1.5 rounded-lg w-fit text-left ${
-                      isActive 
-                        ? `${themeStyles.textPrimary} bg-zinc-500/10 font-bold` 
-                        : `${themeStyles.textSecondary} hover:${themeStyles.textPrimary} hover:bg-zinc-500/5`
-                    }`}
+                    className={`relative px-4 py-2 font-mono text-[10px] tracking-[0.2em] transition-all duration-300 cursor-pointer flex items-center space-x-1.5 rounded-lg w-fit text-left ${isActive
+                      ? `${themeStyles.textPrimary} bg-zinc-500/10 font-bold`
+                      : `${themeStyles.textSecondary} hover:${themeStyles.textPrimary} hover:bg-zinc-500/5`
+                      }`}
                   >
                     <span>{lnk.label}</span>
                     {isActive && (
-                      <span 
+                      <span
                         id={`footer-active-indicator-${lnk.id}`}
-                        className={`absolute left-1 top-1/2 -translate-y-1/2 w-[2px] h-3.5 ${themeStyles.indicatorBg} rounded-full`} 
+                        className={`absolute left-1 top-1/2 -translate-y-1/2 w-[2px] h-3.5 ${themeStyles.indicatorBg} rounded-full`}
                       />
                     )}
                   </button>
@@ -582,7 +578,7 @@ export default function App() {
             <div className={`space-y-2 ${themeStyles.bgCard} p-4 rounded-xl border ${themeStyles.borderMuted}`}>
               <div className={`flex justify-between border-b ${themeStyles.borderMuted} pb-1.5`}>
                 <span>SYSTEM RENDER</span>
-                <span className="text-emerald-500">PETAL_DRIFT_V4</span>
+                <span className="text-emerald-500">WELL WELL</span>
               </div>
               <div className={`flex justify-between border-b ${themeStyles.borderMuted} pb-1.5`}>
                 <span>ACTIVE VELOCITY</span>
@@ -597,49 +593,49 @@ export default function App() {
                 <span className={`${themeStyles.accentText} uppercase`}>{atmosphere.colorTheme}</span>
               </div>
             </div>
-            
+
             {/* Social Cluster */}
             <div className="flex items-center space-x-4 pt-2">
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-zinc-600 hover:text-[#E1306C] transition-colors duration-300"
                 title="Instagram"
               >
                 <Instagram className="w-4 h-4" />
               </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-zinc-600 hover:text-[#1DA1F2] transition-colors duration-300"
                 title="Twitter / X"
               >
                 <Twitter className="w-4 h-4" />
               </a>
-              <a 
-                href="https://youtube.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-zinc-600 hover:text-[#FF0000] transition-colors duration-300"
                 title="YouTube"
               >
                 <Youtube className="w-4 h-4" />
               </a>
-              <a 
-                href="https://discord.gg/ineffable" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://discord.gg/ineffable"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-zinc-600 hover:text-[#5865F2] transition-colors duration-300"
                 title="Discord"
               >
                 <DiscordIcon className="w-4 h-4" />
               </a>
-              <a 
-                href="https://github.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-zinc-600 hover:text-white transition-colors duration-300"
                 title="GitHub"
               >
@@ -648,21 +644,9 @@ export default function App() {
               <span className="text-zinc-600">//</span>
               <div className="flex items-center space-x-1 text-zinc-600">
                 <Sparkles className={`w-3 h-3 ${themeStyles.accentText}`} />
-                <span>SECURE CRYPTO PROTOCOLS LOCK</span>
+                <span>INEF ON TOP</span>
               </div>
             </div>
-          </div>
-        </div>
-
-
-
-        {/* Legal block */}
-        <div className={`max-w-7xl mx-auto border-t ${themeStyles.borderMuted} mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between font-mono text-[9px] ${themeStyles.textMuted} space-y-4 sm:space-y-0`}>
-          <span>© 2026 INEFFABLE INC. ALL CHANNELS RESERVED.</span>
-          <div className="flex space-x-6">
-            <span className="hover:text-zinc-400 transition-colors cursor-pointer">PRIVACY PROTOCOL</span>
-            <span className="hover:text-zinc-400 transition-colors cursor-pointer">SECURITY SCHEMAS</span>
-            <span className="hover:text-zinc-400 transition-colors cursor-pointer">TERMINAL GATEWAY</span>
           </div>
         </div>
       </footer>

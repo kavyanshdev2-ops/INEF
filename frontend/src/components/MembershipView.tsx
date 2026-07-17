@@ -6,14 +6,14 @@
 import React, { useState } from 'react';
 import { AtmosphereConfig, CartItem } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { 
-  Compass, 
-  Flame, 
-  Shield, 
-  Users, 
-  Radio, 
-  CheckCircle2, 
-  ShoppingCart, 
+import {
+  Compass,
+  Flame,
+  Shield,
+  Users,
+  Radio,
+  CheckCircle2,
+  ShoppingCart,
   Sparkles,
   Pickaxe,
   Swords,
@@ -63,9 +63,16 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
       id: 'plat-access',
       name: 'Platinum Access',
       price: 3.00,
-      period: 'month',
-      description: 'Built for active members who want to stand out and enjoy extra privileges. Simple, practical perks that keep the vibes flowing.',
-      icon: Compass,
+      period: 'lifetime',
+      description: 'Step up your game with Diamond perks: Backpack capacity, multiple sethomes, daily currency allowances, and boat keys.',
+      icon: Gem,
+      tag: 'DIAMOND',
+      badgeBg: 'bg-teal-500/10 border-teal-500/20 text-teal-400',
+      color: 'from-teal-500/15 via-emerald-500/5 to-transparent',
+      border: 'hover:border-teal-400/60',
+      glow: 'shadow-teal-500/5',
+      accentColor: 'text-teal-400',
+      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop',
       perks: [
         'External Emoji, Sticker & GIF permissions in all chat rooms',
         'Use custom Soundboard permissions natively',
@@ -73,10 +80,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
         'External Reaction access in all general channels',
         'Elegant "Platinum" role badge in Discord'
       ],
-      color: 'from-blue-500/10 via-blue-600/5 to-transparent',
-      border: 'hover:border-blue-400/50',
-      tag: 'COMMUNITY',
-      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop'
+
     },
     {
       id: 'diam-access',
@@ -278,7 +282,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
 
   return (
     <div id="membership-view-container" className={`max-w-7xl mx-auto px-6 py-24 pt-32 ${themeStyles.textPrimary}`}>
-      
+
       {/* Page Header */}
       <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
         <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
@@ -294,11 +298,10 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
 
       {/* Added Toast Alert */}
       {addedItemName && (
-        <div id="added-cart-toast" className={`fixed bottom-6 right-6 z-50 border font-mono text-[10px] tracking-widest px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 animate-slide-in ${
-          isDarkMode 
-            ? 'bg-emerald-950 border-emerald-500/30 text-emerald-300' 
+        <div id="added-cart-toast" className={`fixed bottom-6 right-6 z-50 border font-mono text-[10px] tracking-widest px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 animate-slide-in ${isDarkMode
+            ? 'bg-emerald-950 border-emerald-500/30 text-emerald-300'
             : 'bg-emerald-50 border-emerald-200 text-emerald-800'
-        }`}>
+          }`}>
           <CheckCircle2 className="w-4 h-4 text-emerald-400 animate-pulse" />
           <span>ADDED {addedItemName.toUpperCase()} TO CART</span>
         </div>
@@ -310,24 +313,22 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
           <button
             id="tab-discord-btn"
             onClick={() => setActiveTab('discord')}
-            className={`px-6 py-3 rounded-xl font-mono text-[10px] tracking-wider transition-all cursor-pointer flex items-center space-x-2.5 ${
-              activeTab === 'discord'
+            className={`px-6 py-3 rounded-xl font-mono text-[10px] tracking-wider transition-all cursor-pointer flex items-center space-x-2.5 ${activeTab === 'discord'
                 ? `${themeStyles.accentBg} ${isDarkMode ? 'text-zinc-950 font-bold' : 'text-white font-bold'} shadow-lg scale-102`
                 : `${isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-zinc-950'}`
-            }`}
+              }`}
           >
             <Radio className="w-4 h-4 shrink-0" />
             <span>DISCORD MEMBERSHIPS</span>
           </button>
-          
+
           <button
             id="tab-minecraft-btn"
             onClick={() => setActiveTab('minecraft')}
-            className={`px-6 py-3 rounded-xl font-mono text-[10px] tracking-wider transition-all cursor-pointer flex items-center space-x-2.5 ${
-              activeTab === 'minecraft'
+            className={`px-6 py-3 rounded-xl font-mono text-[10px] tracking-wider transition-all cursor-pointer flex items-center space-x-2.5 ${activeTab === 'minecraft'
                 ? `${themeStyles.accentBg} ${isDarkMode ? 'text-zinc-950 font-bold' : 'text-white font-bold'} shadow-lg scale-102`
                 : `${isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-zinc-950'}`
-            }`}
+              }`}
           >
             <Pickaxe className="w-4 h-4 shrink-0" />
             <span>MINECRAFT SERVER RANKS</span>
@@ -368,9 +369,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                       <div className={`p-2.5 rounded-xl border flex items-center justify-center bg-zinc-900/40 border-zinc-800/50 ${themeStyles.accentText}`}>
                         <TierIcon className="w-5 h-5" />
                       </div>
-                      <h3 className={`font-sans text-xl font-bold uppercase tracking-wider ${
-                        isDarkMode ? 'text-white' : 'text-zinc-900'
-                      }`}>
+                      <h3 className={`font-sans text-xl font-bold uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-zinc-900'
+                        }`}>
                         {tier.name}
                       </h3>
                     </div>
@@ -381,9 +381,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
 
                   {/* Price Display */}
                   <div className={`py-4 border-b flex items-baseline space-x-1 ${isDarkMode ? 'border-zinc-900' : 'border-zinc-100'}`}>
-                    <span className={`text-3xl md:text-4xl font-extrabold tracking-tight font-mono ${
-                      isDarkMode ? 'text-white' : 'text-zinc-900'
-                    }`}>
+                    <span className={`text-3xl md:text-4xl font-extrabold tracking-tight font-mono ${isDarkMode ? 'text-white' : 'text-zinc-900'
+                      }`}>
                       ${tier.price.toFixed(2)}
                     </span>
                     <span className={`${themeStyles.textMuted} font-mono text-[10px] uppercase tracking-wider`}>
@@ -422,12 +421,12 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
             const currentSubTab = activeCardTabs[tier.id] || 'utilities';
 
             // Custom Glassmorphic styling based on theme and rank hover properties
-            const cardShadowStyle = isDarkMode 
-              ? 'shadow-[4px_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.12)]' 
+            const cardShadowStyle = isDarkMode
+              ? 'shadow-[4px_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.12)]'
               : 'shadow-[4px_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_0_25px_rgba(16,185,129,0.08)]';
-            
-            const cardBgStyle = isDarkMode 
-              ? 'bg-zinc-950/45 border-zinc-800/80' 
+
+            const cardBgStyle = isDarkMode
+              ? 'bg-zinc-950/45 border-zinc-800/80'
               : 'bg-white/45 border-zinc-200/80';
 
             const activePerkList = tier.parts[currentSubTab];
@@ -448,9 +447,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                 <div className={`absolute top-0 left-0 right-0 h-40 bg-gradient-to-b ${tier.color} opacity-80 pointer-events-none`} />
 
                 {/* Retro dashed inner line styling for Minecraft feeling */}
-                <div className={`absolute inset-1 pointer-events-none rounded-[14px] border border-dashed ${
-                  isDarkMode ? 'border-white/5' : 'border-zinc-900/5'
-                }`} />
+                <div className={`absolute inset-1 pointer-events-none rounded-[14px] border border-dashed ${isDarkMode ? 'border-white/5' : 'border-zinc-900/5'
+                  }`} />
 
                 {/* Small ornamental pixel decoration */}
                 <div className="absolute top-2 right-2 flex space-x-0.5 opacity-40 pointer-events-none">
@@ -462,16 +460,14 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                 <div className="relative z-10 space-y-4">
                   {/* Badge Tag */}
                   <div className="flex justify-between items-center">
-                    <span className={`font-mono text-[8px] tracking-[0.2em] uppercase ${
-                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500 font-medium'
-                    }`}>
+                    <span className={`font-mono text-[8px] tracking-[0.2em] uppercase ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500 font-medium'
+                      }`}>
                       {tier.tag}
                     </span>
-                    <span className={`px-2 py-0.5 rounded-full font-mono text-[7px] tracking-wider font-semibold border ${
-                      tier.id === 'ineffable-rank'
+                    <span className={`px-2 py-0.5 rounded-full font-mono text-[7px] tracking-wider font-semibold border ${tier.id === 'ineffable-rank'
                         ? 'border-rose-500/30 text-rose-400 bg-rose-950/20 shadow-[0_0_10px_rgba(244,63,94,0.2)] animate-pulse'
                         : `bg-zinc-500/5 ${glowAccent}`
-                    }`}>
+                      }`}>
                       PERMANENT
                     </span>
                   </div>
@@ -479,16 +475,14 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                   {/* Tier Title */}
                   <div className="space-y-1.5">
                     <div className="flex items-center space-x-2.5">
-                      <div className={`p-2 rounded-xl border flex items-center justify-center ${
-                        isDarkMode 
-                          ? 'bg-zinc-900/90 border-zinc-800 text-zinc-200' 
+                      <div className={`p-2 rounded-xl border flex items-center justify-center ${isDarkMode
+                          ? 'bg-zinc-900/90 border-zinc-800 text-zinc-200'
                           : 'bg-zinc-50 border-zinc-200 text-zinc-800'
-                      } ${tier.accentColor}`}>
+                        } ${tier.accentColor}`}>
                         <TierIcon className="w-4.5 h-4.5" />
                       </div>
-                      <h3 className={`font-sans text-lg font-extrabold uppercase tracking-wide ${
-                        isDarkMode ? 'text-white' : 'text-zinc-900'
-                      }`}>
+                      <h3 className={`font-sans text-lg font-extrabold uppercase tracking-wide ${isDarkMode ? 'text-white' : 'text-zinc-900'
+                        }`}>
                         {tier.name}
                       </h3>
                     </div>
@@ -499,9 +493,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
 
                   {/* Price Block */}
                   <div className={`py-2.5 border-b flex items-baseline space-x-1 ${isDarkMode ? 'border-zinc-900' : 'border-zinc-100'}`}>
-                    <span className={`text-2xl font-black font-mono tracking-tight ${
-                      isDarkMode ? 'text-white' : 'text-zinc-900'
-                    }`}>
+                    <span className={`text-2xl font-black font-mono tracking-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
+                      }`}>
                       ${tier.price.toFixed(2)}
                     </span>
                     <span className={`${themeStyles.textMuted} font-mono text-[9px] uppercase tracking-wider`}>
@@ -511,28 +504,25 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
 
                   {/* SEPARATE THE PART: Nested tabs inside card */}
                   <div className="space-y-3">
-                    <div className={`grid grid-cols-3 p-1 rounded-xl border font-mono text-[8px] font-bold tracking-wider gap-0.5 ${
-                      isDarkMode ? 'bg-zinc-950/75 border-zinc-900' : 'bg-zinc-100/90 border-zinc-200'
-                    }`}>
+                    <div className={`grid grid-cols-3 p-1 rounded-xl border font-mono text-[8px] font-bold tracking-wider gap-0.5 ${isDarkMode ? 'bg-zinc-950/75 border-zinc-900' : 'bg-zinc-100/90 border-zinc-200'
+                      }`}>
                       <button
                         onClick={() => setCardTab(tier.id, 'utilities')}
-                        className={`py-1.5 rounded-lg flex items-center justify-center space-x-1 transition-all cursor-pointer ${
-                          currentSubTab === 'utilities'
+                        className={`py-1.5 rounded-lg flex items-center justify-center space-x-1 transition-all cursor-pointer ${currentSubTab === 'utilities'
                             ? (isDarkMode ? 'bg-zinc-900 text-emerald-400 border border-zinc-800' : 'bg-white text-emerald-600 shadow-sm border border-zinc-200')
                             : (isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-500 hover:text-zinc-900')
-                        }`}
+                          }`}
                       >
                         <Terminal className="w-3 h-3 shrink-0" />
                         <span>CMDS</span>
                       </button>
-                      
+
                       <button
                         onClick={() => setCardTab(tier.id, 'kits')}
-                        className={`py-1.5 rounded-lg flex items-center justify-center space-x-1 transition-all cursor-pointer ${
-                          currentSubTab === 'kits'
+                        className={`py-1.5 rounded-lg flex items-center justify-center space-x-1 transition-all cursor-pointer ${currentSubTab === 'kits'
                             ? (isDarkMode ? 'bg-zinc-900 text-emerald-400 border border-zinc-800' : 'bg-white text-emerald-600 shadow-sm border border-zinc-200')
                             : (isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-500 hover:text-zinc-900')
-                        }`}
+                          }`}
                       >
                         <Package className="w-3 h-3 shrink-0" />
                         <span>KITS</span>
@@ -540,11 +530,10 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
 
                       <button
                         onClick={() => setCardTab(tier.id, 'cosmetics')}
-                        className={`py-1.5 rounded-lg flex items-center justify-center space-x-1 transition-all cursor-pointer ${
-                          currentSubTab === 'cosmetics'
+                        className={`py-1.5 rounded-lg flex items-center justify-center space-x-1 transition-all cursor-pointer ${currentSubTab === 'cosmetics'
                             ? (isDarkMode ? 'bg-zinc-900 text-emerald-400 border border-zinc-800' : 'bg-white text-emerald-600 shadow-sm border border-zinc-200')
                             : (isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-500 hover:text-zinc-900')
-                        }`}
+                          }`}
                       >
                         <Palette className="w-3 h-3 shrink-0" />
                         <span>STYLE</span>
@@ -555,11 +544,10 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                     <div className={`space-y-3 pt-1 h-[180px] overflow-y-auto pr-1 scrollbar-thin`}>
                       {activePerkList.map((perk, idx) => (
                         <div key={idx} className="flex items-start space-x-2">
-                          <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${
-                            tier.id === 'diamond-rank' ? 'text-teal-400' :
-                            tier.id === 'titanium-rank' ? 'text-sky-400' :
-                            tier.id === 'mystical-rank' ? 'text-amber-400' : 'text-rose-400'
-                          }`} />
+                          <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${tier.id === 'diamond-rank' ? 'text-teal-400' :
+                              tier.id === 'titanium-rank' ? 'text-sky-400' :
+                                tier.id === 'mystical-rank' ? 'text-amber-400' : 'text-rose-400'
+                            }`} />
                           <span className={`${themeStyles.textSecondary} text-[11px] font-light leading-snug`}>
                             {perk}
                           </span>
@@ -573,11 +561,10 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
                 <button
                   id={`add-cart-membership-${tier.id}`}
                   onClick={() => handleAddToCart(tier)}
-                  className={`relative z-10 w-full py-3.5 mt-6 font-mono text-[10px] tracking-widest font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 ${
-                    isDarkMode 
-                      ? 'bg-zinc-900 hover:bg-white text-zinc-400 hover:text-zinc-950 border border-zinc-800 hover:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-none' 
+                  className={`relative z-10 w-full py-3.5 mt-6 font-mono text-[10px] tracking-widest font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 ${isDarkMode
+                      ? 'bg-zinc-900 hover:bg-white text-zinc-400 hover:text-zinc-950 border border-zinc-800 hover:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-none'
                       : 'bg-white hover:bg-zinc-900 border border-zinc-300 hover:border-zinc-900 text-zinc-600 hover:text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.06)] hover:shadow-none'
-                  }`}
+                    }`}
                 >
                   <ShoppingCart className="w-3.5 h-3.5" />
                   <span>ADD TO STORE CART</span>
@@ -591,7 +578,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
       {/* Perks Highlight Banner */}
       <div id="membership-perks-highlight" className={`rounded-3xl border ${themeStyles.borderMuted} ${themeStyles.bgCard} p-8 md:p-12 relative overflow-hidden shadow-2xl`}>
         <div className={`absolute top-0 right-0 w-[30%] h-full bg-gradient-to-l ${themeStyles.glowPrimary} blur-[80px] opacity-10 pointer-events-none`} />
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
@@ -620,20 +607,17 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
             </div>
           </div>
 
-          <div className={`border rounded-2xl p-6 space-y-4 ${
-            isDarkMode ? 'bg-zinc-950/40 border-zinc-900' : 'bg-zinc-50 border-zinc-200'
-          }`}>
-            <h5 className={`font-mono text-xs font-bold uppercase border-b pb-3 ${
-              isDarkMode ? 'text-zinc-300 border-zinc-900' : 'text-zinc-800 border-zinc-200'
+          <div className={`border rounded-2xl p-6 space-y-4 ${isDarkMode ? 'bg-zinc-950/40 border-zinc-900' : 'bg-zinc-50 border-zinc-200'
             }`}>
+            <h5 className={`font-mono text-xs font-bold uppercase border-b pb-3 ${isDarkMode ? 'text-zinc-300 border-zinc-900' : 'text-zinc-800 border-zinc-200'
+              }`}>
               Minecraft Connection Info
             </h5>
             <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed`}>
               Connect to the Survival server using our custom play node address below. Ranks apply globally to all server areas and lobby nodes immediately.
             </p>
-            <div className={`p-3 rounded-lg font-mono text-xs flex justify-between items-center ${
-              isDarkMode ? 'bg-zinc-950 text-emerald-400 border border-zinc-900' : 'bg-white text-emerald-600 border border-zinc-200'
-            }`}>
+            <div className={`p-3 rounded-lg font-mono text-xs flex justify-between items-center ${isDarkMode ? 'bg-zinc-950 text-emerald-400 border border-zinc-900' : 'bg-white text-emerald-600 border border-zinc-200'
+              }`}>
               <span>SERVER IP:</span>
               <span className="font-bold tracking-widest">PLAY.INEF.CC</span>
             </div>

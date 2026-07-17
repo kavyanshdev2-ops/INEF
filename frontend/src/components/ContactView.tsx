@@ -85,7 +85,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
         try {
           const parsed = JSON.parse(localTicketsRaw);
           if (Array.isArray(parsed)) {
-            localTickets = parsed.filter((t: any) => 
+            localTickets = parsed.filter((t: any) =>
               t.digitalAddress?.trim().toLowerCase() === emailVal.toLowerCase()
             );
           }
@@ -103,7 +103,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
         }
       });
 
-      const mergedTickets = Array.from(allTicketsMap.values()).sort((a, b) => 
+      const mergedTickets = Array.from(allTicketsMap.values()).sort((a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
 
@@ -122,7 +122,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
   const handleSelectTicket = (ticket: any) => {
     setSelectedTicket(ticket);
     setChatInput('');
-    
+
     const chatKey = `inefontop_chat_${ticket.id}`;
     const existingChatRaw = localStorage.getItem(chatKey);
     if (existingChatRaw) {
@@ -147,19 +147,19 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
 
   const getAutomatedResponse = (inquiryNature: string, text: string) => {
     const query = text.toLowerCase();
-    
+
     if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
       return `Connection signal healthy. Greetings subject. We are processing your request regarding [${inquiryNature}]. State of operations remains nominal. What specific parameters can we optimize?`;
     }
-    
+
     if (query.includes('status') || query.includes('update') || query.includes('when') || query.includes('ready')) {
       return `Query mapped. Ticket status is currently marked as PENDING. The laboratory engineers are completing verification tests. Expect full resolution notification directly to your registered @gmail.com within the next cycle.`;
     }
-    
+
     if (query.includes('thank') || query.includes('solve') || query.includes('ok') || query.includes('cool')) {
       return `Acknowledged. The connection remains active. Glad to assist in streamlining your operational vectors. Let us know if further diagnostic dialogue is required.`;
     }
-    
+
     switch (inquiryNature) {
       case 'BUG':
         return `Exception report parsed. Our testing automation harness has simulated the failure vector and isolated the stack trace. Debuggers are deploying hot patches to the staging nodes right now.`;
@@ -251,7 +251,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
     setTerminalLogs([]);
 
     const logLines = [
-      'INITIATING HANDSHAKE WITH INEFONTOP NODE TOKYO...',
+      'INITIATING HANDSHAKE WITH INEFFABLE NODE ...',
       'ESTABLISHING SECURE TLS_1.3 CHANNEL...',
       'PACKAGING SUBJECT DATA PACKETS...',
       `SUBJECT IDENTITY: "${form.subjectIdentity.toUpperCase()}"`,
@@ -265,11 +265,11 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
 
     try {
       setTerminalLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] DISPATCHING STREAM TO SECURE CLOUD GATEWAY...`]);
-      
+
       await new Promise((resolve) => setTimeout(resolve, 600));
 
       let finalTicketId = 'ticket-' + Date.now();
-      
+
       // Helper to generate UUID
       const generateUUID = () => {
         if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -388,7 +388,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
         `[${new Date().toLocaleTimeString()}] REAL-TIME SIGNAL ROUTED TO STAFF DISPATCH CHANNELS.`,
         `[${new Date().toLocaleTimeString()}] TRANSACTION REGISTER COMPLETED.`
       ]);
-      
+
       setIsSuccess(true);
       setForm({
         subjectIdentity: '',
@@ -450,7 +450,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
       {activeSection === 'transmit' ? (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
           {/* Connection Form */}
-          <div 
+          <div
             id="contact-form-panel"
             className={`lg:col-span-7 ${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-2xl p-6 md:p-8 space-y-6`}
           >
@@ -564,7 +564,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
                 </h3>
               </div>
 
-              <div 
+              <div
                 id="terminal-logger-viewport"
                 className={`h-64 ${isDarkMode ? 'bg-zinc-950 border-zinc-900 text-zinc-400' : 'bg-zinc-50 border-zinc-200 text-zinc-700'} rounded-xl border p-4 font-mono text-[9px] overflow-y-auto space-y-2.5 scrollbar-thin`}
               >
@@ -603,7 +603,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
             <div className={`${isDarkMode ? 'bg-zinc-900/10 border-zinc-900' : 'bg-zinc-100/50 border-zinc-200'} border p-6 rounded-2xl font-mono text-[10px] text-zinc-500 space-y-2.5`}>
               <span className={`${isDarkMode ? 'text-zinc-400' : 'text-zinc-700'} block tracking-wider font-semibold uppercase`}>CRYPTOGRAPHIC CREDENTIALS</span>
               <p className="leading-relaxed font-light">
-                All transmissions are protected with asymmetric client-side cryptographic rotation keys. 
+                All transmissions are protected with asymmetric client-side cryptographic rotation keys.
                 Our destination node stores database records in sandboxed containers on isolated cloud relays.
               </p>
             </div>
@@ -678,8 +678,8 @@ export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDa
                 <div className="space-y-2 overflow-y-auto max-h-[380px] scrollbar-thin">
                   {searchedTickets.map((ticket) => {
                     const isSelected = selectedTicket?.id === ticket.id;
-                    const badgeColor = ticket.status === 'RESOLVED' 
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                    const badgeColor = ticket.status === 'RESOLVED'
+                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                       : 'bg-amber-500/10 text-amber-400 border-amber-500/20';
                     return (
                       <button
