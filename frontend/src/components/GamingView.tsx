@@ -165,7 +165,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
       ip: 'ineffable.mc-play.org',
       tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: '/minecraftinefbanner.png',
+      img: 'bgmiinef.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
@@ -185,7 +185,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
       ip: 'ineffable.mc-play.org',
       tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
-      img: '/minecraftinefbanner.png',
+      img: 'freefire.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
@@ -201,6 +201,76 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
     {
       id: 'csgo' as const,
       title: 'CSGO',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: '/minecraftinefbanner.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'brawhalla' as const,
+      title: 'BRAWHALLA',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: '/minecraftinefbanner.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'smash kart' as const,
+      title: 'SMASH KART',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: '/minecraftinefbanner.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'rocket league' as const,
+      title: 'ROCKET LEAGUE',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: 'rocketleague.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'ludo' as const,
+      title: 'LUDO',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: '/minecraftinefbanner.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'chess' as const,
+      title: 'CHESS',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'If you think you are the best lets duo then....',
+      ip: 'LETS PLAY CHESS TOGEOTHER',
+      tags: ['INEFFABLE', 'CHESS', '500elo - 2500elo'],
+      img: 'chessinef.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'monopoly' as const,
+      title: 'MONOPOLY',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: '/minecraftinefbanner.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'skribble' as const,
+      title: 'SKRIBBLE',
       subtitle: 'INEFFABLE SMP',
       desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
       ip: 'ineffable.mc-play.org',
