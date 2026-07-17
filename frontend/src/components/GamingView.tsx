@@ -146,7 +146,27 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
+  interface MemberProfile {
+    id: string;
+    name: string;
+    discordTag: string;
+    discordId?: string;
+    role: string;
+    category: 'founder' | 'cofounder' | 'owner' | 'coowner' | 'techlead' | 'executive' | 'admin';
+    avatar: string;
+    banner: string;
+    status: string;
+    onlineStatus: 'online' | 'idle' | 'dnd' | 'offline';
+    joinedDate: string;
+    aboutMe: {
+      name: string;
+      age: string;
+      status: string;
+      specialty?: string;
+    };
+    badges: ('staff' | 'booster' | 'developer' | 'supporter')[];
+    description: string;
+  }
   const games = [
     {
       id: 'minecraft' as const,
@@ -156,6 +176,36 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
       ip: 'ineffable.mc-play.org',
       tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
       img: 'minecraftinefbanner.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'bgmi' as const,
+      title: 'BGMI',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: '/minecraftinefbanner.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'codenames' as const,
+      title: 'CODENAMES',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: '/minecraftinefbanner.png',
+      accentColor: 'text-emerald-400 border-emerald-500/30'
+    },
+    {
+      id: 'minecraft' as const,
+      title: 'MINECRAFT',
+      subtitle: 'INEFFABLE SMP',
+      desc: 'Connect to our dedicated survival server.  Built for brutalist architects, designers, and block-builders alike.',
+      ip: 'ineffable.mc-play.org',
+      tags: ['LIFESTEAL', 'SMP', '1.20-1.21.x'],
+      img: '/minecraftinefbanner.png',
       accentColor: 'text-emerald-400 border-emerald-500/30'
     },
     {
