@@ -165,8 +165,8 @@ export const LanguageTranslator: React.FC<LanguageTranslatorProps> = ({ themeSty
           id="translator-dropdown"
           className={`absolute right-0 mt-2 w-56 max-h-80 overflow-y-auto rounded-xl border shadow-2xl z-50 ${themeStyles.bgCard} ${themeStyles.borderMain} scrollbar-thin ${themeStyles.scrollbarThumb}`}
           style={{
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)'
+            backdropFilter: 'blur(80px)',
+            WebkitBackdropFilter: 'blur(80px)'
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -179,8 +179,8 @@ export const LanguageTranslator: React.FC<LanguageTranslatorProps> = ({ themeSty
                   key={lang.code}
                   onClick={() => handleLanguageSelect(lang.code)}
                   className={`w-full px-3 py-2 rounded-lg text-left transition-all duration-200 flex items-center justify-between group cursor-pointer ${isActive
-                      ? `${themeStyles.accentBg} text-zinc-950 font-bold`
-                      : `${themeStyles.textSecondary} hover:${themeStyles.textPrimary} hover:bg-zinc-500/10`
+                    ? `${themeStyles.accentBg} text-zinc-950 font-bold`
+                    : `${themeStyles.textSecondary} hover:${themeStyles.textPrimary} hover:bg-zinc-500/10`
                     }`}
                 >
                   <span className="flex items-center space-x-3.5 font-sans text-xs">

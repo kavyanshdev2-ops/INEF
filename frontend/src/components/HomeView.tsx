@@ -8,27 +8,27 @@ import { motion, AnimatePresence } from 'motion/react';
 import { PageId, ApparelItem, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
 import { ResourceLab } from './ResourceLab';
-import { 
-  ArrowUpRight, 
-  Compass, 
-  Shield, 
-  Flame, 
-  Check, 
-  ShoppingBag, 
-  Eye, 
-  X, 
-  Users, 
-  Volume2, 
-  Tv, 
-  Gamepad2, 
-  Calendar, 
-  Sparkles, 
-  ExternalLink, 
+import {
+  ArrowUpRight,
+  Compass,
+  Shield,
+  Flame,
+  Check,
+  ShoppingBag,
+  Eye,
+  X,
+  Users,
+  Volume2,
+  Tv,
+  Gamepad2,
+  Calendar,
+  Sparkles,
+  ExternalLink,
   Radio,
-  MessageSquare, 
-  Heart, 
-  Smile, 
-  Star, 
+  MessageSquare,
+  Heart,
+  Smile,
+  Star,
   HelpCircle,
   MessageCircle,
   TrendingUp,
@@ -293,9 +293,9 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
 
   return (
     <div id="home-view-container" className={`relative ${themeStyles.textPrimary} pb-24`}>
-      
+
       {/* Cinematic Hero - Discord Rebrand */}
-      <section 
+      <section
         id="home-hero-section"
         className="relative min-h-screen flex flex-col justify-center px-6 lg:px-16 overflow-hidden pt-24"
       >
@@ -304,9 +304,9 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
         <div className={`absolute bottom-[10%] right-[10%] w-[35vw] h-[35vw] rounded-full ${themeStyles.glowSecondary} blur-[100px] pointer-events-none`} />
 
         <div className="max-w-7xl mx-auto w-[1280px] max-w-full pl-0 pt-0 mt-0 relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
+
           {/* LEFT COLUMN: HERO CONTENT (OLD THEME PRESERVED) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -314,21 +314,21 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
           >
 
 
-            <h1 
+            <h1
               id="hero-main-title"
               className={`text-6xl md:text-8xl xl:text-9xl font-sans tracking-tight font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 ${getGradientToClass()} leading-[0.9] uppercase filter drop-shadow-2xl`}
             >
               INEFFABLE
             </h1>
-            
-            <h2 
+
+            <h2
               id="hero-sub-title"
               className={`text-xl md:text-2xl font-mono tracking-[0.05em] ${themeStyles.accentText} font-medium mt-6`}
             >
               A Legendary Community Server Running Strong For 6 Years
             </h2>
 
-            <p 
+            <p
               id="hero-brief"
               className={`${themeStyles.textSecondary} font-sans max-w-2xl text-base md:text-lg mt-6 leading-relaxed font-light mx-auto lg:mx-0`}
             >
@@ -366,7 +366,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
           >
             <motion.div
               className="w-80 h-80 md:w-[480px] md:h-[480px] relative flex items-center justify-center select-none"
-              animate={{ 
+              animate={{
                 y: [0, -15, 0],
               }}
               transition={{
@@ -378,11 +378,11 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
             >
               {/* Glassy background */}
               <div className={`absolute inset-0 rounded-3xl backdrop-blur-xl border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} shadow-xl transition-all duration-300`} />
-              
+
               {/* Your logo image with transparent background */}
-              <img 
-                src="/inefwebsitegif.gif" 
-                alt="INEFFABLE Logo" 
+              <img
+                src="/inefwebsitegif.gif"
+                alt="INEFFABLE Logo"
                 className="w-[90%] h-[90%] z-10 object-contain drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]"
               />
             </motion.div>
@@ -400,7 +400,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       </section>
 
       {/* Real-time Stats Board */}
-      <motion.section 
+      <motion.section
         id="home-stats-section"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -425,7 +425,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       </motion.section>
 
       {/* Bento Grid: Core Sectors */}
-      <section 
+      <section
         id="home-about-section"
         className={`max-w-7xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
       >
@@ -442,9 +442,9 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          
+
           {/* Sector 1: Anime */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -462,7 +462,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
           </motion.div>
 
           {/* Sector 2: Gaming LFG */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -480,7 +480,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
           </motion.div>
 
           {/* Sector 3: Weekly Events */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -498,7 +498,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
           </motion.div>
 
           {/* Sector 4: Active VCs */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -522,7 +522,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       <ResourceLab activeAtmosphere={activeAtmosphere} isDarkMode={isDarkMode} />
 
       {/* Promotional Nodes & Minecraft Realms */}
-      <section 
+      <section
         id="home-apparel-section"
         className={`max-w-7xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
       >
@@ -542,7 +542,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {promotionalNodes.map((item, index) => (
-            <motion.div 
+            <motion.div
               id={`product-card-${item.id}`}
               key={item.id}
               initial={{ opacity: 0, y: 35 }}
@@ -553,14 +553,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
               className={`group relative flex flex-col ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-500 rounded-2xl p-4 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.15)]`}
             >
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-zinc-950 mb-4">
-                <img 
+                <img
                   id={`product-img-${item.id}`}
-                  src={item.image} 
-                  alt={item.name} 
+                  src={item.image}
+                  alt={item.name}
                   className="w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 group-hover:brightness-90 transition-all duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+
                 <div className="absolute bottom-3 left-3 right-3 flex justify-between gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                   <button
                     id={`view-product-btn-${item.id}`}
@@ -568,7 +568,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                     className={`flex-1 py-2 ${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 rounded-lg text-[10px] font-mono tracking-widest transition-all flex items-center justify-center space-x-1 cursor-pointer font-bold`}
                   >
                     <Eye className="w-3.5 h-3.5" />
-                    <span>PREVIEW DETAILEDINFO</span>
+                    <span>PREVIEW DETAILED INFO</span>
                   </button>
                 </div>
               </div>
@@ -600,7 +600,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       </section>
 
       {/* Inefontop Tiers */}
-      <section 
+      <section
         id="home-tiers-section"
         className={`max-w-7xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
       >
@@ -621,7 +621,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
             const IconComponent = t.icon;
             const isFeatured = t.id === 'diamond';
             return (
-              <motion.div 
+              <motion.div
                 id={`tier-card-${t.id}`}
                 key={t.id}
                 initial={{ opacity: 0, y: 35 }}
@@ -629,11 +629,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                 viewport={{ once: true }}
                 whileHover={{ y: -8, scale: 1.01 }}
                 transition={{ duration: 0.55, delay: index * 0.1 }}
-                className={`relative rounded-3xl border p-8 flex flex-col justify-between transition-all duration-300 ${t.color} ${
-                  isFeatured 
-                    ? `${isDarkMode ? 'bg-zinc-900/40' : 'bg-zinc-50'} ${themeStyles.borderHighlight} hover:shadow-2xl` 
-                    : `${themeStyles.bgCard} opacity-95`
-                }`}
+                className={`relative rounded-3xl border p-8 flex flex-col justify-between transition-all duration-300 ${t.color} ${isFeatured
+                  ? `${isDarkMode ? 'bg-zinc-900/40' : 'bg-zinc-50'} ${themeStyles.borderHighlight} hover:shadow-2xl`
+                  : `${themeStyles.bgCard} opacity-95`
+                  }`}
               >
                 {isFeatured && (
                   <span className={`absolute top-4 right-4 ${themeStyles.accentBg} text-zinc-950 font-mono text-[9px] tracking-widest px-3 py-1 rounded-full border ${themeStyles.borderHighlight} font-bold uppercase animate-pulse`}>
@@ -653,7 +652,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                   <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed mb-6`}>
                     {t.description}
                   </p>
-                  
+
                   <ul className={`space-y-3.5 border-t ${themeStyles.borderMuted} pt-6`}>
                     {t.features.map((feat, idx) => (
                       <li key={idx} className={`flex items-center space-x-3 text-xs ${themeStyles.textSecondary} font-light`}>
@@ -676,13 +675,12 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                       image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop'
                     });
                   }}
-                  className={`w-full mt-8 py-3.5 rounded-xl font-mono text-[10px] tracking-[0.2em] transition-all duration-300 cursor-pointer ${
-                    isFeatured 
-                      ? `${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 font-bold shadow-lg` 
-                      : `${isDarkMode ? 'bg-zinc-900/20 hover:bg-zinc-900/40' : 'bg-zinc-100 hover:bg-zinc-200'} ${themeStyles.textPrimary} border ${themeStyles.borderMuted}`
-                  }`}
+                  className={`w-full mt-8 py-3.5 rounded-xl font-mono text-[10px] tracking-[0.2em] transition-all duration-300 cursor-pointer ${isFeatured
+                    ? `${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 font-bold shadow-lg`
+                    : `${isDarkMode ? 'bg-zinc-900/20 hover:bg-zinc-900/40' : 'bg-zinc-100 hover:bg-zinc-200'} ${themeStyles.textPrimary} border ${themeStyles.borderMuted}`
+                    }`}
                 >
-                  ACQUIRE TIER ACCESS
+                  BUY
                 </button>
               </motion.div>
             );
@@ -691,7 +689,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       </section>
 
       {/* FAQ Accordion */}
-      <section 
+      <section
         id="home-faq-section"
         className={`max-w-4xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
       >
@@ -706,15 +704,15 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
 
         <div className="space-y-4">
           {faqs.map((faq, i) => (
-            <motion.div 
-              key={i} 
+            <motion.div
+              key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
               className={`${themeStyles.bgCard} border ${themeStyles.borderMuted} rounded-2xl overflow-hidden transition-all duration-300`}
             >
-              <button 
+              <button
                 onClick={() => setActiveFaq(activeFaq === i ? null : i)}
                 className={`w-full px-6 py-5 flex items-center justify-between text-left hover:${isDarkMode ? 'bg-zinc-900/40' : 'bg-zinc-100/50'} transition-colors font-sans font-bold ${themeStyles.textPrimary} text-sm md:text-base cursor-pointer`}
               >
@@ -744,14 +742,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       {/* Dynamic Product Overlay Drawers */}
       <AnimatePresence>
         {selectedProduct && (
-          <motion.div 
+          <motion.div
             id="product-drawer-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md"
           >
-            <motion.div 
+            <motion.div
               id="product-drawer-body"
               initial={{ scale: 0.95, y: 15, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -768,10 +766,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
               </button>
 
               <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[450px] bg-zinc-950">
-                <img 
+                <img
                   id="product-drawer-img"
-                  src={selectedProduct.image} 
-                  alt={selectedProduct.name} 
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
                   className="w-full h-full object-cover grayscale"
                 />
               </div>
