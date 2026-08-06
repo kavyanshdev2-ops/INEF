@@ -6,6 +6,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PageId, AtmosphereConfig, CartItem } from './types';
 import { PetalDriftCanvas } from './components/PetalDriftCanvas';
+import { MouseGlowTracker } from './components/MouseGlowTracker';
 import { Navbar } from './components/Navbar';
 import { HomeView } from './components/HomeView';
 import { MembershipView } from './components/MembershipView';
@@ -22,7 +23,7 @@ import { PaymentFailedView } from './components/PaymentFailedView';
 import { getThemeStyles } from './lib/theme';
 import { Disc, Sparkles, MapPin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
 import { supabase, isSupabaseConfigured, getDBWishlist, toggleDBWishlist, getDBCart, saveDBCart, getWebsiteSettings } from './lib/supabase';
-import cherryBlossomBg from './assets/images/cherry_blossom_bg_1782902853761.jpg';
+const cherryBlossomBg = '/cherry_blossom_bg_1782902853761.jpg';
 
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg
@@ -45,7 +46,25 @@ export default function App() {
     colorTheme: 'classic'
   });
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
   const [websiteSettings, setWebsiteSettings] = useState<Record<string, any>>({});
+
+  const handleToggleDarkMode = () => {
+    setIsThemeTransitioning(true);
+    setIsDarkMode(prev => !prev);
+    setTimeout(() => {
+      setIsThemeTransitioning(false);
+    }, 750);
+  };
+
+  // Sync dark mode class to html document element for Tailwind dark: utilities
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
 
 
@@ -383,6 +402,17 @@ export default function App() {
       id="ineffable-root-canvas"
       className={`min-h-screen ${getBackgroundGradientClass()} font-sans ${getSelectionClass()} relative overflow-x-hidden transition-all duration-1000 ease-in-out`}
     >
+      {/* Theme Switching Radial Sweep Transition Effect */}
+      {isThemeTransitioning && (
+        <div
+          className="fixed top-6 right-12 w-96 h-96 -translate-y-1/2 translate-x-1/2 rounded-full pointer-events-none z-[100] animate-theme-sweep"
+          style={{
+            background: isDarkMode
+              ? 'radial-gradient(circle, rgba(15, 23, 42, 0.95) 0%, rgba(244, 63, 94, 0.4) 40%, transparent 70%)'
+              : 'radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(251, 182, 206, 0.5) 40%, transparent 70%)'
+          }}
+        />
+      )}
 
       {/* Dynamic photographic background matching the active theme */}
       <div
@@ -402,16 +432,19 @@ export default function App() {
         {/* Soft overlays to ensure contrast and readability */}
         <div className={`absolute inset-0 transition-all duration-1000 ease-in-out ${isDarkMode
           ? 'bg-gradient-to-b from-transparent via-zinc-900/40 to-zinc-900/90'
-          : 'bg-gradient-to-b from-transparent via-zinc-300/45 to-zinc-300/90'
+          : 'bg-gradient-to-b from-transparent via-white/50 to-white/90'
           }`} />
         <div className={`absolute inset-0 transition-all duration-1000 ease-in-out ${isDarkMode
           ? 'bg-gradient-to-r from-zinc-900/15 via-transparent to-zinc-900/15'
-          : 'bg-gradient-to-r from-zinc-300/15 via-transparent to-zinc-300/15'
+          : 'bg-gradient-to-r from-white/20 via-transparent to-white/20'
           }`} />
       </div>
 
       {/* Background Interactive Canvas Particle simulation */}
       <PetalDriftCanvas config={atmosphere} isDarkMode={isDarkMode} />
+
+      {/* Mouse Tracking Radial Liquid Glow Effect */}
+      <MouseGlowTracker atmosphere={atmosphere} isDarkMode={isDarkMode} />
 
       {/* Global Navigation Header with Glassmorphism blur */}
       <Navbar
@@ -419,7 +452,7 @@ export default function App() {
         setCurrentPage={navigateToPage}
         activeAtmosphere={atmosphere}
         isDarkMode={isDarkMode}
-        onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+        onToggleDarkMode={handleToggleDarkMode}
         cartCount={totalCartCount}
         currentUser={currentUser}
         websiteSettings={websiteSettings}
@@ -428,7 +461,7 @@ export default function App() {
       {/* Main Render Views */}
       <main id="ineffable-main-view" className="relative z-20">
         {currentPage === 'home' && (
-          <HomeView setCurrentPage={navigateToPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} />
+          <HomeView setCurrentPage={navigateToPage} activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} onAddToCart={handleAddToCart} />
         )}
         {currentPage === 'gaming' && (
           <GamingView activeAtmosphere={{ ...themeStyles, ...atmosphere }} isDarkMode={isDarkMode} />
@@ -454,7 +487,7 @@ export default function App() {
           <AdminView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} setCurrentPage={navigateToPage} />
         )}
         {currentPage === 'contact' && (
-          <ContactView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} />
+          <ContactView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} />
         )}
         {currentPage === 'about' && (
           <AboutView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} />
@@ -505,13 +538,12 @@ export default function App() {
         id="ineffable-footer"
         className={`relative z-30 ${themeStyles.bgFooter} border-t ${themeStyles.borderMuted} py-16 px-6 backdrop-blur-md transition-all duration-1000`}
       >
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 font-sans font-light">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 font-sans font-light">
 
-          {/* Column 1 - Brand Identity */}
-          <div className="md:col-span-5 space-y-4">
+          {/* Column 1 - Brand Identity & Repositioned Links */}
+          <div className="md:col-span-6 space-y-4">
             <div className="flex items-center space-x-3">
               <div className="relative w-7 h-7 flex items-center justify-center">
-                {/* Your logo image with transparent background */}
                 <img
                   src="/img.jpg"
                   alt="INEFFABLE Logo"
@@ -522,19 +554,55 @@ export default function App() {
                 INEFFABLE
               </h4>
             </div>
-            <p className={`${themeStyles.textSecondary} text-xs max-w-sm leading-relaxed`}>
+            <p className={`${themeStyles.textSecondary} text-xs max-w-md leading-relaxed`}>
               INEFFABLE is an open-ended digital experimental brand blurring the boundary of cyber couture clothing, brutalist architecture, and dynamic physics loops.
             </p>
-            <div className={`flex items-center space-x-3 ${themeStyles.textMuted} font-mono text-[9px] tracking-wider`}>
-              <MapPin className={`w-3.5 h-3.5 ${themeStyles.accentTextMuted}`} />
-              <span>IN UR HEAR AND ALWAYS LOVING</span>
+            <div className="flex flex-wrap items-center gap-4 pt-1">
+              <div className={`flex items-center space-x-2 ${themeStyles.textMuted} font-mono text-[9px] tracking-wider`}>
+                <MapPin className={`w-3.5 h-3.5 ${themeStyles.accentTextMuted}`} />
+                <span>IN UR HEART AND ALWAYS LOVING</span>
+              </div>
+              <div className="flex items-center space-x-3 font-mono text-[10px]">
+                <a
+                  href="https://discord.gg/ineffable"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-500 hover:text-[#5865F2] transition-colors duration-300"
+                  title="Discord"
+                >
+                  <DiscordIcon className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-500 hover:text-rose-500 transition-colors duration-300"
+                  title="GitHub"
+                >
+                  <Github className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-500 hover:text-[#FF0000] transition-colors duration-300"
+                  title="YouTube"
+                >
+                  <Youtube className="w-4 h-4" />
+                </a>
+                <span className="text-zinc-400 dark:text-zinc-600">//</span>
+                <div className="flex items-center space-x-1 text-zinc-500 dark:text-zinc-400 font-bold">
+                  <Sparkles className={`w-3 h-3 ${themeStyles.accentText}`} />
+                  <span>INEF ON TOP</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Column 2 - Quick navigation */}
-          <div className="md:col-span-3 space-y-4 font-mono text-xs">
-            <h5 className={`${themeStyles.textSecondary} tracking-[0.2em] font-medium uppercase px-4`}>SYSTEM ARCHIVE</h5>
-            <div className="flex flex-col space-y-1">
+          {/* Column 2 - System Archive in Two Columns */}
+          <div className="md:col-span-6 space-y-4 font-mono text-xs">
+            <h5 className={`${themeStyles.textSecondary} tracking-[0.2em] font-medium uppercase px-2`}>SYSTEM ARCHIVE</h5>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
               {[
                 { id: 'home' as PageId, label: 'HOME' },
                 { id: 'about' as PageId, label: 'ABOUT US' },
@@ -554,7 +622,7 @@ export default function App() {
                       setCurrentPage(lnk.id);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className={`relative px-4 py-2 font-mono text-[10px] tracking-[0.2em] transition-all duration-300 cursor-pointer flex items-center space-x-1.5 rounded-lg w-fit text-left ${isActive
+                    className={`relative px-3 py-2 font-mono text-[10px] tracking-[0.2em] transition-all duration-300 cursor-pointer flex items-center space-x-1.5 rounded-lg w-full text-left ${isActive
                       ? `${themeStyles.textPrimary} bg-zinc-500/10 font-bold`
                       : `${themeStyles.textSecondary} hover:${themeStyles.textPrimary} hover:bg-zinc-500/5`
                       }`}
@@ -572,82 +640,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Column 3 - Technical stats & coordinates */}
-          <div className={`md:col-span-4 space-y-4 font-mono text-[10px] ${themeStyles.textSecondary} leading-normal`}>
-            <h5 className={`${themeStyles.textSecondary} tracking-[0.2em] font-medium uppercase`}>CORE SPECIFICATION</h5>
-            <div className={`space-y-2 ${themeStyles.bgCard} p-4 rounded-xl border ${themeStyles.borderMuted}`}>
-              <div className={`flex justify-between border-b ${themeStyles.borderMuted} pb-1.5`}>
-                <span>SYSTEM RENDER</span>
-                <span className="text-emerald-500">WELL WELL</span>
-              </div>
-              <div className={`flex justify-between border-b ${themeStyles.borderMuted} pb-1.5`}>
-                <span>ACTIVE VELOCITY</span>
-                <span className={themeStyles.textPrimary}>{atmosphere.driftVelocity} M/S</span>
-              </div>
-              <div className={`flex justify-between border-b ${themeStyles.borderMuted} pb-1.5`}>
-                <span>GRAVITY MASS</span>
-                <span className={themeStyles.textPrimary}>{atmosphere.gravity} G</span>
-              </div>
-              <div className="flex justify-between">
-                <span>CONNECTION STATUS</span>
-                <span className={`${themeStyles.accentText} uppercase`}>{atmosphere.colorTheme}</span>
-              </div>
-            </div>
-
-            {/* Social Cluster */}
-            <div className="flex items-center space-x-4 pt-2">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-zinc-600 hover:text-[#E1306C] transition-colors duration-300"
-                title="Instagram"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-zinc-600 hover:text-[#1DA1F2] transition-colors duration-300"
-                title="Twitter / X"
-              >
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-zinc-600 hover:text-[#FF0000] transition-colors duration-300"
-                title="YouTube"
-              >
-                <Youtube className="w-4 h-4" />
-              </a>
-              <a
-                href="https://discord.gg/ineffable"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-zinc-600 hover:text-[#5865F2] transition-colors duration-300"
-                title="Discord"
-              >
-                <DiscordIcon className="w-4 h-4" />
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-zinc-600 hover:text-white transition-colors duration-300"
-                title="GitHub"
-              >
-                <Github className="w-4 h-4" />
-              </a>
-              <span className="text-zinc-600">//</span>
-              <div className="flex items-center space-x-1 text-zinc-600">
-                <Sparkles className={`w-3 h-3 ${themeStyles.accentText}`} />
-                <span>INEF ON TOP</span>
-              </div>
-            </div>
-          </div>
         </div>
       </footer>
     </div>

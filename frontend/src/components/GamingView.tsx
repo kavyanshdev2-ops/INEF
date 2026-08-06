@@ -5,19 +5,12 @@ import {
   Sparkles, ExternalLink, Activity, Terminal, Copy, Check,
   Layers, Cpu, Trophy, Target, Box, Flame, RefreshCw
 } from 'lucide-react';
+import { AtmosphereConfig } from '../types';
+import { getThemeStyles } from '../lib/theme';
 import { MinecraftStatusWidget } from './MinecraftStatusWidget';
 
 interface GamingViewProps {
-  activeAtmosphere: {
-    colorTheme: string;
-    accentText: string;
-    borderMuted: string;
-    bgCard: string;
-    textPrimary: string;
-    textSecondary: string;
-    textMuted: string;
-    indicatorBg: string;
-  };
+  activeAtmosphere: AtmosphereConfig;
   isDarkMode: boolean;
 }
 
@@ -41,7 +34,8 @@ interface Spark {
 }
 
 export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
-  const [selectedGame, setSelectedGame] = useState<'list' | 'minecraft' | 'roblox' | 'bgmi' | 'codenames' | 'freefire' | 'valorant' | 'csgo' | 'rocketleague' | 'ludo' | 'chess'>('list');
+  const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
+  const [selectedGame, setSelectedGame] = useState<'list' | 'minecraft' | 'roblox' | 'bgmi' | 'codenames' | 'freefire' | 'valorant' | 'csgo' | 'rocketleague' | 'ludo' | 'chess' | 'amongus' | 'mechachameleon'>('list');
   const [copied, setCopied] = useState(false);
 
   // Custom Minecraft States
@@ -266,10 +260,10 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
               <Gamepad2 className="w-3.5 h-3.5" />
               <span>Ineffable Gaming Terminal</span>
             </div>
-            <h2 className={`font-mono text-3xl tracking-[0.25em] ${activeAtmosphere.textPrimary} uppercase`}>
+            <h2 className={`font-mono text-3xl tracking-[0.25em] ${themeStyles.textPrimary} uppercase`}>
               THE GRID ARCADE
             </h2>
-            <p className={`${activeAtmosphere.textSecondary} text-xs font-sans font-light leading-relaxed max-w-xl mx-auto`}>
+            <p className={`${themeStyles.textSecondary} text-xs font-sans font-light leading-relaxed max-w-xl mx-auto`}>
               Interact with custom digital playgrounds, multiplayer sandboxes, and retro simulators configured exclusively for members of the Ineffable cyber matrix.
             </p>
           </motion.div>
@@ -279,7 +273,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={() => setSelectedGame('list')}
-            className={`flex items-center space-x-2 px-4 py-2 border ${activeAtmosphere.borderMuted} rounded-xl hover:border-zinc-500 hover:text-white transition-all text-zinc-400 font-mono text-xs cursor-pointer mb-10`}
+            className={`flex items-center space-x-2 px-4 py-2 border ${themeStyles.borderMuted} rounded-xl hover:border-zinc-500 hover:text-white transition-all text-zinc-400 font-mono text-xs cursor-pointer mb-10`}
           >
             <ChevronLeft className="w-4 h-4" />
             <span>RETURN TO THE GRID ARCADE</span>
@@ -303,7 +297,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className={`group ${activeAtmosphere.bgCard} border ${activeAtmosphere.borderMuted} hover:border-zinc-500/50 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-2xl`}
+                className={`group ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-500/50 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-2xl`}
               >
                 {/* Card Header Image */}
                 <div className="relative h-64 overflow-hidden bg-zinc-950">
@@ -342,7 +336,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                     <span className="text-[9px] tracking-widest text-zinc-500 uppercase font-mono block">
                       {g.subtitle}
                     </span>
-                    <p className={`${activeAtmosphere.textSecondary} text-xs font-light leading-relaxed line-clamp-3`}>
+                    <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed line-clamp-3`}>
                       {g.desc}
                     </p>
                   </div>
@@ -805,12 +799,12 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
-            className={`border ${activeAtmosphere.borderMuted} ${activeAtmosphere.bgCard} rounded-3xl p-8 space-y-8`}
+            className={`border ${themeStyles.borderMuted} ${themeStyles.bgCard} rounded-3xl p-8 space-y-8`}
           >
             <div className={`flex flex-col md:flex-row items-center justify-between gap-6 border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'} pb-6`}>
               <div className="space-y-2 text-center md:text-left">
                 <span className="text-[9px] text-rose-400 uppercase font-mono tracking-wider">INEFFABLE EXPERIENCE NODE</span>
-                <h2 className={`font-mono text-2xl tracking-widest ${activeAtmosphere.textPrimary} font-bold`}>
+                <h2 className={`font-mono text-2xl tracking-widest ${themeStyles.textPrimary} font-bold`}>
                   ROBLOX FASHION SANCTUARY
                 </h2>
               </div>
@@ -834,7 +828,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-7 space-y-4">
                 <h3 className={`font-mono text-xs uppercase ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>Custom Skin Configurator</h3>
-                <p className={`${activeAtmosphere.textSecondary} text-xs font-sans leading-relaxed`}>
+                <p className={`${themeStyles.textSecondary} text-xs font-sans leading-relaxed`}>
                   Configure exclusive high-end cyberpunk garments directly on your Roblox avatar template. Export texture shaders or copy direct experience IDs.
                 </p>
 
@@ -884,12 +878,12 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
-            className={`border ${activeAtmosphere.borderMuted} ${activeAtmosphere.bgCard} rounded-3xl p-8 space-y-8`}
+            className={`border ${themeStyles.borderMuted} ${themeStyles.bgCard} rounded-3xl p-8 space-y-8`}
           >
             <div className={`flex flex-col md:flex-row items-center justify-between gap-6 border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'} pb-6`}>
               <div className="space-y-2 text-center md:text-left">
                 <span className="text-[9px] text-red-400 uppercase font-mono tracking-wider">SKELD REACTOR TERMINAL</span>
-                <h2 className={`font-mono text-2xl tracking-widest ${activeAtmosphere.textPrimary} font-bold`}>
+                <h2 className={`font-mono text-2xl tracking-widest ${themeStyles.textPrimary} font-bold`}>
                   AMONG US REACTOR CONTROLLER
                 </h2>
               </div>
@@ -967,12 +961,12 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
-            className={`border ${activeAtmosphere.borderMuted} ${activeAtmosphere.bgCard} rounded-3xl p-8 space-y-8`}
+            className={`border ${themeStyles.borderMuted} ${themeStyles.bgCard} rounded-3xl p-8 space-y-8`}
           >
             <div className={`flex flex-col md:flex-row items-center justify-between gap-6 border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'} pb-6`}>
               <div className="space-y-2 text-center md:text-left">
                 <span className="text-[9px] text-amber-400 uppercase font-mono tracking-wider">BIO-STEALTH INTERFACE</span>
-                <h2 className={`font-mono text-2xl tracking-widest ${activeAtmosphere.textPrimary} font-bold`}>
+                <h2 className={`font-mono text-2xl tracking-widest ${themeStyles.textPrimary} font-bold`}>
                   MECHA CHAMELEON SPECTRA
                 </h2>
               </div>
@@ -1051,12 +1045,12 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
-                className={`border ${activeAtmosphere.borderMuted} ${activeAtmosphere.bgCard} rounded-3xl p-8 space-y-8`}
+                className={`border ${themeStyles.borderMuted} ${themeStyles.bgCard} rounded-3xl p-8 space-y-8`}
               >
                 <div className={`flex flex-col md:flex-row items-center justify-between gap-6 border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'} pb-6`}>
                   <div className="space-y-2 text-center md:text-left">
                     <span className={`text-[9px] uppercase font-mono tracking-wider ${game.accentColor.split(' ')[0]}`}>{game.subtitle}</span>
-                    <h2 className={`font-mono text-2xl tracking-widest ${activeAtmosphere.textPrimary} font-bold`}>{game.title}</h2>
+                    <h2 className={`font-mono text-2xl tracking-widest ${themeStyles.textPrimary} font-bold`}>{game.title}</h2>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -1064,7 +1058,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                     <div className="relative h-64 w-full overflow-hidden rounded-2xl">
                       <img src={game.img} alt={game.title} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop'; }} />
                     </div>
-                    <p className={`${activeAtmosphere.textSecondary} text-xs font-sans leading-relaxed`}>{game.desc}</p>
+                    <p className={`${themeStyles.textSecondary} text-xs font-sans leading-relaxed`}>{game.desc}</p>
                     {game.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 pt-2">
                         {game.tags.map(tag => (
@@ -1078,7 +1072,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
                       <div className={`w-16 h-16 rounded-xl ${game.accentColor.split(' ')[1].replace('border-', 'bg-').replace('/30', '/10')} border ${game.accentColor.split(' ')[1]} flex items-center justify-center text-3xl mx-auto`}>🎮</div>
                       <div>
                         <span className={`text-[8px] uppercase tracking-wider ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'} block`}>SERVER/ACCESS INFO</span>
-                        <span className={`text-sm font-bold ${activeAtmosphere.textPrimary} font-mono block mt-2`}>{game.ip}</span>
+                        <span className={`text-sm font-bold ${themeStyles.textPrimary} font-mono block mt-2`}>{game.ip}</span>
                       </div>
                       <button
                         onClick={() => {

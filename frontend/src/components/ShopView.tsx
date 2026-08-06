@@ -20,6 +20,9 @@ import {
   X, 
   ChevronRight, 
   ChevronLeft, 
+  ChevronDown,
+  ChevronUp,
+  Zap,
   Ruler, 
   Truck, 
   RotateCcw, 
@@ -180,6 +183,12 @@ export const ShopView: React.FC<ShopViewProps> = ({
   currentUser,
 }) => {
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
+
+  // Navigation & Dropdown states for Shop Sub-Navbar
+  const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
+  const [isTrackOrderModalOpen, setIsTrackOrderModalOpen] = useState(false);
+  const [orderTrackingInput, setOrderTrackingInput] = useState('');
+  const [orderTrackingResult, setOrderTrackingResult] = useState<string | null>(null);
 
   // Filter & Search states
   const [searchQuery, setSearchQuery] = useState('');
@@ -368,18 +377,18 @@ export const ShopView: React.FC<ShopViewProps> = ({
             transition={{ duration: 0.5 }}
             id="shop-catalog-view"
           >
-            {/* Elegant Header */}
-            <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-              <span className={`font-mono text-xs tracking-[0.4em] ${themeStyles.accentText} uppercase block`}>
-                INEFFABLE // APPAREL
-              </span>
-              <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-black uppercase text-glow">
-                CYBER COUTURE
+            {/* Top Announcement Bar */}
+            <div className={`w-full bg-zinc-950 text-zinc-100 text-[10px] md:text-[11px] font-mono tracking-widest text-center py-2 rounded-xl border border-zinc-800/80 uppercase font-semibold flex items-center justify-center space-x-2 mb-8 shadow-sm`}>
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>Orders Dispatch Within 24 Hours</span>
+            </div>
+
+            {/* Simple Clean Header */}
+            <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+              <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-black uppercase text-glow">
+                SHOPPING AREA
               </h2>
               <div className="w-12 h-[2px] bg-rose-500/75 mx-auto rounded-full" />
-              <p className={`${themeStyles.textSecondary} font-sans text-xs md:text-sm font-light leading-relaxed tracking-wider`}>
-                Premium tailored streetwear constructed with heavyweight organic fabrics, brutalist geometric layouts, and structural detailing.
-              </p>
             </div>
 
             {/* Filter and Live Search Panel */}
@@ -393,7 +402,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="SEARCH COUTURE APPAREL..."
+                    placeholder="SEARCH PRODUCTS..."
                     className={`w-full ${isDarkMode ? 'bg-zinc-950/80 border-zinc-900 text-zinc-100 placeholder-zinc-600 focus:border-rose-500/55' : 'bg-white border-zinc-200 text-zinc-900 placeholder-zinc-400 focus:border-rose-500/50'} pl-11 pr-4 py-3 rounded-xl border text-xs font-mono tracking-wider focus:outline-none transition-all duration-300`}
                   />
                   {searchQuery && (
@@ -538,7 +547,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
                       whileHover={{ y: -6 }}
                       id={`shop-product-card-${product.id}`}
                       key={product.id}
-                      className={`group ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-500/40 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-500 relative shadow-md hover:shadow-2xl`}
+                      className={`group glass-panel rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-500 relative hover:border-rose-500/40 hover:shadow-[0_20px_50px_rgba(244,63,94,0.15)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)]`}
                     >
                       {/* Product Image and Hover Actions */}
                       <div 
@@ -597,7 +606,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
 
                         {/* Ratings floating badge */}
                         <div className="absolute bottom-4 right-4 bg-zinc-950/80 backdrop-blur-md border border-zinc-800/40 px-2.5 py-1 rounded-lg flex items-center space-x-1 shadow-sm">
-                          <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                          <Star className="w-3 h-3 text-rose-400 fill-rose-400" />
                           <span className="text-white font-mono text-[9px] font-bold">{product.rating}</span>
                         </div>
                       </div>
@@ -772,7 +781,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
 
                   {/* Rating Badge */}
                   <div className="absolute bottom-4 right-4 bg-zinc-950/80 backdrop-blur-md border border-zinc-800/40 px-3 py-1.5 rounded-xl flex items-center space-x-1.5 pointer-events-none">
-                    <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                    <Star className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
                     <span className="text-white font-mono text-[10px] font-bold">{activeProduct?.rating} // 5.0</span>
                   </div>
                 </div>
@@ -1008,7 +1017,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
                   <div className="flex flex-col items-start">
                     <div className="flex items-center space-x-1">
                       {[1, 2, 3, 4, 5].map((s) => (
-                        <Star key={s} className="w-3 h-3 text-amber-500 fill-amber-500" />
+                        <Star key={s} className="w-3 h-3 text-rose-500 fill-rose-500" />
                       ))}
                     </div>
                     <span className="text-zinc-500 font-mono text-[9px] mt-1 tracking-wider uppercase">100% RECOMMENDATION</span>
@@ -1032,7 +1041,7 @@ export const ShopView: React.FC<ShopViewProps> = ({
                         </div>
                         <div className="flex items-center space-x-0.5">
                           {Array.from({ length: rev.rating }).map((_, i) => (
-                            <Star key={i} className="w-3 h-3 text-amber-500 fill-amber-500" />
+                            <Star key={i} className="w-3 h-3 text-rose-500 fill-rose-500" />
                           ))}
                         </div>
                       </div>
@@ -1325,6 +1334,76 @@ export const ShopView: React.FC<ShopViewProps> = ({
                   Our products generally sport a heavy boxy streetwear fit. If you prefer a traditional standard fitted outline, we highly recommend selecting <strong className={isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}>one size smaller</strong>.
                 </span>
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Order Tracking Modal */}
+      <AnimatePresence>
+        {isTrackOrderModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-zinc-950/80 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => {
+              setIsTrackOrderModalOpen(false);
+              setOrderTrackingResult(null);
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              onClick={(e) => e.stopPropagation()}
+              className={`w-full max-w-md rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMain} p-6 shadow-2xl relative space-y-4 font-sans`}
+            >
+              <button
+                onClick={() => {
+                  setIsTrackOrderModalOpen(false);
+                  setOrderTrackingResult(null);
+                }}
+                className="absolute top-4 right-4 p-2 rounded-full bg-zinc-900/80 text-zinc-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="space-y-1">
+                <span className="font-mono text-[9px] tracking-widest text-rose-500 uppercase font-bold block">ALL STAG // LOGISTICS</span>
+                <h3 className={`text-lg font-bold uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Track Your Shipment</h3>
+                <p className="text-zinc-400 text-xs font-light">
+                  Enter your order number or tracking code (e.g. INF-2026-889) to view real-time courier status.
+                </p>
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <input
+                  type="text"
+                  value={orderTrackingInput}
+                  onChange={(e) => setOrderTrackingInput(e.target.value)}
+                  placeholder="ORDER ID / TRACKING #"
+                  className={`w-full p-3 rounded-xl border ${themeStyles.bgCard} ${themeStyles.borderMuted} ${themeStyles.textPrimary} text-xs font-mono tracking-wider focus:outline-none`}
+                />
+                <button
+                  onClick={() => {
+                    if (!orderTrackingInput.trim()) return;
+                    setOrderTrackingResult(`Order #${orderTrackingInput.toUpperCase()} is DISPATCHED via DHL Express. Estimated Delivery: ${getDeliveryDateStr(true)}.`);
+                  }}
+                  className={`w-full py-3 rounded-xl font-mono text-xs font-bold tracking-widest uppercase transition-all cursor-pointer ${
+                    isDarkMode ? 'bg-white text-zinc-950 hover:bg-zinc-100' : 'bg-zinc-900 text-white hover:bg-zinc-800'
+                  }`}
+                >
+                  CHECK STATUS
+                </button>
+              </div>
+
+              {orderTrackingResult && (
+                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono leading-relaxed flex items-start space-x-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>{orderTrackingResult}</span>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         )}

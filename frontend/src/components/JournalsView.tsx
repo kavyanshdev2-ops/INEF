@@ -4,638 +4,694 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { AtmosphereConfig } from '../types';
+import { motion, AnimatePresence } from 'motion/react';
+import { AtmosphereConfig, JournalPost } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { PenTool, BookOpen, User, Calendar, Trash2, AlertCircle, CheckCircle2, ChevronDown, ChevronUp, Sparkles, Filter, Lock } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-
-interface JournalEntry {
-  id: string;
-  author: string;
-  title: string;
-  story: string;
-  date: string;
-  mood: 'classic' | 'neon-mint' | 'crimson-moon' | 'monochrome';
-  wordsCount: number;
-  createdBy?: string;
-}
+import { BooksShowcase, BookCfg } from './BooksShowcase';
+import {
+  BookOpen,
+  Plus,
+  Search,
+  Filter,
+  Sparkles,
+  Calendar,
+  User,
+  Clock,
+  Star,
+  X,
+  Book,
+  Layers,
+  Trash2,
+  Edit3,
+  Bookmark,
+  Share2,
+  Check
+} from 'lucide-react';
 
 interface JournalsViewProps {
   activeAtmosphere: AtmosphereConfig;
   isDarkMode: boolean;
-  currentUser: string | null;
+  currentUser?: any;
 }
 
-const MOOD_IMAGES = {
-  'classic': 'https://images.unsplash.com/photo-1522083165195-3427ec02927a?q=80&w=600&auto=format&fit=crop',
-  'neon-mint': 'https://images.unsplash.com/photo-1548345680-f5475ea5df84?q=80&w=600&auto=format&fit=crop',
-  'crimson-moon': 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600&auto=format&fit=crop',
-  'monochrome': 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
-};
+const STORAGE_KEY = 'ineffable_journals_v1';
 
-const MOOD_LABELS = {
-  'classic': 'CLASSIC DRIFT',
-  'neon-mint': 'NEON EMERALD',
-  'crimson-moon': 'CRIMSON MOON',
-  'monochrome': 'CHALK COUTURE',
-};
-
-const INITIAL_JOURNALS: JournalEntry[] = [
+const defaultSampleBooks: (BookCfg & { content: string; category: string; date: string; readTime: string })[] = [
   {
-    id: 'journal-default-1',
-    author: 'Kaelen Vance',
-    title: 'The Cherry Blossom Particle Constant',
-    story: 'We observed the third calibration of our drift algorithms this evening. By tuning the windAngle parameter to exactly 120 degrees and injecting a gravity constant of 1.1 G, the virtual petals achieved what can only be described as dynamic suspension. They hover perfectly, riding waves of invisible thermals across the dark canvas of the container. It mimics a tactile reality we have long lost. All variables are syncing. The lattice remains secure.',
-    date: 'JULY 02, 2026',
-    mood: 'classic',
-    wordsCount: 78,
-    createdBy: 'Kaelen Vance'
+    id: '1',
+    title: 'The Cybernetics of Atmospheric UI',
+    author: 'Kavyansh Shakya',
+    year: '2026',
+    stars: 5,
+    desc: 'Exploring fluid particle canvas loops, dark mode luminescence, and brutalist typographic hierarchy in modern web applications.',
+    content: `## Chapter 01: The Cybernetic Canvas
+Modern user interfaces have evolved beyond static flat boxes into reactive, fluid environments. By pairing WebGL canvas loops with dark-mode luminescence, we construct interfaces that feel alive, responsive, and deeply atmospheric.
+
+## Chapter 02: Particle Physics & Kinetic Energy
+When a user moves their cursor across the viewport, ambient particles react to gravitational pull and velocity vectors. This kinetic feedback bridges physical intuition with digital software.
+
+## Chapter 03: Brutalist Typographic Hierarchy
+High-contrast typography cuts through ambient canvas reflections, giving users clear structural anchors while preserving aesthetic depth.
+
+## Chapter 04: Future Frontiers
+As GPU acceleration in web browsers continues to mature, real-time shaders and 3D UI components will replace traditional 2D DOM cards entirely.`,
+    category: 'DESIGN ARCHITECTURE',
+    date: '2026-07-30',
+    readTime: '4 MIN READ',
+    chapters: ['01. The Cybernetic Canvas', '02. Particle Physics', '03. Brutalist Typography', '04. Future Frontiers'],
+    spineBg: '#881337',
+    spineInk: '#fecdd3',
+    backBg: '#4c0519',
+    backInk: '#fecdd3',
+    edge: '#ffe4e6'
   },
   {
-    id: 'journal-default-2',
-    author: 'Sora Tanaka',
-    title: 'Quantum Fabric & Neon Weaves',
-    story: 'Today the laboratory completed knitting tests for the oversized "Drift" physical print. Integrating reactive digital atmospheric APIs directly into organic heavy thread allows the ink to shift hue subtly when matching proximity to server boosters. In the daylight, it displays soft chalk gray equations. In ultraviolet community centers, the active mint dyes radiate. The cyber couture drop is nearly ready for general connection.',
-    date: 'JUNE 28, 2026',
-    mood: 'neon-mint',
-    wordsCount: 71,
-    createdBy: 'Sora Tanaka'
+    id: '2',
+    title: 'Minecraft Season 5: Mystical Tier',
+    author: 'Sanctuary Team',
+    year: '2026',
+    stars: 5,
+    desc: 'Announcing custom enchantments, 4-row ender backpacks, and virtual anvils for all Mystical rank members.',
+    content: `## Season 5 Release Notes & Mystical Mechanics
+We are excited to unveil Season 5 of the Ineffable Survival Network! This update introduces high-tier RPG mechanics, custom enchanted weapons, and expanded player vaults.
+
+### Core Highlights:
+- **Mystical Rank Tier**: Access to exclusive 4-row portable ender backpacks and virtual anvils anywhere in the world.
+- **Custom Enchantments**: Soulbound I, Kinetic Impact III, and Chrono Recall.
+- **Economy & Market**: Player-driven auction houses with live trade metrics.`,
+    category: 'COMMUNITY ANNOUNCEMENT',
+    date: '2026-07-22',
+    readTime: '6 MIN READ',
+    chapters: ['01. Overview', '02. Mystical Tier Benefits', '03. Custom Enchantments', '04. Economy Updates'],
+    spineBg: '#0f766e',
+    spineInk: '#ccfbf1',
+    backBg: '#134e4a',
+    backInk: '#ccfbf1',
+    edge: '#e6fffa'
   },
-  {
-    id: 'journal-default-3',
-    author: 'Elena Rostova',
-    title: 'Notes on Crimson Orbital Lattices',
-    story: 'The moon rose early in Reykjavík. Its reflection on the dark basalt sand felt remarkably analog. In the terminal, we locked the color theme to crimson-moon. Immediately, the sensory feed stabilized. It is fascinating how simple chromodynamic shifts change the anxiety curves of terminal operators. We must persist with this aesthetic calibration. Red light decreases cognitive friction during midnight packet compilation. Secure nodes logged.',
-    date: 'JUNE 15, 2026',
-    mood: 'crimson-moon',
-    wordsCount: 68,
-    createdBy: 'Elena Rostova'
-  }
+  
+];
+
+const PRESET_THEMES = [
+  { name: 'Crimson Moon', spineBg: '#881337', spineInk: '#fecdd3', backBg: '#4c0519', backInk: '#fecdd3', edge: '#ffe4e6' },
+  { name: 'Emerald Sanctuary', spineBg: '#0f766e', spineInk: '#ccfbf1', backBg: '#134e4a', backInk: '#ccfbf1', edge: '#e6fffa' },
+  { name: 'Midnight Cyber', spineBg: '#1e1b4b', spineInk: '#c7d2fe', backBg: '#0f172a', backInk: '#c7d2fe', edge: '#e0e7ff' },
+  { name: 'Violet Resonance', spineBg: '#581c87', spineInk: '#f5d0fe', backBg: '#3b0764', backInk: '#f5d0fe', edge: '#fae8ff' },
+  { name: 'Monochrome Noir', spineBg: '#18181b', spineInk: '#f4f4f5', backBg: '#09090b', backInk: '#e4e4e7', edge: '#f4f4f5' },
+  { name: 'Solar Amber', spineBg: '#78350f', spineInk: '#fef3c7', backBg: '#451a03', backInk: '#fef3c7', edge: '#fffbeb' },
 ];
 
 export const JournalsView: React.FC<JournalsViewProps> = ({ activeAtmosphere, isDarkMode, currentUser }) => {
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
-  
-  // State
-  const [journals, setJournals] = useState<JournalEntry[]>([]);
-  const [author, setAuthor] = useState('');
-  const [title, setTitle] = useState('');
-  const [story, setStory] = useState('');
-  const [mood, setMood] = useState<'classic' | 'neon-mint' | 'crimson-moon' | 'monochrome'>('classic');
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'classic' | 'neon-mint' | 'crimson-moon' | 'monochrome'>('all');
-  
-  const [showForm, setShowForm] = useState(false);
-  const [expandedEntries, setExpandedEntries] = useState<Record<string, boolean>>({});
-  const [successToast, setSuccessToast] = useState<string | null>(null);
-  const [sessionCreatedIds, setSessionCreatedIds] = useState<string[]>([]);
 
-  // Automatically prefill author if user is logged in
-  useEffect(() => {
-    if (currentUser) {
-      setAuthor(currentUser);
-    } else {
-      setAuthor('');
-    }
-  }, [currentUser, showForm]);
-
-  // Load Journals from Supabase or localStorage
-  useEffect(() => {
-    const fetchJournals = async () => {
-      try {
-        if (supabase) {
-          const { data, error } = await supabase
-            .from('journals')
-            .select('*')
-            .order('created_at', { ascending: false });
-
-          if (!error && data && data.length > 0) {
-            const mapped: JournalEntry[] = data.map((item: any) => ({
-              id: item.id,
-              author: item.author,
-              title: item.title,
-              story: item.story,
-              date: item.date,
-              mood: item.mood,
-              wordsCount: item.wordsCount || item.story.split(/\s+/).filter(Boolean).length,
-              createdBy: item.createdBy || item.author,
-            }));
-            setJournals(mapped);
-            return;
-          } else if (error) {
-            console.warn('Supabase journal fetch failed or empty, using localStorage:', error);
-          }
-        }
-
-        const cached = localStorage.getItem('inefontop_journals');
-        if (cached) {
-          setJournals(JSON.parse(cached));
-        } else {
-          localStorage.setItem('inefontop_journals', JSON.stringify(INITIAL_JOURNALS));
-          setJournals(INITIAL_JOURNALS);
-        }
-      } catch (err) {
-        setJournals(INITIAL_JOURNALS);
+  // Load books from localStorage or fallback to default
+  const [books, setBooks] = useState<BookCfg[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
-    };
-    fetchJournals();
-
-    // Load session created ids if any
-    const savedSessionIds = sessionStorage.getItem('session_created_journal_ids');
-    if (savedSessionIds) {
-      try {
-        setSessionCreatedIds(JSON.parse(savedSessionIds));
-      } catch (e) {
-        // ignore
-      }
+    } catch (e) {
+      console.error('Failed to parse saved journals:', e);
     }
-  }, []);
+    return defaultSampleBooks;
+  });
 
-  // Helper to count words
-  const countWords = (text: string): number => {
-    if (!text || text.trim() === '') return 0;
-    return text.trim().split(/\s+/).filter(w => w.length > 0).length;
-  };
-
-  const currentWords = countWords(story);
-  const isOverLimit = currentWords > 3000;
-
-  // Handle story text area input with physically enforced word limit of 3000
-  const handleStoryChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const text = e.target.value;
-    const words = text.trim().split(/\s+/).filter(w => w.length > 0);
-    
-    if (words.length <= 3000) {
-      setStory(text);
-    } else {
-      // Reconstruct exactly up to 3000 words to enforce hard cap
-      const truncated = text.split(/\s+/).slice(0, 3000).join(' ');
-      setStory(truncated);
+  // Save to localStorage whenever books state updates
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+    } catch (e) {
+      console.error('Failed to save journals to storage:', e);
     }
-  };
+  }, [books]);
 
-  // Submit new entry
-  const handleSubmitEntry = async (e: React.FormEvent) => {
+  const [viewMode, setViewMode] = useState<'3d' | 'grid'>('3d');
+  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  
+  // Modals state
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [activeReaderBook, setActiveReaderBook] = useState<BookCfg | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // New book form state
+  const [newTitle, setNewTitle] = useState('');
+  const [newAuthor, setNewAuthor] = useState(currentUser || 'Community Author');
+  const [newCategory, setNewCategory] = useState('DESIGN ARCHITECTURE');
+  const [newDesc, setNewDesc] = useState('');
+  const [newContent, setNewContent] = useState('');
+  const [newStars, setNewStars] = useState(5);
+  const [newYear, setNewYear] = useState('2026');
+  const [newChapters, setNewChapters] = useState('01. Introduction, 02. Core Analysis, 03. Summary');
+  const [selectedThemeIndex, setSelectedThemeIndex] = useState(0);
+  const [customCoverUrl, setCustomCoverUrl] = useState('');
+
+  // Categories list
+  const categories = ['ALL', ...Array.from(new Set(books.map((b) => b.category || 'GENERAL').filter(Boolean)))];
+
+  // Filtered books
+  const filteredBooks = books.filter((book) => {
+    const matchesCategory = selectedCategory === 'ALL' || book.category === selectedCategory;
+    const q = searchQuery.toLowerCase().trim();
+    const matchesSearch =
+      !q ||
+      book.title.toLowerCase().includes(q) ||
+      book.author.toLowerCase().includes(q) ||
+      book.desc.toLowerCase().includes(q) ||
+      (book.category && book.category.toLowerCase().includes(q));
+    return matchesCategory && matchesSearch;
+  });
+
+  const handleAddJournal = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!author.trim() || !title.trim() || !story.trim() || isOverLimit) return;
+    if (!newTitle.trim() || !newDesc.trim()) return;
 
-    try {
-      const wordsCount = story.trim().split(/\s+/).filter(w => w.length > 0).length;
-      const newEntry: JournalEntry = {
-        id: 'journal-' + Date.now(),
-        author: author.trim(),
-        title: title.trim(),
-        story: story.trim(),
-        date: new Date().toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }).toUpperCase(),
-        mood,
-        wordsCount,
-        createdBy: currentUser || 'anonymous'
-      };
+    const theme = PRESET_THEMES[selectedThemeIndex];
+    const chapterList = newChapters
+      .split(',')
+      .map((c) => c.trim())
+      .filter((c) => c.length > 0);
 
-      // 1. Save to Supabase if configured
-      if (supabase) {
-        const { error } = await supabase
-          .from('journals')
-          .insert([{
-            id: newEntry.id,
-            author: newEntry.author,
-            title: newEntry.title,
-            story: newEntry.story,
-            date: newEntry.date,
-            mood: newEntry.mood,
-            wordsCount: newEntry.wordsCount,
-            createdBy: newEntry.createdBy
-          }]);
-        if (error) {
-          console.warn('Supabase write error, using fallback:', error);
-        }
-      }
+    const newBook: BookCfg = {
+      id: Date.now().toString(),
+      title: newTitle.trim(),
+      author: newAuthor.trim() || 'Anonymous Author',
+      year: newYear || '2026',
+      stars: newStars,
+      desc: newDesc.trim(),
+      content: newContent.trim() || newDesc.trim(),
+      category: newCategory.trim().toUpperCase(),
+      date: new Date().toISOString().split('T')[0],
+      readTime: `${Math.max(2, Math.ceil((newContent || newDesc).split(' ').length / 150))} MIN READ`,
+      chapters: chapterList.length > 0 ? chapterList : ['01. Main Article'],
+      spineBg: theme.spineBg,
+      spineInk: theme.spineInk,
+      backBg: theme.backBg,
+      backInk: theme.backInk,
+      edge: theme.edge,
+      coverURL: customCoverUrl.trim() || null,
+      images: customCoverUrl.trim() ? { front: customCoverUrl.trim() } : undefined,
+    };
 
-      // 2. Replication write to local cache
-      const cached = localStorage.getItem('inefontop_journals');
-      const existingJournals: JournalEntry[] = cached ? JSON.parse(cached) : INITIAL_JOURNALS;
-      const updatedJournals = [newEntry, ...existingJournals];
-      localStorage.setItem('inefontop_journals', JSON.stringify(updatedJournals));
-      setJournals(updatedJournals);
+    setBooks((prev) => [newBook, ...prev]);
+    setIsAddModalOpen(false);
 
-      // Log to audit log
-      const existingLogsRaw = localStorage.getItem('inefontop_audit_logs');
-      const existingLogs = existingLogsRaw ? JSON.parse(existingLogsRaw) : [];
-      existingLogs.push(`[JOURNAL] NEW ENTRY TRANSMITTED: "${title.trim().toUpperCase()}" BY ${author.trim().toUpperCase()}`);
-      localStorage.setItem('inefontop_audit_logs', JSON.stringify(existingLogs));
+    // Reset form
+    setNewTitle('');
+    setNewDesc('');
+    setNewContent('');
+    setCustomCoverUrl('');
+  };
 
-      // Also push audit log to Supabase if configured
-      if (supabase) {
-        await supabase.from('audit_logs').insert([{ message: `[JOURNAL] NEW ENTRY TRANSMITTED: "${title.trim().toUpperCase()}" BY ${author.trim().toUpperCase()}` }]);
-      }
-
-      // Update session IDs
-      const updatedSessionIds = [...sessionCreatedIds, newEntry.id];
-      setSessionCreatedIds(updatedSessionIds);
-      sessionStorage.setItem('session_created_journal_ids', JSON.stringify(updatedSessionIds));
-
-      // Reset Form
-      setAuthor(currentUser || '');
-      setTitle('');
-      setStory('');
-      setMood('classic');
-      setShowForm(false);
-      
-      // Toast Alert
-      setSuccessToast('TRANSMITTED JOURNAL ENTRY');
-      setTimeout(() => setSuccessToast(null), 3000);
-    } catch (err: any) {
-      alert('Local vector error transmitting journal entry.');
+  const handleDeleteBook = (id: string, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (window.confirm('Are you sure you want to delete this journal entry?')) {
+      setBooks((prev) => prev.filter((b) => b.id !== id));
+      if (activeReaderBook?.id === id) setActiveReaderBook(null);
     }
   };
 
-  // Delete entry
-  const handleDeleteEntry = async (id: string) => {
-    const journal = journals.find(j => j.id === id);
-    if (!journal) return;
-
-    const isAdmin = currentUser?.toLowerCase() === 'kavyanshshakya' || currentUser?.toLowerCase() === 'admin';
-    const canDelete = isAdmin || (currentUser && (journal.createdBy?.toLowerCase() === currentUser.toLowerCase() || journal.author?.toLowerCase() === currentUser.toLowerCase())) || sessionCreatedIds.includes(journal.id);
-
-    if (!canDelete) {
-      alert('ACCESS DENIED: You are not authorized to delete other writers\' entries.');
-      return;
-    }
-
-    const confirmDel = window.confirm(`Are you sure you want to delete "${journal.title}"?`);
-    if (!confirmDel) return;
-
-    try {
-      // 1. Delete from Supabase
-      if (supabase) {
-        const { error } = await supabase
-          .from('journals')
-          .delete()
-          .eq('id', id);
-        if (error) {
-          console.warn('Supabase delete error:', error);
-        }
-      }
-
-      // 2. Replicate locally
-      const cached = localStorage.getItem('inefontop_journals');
-      if (cached) {
-        const existingJournals: JournalEntry[] = JSON.parse(cached);
-        const filtered = existingJournals.filter(j => j.id !== id);
-        localStorage.setItem('inefontop_journals', JSON.stringify(filtered));
-        setJournals(filtered);
-      }
-
-      // Log to audit log
-      const existingLogsRaw = localStorage.getItem('inefontop_audit_logs');
-      const existingLogs = existingLogsRaw ? JSON.parse(existingLogsRaw) : [];
-      existingLogs.push(`[JOURNAL] REMOVED ENTRY: "${journal.title.toUpperCase()}" BY ${journal.author.toUpperCase()}`);
-      localStorage.setItem('inefontop_audit_logs', JSON.stringify(existingLogs));
-
-      if (supabase) {
-        await supabase.from('audit_logs').insert([{ message: `[JOURNAL] REMOVED ENTRY: "${journal.title.toUpperCase()}" BY ${journal.author.toUpperCase()}` }]);
-      }
-
-      setSuccessToast('REMOVED JOURNAL ENTRY');
-      setTimeout(() => setSuccessToast(null), 3000);
-    } catch (err) {
-      alert('Local vector error deleting journal entry.');
-    }
+  const handleShare = (book: BookCfg) => {
+    navigator.clipboard.writeText(`${window.location.origin} - Journal: ${book.title}`);
+    setCopiedId(book.id);
+    setTimeout(() => setCopiedId(null), 2000);
   };
-
-  // Toggle single story expansion
-  const toggleExpand = (id: string) => {
-    setExpandedEntries(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
-
-  const filteredJournals = selectedFilter === 'all'
-    ? journals
-    : journals.filter(j => j.mood === selectedFilter);
 
   return (
-    <div id="journals-view-container" className={`max-w-7xl mx-auto px-6 py-24 pt-32 ${themeStyles.textPrimary}`}>
-      
-      {/* Page Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
-          ARCHIVE // COMMUNITY TRANSMISSIONS
-        </span>
-        <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-extrabold uppercase">
-          INEFFABLE JOURNALS
-        </h2>
-        <p className={`${themeStyles.textSecondary} font-sans text-sm md:text-base font-light leading-relaxed`}>
-          A space to record thoughts, digital logs, sensory studies, and custom server experiences. Every entry is persistent and structured with high-contrast tactical framing.
-        </p>
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-24 space-y-10">
+      {/* Primary Control Toolbar */}
+      <div className={`p-4 md:p-6 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-xl space-y-4`}>
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 border-b border-white/10 pb-4">
+          {/* Create Button & View Switcher */}
+          <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+            <button
+              onClick={() => setIsAddModalOpen(true)}
+              className="inline-flex items-center space-x-2 bg-rose-500 hover:bg-rose-600 text-white font-bold px-5 py-2.5 rounded-full shadow-lg shadow-rose-500/25 transition-all transform hover:scale-105 active:scale-95 cursor-pointer text-xs md:text-sm"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Create New Journal Entry</span>
+            </button>
 
-        <div className="pt-4 flex justify-center">
-          <button
-            id="toggle-write-journal-btn"
-            onClick={() => setShowForm(!showForm)}
-            className={`px-6 py-3 font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center space-x-2 border shadow-lg cursor-pointer ${
-              showForm
-                ? 'bg-rose-950 text-rose-200 border-rose-900/50'
-                : `${isDarkMode ? 'bg-zinc-100 text-zinc-950 border-white hover:bg-white' : 'bg-zinc-900 text-white border-zinc-950 hover:bg-zinc-800'}`
-            }`}
-          >
-            <PenTool className="w-4 h-4 animate-pulse" />
-            <span>{showForm ? 'CANCEL WRITING' : 'WRITE NEW JOURNAL ENTRY'}</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Success Toast Notification */}
-      {successToast && (
-        <div id="journal-toast-success" className="fixed bottom-6 right-6 z-50 bg-emerald-950 border border-emerald-500/30 text-emerald-300 font-mono text-[10px] tracking-widest px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 animate-slide-in">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>{successToast}</span>
-        </div>
-      )}
-
-      {/* Write Entry Form Container */}
-      {showForm && (
-        <div 
-          id="write-journal-form-panel"
-          className={`max-w-2xl mx-auto ${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-2xl p-6 md:p-8 space-y-6 mb-16 shadow-2xl`}
-        >
-          <div className={`flex items-center space-x-2 border-b ${themeStyles.borderMuted} pb-4`}>
-            <Sparkles className={`w-4 h-4 ${themeStyles.accentText}`} />
-            <h3 className={`font-mono text-xs tracking-widest font-semibold ${themeStyles.textPrimary} uppercase`}>
-              Compile Journal Transmission
-            </h3>
+            <div className={`p-1 rounded-full bg-black/20 dark:bg-white/5 border ${themeStyles.borderMuted} flex items-center space-x-1 backdrop-blur-md`}>
+              <button
+                onClick={() => setViewMode('3d')}
+                className={`px-4 py-2 rounded-full text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer ${
+                  viewMode === '3d'
+                    ? 'bg-rose-500 text-white shadow-md'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>3D Bookshelf</span>
+              </button>
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`px-4 py-2 rounded-full text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer ${
+                  viewMode === 'grid'
+                    ? 'bg-rose-500 text-white shadow-md'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>Grid Catalog</span>
+              </button>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmitEntry} className="space-y-5">
-            {/* Identity & Title row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="space-y-1.5">
-                <label className={`font-mono text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} tracking-widest block uppercase`}>
-                  AUTHOR IDENTITY (NAME / ENTITY)
-                </label>
-                <div className="relative">
-                  <User className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 ${themeStyles.textMuted}`} />
-                  <input
-                    type="text"
-                    required
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
-                    placeholder="e.g. SUBJECT_04"
-                    className={`w-full ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-200' : 'bg-white border-zinc-300 text-zinc-800'} border pl-11 pr-4 py-3.5 rounded-lg font-mono text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors`}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className={`font-mono text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} tracking-widest block uppercase`}>
-                  JOURNAL TITLE
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Atmospheric Drift Paradox"
-                  className={`w-full ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-200' : 'bg-white border-zinc-300 text-zinc-800'} border px-4 py-3.5 rounded-lg font-mono text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors`}
-                />
-              </div>
-            </div>
-
-            {/* Backdrop / Mood Style */}
-            <div className="space-y-1.5">
-              <label className={`font-mono text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} tracking-widest block uppercase`}>
-                BACKDROP ART MOOD (MATCHES THEME CARD STYLE)
-              </label>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {(Object.keys(MOOD_LABELS) as Array<keyof typeof MOOD_LABELS>).map((key) => {
-                  const isActive = mood === key;
-                  return (
-                    <button
-                      type="button"
-                      key={key}
-                      onClick={() => setMood(key)}
-                      className={`px-3 py-2.5 font-mono text-[9px] tracking-widest border rounded-lg transition-all text-center cursor-pointer ${
-                        isActive
-                          ? `${themeStyles.accentBg} text-zinc-950 font-bold border-white`
-                          : `${themeStyles.bgCard} ${themeStyles.textSecondary} ${themeStyles.borderMuted} hover:${themeStyles.textPrimary}`
-                      }`}
-                    >
-                      {MOOD_LABELS[key]}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Story text Area */}
-            <div className="space-y-1.5">
-              <div className="flex justify-between items-center">
-                <label className={`font-mono text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} tracking-widest block uppercase`}>
-                  JOURNAL NARRATIVE (STORY)
-                </label>
-                <div className={`font-mono text-[9px] ${currentWords > 2800 ? 'text-rose-500 animate-pulse' : themeStyles.textSecondary}`}>
-                  {currentWords} / 3000 WORDS
-                </div>
-              </div>
-              <textarea
-                required
-                value={story}
-                onChange={handleStoryChange}
-                placeholder="Compose your story here... Limit 3,000 words. Real-time validation active."
-                className={`w-full h-48 ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-200' : 'bg-white border-zinc-300 text-zinc-800'} border px-4 py-3.5 rounded-lg font-sans text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors resize-none leading-relaxed`}
-              />
-              {/* Progress Bar of Words limit */}
-              <div className="w-full bg-zinc-800 h-1.5 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full transition-all duration-300 ${
-                    currentWords > 2800 
-                      ? 'bg-rose-500' 
-                      : currentWords > 1500 
-                        ? 'bg-amber-400' 
-                        : 'bg-emerald-500'
-                  }`}
-                  style={{ width: `${Math.min((currentWords / 3000) * 100, 100)}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Submit btn */}
-            <button
-              id="submit-journal-entry-btn"
-              type="submit"
-              disabled={!author.trim() || !title.trim() || !story.trim() || currentWords > 3000}
-              className={`w-full py-4 ${isDarkMode ? 'bg-zinc-100 text-zinc-950 disabled:bg-zinc-900 disabled:text-zinc-600' : 'bg-zinc-900 text-white disabled:bg-zinc-200 disabled:text-zinc-400'} font-mono text-xs tracking-widest font-bold rounded-xl transition-colors flex items-center justify-center space-x-2 cursor-pointer disabled:cursor-not-allowed`}
-            >
-              <PenTool className="w-4 h-4" />
-              <span>TRANSMIT TO SERVER REGISTRY</span>
-            </button>
-          </form>
+          {/* Search Input */}
+          <div className="relative w-full lg:w-72">
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
+            <input
+              type="text"
+              placeholder="Search journals..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={`w-full pl-10 pr-4 py-2 rounded-xl bg-black/20 dark:bg-white/5 border ${themeStyles.borderMuted} text-xs text-zinc-950 dark:text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500/50 transition-all`}
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </div>
-      )}
 
-      {/* Mood Filter Controls */}
-      <div id="journals-mood-filters" className="flex flex-wrap items-center justify-center gap-2 mb-12 border-b border-zinc-800 pb-6 max-w-lg mx-auto">
-        <span className={`font-mono text-[9px] ${themeStyles.textSecondary} uppercase tracking-widest mr-2`}>
-          Filter Mood:
-        </span>
-        <button
-          onClick={() => setSelectedFilter('all')}
-          className={`px-3.5 py-1.5 font-mono text-[9px] tracking-widest rounded-full border transition-all cursor-pointer ${
-            selectedFilter === 'all'
-              ? `${themeStyles.accentBg} text-zinc-950 border-white font-bold`
-              : `${themeStyles.bgCard} ${themeStyles.textSecondary} ${themeStyles.borderMuted}`
-          }`}
-        >
-          ALL ARCHIVE
-        </button>
-        {(Object.keys(MOOD_LABELS) as Array<keyof typeof MOOD_LABELS>).map((key) => {
-          const isSelected = selectedFilter === key;
-          return (
+        {/* Category Pills */}
+        <div className="flex items-center space-x-2 overflow-x-auto w-full pt-1 no-scrollbar">
+          {categories.map((cat) => (
             <button
-              key={key}
-              onClick={() => setSelectedFilter(key)}
-              className={`px-3.5 py-1.5 font-mono text-[9px] tracking-widest rounded-full border transition-all cursor-pointer ${
-                isSelected
-                  ? `${themeStyles.accentBg} text-zinc-950 border-white font-bold`
-                  : `${themeStyles.bgCard} ${themeStyles.textSecondary} ${themeStyles.borderMuted}`
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                selectedCategory === cat
+                  ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40 shadow-xs'
+                  : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-transparent'
               }`}
             >
-              {MOOD_LABELS[key].split(' ')[0]}
+              {cat}
             </button>
-          );
-        })}
+          ))}
+        </div>
       </div>
 
-      {/* Empty State */}
-      {filteredJournals.length === 0 && (
-        <div id="journals-empty-state" className="text-center py-24 max-w-md mx-auto space-y-4">
-          <AlertCircle className={`w-12 h-12 ${themeStyles.textMuted} mx-auto animate-pulse`} />
-          <h3 className={`font-sans text-lg font-bold text-white uppercase`}>No records decrypted</h3>
-          <p className={`${themeStyles.textSecondary} text-xs font-light`}>
-            No journal entries matching the chosen mood filter exist in the digital vault. Compile a new transmission.
-          </p>
+      {/* Main View Display */}
+      {viewMode === '3d' ? (
+        <div className="space-y-6">
+          <div className="h-[760px] w-full relative">
+            <BooksShowcase
+              books={filteredBooks}
+              heroTitle="Chronicles"
+              navTitle={`${filteredBooks.length} Books Available`}
+              showNav={true}
+              showDetailPanel={true}
+              showCarousel={true}
+              onOpenReader={(book) => setActiveReaderBook(book)}
+            />
+          </div>
+
+          <div className="text-center text-xs font-mono text-zinc-500 flex items-center justify-center space-x-2">
+            <Sparkles className="w-3.5 h-3.5 text-rose-500" />
+            <span>Pro-tip: Click and drag any 3D book cover to peel the cover, or open details to rotate the 3D book in real-time.</span>
+          </div>
         </div>
-      )}
-
-      {/* Journals Grid (Card style like the Shop) */}
-      <div id="journals-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredJournals.map((journal) => {
-          const isExpanded = !!expandedEntries[journal.id];
-          // Truncate story if not expanded
-          const previewText = journal.story.length > 180 
-            ? `${journal.story.slice(0, 180)}...` 
-            : journal.story;
-
-          return (
-            <div
-              id={`journal-card-${journal.id}`}
-              key={journal.id}
-              className={`group ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-500/50 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-2xl`}
+      ) : (
+        /* Grid Catalog View */
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredBooks.map((book) => (
+            <motion.div
+              key={book.id}
+              whileHover={{ y: -6 }}
+              className={`p-6 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-xl shadow-xl flex flex-col justify-between space-y-4 hover:border-rose-500/40 transition-all group relative overflow-hidden`}
             >
-              {/* Mood Image Backdrop (exactly like Shop product image) */}
-              <div className="relative h-48 overflow-hidden bg-zinc-950">
-                <img
-                  src={MOOD_IMAGES[journal.mood]}
-                  alt={journal.title}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-75 group-hover:brightness-90"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-70" />
+              {/* Card Accent Top Bar */}
+              <div
+                className="h-1.5 w-full absolute top-0 left-0"
+                style={{ backgroundColor: book.spineBg || '#881337' }}
+              />
 
-                {/* Floating Badge (exactly like shop tag badge) */}
-                <div className="absolute top-4 left-4">
-                  <span className="bg-zinc-950/85 backdrop-blur-md text-zinc-100 border border-zinc-800/80 px-3 py-1 rounded-full font-mono text-[9px] tracking-widest font-bold uppercase">
-                    {MOOD_LABELS[journal.mood]}
+              <div className="space-y-3 pt-2">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20 font-bold uppercase">
+                    {book.category || 'JOURNAL'}
+                  </span>
+                  <span className="text-zinc-500 flex items-center space-x-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{book.readTime || '5 MIN READ'}</span>
                   </span>
                 </div>
 
-                {/* Floating words count */}
-                <div className="absolute bottom-4 right-4 bg-zinc-950/80 backdrop-blur-md border border-zinc-800/60 px-2.5 py-1 rounded-lg flex items-center space-x-1 font-mono text-[9px] text-zinc-300">
-                  <BookOpen className="w-3 h-3 text-rose-400" />
-                  <span className="font-bold">{journal.wordsCount} WORDS</span>
+                <h3 className="font-display font-bold text-xl text-zinc-950 dark:text-white group-hover:text-rose-400 transition-colors">
+                  {book.title}
+                </h3>
+
+                <p className="text-xs text-zinc-400 leading-relaxed font-light line-clamp-3">
+                  {book.desc}
+                </p>
+
+                {/* Rating & Metadata */}
+                <div className="flex items-center space-x-1 pt-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-3.5 h-3.5 ${
+                        i < (book.stars || 5) ? 'text-rose-500 fill-rose-500' : 'text-zinc-700'
+                      }`}
+                    />
+                  ))}
+                  <span className="text-[10px] font-mono text-zinc-500 ml-2">({book.stars || 5}.0)</span>
                 </div>
               </div>
 
-              {/* Journal Info Content */}
-              <div className="p-6 space-y-4 flex-grow flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between text-zinc-400 font-mono text-[8px] tracking-[0.2em]">
-                      <span className="flex items-center space-x-1">
-                        <User className="w-2.5 h-2.5" />
-                        <span className="font-bold">{journal.author.toUpperCase()}</span>
-                      </span>
-                      <span className="flex items-center space-x-1">
-                        <Calendar className="w-2.5 h-2.5" />
-                        <span>{journal.date}</span>
-                      </span>
-                    </div>
-                    <h3 className="font-sans text-lg font-bold text-white uppercase tracking-wide pt-1">
-                      {journal.title}
-                    </h3>
+              {/* Card Footer */}
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono">
+                <div className="text-zinc-400">
+                  <span className="block text-[9px] text-zinc-500">AUTHOR</span>
+                  <span className="font-bold text-zinc-200">{book.author.toUpperCase()}</span>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setActiveReaderBook(book)}
+                    className="px-3.5 py-1.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold transition-all text-xs cursor-pointer shadow-md"
+                  >
+                    Read
+                  </button>
+
+                  <button
+                    onClick={(e) => handleDeleteBook(book.id, e)}
+                    className="p-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 text-zinc-400 hover:text-rose-400 transition-all cursor-pointer border border-white/5"
+                    title="Delete Journal"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      {/* CREATE NEW JOURNAL MODAL */}
+      <AnimatePresence>
+        {isAddModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className={`w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} p-6 md:p-8 shadow-2xl space-y-6 relative text-zinc-950 dark:text-white`}
+            >
+              <button
+                onClick={() => setIsAddModalOpen(false)}
+                className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-400 hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="space-y-1">
+                <span className="text-xs font-mono font-bold tracking-[0.2em] text-rose-500 uppercase">
+                  PUBLISH A NEW BOOK / LOG
+                </span>
+                <h2 className="text-2xl font-display font-extrabold uppercase">
+                  CREATE JOURNAL ENTRY
+                </h2>
+              </div>
+
+              <form onSubmit={handleAddJournal} className="space-y-5 text-xs">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Title */}
+                  <div className="space-y-1.5">
+                    <label className="font-mono text-zinc-400 uppercase font-bold">Journal Title *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Cybernetics of Fluid UI"
+                      value={newTitle}
+                      onChange={(e) => setNewTitle(e.target.value)}
+                      className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all`}
+                    />
                   </div>
 
-                  <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed whitespace-pre-line`}>
-                    {isExpanded ? journal.story : previewText}
-                  </p>
+                  {/* Author */}
+                  <div className="space-y-1.5">
+                    <label className="font-mono text-zinc-400 uppercase font-bold">Author Name</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. kk"
+                      value={newAuthor}
+                      onChange={(e) => setNewAuthor(e.target.value)}
+                      className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all`}
+                    />
+                  </div>
                 </div>
 
-                <div className="pt-4 flex items-center justify-between gap-3 border-t border-zinc-900/40">
-                  {/* Expand/Collapse story */}
-                  {journal.story.length > 180 ? (
-                    <button
-                      onClick={() => toggleExpand(journal.id)}
-                      className="text-[10px] font-mono tracking-widest font-bold uppercase text-zinc-400 hover:text-white flex items-center space-x-1 cursor-pointer transition-colors"
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Category */}
+                  <div className="space-y-1.5">
+                    <label className="font-mono text-zinc-400 uppercase font-bold">Category</label>
+                    <select
+                      value={newCategory}
+                      onChange={(e) => setNewCategory(e.target.value)}
+                      className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all`}
                     >
-                      {isExpanded ? (
-                        <>
-                          <span>SHOW LESS</span>
-                          <ChevronUp className="w-3.5 h-3.5" />
-                        </>
-                      ) : (
-                        <>
-                          <span>READ FULL STORY</span>
-                          <ChevronDown className="w-3.5 h-3.5" />
-                        </>
-                      )}
+                      <option value="DESIGN ARCHITECTURE">DESIGN ARCHITECTURE</option>
+                      <option value="DEV LOG">DEV LOG</option>
+                      <option value="COMMUNITY ANNOUNCEMENT">COMMUNITY ANNOUNCEMENT</option>
+                      <option value="CYBER COUTURE">CYBER COUTURE</option>
+                      <option value="SOUND ARCHITECTURE">SOUND ARCHITECTURE</option>
+                      <option value="SCIFI LORE">SCIFI LORE</option>
+                    </select>
+                  </div>
+
+                  {/* Rating */}
+                  <div className="space-y-1.5">
+                    <label className="font-mono text-zinc-400 uppercase font-bold">Rating (Stars)</label>
+                    <select
+                      value={newStars}
+                      onChange={(e) => setNewStars(Number(e.target.value))}
+                      className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all`}
+                    >
+                      <option value={5}>5 Stars (★★★★★)</option>
+                      <option value={4}>4 Stars (★★★★☆)</option>
+                      <option value={3}>3 Stars (★★★☆☆)</option>
+                    </select>
+                  </div>
+
+                  {/* Year */}
+                  <div className="space-y-1.5">
+                    <label className="font-mono text-zinc-400 uppercase font-bold">Publication Year</label>
+                    <input
+                      type="text"
+                      value={newYear}
+                      onChange={(e) => setNewYear(e.target.value)}
+                      className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all`}
+                    />
+                  </div>
+                </div>
+
+                {/* Excerpt / Summary */}
+                <div className="space-y-1.5">
+                  <label className="font-mono text-zinc-400 uppercase font-bold">Short Excerpt / Abstract *</label>
+                  <textarea
+                    required
+                    rows={2}
+                    placeholder="Brief summary displayed on 3D book panel and grid cards..."
+                    value={newDesc}
+                    onChange={(e) => setNewDesc(e.target.value)}
+                    className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all`}
+                  />
+                </div>
+
+                {/* Chapters */}
+                <div className="space-y-1.5">
+                  <label className="font-mono text-zinc-400 uppercase font-bold">Chapters Index (Comma Separated)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 01. Introduction, 02. Architecture, 03. Conclusion"
+                    value={newChapters}
+                    onChange={(e) => setNewChapters(e.target.value)}
+                    className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all`}
+                  />
+                </div>
+
+                {/* Full Article Content */}
+                <div className="space-y-1.5">
+                  <label className="font-mono text-zinc-400 uppercase font-bold">Full Journal Content</label>
+                  <textarea
+                    rows={5}
+                    placeholder="Write your full article / journal text here..."
+                    value={newContent}
+                    onChange={(e) => setNewContent(e.target.value)}
+                    className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all font-mono text-[11px]`}
+                  />
+                </div>
+
+                {/* 3D Cover Color Theme Presets */}
+                <div className="space-y-2">
+                  <label className="font-mono text-zinc-400 uppercase font-bold block">
+                    3D Book Cover Theme Palette
+                  </label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {PRESET_THEMES.map((theme, i) => (
+                      <button
+                        key={theme.name}
+                        type="button"
+                        onClick={() => setSelectedThemeIndex(i)}
+                        className={`p-2.5 rounded-xl border transition-all text-left flex items-center space-x-2 cursor-pointer ${
+                          selectedThemeIndex === i
+                            ? 'border-rose-500 bg-rose-500/10 text-white'
+                            : 'border-white/10 bg-black/20 text-zinc-400 hover:text-white'
+                        }`}
+                      >
+                        <span
+                          className="w-4 h-4 rounded-full inline-block border border-white/20 shrink-0"
+                          style={{ backgroundColor: theme.spineBg }}
+                        />
+                        <span className="font-mono text-[11px] truncate">{theme.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Optional Custom Image URL */}
+                <div className="space-y-1.5">
+                  <label className="font-mono text-zinc-400 uppercase font-bold">Custom Cover Image URL (Optional)</label>
+                  <input
+                    type="url"
+                    placeholder="https://images.unsplash.com/photo-..."
+                    value={customCoverUrl}
+                    onChange={(e) => setCustomCoverUrl(e.target.value)}
+                    className={`w-full px-4 py-2.5 rounded-xl bg-black/30 border ${themeStyles.borderMuted} text-white focus:outline-none focus:border-rose-500 transition-all`}
+                  />
+                </div>
+
+                {/* Submit Action */}
+                <div className="pt-2 flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => setIsAddModalOpen(false)}
+                    className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white font-mono font-bold cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold transition-all cursor-pointer shadow-lg shadow-rose-500/25"
+                  >
+                    Publish Journal Book
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* FULL READER MODAL / SLIDE-OVER */}
+      <AnimatePresence>
+        {activeReaderBook && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/90 backdrop-blur-2xl">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              className={`w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} p-6 md:p-10 shadow-2xl relative text-zinc-950 dark:text-white space-y-8`}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setActiveReaderBook(null)}
+                className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-400 hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              {/* Reader Header */}
+              <div className="space-y-4 border-b border-white/10 pb-6">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-mono text-xs font-bold uppercase">
+                    {activeReaderBook.category || 'JOURNAL PUBLICATION'}
+                  </span>
+                  <div className="flex items-center space-x-4 text-xs font-mono text-zinc-400">
+                    <span className="flex items-center space-x-1">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>{activeReaderBook.readTime || '5 MIN READ'}</span>
+                    </span>
+                    <span>•</span>
+                    <span>{activeReaderBook.date || activeReaderBook.year}</span>
+                  </div>
+                </div>
+
+                <h1 className="text-3xl md:text-5xl font-display font-extrabold uppercase leading-tight">
+                  {activeReaderBook.title}
+                </h1>
+
+                <div className="flex items-center justify-between pt-2">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-full bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 font-bold font-mono">
+                      {activeReaderBook.author.substring(0, 2).toUpperCase()}
+                    </div>
+                    <div>
+                      <div className="text-xs font-mono text-zinc-400">AUTHOR</div>
+                      <div className="text-sm font-bold">{activeReaderBook.author}</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => handleShare(activeReaderBook)}
+                      className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-mono font-bold transition-all flex items-center space-x-1.5 cursor-pointer"
+                    >
+                      {copiedId === activeReaderBook.id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+                      <span>{copiedId === activeReaderBook.id ? 'Copied' : 'Share'}</span>
                     </button>
-                  ) : (
-                    <span className="text-[9px] font-mono text-zinc-600">COMPLETE RECORD</span>
-                  )}
-
-                  {/* Delete Button / Lock Indicator */}
-                  {(() => {
-                    const isAdminUser = currentUser?.toLowerCase() === 'kavyanshshakya' || currentUser?.toLowerCase() === 'admin';
-                    const canDelete = isAdminUser || (currentUser && (journal.createdBy?.toLowerCase() === currentUser.toLowerCase() || journal.author?.toLowerCase() === currentUser.toLowerCase())) || sessionCreatedIds.includes(journal.id);
-
-                    if (canDelete) {
-                      return (
-                        <button
-                          onClick={() => handleDeleteEntry(journal.id)}
-                          className="p-1.5 text-zinc-600 hover:text-rose-500 transition-colors rounded-lg hover:bg-rose-950/20 cursor-pointer"
-                          title="Delete entry from register"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      );
-                    } else {
-                      return (
-                        <span 
-                          className="p-1.5 text-zinc-700 hover:text-zinc-500 transition-colors flex items-center space-x-1" 
-                          title="Protected: Only the author or administrator can delete this journal entry."
-                        >
-                          <Lock className="w-3.5 h-3.5 text-zinc-700" />
-                          <span className="text-[8px] font-mono tracking-wider font-bold">SECURE</span>
-                        </span>
-                      );
-                    }
-                  })()}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+
+              {/* Chapters / Index Navigator */}
+              {activeReaderBook.chapters && activeReaderBook.chapters.length > 0 && (
+                <div className="p-4 rounded-2xl bg-black/20 dark:bg-white/5 border border-white/10 space-y-2">
+                  <div className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest flex items-center space-x-1.5">
+                    <Book className="w-3.5 h-3.5" />
+                    <span>TABLE OF CONTENTS</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-mono text-zinc-400">
+                    {activeReaderBook.chapters.map((ch, idx) => (
+                      <div key={idx} className="p-2 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between">
+                        <span className="truncate">{ch}</span>
+                        <span className="text-[10px] text-zinc-500">P. {1 + idx * 4}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Body Content */}
+              <div className="prose dark:prose-invert max-w-none text-zinc-300 space-y-4 font-sans text-sm md:text-base leading-relaxed whitespace-pre-line">
+                {activeReaderBook.content || activeReaderBook.desc}
+              </div>
+
+              {/* Reader Footer */}
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400">
+                <span>Ineffable Publication &copy; {activeReaderBook.year || '2026'}</span>
+                <button
+                  onClick={() => setActiveReaderBook(null)}
+                  className="px-5 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold transition-all cursor-pointer"
+                >
+                  Close Reader
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
+
+export default JournalsView;

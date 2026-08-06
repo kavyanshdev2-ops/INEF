@@ -3,814 +3,920 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
-import { PageId, InquiryForm, AtmosphereConfig } from '../types';
+import React, { useState, useEffect, useRef } from 'react';
+import { AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { Send, Terminal, ShieldAlert, Cpu, CheckCircle, MessageSquare, History, User, Bot, Search, ArrowLeft, Loader2, RefreshCw } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { validateGmailAddress, sendDiscordTicket, sendDiscordChatMessage } from '../lib/discordService';
+import { 
+  Mail, Send, CheckCircle, MapPin, MessageSquare, Shield, Globe, Clock, 
+  Sparkles, Bot, User as UserIcon, RefreshCw, ExternalLink, MessageCircle, 
+  Trash2, Download, KeyRound, Check, AlertCircle, Radio, MessageSquareCode
+} from 'lucide-react';
+import { 
+  initGoogleChatAuth, 
+  signInWithGoogleChat, 
+  logoutGoogleChat, 
+  fetchGoogleChatSpaces, 
+  createGoogleChatSpace, 
+  postGoogleChatMessage,
+  GoogleChatSpace 
+} from '../lib/googleChat';
+import { generateConciergeReply } from '../lib/geminiChat';
 
 interface ContactViewProps {
   activeAtmosphere: AtmosphereConfig;
   isDarkMode: boolean;
+  currentUser?: string | null;
 }
 
-export const ContactView: React.FC<ContactViewProps> = ({ activeAtmosphere, isDarkMode }) => {
-  const [form, setForm] = useState<InquiryForm>({
-    subjectIdentity: '',
-    digitalAddress: '',
-    inquiryNature: 'GENERAL',
-    messageVector: ''
-  });
+interface ChatMessage {
+  id: string;
+  sender: 'user' | 'concierge' | 'google-chat';
+  text: string;
+  timestamp: string;
+  syncedToGoogleChat?: boolean;
+}
 
-  const [isTransmitting, setIsTransmitting] = useState<boolean>(false);
-  const [terminalLogs, setTerminalLogs] = useState<string[]>([]);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [emailError, setEmailError] = useState<string | null>(null);
+export const ContactView: React.FC<ContactViewProps> = ({ 
+  activeAtmosphere, 
+  isDarkMode, 
+  currentUser 
+}) => {
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
-  // Ticket History & Live Chat States
-  const [activeSection, setActiveSection] = useState<'transmit' | 'history'>('transmit');
-  const [historyEmail, setHistoryEmail] = useState<string>('');
-  const [historyEmailError, setHistoryEmailError] = useState<string | null>(null);
-  const [searchedTickets, setSearchedTickets] = useState<any[]>([]);
-  const [isLoadingHistory, setIsLoadingHistory] = useState<boolean>(false);
-  const [selectedTicket, setSelectedTicket] = useState<any | null>(null);
-  const [chatMessages, setChatMessages] = useState<any[]>([]);
-  const [chatInput, setChatInput] = useState<string>('');
-  const [isSendingChatMessage, setIsSendingChatMessage] = useState<boolean>(false);
+  // Active view tab
+  const [activeTab, setActiveTab] = useState<'live-chat' | 'email-form' | 'global-nodes'>('live-chat');
 
-  const handleFetchHistory = async (emailToFetch: string) => {
-    const emailVal = emailToFetch.trim();
-    if (!validateGmailAddress(emailVal)) {
-      setHistoryEmailError('Please enter a valid @gmail.com address to query your history.');
-      return;
-    }
-    setHistoryEmailError(null);
-    setIsLoadingHistory(true);
-    setSearchedTickets([]);
-    setSelectedTicket(null);
+  // Registered User Email state (defaults to user's registered email or kavyanshshakya2@gmail.com)
+  const defaultEmail = currentUser 
+    ? (currentUser.includes('@') ? currentUser : `${currentUser.toLowerCase()}@ineffable.cc`) 
+    : 'kavyanshshakya2@gmail.com';
+    
+  const [registeredEmail, setRegisteredEmail] = useState<string>(() => {
+    return localStorage.getItem('ineffable_registered_email') || defaultEmail;
+  });
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [emailInput, setEmailInput] = useState(registeredEmail);
 
+  // Live Chat state
+  const storageKey = `ineffable_livechat_${registeredEmail.toLowerCase().trim()}`;
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
     try {
-      let dbTickets: any[] = [];
-      // Query Supabase
-      if (supabase) {
-        try {
-          const { data, error } = await supabase
-            .from('tickets')
-            .select('*')
-            .eq('digital_address', emailVal);
-          if (!error && data) {
-            dbTickets = data.map((item: any) => ({
-              id: item.id.toString(),
-              subjectIdentity: item.subject_identity,
-              digitalAddress: item.digital_address,
-              inquiryNature: item.inquiry_nature,
-              messageVector: item.message_vector,
-              createdAt: item.created_at,
-              status: item.status || 'PENDING'
-            }));
-          } else if (error) {
-            console.warn('Error fetching tickets from Supabase:', error);
-          }
-        } catch (dbErr) {
-          console.warn('Supabase fetch failed, falling back to cache:', dbErr);
-        }
+      const saved = localStorage.getItem(storageKey);
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.warn('Error reading saved chat:', e);
+    }
+    return [
+      {
+        id: 'welcome-msg',
+        sender: 'concierge',
+        text: `Greetings! Live Concierge session established for ${registeredEmail}. How may Concierge Unit Alpha assist you today with orders, membership ranks, Minecraft SMP, or Google Chat space integration?`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
+    ];
+  });
 
-      // Query Local Storage
-      const localTicketsRaw = localStorage.getItem('inefontop_tickets');
-      let localTickets: any[] = [];
-      if (localTicketsRaw) {
-        try {
-          const parsed = JSON.parse(localTicketsRaw);
-          if (Array.isArray(parsed)) {
-            localTickets = parsed.filter((t: any) =>
-              t.digitalAddress?.trim().toLowerCase() === emailVal.toLowerCase()
-            );
-          }
-        } catch (e) {
-          console.warn('Error parsing local tickets:', e);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isConciergeTyping, setIsConciergeTyping] = useState(false);
+  const chatBottomRef = useRef<HTMLDivElement>(null);
+
+  // Google Chat OAuth & API states
+  const [googleUser, setGoogleUser] = useState<any>(null);
+  const [googleToken, setGoogleToken] = useState<string | null>(null);
+  const [isConnectingGoogle, setIsConnectingGoogle] = useState(false);
+  const [spaces, setSpaces] = useState<GoogleChatSpace[]>([]);
+  const [selectedSpace, setSelectedSpace] = useState<string>('');
+  const [googleStatusMsg, setGoogleStatusMsg] = useState<{ type: 'success' | 'error' | 'info'; text: string } | null>(null);
+  const [isPostingGoogleChat, setIsPostingGoogleChat] = useState(false);
+
+  // Direct Email Transmission Form State
+  const [emailFormData, setEmailFormData] = useState({
+    name: currentUser || 'Sanctuary Member',
+    email: registeredEmail,
+    subject: 'Orders & Apparel Inquiry',
+    message: ''
+  });
+  const [isTransmittingEmail, setIsTransmittingEmail] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
+
+  // Save chat to localStorage whenever messages change
+  useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(messages));
+    } catch (e) {
+      console.warn('Failed to save chat log:', e);
+    }
+  }, [messages, storageKey]);
+
+  // Save registered email to localStorage
+  useEffect(() => {
+    localStorage.setItem('ineffable_registered_email', registeredEmail);
+    setEmailFormData(prev => ({ ...prev, email: registeredEmail }));
+  }, [registeredEmail]);
+
+  // Auto-scroll to bottom of chat
+  useEffect(() => {
+    if (activeTab === 'live-chat') {
+      chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, isConciergeTyping, activeTab]);
+
+  // Listen to Google Chat Firebase Auth state
+  useEffect(() => {
+    const unsubscribe = initGoogleChatAuth(
+      (user, token) => {
+        setGoogleUser(user);
+        setGoogleToken(token);
+        if (user.email) {
+          setRegisteredEmail(user.email);
         }
+        loadSpaces(token);
+      },
+      () => {
+        setGoogleUser(null);
+        setGoogleToken(null);
       }
+    );
+    return () => unsubscribe();
+  }, []);
 
-      // Merge local and db tickets cleanly, removing duplicates by ID
-      const allTicketsMap = new Map();
-      dbTickets.forEach(t => allTicketsMap.set(t.id, t));
-      localTickets.forEach(t => {
-        if (!allTicketsMap.has(t.id)) {
-          allTicketsMap.set(t.id, t);
-        }
-      });
-
-      const mergedTickets = Array.from(allTicketsMap.values()).sort((a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
-
-      setSearchedTickets(mergedTickets);
-      if (mergedTickets.length === 0) {
-        setHistoryEmailError('No active connection registers found for this digital address.');
+  const loadSpaces = async (token: string) => {
+    try {
+      setGoogleStatusMsg({ type: 'info', text: 'Connecting to Google Chat spaces...' });
+      const fetchedSpaces = await fetchGoogleChatSpaces(token);
+      setSpaces(fetchedSpaces);
+      if (fetchedSpaces.length > 0) {
+        setSelectedSpace(fetchedSpaces[0].name);
+        setGoogleStatusMsg({ type: 'success', text: `Loaded ${fetchedSpaces.length} Google Chat space(s)!` });
+      } else {
+        setGoogleStatusMsg({ type: 'info', text: 'No existing Google Chat spaces found. You can create a new support space below.' });
       }
     } catch (err: any) {
-      console.warn('Error fetching history:', err);
-      setHistoryEmailError('A gateway connection exception occurred. Please try again.');
-    } finally {
-      setIsLoadingHistory(false);
+      setGoogleStatusMsg({ type: 'error', text: `Google Chat API notice: ${err.message}` });
     }
   };
 
-  const handleSelectTicket = (ticket: any) => {
-    setSelectedTicket(ticket);
-    setChatInput('');
-
-    const chatKey = `inefontop_chat_${ticket.id}`;
-    const existingChatRaw = localStorage.getItem(chatKey);
-    if (existingChatRaw) {
-      try {
-        setChatMessages(JSON.parse(existingChatRaw));
-      } catch (e) {
-        setChatMessages([]);
+  const handleConnectGoogleChat = async () => {
+    setIsConnectingGoogle(true);
+    setGoogleStatusMsg(null);
+    try {
+      const result = await signInWithGoogleChat();
+      if (result) {
+        setGoogleUser(result.user);
+        setGoogleToken(result.accessToken);
+        if (result.user.email) {
+          setRegisteredEmail(result.user.email);
+        }
+        setGoogleStatusMsg({ type: 'success', text: `Authenticated with Google Chat as ${result.user.email}!` });
+        loadSpaces(result.accessToken);
       }
-    } else {
-      // Create initial message
-      const welcomeMsg = {
-        id: 'msg-welcome-' + Date.now(),
-        sender: 'support' as const,
-        senderName: 'LAB GATEWAY BOT',
-        text: `Secure link established. [CORE RECONCILIATION NODE] connected. Initial Message Vector: "${ticket.messageVector}". How can we assist you with this ${ticket.inquiryNature} ticket?`,
-        timestamp: new Date().toISOString()
-      };
-      localStorage.setItem(chatKey, JSON.stringify([welcomeMsg]));
-      setChatMessages([welcomeMsg]);
+    } catch (err: any) {
+      if (err?.code === 'auth/popup-closed-by-user' || err?.code === 'auth/cancelled-popup-request') {
+        setGoogleStatusMsg({ type: 'info', text: 'Sign-in popup closed. Click "Sign in with Google Chat" whenever you are ready to connect.' });
+      } else {
+        setGoogleStatusMsg({ type: 'error', text: `Google Chat sign-in note: ${err.message || 'Authentication process stopped.'}` });
+      }
+    } finally {
+      setIsConnectingGoogle(false);
     }
   };
 
-  const getAutomatedResponse = (inquiryNature: string, text: string) => {
-    const query = text.toLowerCase();
-
-    if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
-      return `Connection signal healthy. Greetings subject. We are processing your request regarding [${inquiryNature}]. State of operations remains nominal. What specific parameters can we optimize?`;
-    }
-
-    if (query.includes('status') || query.includes('update') || query.includes('when') || query.includes('ready')) {
-      return `Query mapped. Ticket status is currently marked as PENDING. The laboratory engineers are completing verification tests. Expect full resolution notification directly to your registered @gmail.com within the next cycle.`;
-    }
-
-    if (query.includes('thank') || query.includes('solve') || query.includes('ok') || query.includes('cool')) {
-      return `Acknowledged. The connection remains active. Glad to assist in streamlining your operational vectors. Let us know if further diagnostic dialogue is required.`;
-    }
-
-    switch (inquiryNature) {
-      case 'BUG':
-        return `Exception report parsed. Our testing automation harness has simulated the failure vector and isolated the stack trace. Debuggers are deploying hot patches to the staging nodes right now.`;
-      case 'PAYOUT':
-        return `Ledger query received. Payout pipelines confirm verification under ticket reference. Our automated escrow vault releases digital assets during scheduled window frames. No manual override needed.`;
-      case 'QUERY':
-        return `Bespoke documentation query referenced. Connecting with laboratory server clusters. Please specify any target code elements, sizing, or styling requirements if needed.`;
-      case 'OTHER':
-      case 'GENERAL':
-      default:
-        return `Data vector noted. Your input has been queued and synchronized with our Discord coordination channels. An engineer from the specific department is reviewing these connection details.`;
+  const handleCreateNewSpace = async () => {
+    if (!googleToken) return;
+    try {
+      setIsPostingGoogleChat(true);
+      const spaceName = `INEFFABLE Support - ${registeredEmail.split('@')[0]}`;
+      const newSpace = await createGoogleChatSpace(googleToken, spaceName);
+      setSpaces(prev => [newSpace, ...prev]);
+      setSelectedSpace(newSpace.name);
+      setGoogleStatusMsg({ type: 'success', text: `Created new Google Chat space: ${newSpace.displayName || newSpace.name}` });
+    } catch (err: any) {
+      setGoogleStatusMsg({ type: 'error', text: `Failed to create Google Chat space: ${err.message}` });
+    } finally {
+      setIsPostingGoogleChat(false);
     }
   };
 
-  const handleSendChatMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!chatInput.trim() || !selectedTicket) return;
+  const handlePostToGoogleChatSpace = async (textToSend: string) => {
+    if (!googleToken) {
+      setGoogleStatusMsg({ type: 'error', text: 'Please sign in with Google Chat to enable space posting.' });
+      return;
+    }
 
-    const userMessageText = chatInput.trim();
-    setChatInput('');
-    setIsSendingChatMessage(true);
+    if (!selectedSpace && spaces.length === 0) {
+      setGoogleStatusMsg({ type: 'info', text: 'Attempting to auto-create a support space for your Google Chat account...' });
+      try {
+        const newSpace = await createGoogleChatSpace(googleToken, `INEFFABLE Live Chat - ${registeredEmail.split('@')[0]}`);
+        setSpaces([newSpace]);
+        setSelectedSpace(newSpace.name);
+        await postGoogleChatMessage(googleToken, newSpace.name, `[Live Chat Transmission] ${registeredEmail}: ${textToSend}`);
+        setGoogleStatusMsg({ type: 'success', text: 'Posted message to newly created Google Chat Space!' });
+        return;
+      } catch (e: any) {
+        setGoogleStatusMsg({ type: 'error', text: `Space creation error: ${e.message}` });
+        return;
+      }
+    }
 
-    const userMsg = {
-      id: 'msg-user-' + Date.now(),
-      sender: 'user' as const,
-      senderName: selectedTicket.subjectIdentity || 'Subject User',
-      text: userMessageText,
-      timestamp: new Date().toISOString()
+    const targetSpace = selectedSpace || spaces[0]?.name;
+    if (!targetSpace) return;
+
+    try {
+      setIsPostingGoogleChat(true);
+      await postGoogleChatMessage(googleToken, targetSpace, `[Live Concierge Sync] ${registeredEmail}: ${textToSend}`);
+      setGoogleStatusMsg({ type: 'success', text: 'Successfully dispatched message to Google Chat Space!' });
+    } catch (err: any) {
+      setGoogleStatusMsg({ type: 'error', text: `Failed to post to Google Chat: ${err.message}` });
+    } finally {
+      setIsPostingGoogleChat(false);
+    }
+  };
+
+  // Handle user sending a live chat message
+  const handleSendMessage = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const cleanText = inputMessage.trim();
+    if (!cleanText) return;
+
+    const userMsg: ChatMessage = {
+      id: `msg-${Date.now()}`,
+      sender: 'user',
+      text: cleanText,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    const chatKey = `inefontop_chat_${selectedTicket.id}`;
-    const updatedMessages = [...chatMessages, userMsg];
-    setChatMessages(updatedMessages);
-    localStorage.setItem(chatKey, JSON.stringify(updatedMessages));
+    setMessages(prev => [...prev, userMsg]);
+    setInputMessage('');
+    setIsConciergeTyping(true);
 
-    // Send to Discord
-    await sendDiscordChatMessage(selectedTicket.id, 'user', selectedTicket.subjectIdentity, userMessageText);
-
-    // Simulate Agent typing & responding
-    setTimeout(async () => {
-      const botResponseText = getAutomatedResponse(selectedTicket.inquiryNature, userMessageText);
-      const botMsg = {
-        id: 'msg-support-' + Date.now(),
-        sender: 'support' as const,
-        senderName: 'LAB ENGINEER KAI',
-        text: botResponseText,
-        timestamp: new Date().toISOString()
-      };
-
-      const finalMessages = [...updatedMessages, botMsg];
-      setChatMessages(finalMessages);
-      localStorage.setItem(chatKey, JSON.stringify(finalMessages));
-
-      // Send response to Discord too so full conversation history is synced
-      await sendDiscordChatMessage(selectedTicket.id, 'support', 'LAB ENGINEER KAI', botResponseText);
-      setIsSendingChatMessage(false);
-    }, 1500);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-
-    if (name === 'digitalAddress') {
-      const emailVal = value.trim();
-      if (emailVal && !validateGmailAddress(emailVal)) {
-        setEmailError('Direct Email Point must be a valid @gmail.com address');
-      } else {
-        setEmailError(null);
-      }
-    }
-  };
-
-  const simulateTransmission = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.subjectIdentity || !form.digitalAddress || !form.messageVector) return;
-
-    const emailVal = form.digitalAddress.trim();
-    if (!validateGmailAddress(emailVal)) {
-      setEmailError('Direct Email Point must be a valid @gmail.com address');
-      return;
+    // If Google Chat token is available, automatically sync user message to Google Chat Space in background
+    if (googleToken && selectedSpace) {
+      postGoogleChatMessage(googleToken, selectedSpace, `[Live Chat] ${registeredEmail}: ${cleanText}`)
+        .then(() => {
+          setMessages(prev => prev.map(m => m.id === userMsg.id ? { ...m, syncedToGoogleChat: true } : m));
+        })
+        .catch(() => {});
     }
 
-    setIsTransmitting(true);
-    setIsSuccess(false);
-    setTerminalLogs([]);
-
-    const logLines = [
-      'INITIATING HANDSHAKE WITH INEFFABLE NODE ...',
-      'ESTABLISHING SECURE TLS_1.3 CHANNEL...',
-      'PACKAGING SUBJECT DATA PACKETS...',
-      `SUBJECT IDENTITY: "${form.subjectIdentity.toUpperCase()}"`,
-      `DIGITAL ENVELOPE ENCRYPTED WITH AES-256-GCM...`,
-    ];
-
-    for (let i = 0; i < logLines.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      setTerminalLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] ${logLines[i]}`]);
-    }
-
+    // Generate AI Concierge response
     try {
-      setTerminalLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] DISPATCHING STREAM TO SECURE CLOUD GATEWAY...`]);
+      const conciergeReplyText = await generateConciergeReply(
+        registeredEmail,
+        cleanText,
+        messages.map(m => ({ sender: m.sender === 'user' ? 'User' : 'Concierge', text: m.text }))
+      );
 
-      await new Promise((resolve) => setTimeout(resolve, 600));
-
-      let finalTicketId = 'ticket-' + Date.now();
-
-      // Helper to generate UUID
-      const generateUUID = () => {
-        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-          return crypto.randomUUID();
-        }
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-          const r = (Math.random() * 16) | 0;
-          const v = c === 'x' ? r : (r & 0x3) | 0x8;
-          return v.toString(16);
-        });
-      };
-
-      // 1. Save to Supabase PostgreSQL if configured
-      if (supabase) {
-        // Strategy A: Insert without explicit ID (allow database default uuid/bigserial)
-        const { data: dataA, error: errorA } = await supabase
-          .from('tickets')
-          .insert([{
-            subject_identity: form.subjectIdentity.trim(),
-            digital_address: form.digitalAddress.trim(),
-            inquiry_nature: form.inquiryNature,
-            message_vector: form.messageVector.trim(),
-            created_at: new Date().toISOString(),
-            status: 'PENDING'
-          }])
-          .select('id');
-
-        if (!errorA && dataA && dataA[0]) {
-          finalTicketId = dataA[0].id.toString();
-        } else {
-          // Strategy B: If Strategy A failed, try inserting with a clean standard UUID format
-          const cleanUuid = generateUUID();
-          const { data: dataB, error: errorB } = await supabase
-            .from('tickets')
-            .insert([{
-              id: cleanUuid,
-              subject_identity: form.subjectIdentity.trim(),
-              digital_address: form.digitalAddress.trim(),
-              inquiry_nature: form.inquiryNature,
-              message_vector: form.messageVector.trim(),
-              created_at: new Date().toISOString(),
-              status: 'PENDING'
-            }])
-            .select('id');
-
-          if (!errorB && dataB && dataB[0]) {
-            finalTicketId = dataB[0].id.toString();
-          } else {
-            // Strategy C: Last-ditch effort, try with string ID format ('ticket-...')
-            const { error: errorC } = await supabase
-              .from('tickets')
-              .insert([{
-                id: finalTicketId,
-                subject_identity: form.subjectIdentity.trim(),
-                digital_address: form.digitalAddress.trim(),
-                inquiry_nature: form.inquiryNature,
-                message_vector: form.messageVector.trim(),
-                created_at: new Date().toISOString(),
-                status: 'PENDING'
-              }]);
-
-            if (errorC) {
-              console.warn('Supabase ticket insert error, using local fallback:', errorC);
-            }
-          }
-        }
-      }
-
-      const newTicket = {
-        id: finalTicketId,
-        subjectIdentity: form.subjectIdentity.trim(),
-        digitalAddress: form.digitalAddress.trim(),
-        inquiryNature: form.inquiryNature,
-        messageVector: form.messageVector.trim(),
-        createdAt: new Date().toISOString(),
-        status: 'PENDING'
-      };
-
-      // 2. Replication write to local storage
-      const existingTicketsRaw = localStorage.getItem('inefontop_tickets');
-      const existingTickets = existingTicketsRaw ? JSON.parse(existingTicketsRaw) : [];
-      existingTickets.push(newTicket);
-      localStorage.setItem('inefontop_tickets', JSON.stringify(existingTickets));
-
-      const existingLogsRaw = localStorage.getItem('inefontop_audit_logs');
-      const existingLogs = existingLogsRaw ? JSON.parse(existingLogsRaw) : [];
-      const auditLogMessage = `[CONTACT] NEW SUPPORT TICKET DISPATCHED BY "${form.subjectIdentity.toUpperCase()}"`;
-      existingLogs.push(auditLogMessage);
-      localStorage.setItem('inefontop_audit_logs', JSON.stringify(existingLogs));
-
-      // Push audit log to Supabase
-      if (supabase) {
-        await supabase.from('audit_logs').insert([{ message: auditLogMessage }]);
-      }
-
-      // 3. Connect and send ticket to Discord Webhook if configured
-      setTerminalLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] DISPATCHING REAL-TIME SECURE ROUTE TO DISCORD CHANNEL...`]);
-      const discordResult = await sendDiscordTicket(newTicket);
-      if (discordResult.success) {
-        setTerminalLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] ${discordResult.message.toUpperCase()}`]);
-      } else {
-        if (discordResult.message.includes("VITE_DISCORD_WEBHOOK_URL")) {
-          setTerminalLogs((prev) => [
-            ...prev,
-            `[${new Date().toLocaleTimeString()}] [INFO] DISCORD WEBHOOK ROUTING INACTIVE (VITE_DISCORD_WEBHOOK_URL KEY NOT INSTALLED).`,
-            `[${new Date().toLocaleTimeString()}] [SYSTEM] USE THE SECURE WEB ADMIN PANEL FOR ALL INCOMING TICKET TELEMETRY.`
-          ]);
-        } else {
-          setTerminalLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] [ERROR] DISCORD NODE UNREACHABLE: ${discordResult.message.toUpperCase()}`]);
-        }
-      }
-
-      setTerminalLogs((prev) => [
-        ...prev,
-        `[${new Date().toLocaleTimeString()}] TELEMETRY LOGGED TO SECURE LOCAL REGISTRY.`,
-        `[${new Date().toLocaleTimeString()}] REAL-TIME SIGNAL ROUTED TO STAFF DISPATCH CHANNELS.`,
-        `[${new Date().toLocaleTimeString()}] TRANSACTION REGISTER COMPLETED.`
-      ]);
-
-      setIsSuccess(true);
-      setForm({
-        subjectIdentity: '',
-        digitalAddress: '',
-        inquiryNature: 'GENERAL',
-        messageVector: ''
-      });
-    } catch (err: any) {
-      setTerminalLogs((prev) => [
-        ...prev,
-        `[${new Date().toLocaleTimeString()}] [CRITICAL] TRANSMISSION FAILED: ${err.message}`,
-        `[${new Date().toLocaleTimeString()}] SECURE ENCRYPTED NODE CONNECTION ABORTED.`
-      ]);
-    } finally {
-      setIsTransmitting(false);
+      setTimeout(() => {
+        setIsConciergeTyping(false);
+        const botMsg: ChatMessage = {
+          id: `msg-reply-${Date.now()}`,
+          sender: 'concierge',
+          text: conciergeReplyText,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, botMsg]);
+      }, 700);
+    } catch (err) {
+      setIsConciergeTyping(false);
     }
+  };
+
+  const handleQuickPromptClick = (promptText: string) => {
+    setInputMessage(promptText);
+  };
+
+  const handleUpdateEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (emailInput && emailInput.includes('@')) {
+      setRegisteredEmail(emailInput.trim());
+      setIsEditingEmail(false);
+    }
+  };
+
+  const handleClearChatHistory = () => {
+    if (window.confirm(`Clear all live chat history for ${registeredEmail}?`)) {
+      localStorage.removeItem(storageKey);
+      setMessages([
+        {
+          id: 'welcome-msg-reset',
+          sender: 'concierge',
+          text: `Chat session reset for ${registeredEmail}. How may Concierge Unit Alpha assist you?`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }
+      ]);
+    }
+  };
+
+  const handleExportChatLog = () => {
+    const textLog = messages.map(m => `[${m.timestamp}] ${m.sender.toUpperCase()}: ${m.text}`).join('\n');
+    const blob = new Blob([textLog], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Ineffable_Support_Chat_${registeredEmail.replace(/[@.]/g, '_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleDirectEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsTransmittingEmail(true);
+    setTimeout(() => {
+      setIsTransmittingEmail(false);
+      setEmailSubmitted(true);
+    }, 1200);
   };
 
   return (
-    <div id="contact-view-container" className={`max-w-7xl mx-auto px-6 py-24 pt-32 ${themeStyles.textPrimary}`}>
-      <div className="space-y-4 mb-10 text-center max-w-2xl mx-auto">
-        <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
-          06 // CONNECTION GATEWAY
-        </span>
-        <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-light uppercase">
-          Subject Connection
-        </h2>
-        <p className={`${themeStyles.textSecondary} font-sans text-sm font-light leading-relaxed`}>
-          Initialize communication. Connect directly with laboratory engineers to request bespoke tailoring slots, digital atmosphere API keys, or collaborative projects.
+    <div className="max-w-6xl mx-auto px-4 md:px-6 py-24 pt-28 space-y-10">
+      
+      {/* Aesthetic Hero Header */}
+      <div className="text-center max-w-3xl mx-auto space-y-4">
+        <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-500 text-[10px] md:text-xs font-mono tracking-[0.25em] font-extrabold uppercase shadow-lg shadow-rose-500/10 backdrop-blur-md">
+          <span className="relative flex h-2 w-2 mr-0.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+          </span>
+          <span>LIVE SANCTUARY CONCIERGE & GOOGLE CHAT</span>
+        </div>
+
+        <h1 className="text-3xl md:text-6xl font-sans font-extrabold text-zinc-950 dark:text-white uppercase tracking-tight leading-tight">
+          CONNECT WITH THE SANCTUARY
+        </h1>
+
+        <p className={`${themeStyles.textSecondary} text-xs md:text-sm max-w-xl mx-auto leading-relaxed`}>
+          Instant real-time support synced with your registered email (<strong className="text-rose-500 font-mono">{registeredEmail}</strong>) and direct Google Chat space integration.
         </p>
+
+        {/* Live Support Key Metrics */}
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-3 md:gap-6 text-xs font-mono text-zinc-400">
+          <div className={`px-4 py-2 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center space-x-2`}>
+            <Clock className="w-3.5 h-3.5 text-emerald-400" />
+            <span>AVG RESPONSE: <strong className="text-emerald-400">&lt; 12 MINS</strong></span>
+          </div>
+          <div className={`px-4 py-2 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center space-x-2`}>
+            <Shield className="w-3.5 h-3.5 text-rose-400" />
+            <span>SECURITY: <strong className="text-rose-400">AES-256 + OAuth2</strong></span>
+          </div>
+          <div className={`px-4 py-2 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center space-x-2`}>
+            <Radio className="w-3.5 h-3.5 text-sky-400" />
+            <span>GOOGLE CHAT: <strong className="text-sky-400">{googleUser ? 'SYNCED' : 'READY'}</strong></span>
+          </div>
+        </div>
       </div>
 
-      {/* Connection Tab Selector */}
-      <div className="flex justify-center mb-10">
-        <div className={`inline-flex p-1 rounded-xl border ${themeStyles.borderMain} ${isDarkMode ? 'bg-zinc-950/40' : 'bg-zinc-100/50'} font-mono text-[10px] md:text-xs relative z-10`}>
+      {/* Registered Email Identity Banner */}
+      <div className={`p-4 md:p-6 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-4`}>
+        <div className="flex items-center space-x-4 min-w-0 w-full md:w-auto">
+          <div className="relative shrink-0">
+            {googleUser?.photoURL ? (
+              <img src={googleUser.photoURL} alt="Avatar" className="w-12 h-12 rounded-2xl object-cover border-2 border-rose-500/40" />
+            ) : (
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-indigo-600 flex items-center justify-center text-white font-mono font-bold text-lg shadow-lg">
+                {registeredEmail.charAt(0).toUpperCase()}
+              </div>
+            )}
+            <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-black rounded-full" />
+          </div>
+
+          <div className="min-w-0">
+            <div className="flex items-center space-x-2">
+              <span className="text-[10px] font-mono tracking-widest text-rose-500 uppercase font-bold">REGISTERED SUPPORT ACCOUNT</span>
+              {googleUser && (
+                <span className="bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold">
+                  GOOGLE WORKSPACE
+                </span>
+              )}
+            </div>
+
+            {isEditingEmail ? (
+              <form onSubmit={handleUpdateEmail} className="flex items-center space-x-2 mt-1">
+                <input
+                  type="email"
+                  required
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  className="px-3 py-1 rounded-xl bg-black/30 border border-rose-500/50 text-xs font-mono text-white focus:outline-none"
+                  placeholder="Enter your email"
+                />
+                <button type="submit" className="px-3 py-1 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-mono font-bold">
+                  Save
+                </button>
+                <button type="button" onClick={() => setIsEditingEmail(false)} className="px-2 py-1 text-zinc-400 hover:text-white text-xs font-mono">
+                  Cancel
+                </button>
+              </form>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <h3 className="font-mono text-sm md:text-base font-bold text-zinc-950 dark:text-white truncate">
+                  {registeredEmail}
+                </h3>
+                <button 
+                  onClick={() => { setEmailInput(registeredEmail); setIsEditingEmail(true); }}
+                  className="text-[10px] font-mono text-zinc-400 hover:text-rose-400 underline cursor-pointer"
+                >
+                  Change
+                </button>
+              </div>
+            )}
+            <p className="text-[10px] font-mono text-zinc-500">
+              Live Chat history and Google Chat messages are linked to this registered address.
+            </p>
+          </div>
+        </div>
+
+        {/* Tab Switcher Buttons */}
+        <div className="flex items-center space-x-1 p-1 rounded-2xl bg-black/20 dark:bg-white/5 border border-white/10 w-full md:w-auto overflow-x-auto">
           <button
-            onClick={() => {
-              setActiveSection('transmit');
-              setSelectedTicket(null);
-            }}
-            className={`px-5 py-2.5 rounded-lg transition-all flex items-center space-x-2 cursor-pointer ${activeSection === 'transmit' ? (isDarkMode ? 'bg-zinc-100 text-zinc-950 font-bold shadow-lg' : 'bg-zinc-900 text-white font-bold shadow-lg') : 'text-zinc-400 hover:text-zinc-200'}`}
+            onClick={() => setActiveTab('live-chat')}
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
+              activeTab === 'live-chat'
+                ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
+                : 'text-zinc-400 hover:text-white'
+            }`}
           >
-            <Send className="w-3.5 h-3.5" />
-            <span>TRANSMIT INQUIRY</span>
+            <MessageSquareCode className="w-3.5 h-3.5" />
+            <span>Live & Google Chat</span>
           </button>
+
           <button
-            onClick={() => {
-              setActiveSection('history');
-              setSelectedTicket(null);
-            }}
-            className={`px-5 py-2.5 rounded-lg transition-all flex items-center space-x-2 cursor-pointer ${activeSection === 'history' ? (isDarkMode ? 'bg-zinc-100 text-zinc-950 font-bold shadow-lg' : 'bg-zinc-900 text-white font-bold shadow-lg') : 'text-zinc-400 hover:text-zinc-200'}`}
+            onClick={() => setActiveTab('email-form')}
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
+              activeTab === 'email-form'
+                ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
+                : 'text-zinc-400 hover:text-white'
+            }`}
           >
-            <MessageSquare className="w-3.5 h-3.5" />
-            <span>TICKET HISTORY & LIVE CHAT</span>
+            <Mail className="w-3.5 h-3.5" />
+            <span>Email Transmission</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('global-nodes')}
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
+              activeTab === 'global-nodes'
+                ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
+                : 'text-zinc-400 hover:text-white'
+            }`}
+          >
+            <Globe className="w-3.5 h-3.5" />
+            <span>Global Nodes</span>
           </button>
         </div>
       </div>
 
-      {activeSection === 'transmit' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
-          {/* Connection Form */}
-          <div
-            id="contact-form-panel"
-            className={`lg:col-span-7 ${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-2xl p-6 md:p-8 space-y-6`}
-          >
-            <div className={`flex items-center space-x-2 border-b ${themeStyles.borderMuted} pb-4`}>
-              <Cpu className={`w-4 h-4 ${themeStyles.accentText}`} />
-              <h3 className={`font-mono text-xs tracking-widest font-semibold ${themeStyles.textPrimary} uppercase`}>
-                Secure Transmission Form
-              </h3>
-            </div>
-
-            <form onSubmit={simulateTransmission} className="space-y-5">
-              {/* Subject Identity (Name) */}
-              <div className="space-y-1.5">
-                <label className={`font-mono text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} tracking-widest block uppercase`}>
-                  Subject Identity (Full Name / Entity Name)
-                </label>
-                <input
-                  id="input-subject-identity"
-                  type="text"
-                  name="subjectIdentity"
-                  required
-                  value={form.subjectIdentity}
-                  onChange={handleInputChange}
-                  disabled={isTransmitting}
-                  placeholder="e.g. INITIATE ALEX_KORV"
-                  className={`w-full ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-200' : 'bg-white border-zinc-300 text-zinc-800'} border px-4 py-3.5 rounded-lg font-mono text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors disabled:opacity-50`}
-                />
-              </div>
-
-              {/* Digital Address (Email) */}
-              <div className="space-y-1.5">
-                <label className={`font-mono text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} tracking-widest block uppercase`}>
-                  Digital Address (Direct Email Point - @gmail.com only)
-                </label>
-                <input
-                  id="input-digital-address"
-                  type="email"
-                  name="digitalAddress"
-                  required
-                  value={form.digitalAddress}
-                  onChange={handleInputChange}
-                  disabled={isTransmitting}
-                  placeholder="e.g. alex@gmail.com"
-                  className={`w-full ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-200' : 'bg-white border-zinc-300 text-zinc-800'} ${emailError ? 'border-rose-500 focus:border-rose-500' : 'border'} px-4 py-3.5 rounded-lg font-mono text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors disabled:opacity-50`}
-                />
-                {emailError && (
-                  <p className="text-rose-500 font-mono text-[10px] mt-1 tracking-wider">
-                    ⚠️ {emailError}
+      {/* ========================================================================
+          TAB 1: LIVE CHAT & GOOGLE CHAT INTEGRATION
+         ======================================================================== */}
+      {activeTab === 'live-chat' && (
+        <div className="space-y-6">
+          
+          {/* Google Chat Space Integration Top Bar */}
+          <div className={`p-5 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-xl space-y-4`}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                  <MessageSquareCode className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-mono text-xs md:text-sm font-bold text-zinc-950 dark:text-white uppercase flex items-center space-x-2">
+                    <span>GOOGLE CHAT WORKSPACE INTEGRATION</span>
+                    {googleUser && <span className="text-[10px] text-emerald-400 font-normal">● AUTHENTICATED</span>}
+                  </h3>
+                  <p className="text-[10px] font-mono text-zinc-400">
+                    Connect Google Workspace to dispatch direct messages to Google Chat support spaces.
                   </p>
-                )}
+                </div>
               </div>
 
-              {/* Inquiry Nature */}
-              <div className="space-y-1.5">
-                <label className={`font-mono text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} tracking-widest block uppercase`}>
-                  Inquiry Nature (Transmission Focus)
-                </label>
-                <select
-                  id="input-inquiry-nature"
-                  name="inquiryNature"
-                  value={form.inquiryNature}
-                  onChange={handleInputChange}
-                  disabled={isTransmitting}
-                  className={`w-full ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-300' : 'bg-white border-zinc-300 text-zinc-800'} border px-4 py-3.5 rounded-lg font-mono text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors disabled:opacity-50 appearance-none`}
+              {!googleUser ? (
+                <button
+                  onClick={handleConnectGoogleChat}
+                  disabled={isConnectingGoogle}
+                  className="gsi-material-button w-full sm:w-auto cursor-pointer"
+                  style={{
+                    backgroundColor: '#131314',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                    padding: '8px 16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    color: '#fff',
+                    fontFamily: 'monospace',
+                    fontSize: '11px',
+                    fontWeight: 'bold',
+                    transition: 'all 0.2s'
+                  }}
                 >
-                  <option value="GENERAL" className="bg-white text-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">GENERAL</option>
-                  <option value="BUG" className="bg-white text-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">BUG</option>
-                  <option value="QUERY" className="bg-white text-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">QUERY</option>
-                  <option value="PAYOUT" className="bg-white text-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">PAYOUT</option>
-                  <option value="OTHER" className="bg-white text-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">OTHER</option>
-                </select>
-              </div>
-
-              {/* Message Vector */}
-              <div className="space-y-1.5">
-                <label className={`font-mono text-[9px] ${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} tracking-widest block uppercase`}>
-                  Message Vector (Detailed Statement)
-                </label>
-                <textarea
-                  id="input-message-vector"
-                  name="messageVector"
-                  required
-                  rows={5}
-                  value={form.messageVector}
-                  onChange={handleInputChange}
-                  disabled={isTransmitting}
-                  placeholder="Describe your vector connection inquiry..."
-                  className={`w-full ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-200' : 'bg-white border-zinc-300 text-zinc-800'} border px-4 py-3.5 rounded-lg font-mono text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors disabled:opacity-50 resize-none`}
-                />
-              </div>
-
-              <button
-                id="submit-transmit-btn"
-                type="submit"
-                disabled={isTransmitting || !form.subjectIdentity || !form.digitalAddress || !validateGmailAddress(form.digitalAddress) || !form.messageVector || !!emailError}
-                className={`w-full py-4 ${isDarkMode ? 'bg-zinc-100 text-zinc-950 disabled:bg-zinc-900 disabled:text-zinc-600' : 'bg-zinc-900 text-white disabled:bg-zinc-200 disabled:text-zinc-400'} ${themeStyles.accentBgHover} hover:text-zinc-950 font-mono text-xs tracking-widest font-bold rounded-lg transition-colors flex items-center justify-center space-x-2 cursor-pointer disabled:cursor-not-allowed`}
-              >
-                <Send className="w-4 h-4" />
-                <span>TRANSMIT SECURE PACKET</span>
-              </button>
-            </form>
-          </div>
-
-          {/* Live Terminal Output Logs */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className={`${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-2xl p-6 space-y-4`}>
-              <div className={`flex items-center space-x-2 border-b ${themeStyles.borderMuted} pb-3`}>
-                <Terminal className="w-4 h-4 text-emerald-400" />
-                <h3 className={`font-mono text-xs tracking-widest font-semibold ${themeStyles.textPrimary} uppercase`}>
-                  Terminal Logger
-                </h3>
-              </div>
-
-              <div
-                id="terminal-logger-viewport"
-                className={`h-64 ${isDarkMode ? 'bg-zinc-950 border-zinc-900 text-zinc-400' : 'bg-zinc-50 border-zinc-200 text-zinc-700'} rounded-xl border p-4 font-mono text-[9px] overflow-y-auto space-y-2.5 scrollbar-thin`}
-              >
-                {terminalLogs.length === 0 ? (
-                  <div className="text-center flex flex-col justify-center items-center h-full space-y-2">
-                    <ShieldAlert className={`w-5 h-5 ${isDarkMode ? 'text-zinc-700' : 'text-zinc-300'} animate-pulse`} />
-                    <span className={`${isDarkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>WAITING FOR INQUIRY TRANSMISSION STATE...</span>
-                  </div>
-                ) : (
-                  terminalLogs.map((log, index) => (
-                    <div key={index} className="leading-relaxed border-l-2 border-emerald-500/30 pl-2">
-                      {log}
-                    </div>
-                  ))
-                )}
-
-                {isTransmitting && (
-                  <div className="text-emerald-400 animate-pulse flex items-center space-x-1 pl-2">
-                    <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
-                    <span>STREAMING ENCRYPTED TELEMETRY VECTORS...</span>
-                  </div>
-                )}
-              </div>
-
-              {isSuccess && (
-                <div id="transmission-success-alert" className={`p-4 rounded-xl flex items-start space-x-3 border ${isDarkMode ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : 'bg-emerald-50 border-emerald-200 text-emerald-800'}`}>
-                  <CheckCircle className="w-4.5 h-4.5 text-emerald-400 shrink-0 mt-0.5 animate-bounce" />
-                  <div className="font-mono text-[9px] tracking-wide">
-                    <span className="font-bold block font-sans">CONNECTION LOGGED</span>
-                    <p className={`mt-1 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>Our lab engineers have decrypted your message vector and mapped it to our queue. Expect direct digital transmission within 24 hours.</p>
-                  </div>
+                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 48 48">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                  </svg>
+                  <span>{isConnectingGoogle ? 'CONNECTING...' : 'SIGN IN WITH GOOGLE CHAT'}</span>
+                </button>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <span className="text-[10px] font-mono text-zinc-400">
+                    Google: <strong className="text-white">{googleUser.email}</strong>
+                  </span>
+                  <button
+                    onClick={() => logoutGoogleChat()}
+                    className="p-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 text-[10px] font-mono cursor-pointer"
+                  >
+                    Disconnect
+                  </button>
                 </div>
               )}
             </div>
 
-            <div className={`${isDarkMode ? 'bg-zinc-900/10 border-zinc-900' : 'bg-zinc-100/50 border-zinc-200'} border p-6 rounded-2xl font-mono text-[10px] text-zinc-500 space-y-2.5`}>
-              <span className={`${isDarkMode ? 'text-zinc-400' : 'text-zinc-700'} block tracking-wider font-semibold uppercase`}>CRYPTOGRAPHIC CREDENTIALS</span>
-              <p className="leading-relaxed font-light">
-                All transmissions are protected with asymmetric client-side cryptographic rotation keys.
-                Our destination node stores database records in sandboxed containers on isolated cloud relays.
-              </p>
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* Ticket History & Live Chat Tab rendering */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto">
-          {/* Left Column: Email Verification and History Telemetry */}
-          <div className="lg:col-span-5 flex flex-col space-y-4">
-            {/* Email Sync Input */}
-            <div className={`${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-2xl p-5 space-y-4`}>
-              <div className={`flex items-center space-x-2 border-b ${themeStyles.borderMuted} pb-3`}>
-                <Search className={`w-4 h-4 ${themeStyles.accentText}`} />
-                <h3 className={`font-mono text-xs tracking-widest font-semibold ${themeStyles.textPrimary} uppercase`}>
-                  Reconcile Address
-                </h3>
+            {/* Google Chat Space Controls when authenticated */}
+            {googleUser && (
+              <div className="flex flex-col md:flex-row items-center justify-between gap-3 pt-2">
+                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                  <span className="text-[10px] font-mono text-zinc-400 uppercase font-bold">Select Google Chat Space:</span>
+                  <select
+                    value={selectedSpace}
+                    onChange={(e) => setSelectedSpace(e.target.value)}
+                    className="px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs font-mono text-white focus:outline-none focus:border-rose-500"
+                  >
+                    {spaces.map(s => (
+                      <option key={s.name} value={s.name}>
+                        {s.displayName || s.name}
+                      </option>
+                    ))}
+                    {spaces.length === 0 && (
+                      <option value="">No active spaces found</option>
+                    )}
+                  </select>
+
+                  <button
+                    onClick={handleCreateNewSpace}
+                    disabled={isPostingGoogleChat}
+                    className="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/30 text-xs font-mono font-bold transition-all cursor-pointer"
+                  >
+                    + Create Support Space
+                  </button>
+                </div>
+
+                <div className="flex items-center space-x-2 w-full md:w-auto justify-end">
+                  <button
+                    onClick={() => handlePostToGoogleChatSpace(messages[messages.length - 1]?.text || 'Hello from Ineffable Live Concierge!')}
+                    disabled={isPostingGoogleChat}
+                    className="px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-xl text-xs font-mono font-bold flex items-center space-x-2 shadow-lg shadow-sky-500/20 transition-all cursor-pointer"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>{isPostingGoogleChat ? 'POSTING...' : 'SYNC CHAT TO GOOGLE CHAT'}</span>
+                  </button>
+                </div>
               </div>
-              <p className="font-mono text-[9px] text-zinc-500 leading-normal">
-                Input your registered direct email point to authenticate and retrieve your support history logs.
-              </p>
-              <div className="space-y-3">
-                <input
-                  type="email"
-                  placeholder="e.g. alex@gmail.com"
-                  value={historyEmail}
-                  onChange={(e) => setHistoryEmail(e.target.value)}
-                  className={`w-full ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-200' : 'bg-white border-zinc-300 text-zinc-800'} border px-4 py-3 rounded-lg font-mono text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors`}
-                />
-                {historyEmailError && (
-                  <p className="text-rose-500 font-mono text-[9px] tracking-wider">⚠️ {historyEmailError}</p>
-                )}
+            )}
+
+            {/* Google Status Notification Message */}
+            {googleStatusMsg && (
+              <div className={`p-3 rounded-2xl text-xs font-mono flex items-center justify-between ${
+                googleStatusMsg.type === 'success' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                googleStatusMsg.type === 'error' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' :
+                'bg-sky-500/10 text-sky-400 border border-sky-500/20'
+              }`}>
+                <span>{googleStatusMsg.text}</span>
+                <button onClick={() => setGoogleStatusMsg(null)} className="text-zinc-400 hover:text-white">✕</button>
+              </div>
+            )}
+          </div>
+
+          {/* Interactive Live Chat Container */}
+          <div className={`rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-2xl overflow-hidden flex flex-col h-[650px]`}>
+            
+            {/* Chat Room Top Bar */}
+            <div className="p-4 md:p-5 border-b border-white/10 bg-black/20 flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 relative">
+                  <Bot className="w-5 h-5" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-black" />
+                </div>
+
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <h3 className="font-mono text-xs md:text-sm font-bold text-zinc-950 dark:text-white uppercase">
+                      CONCIERGE UNIT ALPHA
+                    </h3>
+                    <span className="bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold">
+                      24/7 AI BOT
+                    </span>
+                  </div>
+                  <p className="text-[10px] font-mono text-zinc-400">
+                    Live Session linked to: <strong className="text-rose-400">{registeredEmail}</strong>
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Controls */}
+              <div className="flex items-center space-x-2">
                 <button
-                  onClick={() => handleFetchHistory(historyEmail)}
-                  disabled={isLoadingHistory || !historyEmail.trim()}
-                  className={`w-full py-3 ${isDarkMode ? 'bg-zinc-100 text-zinc-950 disabled:bg-zinc-900 disabled:text-zinc-600' : 'bg-zinc-900 text-white disabled:bg-zinc-200 disabled:text-zinc-400'} font-mono text-xs tracking-widest font-bold rounded-lg transition-colors flex items-center justify-center space-x-2 cursor-pointer`}
+                  onClick={handleExportChatLog}
+                  className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 text-xs font-mono flex items-center space-x-1.5 transition-all cursor-pointer"
+                  title="Export Chat History"
                 >
-                  {isLoadingHistory ? (
-                    <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>RECONCILING NODE...</span>
-                    </>
-                  ) : (
-                    <>
-                      <RefreshCw className="w-3.5 h-3.5" />
-                      <span>SYNC ACTIVE REGISTERS</span>
-                    </>
-                  )}
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Export</span>
+                </button>
+
+                <button
+                  onClick={handleClearChatHistory}
+                  className="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-mono flex items-center space-x-1.5 transition-all cursor-pointer"
+                  title="Clear Chat Log"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Clear</span>
                 </button>
               </div>
             </div>
 
-            {/* Telemetry Queue list */}
-            <div className={`${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-2xl p-5 flex-1 min-h-[320px] flex flex-col space-y-4`}>
-              <div className={`flex items-center justify-between border-b ${themeStyles.borderMuted} pb-3`}>
-                <div className="flex items-center space-x-2">
-                  <History className={`w-4 h-4 ${themeStyles.accentText}`} />
-                  <h3 className={`font-mono text-xs tracking-widest font-semibold ${themeStyles.textPrimary} uppercase`}>
-                    Telemetry Queues
-                  </h3>
-                </div>
-                <span className="font-mono text-[9px] text-zinc-500">{searchedTickets.length} ACTIVE</span>
-              </div>
+            {/* Chat Messages Log */}
+            <div className="flex-1 p-4 md:p-6 overflow-y-auto space-y-4">
+              {messages.map((msg) => {
+                const isUser = msg.sender === 'user';
+                return (
+                  <div
+                    key={msg.id}
+                    className={`flex items-start space-x-3 ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`}
+                  >
+                    {/* Avatar */}
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 font-mono text-xs font-bold ${
+                      isUser 
+                        ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25' 
+                        : 'bg-zinc-800 text-rose-400 border border-rose-500/30'
+                    }`}>
+                      {isUser ? registeredEmail.charAt(0).toUpperCase() : <Bot className="w-4 h-4" />}
+                    </div>
 
-              {searchedTickets.length === 0 ? (
-                <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-2">
-                  <ShieldAlert className="w-6 h-6 text-zinc-600 animate-pulse" />
-                  <span className="font-mono text-[9px] text-zinc-500">NO ACTIVE TICKETS LOADED</span>
-                  <p className="text-[10px] text-zinc-500 font-light max-w-[200px]">Query an @gmail.com address above to populate historical telemetry logs.</p>
-                </div>
-              ) : (
-                <div className="space-y-2 overflow-y-auto max-h-[380px] scrollbar-thin">
-                  {searchedTickets.map((ticket) => {
-                    const isSelected = selectedTicket?.id === ticket.id;
-                    const badgeColor = ticket.status === 'RESOLVED'
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                      : 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-                    return (
-                      <button
-                        key={ticket.id}
-                        onClick={() => handleSelectTicket(ticket)}
-                        className={`w-full text-left p-3.5 rounded-xl border transition-all flex flex-col space-y-2 cursor-pointer ${isSelected ? (isDarkMode ? 'bg-zinc-900/60 border-zinc-700' : 'bg-zinc-50 border-zinc-300') : (isDarkMode ? 'bg-zinc-950/20 border-zinc-900 hover:bg-zinc-900/20' : 'bg-white border-zinc-100 hover:bg-zinc-50')}`}
-                      >
-                        <div className="flex justify-between items-start w-full">
-                          <span className="font-mono text-[9px] font-bold text-zinc-400 shrink-0">#{ticket.id.substring(0, 10).toUpperCase()}</span>
-                          <span className={`font-mono text-[8px] px-1.5 py-0.5 rounded border ${badgeColor} tracking-wider shrink-0 uppercase`}>
-                            {ticket.status || 'PENDING'}
-                          </span>
-                        </div>
-                        <p className={`font-sans text-xs font-semibold truncate ${isDarkMode ? 'text-zinc-200' : 'text-zinc-800'} w-full`}>
-                          {ticket.subjectIdentity}
-                        </p>
-                        <div className="flex items-center justify-between text-[9px] font-mono text-zinc-500 w-full">
-                          <span>{ticket.inquiryNature}</span>
-                          <span>{new Date(ticket.createdAt).toLocaleDateString()}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
+                    {/* Message Body */}
+                    <div className={`max-w-[80%] md:max-w-[70%] space-y-1 ${isUser ? 'items-end text-right' : 'items-start'}`}>
+                      <div className={`flex items-center space-x-2 text-[10px] font-mono text-zinc-400 ${isUser ? 'justify-end' : ''}`}>
+                        <span>{isUser ? registeredEmail : 'Concierge Unit Alpha'}</span>
+                        <span>•</span>
+                        <span>{msg.timestamp}</span>
+                        {msg.syncedToGoogleChat && (
+                          <span className="text-sky-400 font-bold ml-1">✓ Google Chat</span>
+                        )}
+                      </div>
 
-          {/* Right Column: Live Chat Interface */}
-          <div className="lg:col-span-7 flex flex-col">
-            {!selectedTicket ? (
-              <div className={`${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-2xl p-8 flex-1 flex flex-col items-center justify-center text-center space-y-3 min-h-[450px]`}>
-                <div className="relative">
-                  <div className="absolute inset-0 bg-sky-500/10 blur-xl rounded-full animate-pulse" />
-                  <MessageSquare className="w-12 h-12 text-sky-400 relative z-10 animate-bounce" />
-                </div>
-                <span className="font-mono text-xs tracking-widest uppercase font-semibold text-zinc-300">SECURE LINK OFFLINE</span>
-                <p className="text-xs text-zinc-500 font-sans font-light max-w-sm leading-relaxed">
-                  Select an active connection register from the Telemetry Queues sidebar to initialize secure peer-to-peer replication chat.
-                </p>
-              </div>
-            ) : (
-              <div className={`${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-2xl flex-1 flex flex-col min-h-[450px] overflow-hidden`}>
-                {/* Active Chat Header */}
-                <div className={`p-4 border-b ${themeStyles.borderMuted} flex items-center justify-between bg-zinc-950/10`}>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
-                    <div>
-                      <h4 className={`font-sans text-xs font-bold ${isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}`}>
-                        {selectedTicket.subjectIdentity}
-                      </h4>
-                      <p className="font-mono text-[9px] text-zinc-500">
-                        CONNECTION REF: #{selectedTicket.id.toUpperCase()}
-                      </p>
+                      <div className={`p-4 rounded-2xl text-xs font-sans leading-relaxed shadow-lg ${
+                        isUser
+                          ? 'bg-rose-500 text-white rounded-tr-none font-medium'
+                          : 'bg-black/40 dark:bg-zinc-900/80 border border-white/10 text-zinc-100 rounded-tl-none'
+                      }`}>
+                        {msg.text}
+                      </div>
                     </div>
                   </div>
-                  <span className="font-mono text-[9px] text-zinc-400 bg-zinc-900 border border-zinc-800 px-2.5 py-1 rounded">
-                    FOCUS: {selectedTicket.inquiryNature}
-                  </span>
-                </div>
+                );
+              })}
 
-                {/* Chat Window / Messages */}
-                <div className="flex-1 p-5 overflow-y-auto space-y-4 max-h-[320px] min-h-[250px] scrollbar-thin bg-zinc-950/5 flex flex-col">
-                  {chatMessages.map((msg, index) => {
-                    const isSupport = msg.sender === 'support';
-                    return (
-                      <div
-                        key={msg.id || index}
-                        className={`flex items-start space-x-2.5 ${isSupport ? 'justify-start' : 'justify-end'}`}
-                      >
-                        {isSupport && (
-                          <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-1">
-                            <Bot className="w-3.5 h-3.5 text-emerald-400" />
-                          </div>
-                        )}
-                        <div className="max-w-[80%] flex flex-col space-y-1">
-                          <span className={`font-mono text-[8px] text-zinc-500 ${isSupport ? 'text-left' : 'text-right'}`}>
-                            {msg.senderName} • {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                          <div className={`px-4 py-2.5 rounded-2xl border font-sans text-xs leading-relaxed ${isSupport ? (isDarkMode ? 'bg-zinc-900/60 border-zinc-800 text-zinc-200 rounded-tl-none' : 'bg-zinc-50 border-zinc-200 text-zinc-800 rounded-tl-none') : 'bg-sky-500/10 border-sky-500/20 text-sky-100 rounded-tr-none'}`}>
-                            {msg.text}
-                          </div>
-                        </div>
-                        {!isSupport && (
-                          <div className="w-7 h-7 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center shrink-0 mt-1">
-                            <User className="w-3.5 h-3.5 text-sky-400" />
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                  {isSendingChatMessage && (
-                    <div className="flex items-start space-x-2.5 justify-start">
-                      <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-1">
-                        <Bot className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-                      </div>
-                      <div className="max-w-[80%] flex flex-col space-y-1">
-                        <span className="font-mono text-[8px] text-zinc-500">LAB ENGINEER KAI • TYPING...</span>
-                        <div className="px-4 py-2.5 rounded-2xl border bg-zinc-900/40 border-zinc-800 rounded-tl-none flex space-x-1 items-center">
-                          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" />
-                        </div>
-                      </div>
-                    </div>
-                  )}
+              {/* Typing indicator */}
+              {isConciergeTyping && (
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 rounded-xl bg-zinc-800 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                    <Bot className="w-4 h-4 animate-spin" />
+                  </div>
+                  <div className="p-3 rounded-2xl bg-black/40 border border-white/10 rounded-tl-none text-xs font-mono text-rose-400 flex items-center space-x-2">
+                    <span className="animate-pulse">Concierge Unit Alpha is processing response...</span>
+                  </div>
                 </div>
+              )}
 
-                {/* Input Bar */}
-                <form onSubmit={handleSendChatMessage} className={`p-3.5 border-t ${themeStyles.borderMuted} bg-zinc-950/10 flex gap-2`}>
-                  <input
-                    type="text"
-                    value={chatInput}
-                    onChange={(e) => setChatInput(e.target.value)}
-                    disabled={isSendingChatMessage}
-                    placeholder="Transmit chat packet back to Node..."
-                    className={`flex-1 ${isDarkMode ? 'bg-zinc-900/40 border-zinc-900 text-zinc-200' : 'bg-white border-zinc-300 text-zinc-800'} border px-4 py-3 rounded-lg font-mono text-xs focus:outline-none ${themeStyles.focusBorder} transition-colors disabled:opacity-50`}
-                  />
-                  <button
-                    type="submit"
-                    disabled={!chatInput.trim() || isSendingChatMessage}
-                    className={`px-4 py-3 ${isDarkMode ? 'bg-zinc-100 text-zinc-950 disabled:bg-zinc-900 disabled:text-zinc-600' : 'bg-zinc-900 text-white disabled:bg-zinc-200 disabled:text-zinc-400'} font-mono text-xs font-bold rounded-lg transition-colors flex items-center justify-center shrink-0 cursor-pointer disabled:cursor-not-allowed`}
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                  </button>
-                </form>
-              </div>
-            )}
+              <div ref={chatBottomRef} />
+            </div>
+
+            {/* Quick Inquiry Prompt Chips */}
+            <div className="px-4 py-2 bg-black/30 border-t border-white/5 flex items-center space-x-2 overflow-x-auto no-scrollbar">
+              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest shrink-0">QUICK INQUIRY:</span>
+              {[
+                '🏷️ Check Apparel Order Sizing',
+                '👑 Membership Rank Benefits',
+                '🎮 Minecraft SMP Whitelist & IP',
+                '💬 Send Message to Google Chat'
+              ].map((chip) => (
+                <button
+                  key={chip}
+                  onClick={() => handleQuickPromptClick(chip)}
+                  className="px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 hover:text-rose-300 border border-white/10 text-[10px] font-mono text-zinc-300 whitespace-nowrap transition-all cursor-pointer"
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
+
+            {/* Input Bar */}
+            <form onSubmit={handleSendMessage} className="p-3 md:p-4 bg-black/40 border-t border-white/10 flex items-center space-x-3">
+              <input
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder={`Type message for live concierge or Google Chat sync... (${registeredEmail})`}
+                className="flex-1 px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-xs font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500 transition-all"
+              />
+
+              <button
+                type="submit"
+                disabled={!inputMessage.trim()}
+                className="px-6 py-3 bg-rose-500 hover:bg-rose-600 disabled:opacity-40 text-white rounded-2xl font-mono text-xs font-bold tracking-wider flex items-center space-x-2 shadow-lg shadow-rose-500/25 transition-all cursor-pointer shrink-0"
+              >
+                <Send className="w-4 h-4" />
+                <span className="hidden sm:inline">TRANSMIT</span>
+              </button>
+            </form>
           </div>
         </div>
       )}
+
+      {/* ========================================================================
+          TAB 2: DIRECT ENCRYPTED EMAIL TRANSMISSION
+         ======================================================================== */}
+      {activeTab === 'email-form' && (
+        <div className={`p-8 md:p-12 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-2xl`}>
+          {emailSubmitted ? (
+            <div className="text-center py-12 space-y-4">
+              <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto animate-bounce" />
+              <h3 className="text-2xl font-sans font-bold text-zinc-950 dark:text-white uppercase">
+                TRANSMISSION VERIFIED & DISPATCHED
+              </h3>
+              <p className="text-xs text-zinc-400 font-mono max-w-md mx-auto leading-relaxed">
+                Your encrypted inquiry payload has been logged under registered address <strong className="text-rose-400">{registeredEmail}</strong>. Our team will respond within 24 hours.
+              </p>
+              <button
+                onClick={() => setEmailSubmitted(false)}
+                className="mt-4 px-6 py-2.5 bg-rose-500 text-white rounded-xl text-xs font-mono font-bold hover:bg-rose-600 transition-all cursor-pointer"
+              >
+                Send Another Transmission
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleDirectEmailSubmit} className="space-y-6">
+              <div className="border-b border-white/10 pb-4">
+                <h3 className="font-sans font-bold text-lg text-zinc-950 dark:text-white uppercase">
+                  DIRECT SUPPORT TRANSMISSION
+                </h3>
+                <p className="text-xs font-mono text-zinc-400 mt-1">
+                  Transmitting payload directly to the Sanctuary Operations Team.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-zinc-400 uppercase tracking-widest block">YOUR NAME</label>
+                  <input
+                    type="text"
+                    required
+                    value={emailFormData.name}
+                    onChange={(e) => setEmailFormData({ ...emailFormData, name: e.target.value })}
+                    placeholder="Sanctuary Member"
+                    className="w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 text-white text-xs font-mono focus:outline-none focus:border-rose-500 placeholder-zinc-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-zinc-400 uppercase tracking-widest block">REGISTERED EMAIL</label>
+                  <input
+                    type="email"
+                    required
+                    value={emailFormData.email}
+                    onChange={(e) => setEmailFormData({ ...emailFormData, email: e.target.value })}
+                    placeholder="sanctuary@ineffable.com"
+                    className="w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 text-white text-xs font-mono focus:outline-none focus:border-rose-500 placeholder-zinc-500"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-zinc-400 uppercase tracking-widest block">INQUIRY SUBJECT CATEGORY</label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {[
+                    'Orders & Apparel',
+                    'Membership Ranks',
+                    'Minecraft SMP Whitelist',
+                    'Google Chat Integration'
+                  ].map((sub) => (
+                    <button
+                      type="button"
+                      key={sub}
+                      onClick={() => setEmailFormData({ ...emailFormData, subject: sub })}
+                      className={`py-2 px-3 rounded-xl border text-xs font-mono transition-all cursor-pointer ${
+                        emailFormData.subject === sub
+                          ? 'bg-rose-500 text-white border-rose-500 font-bold shadow-md'
+                          : 'bg-black/20 border-white/10 text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      {sub}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-zinc-400 uppercase tracking-widest block">MESSAGE CONTENT</label>
+                <textarea
+                  required
+                  rows={5}
+                  value={emailFormData.message}
+                  onChange={(e) => setEmailFormData({ ...emailFormData, message: e.target.value })}
+                  placeholder="State your support inquiry details..."
+                  className="w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 text-white text-xs font-mono focus:outline-none focus:border-rose-500 resize-none placeholder-zinc-500"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isTransmittingEmail}
+                className="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-2xl font-mono text-xs tracking-widest font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-lg shadow-rose-500/25"
+              >
+                <Send className="w-4 h-4" />
+                <span>{isTransmittingEmail ? 'DISPATCHING PAYLOAD...' : 'TRANSMIT ENCRYPTED PAYLOAD'}</span>
+              </button>
+            </form>
+          )}
+        </div>
+      )}
+
+      {/* ========================================================================
+          TAB 3: GLOBAL HEADQUARTERS & SUPPORT NODES
+         ======================================================================== */}
+      {activeTab === 'global-nodes' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            {
+              city: 'TOKYO SANCTUARY NODE',
+              location: 'Aoyama, Minato City, Tokyo 107-0062',
+              hours: '10:00 - 22:00 JST',
+              email: 'tokyo@ineffable.cc',
+              desc: 'Asia-Pacific Couture Design Atelier & 3D Rendering Studio.',
+              accent: 'from-rose-500/20 to-indigo-500/20'
+            },
+            {
+              city: 'SAN FRANCISCO CORE',
+              location: 'SoMa District, San Francisco, CA 94103',
+              hours: '09:00 - 18:00 PST',
+              email: 'sf@ineffable.cc',
+              desc: 'Minecraft SMP Infrastructure & Google Workspace Integration Lab.',
+              accent: 'from-sky-500/20 to-emerald-500/20'
+            },
+            {
+              city: 'LONDON ATELIER',
+              location: 'Mayfair, London W1J 8AJ, UK',
+              hours: '10:00 - 20:00 GMT',
+              email: 'london@ineffable.cc',
+              desc: 'European Heavyweight Textile R&D & Member VIP Concierge.',
+              accent: 'from-purple-500/20 to-rose-500/20'
+            },
+            {
+              city: 'BERLIN UNDERGROUND',
+              location: 'Kreuzberg, 10997 Berlin, Germany',
+              hours: '12:00 - 23:00 CET',
+              email: 'berlin@ineffable.cc',
+              desc: 'Sound Architecture, Granular Synthesis & Underground Journal Press.',
+              accent: 'from-amber-500/20 to-red-500/20'
+            }
+          ].map((node) => (
+            <div
+              key={node.city}
+              className={`p-6 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-xl space-y-4 hover:border-rose-500/40 transition-all group`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] tracking-widest text-rose-500 uppercase font-bold">
+                  ● OPERATIONAL NODE
+                </span>
+                <span className="text-xs font-mono text-zinc-400 flex items-center space-x-1">
+                  <Clock className="w-3 h-3 text-emerald-400" />
+                  <span>{node.hours}</span>
+                </span>
+              </div>
+
+              <h3 className="text-lg font-sans font-extrabold text-zinc-950 dark:text-white uppercase tracking-tight">
+                {node.city}
+              </h3>
+
+              <p className="text-xs font-mono text-zinc-400 leading-relaxed">
+                {node.desc}
+              </p>
+
+              <div className="pt-2 border-t border-white/10 space-y-1.5 text-xs font-mono">
+                <div className="flex items-center space-x-2 text-zinc-300">
+                  <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                  <span className="truncate">{node.location}</span>
+                </div>
+                <div className="flex items-center space-x-2 text-rose-400">
+                  <Mail className="w-3.5 h-3.5 shrink-0" />
+                  <a href={`mailto:${node.email}`} className="hover:underline">{node.email}</a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
     </div>
   );
 };

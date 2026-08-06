@@ -1221,16 +1221,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   </button>
                 </form>
 
-                {/* Direct Admin Access Button */}
-                <div className="mt-6 pt-6 border-t border-zinc-800">
-                  <button
-                    onClick={() => setCurrentPage('admin')}
-                    className="w-full py-3.5 bg-rose-900 hover:bg-rose-800 text-rose-200 border border-rose-800 rounded-xl font-mono text-[9px] tracking-widest font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer"
-                  >
-                    <Shield className="w-4 h-4" />
-                    <span>ADMINISTRATOR PORTAL (BYPASS LOGIN)</span>
-                  </button>
-                </div>
+
               </>
             )}
           </div>

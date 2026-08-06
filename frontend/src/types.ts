@@ -3,48 +3,83 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export type PageId = 'home' | 'gaming' | 'membership' | 'shop' | 'journals' | 'contact' | 'cart' | 'login' | 'admin' | 'about' | 'payment-success' | 'payment-failed';
+export type PageId =
+  | 'home'
+  | 'membership'
+  | 'shop'
+  | 'contact'
+  | 'journals'
+  | 'admin'
+  | 'cart'
+  | 'login'
+  | 'gaming'
+  | 'about'
+  | 'payment-success'
+  | 'payment-failed';
+
+export type ColorTheme = 'classic' | 'neon-mint' | 'crimson-moon' | 'mono-minimal' | 'monochrome';
+
+export interface AtmosphereConfig {
+  petalCount: number;
+  driftVelocity: number;
+  windAngle: number;
+  gravity: number;
+  colorTheme: ColorTheme;
+}
 
 export interface CartItem {
   id: string;
   name: string;
   price: number;
-  image: string;
   quantity: number;
-  type: 'membership' | 'shop';
+  category?: string;
+  image?: string;
+  rank?: string;
   size?: string;
-}
-
-export interface AtmosphereConfig {
-  petalCount: number;
-  driftVelocity: number;
-  windAngle: number; // in degrees
-  gravity: number;
-  colorTheme: 'classic' | 'neon-mint' | 'crimson-moon' | 'monochrome';
-}
-
-export interface Sanctuary {
-  id: string;
-  title: string;
-  category: string;
-  description: string;
-  location: string;
-  image: string;
-  stats: { label: string; value: string }[];
+  inStock?: boolean;
+  type?: string;
 }
 
 export interface ApparelItem {
   id: string;
   name: string;
-  description: string;
-  price: string;
-  image: string;
+  price: number;
   category: string;
+  image: string;
+  description?: string;
+  inStock?: boolean;
+  rating?: number;
+  reviewsCount?: number;
+  sizes?: string[];
+  features?: string[];
 }
 
-export interface InquiryForm {
-  subjectIdentity: string;
-  digitalAddress: string;
-  inquiryNature: string;
-  messageVector: string;
+export interface RankItem {
+  id: string;
+  title: string;
+  price: number;
+  badge: string;
+  icon: string;
+  description: string;
+  features: string[];
+}
+
+export interface JournalPost {
+  id: string;
+  title: string;
+  author: string;
+  date: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  readTime: string;
+  image: string;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  username: string;
+  role: 'admin' | 'user' | 'vip';
+  avatar?: string;
 }

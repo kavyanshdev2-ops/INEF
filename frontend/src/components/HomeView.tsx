@@ -7,7 +7,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId, ApparelItem, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { ResourceLab } from './ResourceLab';
+import { MembershipCard, defaultRanks } from './MembershipCard';
+import { ScrollDissolveReveal, TextScrollDissolveReveal } from './ScrollDissolveReveal';
+import { KineticText } from '@/registry/magicui/kinetic-text';
 import {
   ArrowUpRight,
   Compass,
@@ -42,9 +44,10 @@ interface HomeViewProps {
   activeAtmosphere: AtmosphereConfig;
   isDarkMode: boolean;
   currentUser?: string | null;
+  onAddToCart?: (item: any) => void;
 }
 
-export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosphere, isDarkMode, currentUser }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosphere, isDarkMode, currentUser, onAddToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState<ApparelItem | null>(null);
   const [acquiredSuccess, setAcquiredSuccess] = useState<boolean>(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -94,7 +97,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
     const gradients = [
       'from-rose-400 to-rose-300',
       'from-rose-300 to-pink-300',
-      'from-pink-300 to-amber-200'
+      'from-pink-300 to-rose-300'
     ];
     return gradients[index];
   };
@@ -133,7 +136,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       const colors = [
         { bg: 'bg-rose-500/10', border: 'hover:border-rose-500/40 border-rose-500/10', text: 'text-rose-400', hoverText: 'group-hover:text-rose-400' },
         { bg: 'bg-pink-500/10', border: 'hover:border-pink-500/40 border-pink-500/10', text: 'text-pink-400', hoverText: 'group-hover:text-pink-400' },
-        { bg: 'bg-amber-500/10', border: 'hover:border-amber-500/40 border-amber-500/10', text: 'text-amber-400', hoverText: 'group-hover:text-amber-400' },
+        { bg: 'bg-rose-500/10', border: 'hover:border-rose-500/40 border-rose-500/10', text: 'text-rose-400', hoverText: 'group-hover:text-rose-400' },
         { bg: 'bg-rose-500/10', border: 'hover:border-rose-500/40 border-rose-500/10', text: 'text-rose-400', hoverText: 'group-hover:text-rose-400' }
       ];
       return colors[index];
@@ -170,7 +173,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       const colors = [
         { bg: 'bg-rose-500/15 border-rose-500/30', border: 'hover:border-rose-500/60 border-zinc-200/60', text: 'text-rose-700', hoverText: 'group-hover:text-rose-700' },
         { bg: 'bg-pink-500/15 border-pink-500/30', border: 'hover:border-pink-500/60 border-zinc-200/60', text: 'text-pink-700', hoverText: 'group-hover:text-pink-700' },
-        { bg: 'bg-amber-500/15 border-amber-500/30', border: 'hover:border-amber-500/60 border-zinc-200/60', text: 'text-amber-700', hoverText: 'group-hover:text-amber-700' },
+        { bg: 'bg-rose-500/15 border-rose-500/30', border: 'hover:border-rose-500/60 border-zinc-200/60', text: 'text-rose-700', hoverText: 'group-hover:text-rose-700' },
         { bg: 'bg-rose-500/15 border-rose-500/30', border: 'hover:border-rose-500/60 border-zinc-200/60', text: 'text-rose-700', hoverText: 'group-hover:text-rose-700' }
       ];
       return colors[index];
@@ -292,252 +295,200 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
   };
 
   return (
-    <div id="home-view-container" className={`relative ${themeStyles.textPrimary} pb-24`}>
+    <div id="home-view-container" className="relative min-h-screen pt-24 pb-32 overflow-hidden selection:bg-zinc-800 selection:text-white dark:selection:bg-white dark:selection:text-black">
+      {/* Background Decorative Ambient Canvas */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[80vw] h-[50vh] bg-gradient-to-tr from-zinc-500/5 via-rose-500/5 to-transparent blur-[140px] rounded-full" />
+      </div>
 
-      {/* Cinematic Hero - Discord Rebrand */}
+      {/* FULL-SCREEN HERO SECTION */}
       <section
         id="home-hero-section"
-        className="relative min-h-screen flex flex-col justify-center px-6 lg:px-16 overflow-hidden pt-24"
+        className="relative min-h-[85vh] flex flex-col justify-center items-center px-4 md:px-8 py-16 md:py-24"
       >
-        {/* Background mesh glow */}
-        <div className={`absolute top-[20%] left-[30%] -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] rounded-full ${themeStyles.glowPrimary} blur-[120px] pointer-events-none`} />
-        <div className={`absolute bottom-[10%] right-[10%] w-[35vw] h-[35vw] rounded-full ${themeStyles.glowSecondary} blur-[100px] pointer-events-none`} />
+        <div className="max-w-7xl mx-auto w-full relative z-20 flex flex-col items-center text-center">
 
-        <div className="max-w-7xl mx-auto w-[1280px] max-w-full pl-0 pt-0 mt-0 relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
-          {/* LEFT COLUMN: HERO CONTENT (OLD THEME PRESERVED) */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-7 flex flex-col justify-center text-center lg:text-left items-center lg:items-start"
+            className="relative z-10 max-w-7xl w-full flex flex-col items-center"
           >
+            {/* Ambient Radial Spotlight Glow */}
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-96 h-96 bg-rose-500/15 dark:bg-rose-500/20 rounded-full blur-3xl pointer-events-none" />
 
+            {/* Kinetic Text Hero Animation */}
+            <div className="relative w-full flex items-center justify-center my-2 sm:my-4 select-none overflow-visible max-w-full">
+              <KineticText
+                text="INEFFABLE"
+                letterSpacing="0.18em"
+                unhoveredOpacity={0.68}
+                hoveredOpacity={1.0}
+                className="font-anton text-[clamp(2.2rem,8.5vw,12.5rem)] leading-none uppercase text-black dark:text-white dark:drop-shadow-[0_4px_30px_rgba(255,255,255,0.15)]"
+              />
+            </div>
 
-            <h1
-              id="hero-main-title"
-              className={`text-6xl md:text-8xl xl:text-9xl font-sans tracking-tight font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 ${getGradientToClass()} leading-[0.9] uppercase filter drop-shadow-2xl`}
-            >
-              INEFFABLE
-            </h1>
+            {/* Short Description */}
+            <TextScrollDissolveReveal
+              text="INEFFABLE bridges high-end streetwear architecture, cyber-couture craftsmanship, and an exclusive global community sanctuary running strong for 6 years."
+              className="max-w-xl text-base md:text-lg mt-4 font-normal tracking-wide opacity-90"
+              wordClassName={`${themeStyles.textSecondary} font-sans`}
+            />
 
-            <h2
-              id="hero-sub-title"
-              className={`text-xl md:text-2xl font-mono tracking-[0.05em] ${themeStyles.accentText} font-medium mt-6`}
-            >
-              A Legendary Community Server Running Strong For 6 Years
-            </h2>
-
-            <p
-              id="hero-brief"
-              className={`${themeStyles.textSecondary} font-sans max-w-2xl text-base md:text-lg mt-6 leading-relaxed font-light mx-auto lg:mx-0`}
-            >
-              Built on friendships, loyalty, fun, and unforgettable memories. Join active voice chats, gaming events, and a place where everyone belongs—from old legends to new members.
-            </p>
-
-            <div id="hero-actions" className="flex flex-wrap justify-center lg:justify-start gap-4 mt-10">
+            {/* CTA Buttons */}
+            <div id="hero-actions" className="flex flex-wrap justify-center items-center gap-4 mt-10">
               <a
                 href="https://discord.gg/inefontop"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center space-x-2 ${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 font-mono text-[10px] tracking-widest font-bold transition-all duration-300 rounded-xl px-5 py-2.5 cursor-pointer border ${themeStyles.borderHighlight} hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]`}
+                className={`flex items-center space-x-3 ${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 font-mono text-xs tracking-[0.2em] font-extrabold py-3.5 px-8 rounded-full shadow-[0_4px_20px_rgba(244,63,94,0.3)] transition-all duration-300 hover:scale-[1.03] active:scale-95 cursor-pointer`}
               >
-                <Radio className="w-3.5 h-3.5 text-zinc-950 animate-pulse" />
+                <Radio className="w-4 h-4 animate-pulse text-zinc-950" />
                 <span>JOIN DISCORD NODE</span>
-                <ExternalLink className="w-2.5 h-2.5 opacity-80 text-zinc-950" />
+                <ExternalLink className="w-3.5 h-3.5 opacity-80 text-zinc-950" />
               </a>
+
               <button
-                id="hero-cta-gallery"
+                id="hero-cta-about"
                 onClick={() => setCurrentPage('about')}
-                className={`flex items-center space-x-2 ${themeStyles.bgCard} hover:bg-zinc-500/10 border ${themeStyles.borderMain} ${themeStyles.textPrimary} font-mono text-[10px] tracking-widest font-bold transition-all duration-300 rounded-xl px-5 py-2.5 cursor-pointer`}
+                className={`flex items-center space-x-3 ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-400 ${themeStyles.textPrimary} font-mono text-xs tracking-[0.2em] font-bold py-3.5 px-8 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-95 cursor-pointer backdrop-blur-xl shadow-xs`}
               >
-                <span>ABOUT US</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <Users className={`w-4 h-4 ${themeStyles.accentIconColor}`} />
+                <span>ABOUT ME</span>
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
               </button>
             </div>
           </motion.div>
 
-          {/* RIGHT COLUMN: LOGO */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="lg:col-span-5 flex justify-center items-center w-full"
-          >
-            <motion.div
-              className="w-80 h-80 md:w-[480px] md:h-[480px] relative flex items-center justify-center select-none"
-              animate={{
-                y: [0, -15, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }}
-            >
-              {/* Glassy background */}
-              <div className={`absolute inset-0 rounded-3xl backdrop-blur-xl border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} shadow-xl transition-all duration-300`} />
-
-              {/* Your logo image with transparent background */}
-              <img
-                src="/inefwebsitegif.gif"
-                alt="INEFFABLE Logo"
-                className="w-[90%] h-[90%] z-10 object-contain drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]"
-              />
-            </motion.div>
-          </motion.div>
-
-        </div>
-
-        {/* Minimal Scroll down indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 pointer-events-none">
-          <span className={`font-mono text-[9px] tracking-[0.3em] ${themeStyles.textMuted} uppercase`}>
-            SCROLL TO GATEWAY
-          </span>
-          <div className={`w-[1px] h-12 bg-gradient-to-b ${themeStyles.accentLine} to-transparent animate-pulse`} />
         </div>
       </section>
 
-      {/* Real-time Stats Board */}
+      {/* Real-time Editorial Metrics Board */}
       <motion.section
         id="home-stats-section"
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.7 }}
         className="max-w-7xl mx-auto px-6 py-12 relative z-10"
       >
-        <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${themeStyles.bgCard} backdrop-blur-xl border ${themeStyles.borderMuted} rounded-3xl p-8 md:p-12 text-center shadow-xl`}>
-          <div className={`space-y-2 border-b md:border-b-0 md:border-r ${isDarkMode ? 'border-zinc-800/60' : 'border-zinc-200'} pb-6 md:pb-0`}>
-            <div className={`text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${getStatsGradient(0)}`}>13,000+</div>
-            <div className={`font-mono text-[10px] tracking-widest ${themeStyles.textMuted} uppercase`}>Verified Members</div>
+        <div className="glass-panel rounded-3xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-black/10 dark:divide-white/10">
+          <div className="space-y-2 pb-6 md:pb-0">
+            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">13,000+</div>
+            <div className={`font-mono text-[10px] tracking-[0.25em] ${themeStyles.accentText} uppercase font-semibold`}>VERIFIED MEMBERS</div>
           </div>
-          <div className={`space-y-2 border-b md:border-b-0 md:border-r ${isDarkMode ? 'border-zinc-800/60' : 'border-zinc-200'} py-6 md:py-0`}>
-            <div className={`text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${getStatsGradient(1)}`}>50+</div>
-            <div className={`font-mono text-[10px] tracking-widest ${themeStyles.textMuted} uppercase`}>Active Voice Zones</div>
+          <div className="space-y-2 py-6 md:py-0 md:px-6">
+            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">50+</div>
+            <div className={`font-mono text-[10px] tracking-[0.25em] ${themeStyles.accentText} uppercase font-semibold`}>VOICE SANCTUARIES</div>
           </div>
           <div className="space-y-2 pt-6 md:pt-0">
-            <div className={`text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${getStatsGradient(2)}`}>100+</div>
-            <div className={`font-mono text-[10px] tracking-widest ${themeStyles.textMuted} uppercase`}>Epic Giveaways</div>
+            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">6 YEARS</div>
+            <div className={`font-mono text-[10px] tracking-[0.25em] ${themeStyles.accentText} uppercase font-semibold`}>CONTINUOUS HERITAGE</div>
           </div>
         </div>
       </motion.section>
 
-      {/* Bento Grid: Core Sectors */}
+      {/* Modern Bento Grid: Core Pillars */}
       <section
         id="home-about-section"
-        className={`max-w-7xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
+        className="max-w-7xl mx-auto px-6 py-20 border-t border-black/10 dark:border-white/10 relative z-10"
       >
-        <div className="mb-12 text-center lg:text-left space-y-2">
-          <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
-            01 // SERVER SPHERES
+        <div className="mb-14 text-center lg:text-left space-y-3">
+          <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} font-bold uppercase block`}>
+            01 // ARCHITECTURAL PILLARS
           </span>
-          <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${themeStyles.textPrimary}`}>
-            Interactive Server Activities
+          <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-zinc-950 dark:text-white">
+            Community Spheres & Culture
           </h2>
-          <p className={`${themeStyles.textSecondary} max-w-xl font-sans text-sm md:text-base leading-relaxed font-light`}>
-            Explore our main interactive sectors custom-built to keep the energy, friendship, and fun alive at all hours.
-          </p>
+          <TextScrollDissolveReveal
+            text="Designed for those who appreciate high craftsmanship, collaborative gaming, and effortless digital lifestyle connection."
+            className="max-w-xl text-sm md:text-base font-light"
+            wordClassName="text-zinc-600 dark:text-zinc-400 font-sans"
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
           {/* Sector 1: Anime */}
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             whileHover={{ y: -6 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={`${themeStyles.bgCard} backdrop-blur-md hover:${isDarkMode ? 'bg-zinc-900/45' : 'bg-white/95'} border ${getSectorStyles(0).border} rounded-2xl p-6 transition-all duration-300 group shadow-lg`}
+            transition={{ duration: 0.3 }}
+            className={`glass-panel p-7 rounded-3xl transition-all duration-300 hover:${themeStyles.borderHighlight} group cursor-pointer`}
           >
-            <div className={`w-12 h-12 rounded-xl ${getSectorStyles(0).bg} border ${isDarkMode ? 'border-zinc-800/60' : 'border-zinc-200/60'} flex items-center justify-center mb-6 ${getSectorStyles(0).text} group-hover:scale-110 transition-transform`}>
+            <div className={`w-12 h-12 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center justify-center mb-6 ${themeStyles.accentIconColor} group-hover:scale-110 transition-transform`}>
               <Tv className="w-6 h-6" />
             </div>
-            <h3 className={`text-lg font-bold mb-2 ${getSectorStyles(0).hoverText} transition-colors`}>Anime & Manga</h3>
-            <p className={`text-xs ${themeStyles.textSecondary} leading-relaxed font-light`}>
-              Catch up on the latest episodes, discuss chapters, and find your next favorites in our active discussion zones.
+            <h3 className="text-lg font-display font-bold text-zinc-950 dark:text-white mb-2">Anime & Culture</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+              Debate episodes, discover hidden gems, and stream cinema with enthusiasts in high-definition salons.
             </p>
           </motion.div>
 
           {/* Sector 2: Gaming LFG */}
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             whileHover={{ y: -6 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className={`${themeStyles.bgCard} backdrop-blur-md hover:${isDarkMode ? 'bg-zinc-900/45' : 'bg-white/95'} border ${getSectorStyles(1).border} rounded-2xl p-6 transition-all duration-300 group shadow-lg`}
+            transition={{ duration: 0.3 }}
+            className={`glass-panel p-7 rounded-3xl transition-all duration-300 hover:${themeStyles.borderHighlight} group cursor-pointer`}
           >
-            <div className={`w-12 h-12 rounded-xl ${getSectorStyles(1).bg} border ${isDarkMode ? 'border-zinc-800/60' : 'border-zinc-200/60'} flex items-center justify-center mb-6 ${getSectorStyles(1).text} group-hover:scale-110 transition-transform`}>
+            <div className={`w-12 h-12 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center justify-center mb-6 ${themeStyles.accentIconColor} group-hover:scale-110 transition-transform`}>
               <Gamepad2 className="w-6 h-6" />
             </div>
-            <h3 className={`text-lg font-bold mb-2 ${getSectorStyles(1).hoverText} transition-colors`}>Gaming LFG</h3>
-            <p className={`text-xs ${themeStyles.textSecondary} leading-relaxed font-light`}>
-              Never play alone. Find groups for Valorant, Minecraft, Among Us, and more instantly through our ping systems.
+            <h3 className="text-lg font-display font-bold text-zinc-950 dark:text-white mb-2">Gaming LFG</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+              Connect instantly with skilled squads for Valorant, Minecraft, CS, and competitive titles.
             </p>
           </motion.div>
 
           {/* Sector 3: Weekly Events */}
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             whileHover={{ y: -6 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className={`${themeStyles.bgCard} backdrop-blur-md hover:${isDarkMode ? 'bg-zinc-900/45' : 'bg-white/95'} border ${getSectorStyles(2).border} rounded-2xl p-6 transition-all duration-300 group shadow-lg`}
+            transition={{ duration: 0.3 }}
+            className={`glass-panel p-7 rounded-3xl transition-all duration-300 hover:${themeStyles.borderHighlight} group cursor-pointer`}
           >
-            <div className={`w-12 h-12 rounded-xl ${getSectorStyles(2).bg} border ${isDarkMode ? 'border-zinc-800/60' : 'border-zinc-200/60'} flex items-center justify-center mb-6 ${getSectorStyles(2).text} group-hover:scale-110 transition-transform`}>
+            <div className={`w-12 h-12 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center justify-center mb-6 ${themeStyles.accentIconColor} group-hover:scale-110 transition-transform`}>
               <Calendar className="w-6 h-6" />
             </div>
-            <h3 className={`text-lg font-bold mb-2 ${getSectorStyles(2).hoverText} transition-colors`}>Weekly Events</h3>
-            <p className={`text-xs ${themeStyles.textSecondary} leading-relaxed font-light`}>
-              Movie nights, karaoke, and tournaments hosted regularly by our amazing staff to keep the vibes high.
+            <h3 className="text-lg font-display font-bold text-zinc-950 dark:text-white mb-2">Weekly Events</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+              Curated movie streams, acoustic jamming, trivia nights, and exclusive member giveaways.
             </p>
           </motion.div>
 
           {/* Sector 4: Active VCs */}
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             whileHover={{ y: -6 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className={`${themeStyles.bgCard} backdrop-blur-md hover:${isDarkMode ? 'bg-zinc-900/45' : 'bg-white/95'} border ${getSectorStyles(3).border} rounded-2xl p-6 transition-all duration-300 group shadow-lg`}
+            transition={{ duration: 0.3 }}
+            className={`glass-panel p-7 rounded-3xl transition-all duration-300 hover:${themeStyles.borderHighlight} group cursor-pointer`}
           >
-            <div className={`w-12 h-12 rounded-xl ${getSectorStyles(3).bg} border ${isDarkMode ? 'border-zinc-800/60' : 'border-zinc-200/60'} flex items-center justify-center mb-6 ${getSectorStyles(3).text} group-hover:scale-110 transition-transform`}>
+            <div className={`w-12 h-12 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center justify-center mb-6 ${themeStyles.accentIconColor} group-hover:scale-110 transition-transform`}>
               <Volume2 className="w-6 h-6" />
             </div>
-            <h3 className={`text-lg font-bold mb-2 ${getSectorStyles(3).hoverText} transition-colors`}>Voice Zones</h3>
-            <p className={`text-xs ${themeStyles.textSecondary} leading-relaxed font-light`}>
-              Jump into our VCs anytime. Stream games, blast music, debate, or just chill. The community is always awake.
+            <h3 className="text-lg font-display font-bold text-zinc-950 dark:text-white mb-2">Voice Sanctuaries</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+              24/7 active voice nodes to chill, share screens, or unwind with global members.
             </p>
           </motion.div>
 
         </div>
       </section>
 
-      {/* Aesthetic Resource Lab from inef.cc */}
-      <ResourceLab activeAtmosphere={activeAtmosphere} isDarkMode={isDarkMode} />
-
-      {/* Promotional Nodes & Minecraft Realms */}
+      {/* Exclusive Services & Nodes Grid */}
       <section
         id="home-apparel-section"
-        className={`max-w-7xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
+        className="max-w-7xl mx-auto px-6 py-20 border-t border-black/10 dark:border-white/10"
       >
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-          <div className="space-y-4">
-            <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
+          <div className="space-y-3">
+            <span className="font-mono text-xs tracking-[0.3em] text-rose-700 dark:text-rose-400 font-bold uppercase block">
               02 // EXCLUSIVE CHANNELS
             </span>
-            <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${themeStyles.textPrimary}`}>
-              Premium Services & Nodes
+            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-zinc-950 dark:text-white">
+              Featured Nodes & Services
             </h2>
           </div>
-          <p className={`${themeStyles.textMuted} font-mono text-[10px] tracking-widest mt-4 md:mt-0 uppercase`}>
-            COMMUNITY NODES & SPONSORED SLOTS
-          </p>
+          <span className="font-mono text-[10px] tracking-[0.2em] text-zinc-400 uppercase mt-2 md:mt-0">
+            VERIFIED COMMUNITY HIGHLIGHTS
+          </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -545,52 +496,47 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
             <motion.div
               id={`product-card-${item.id}`}
               key={item.id}
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`group relative flex flex-col ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-500 rounded-2xl p-4 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.15)]`}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.4 }}
+              className="group glass-panel rounded-3xl p-4 flex flex-col justify-between transition-all duration-300 hover:border-rose-500/40"
             >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-zinc-950 mb-4">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-900 mb-4">
                 <img
                   id={`product-img-${item.id}`}
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 group-hover:brightness-90 transition-all duration-500"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="absolute bottom-3 left-3 right-3 flex justify-between gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                   <button
                     id={`view-product-btn-${item.id}`}
                     onClick={() => setSelectedProduct(item as any)}
-                    className={`flex-1 py-2 ${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 rounded-lg text-[10px] font-mono tracking-widest transition-all flex items-center justify-center space-x-1 cursor-pointer font-bold`}
+                    className="w-full py-2.5 px-4 bg-white/90 dark:bg-zinc-900/90 text-zinc-950 dark:text-white rounded-full text-[10px] font-mono tracking-widest font-bold transition-all flex items-center justify-center space-x-2 shadow-lg cursor-pointer hover:bg-rose-500 hover:text-white"
                   >
                     <Eye className="w-3.5 h-3.5" />
-                    <span>PREVIEW DETAILED INFO</span>
+                    <span>PREVIEW DETAILS</span>
                   </button>
                 </div>
               </div>
 
               <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <span className={`font-mono text-[9px] tracking-[0.2em] ${themeStyles.accentTextMuted} block mb-1`}>
+                  <span className="font-mono text-[9px] tracking-[0.2em] text-rose-600 dark:text-rose-400 uppercase font-bold block mb-1">
                     {item.category}
                   </span>
-                  <h3 className={`font-sans text-base tracking-wide font-bold ${themeStyles.textPrimary} ${themeStyles.groupTextHover} transition-colors`}>
+                  <h3 className="font-display text-base font-bold text-zinc-950 dark:text-white">
                     {item.name}
                   </h3>
-                  <p className={`text-xs ${themeStyles.textSecondary} line-clamp-2 mt-2 font-light leading-relaxed`}>
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-2 mt-2 font-light leading-relaxed">
                     {item.description}
                   </p>
                 </div>
-                <div className={`flex items-center justify-between mt-4 border-t ${themeStyles.borderMuted} pt-3`}>
-                  <span className={`font-mono text-xs ${themeStyles.accentText} font-bold`}>
+                <div className="flex items-center justify-between mt-4 border-t border-black/5 dark:border-white/10 pt-3">
+                  <span className="font-mono text-xs font-bold text-zinc-900 dark:text-white">
                     {item.price}
                   </span>
-                  <span className={`font-mono text-[9px] ${themeStyles.textMuted} tracking-wider uppercase`}>
-                    [ONLINE NODE]
+                  <span className="font-mono text-[9px] text-zinc-400 uppercase">
+                    [ONLINE]
                   </span>
                 </div>
               </div>
@@ -599,125 +545,75 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
         </div>
       </section>
 
-      {/* Inefontop Tiers */}
+      {/* Membership Tiers */}
       <section
         id="home-tiers-section"
-        className={`max-w-7xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
+        className="max-w-7xl mx-auto px-6 py-20 border-t border-black/10 dark:border-white/10"
       >
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
-            03 // DONATE / BOOST
+          <span className="font-mono text-xs tracking-[0.3em] text-rose-700 dark:text-rose-400 font-bold uppercase block">
+            03 // DONATE & BOOST
           </span>
-          <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${themeStyles.textPrimary}`}>
-            Support INEFFABLE
+          <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-zinc-950 dark:text-white">
+            Membership Access Tiers
           </h2>
-          <p className={`${themeStyles.textSecondary} font-sans text-sm md:text-base leading-relaxed font-light`}>
-            Support our hosting and secure exclusive customized roles, extra reactions, external stickers permissions, global custom color roles, and elite voice privileges.
+          <p className="text-zinc-600 dark:text-zinc-400 font-sans text-sm md:text-base leading-relaxed font-light">
+            Support server infrastructure and unlock exclusive roles, custom color privileges, sticker/GIF perms, and priority status.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {tiers.map((t, index) => {
-            const IconComponent = t.icon;
-            const isFeatured = t.id === 'diamond';
-            return (
-              <motion.div
-                id={`tier-card-${t.id}`}
-                key={t.id}
-                initial={{ opacity: 0, y: 35 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8, scale: 1.01 }}
-                transition={{ duration: 0.55, delay: index * 0.1 }}
-                className={`relative rounded-3xl border p-8 flex flex-col justify-between transition-all duration-300 ${t.color} ${isFeatured
-                  ? `${isDarkMode ? 'bg-zinc-900/40' : 'bg-zinc-50'} ${themeStyles.borderHighlight} hover:shadow-2xl`
-                  : `${themeStyles.bgCard} opacity-95`
-                  }`}
-              >
-                {isFeatured && (
-                  <span className={`absolute top-4 right-4 ${themeStyles.accentBg} text-zinc-950 font-mono text-[9px] tracking-widest px-3 py-1 rounded-full border ${themeStyles.borderHighlight} font-bold uppercase animate-pulse`}>
-                    MOST POPULAR
-                  </span>
-                )}
-                <div>
-                  <div className={`w-12 h-12 rounded-xl ${themeStyles.bgCard} border ${isFeatured ? themeStyles.borderHighlight : themeStyles.borderMuted} flex items-center justify-center mb-6`}>
-                    <IconComponent className={`w-6 h-6 ${isFeatured ? themeStyles.accentText : ''}`} />
-                  </div>
-                  <h3 className={`text-xl font-sans tracking-wide font-extrabold ${themeStyles.textPrimary}`}>
-                    {t.name}
-                  </h3>
-                  <div className="flex items-baseline mt-2 mb-6">
-                    <span className={`font-mono text-3xl font-extrabold ${themeStyles.textPrimary}`}>{t.price}</span>
-                  </div>
-                  <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed mb-6`}>
-                    {t.description}
-                  </p>
-
-                  <ul className={`space-y-3.5 border-t ${themeStyles.borderMuted} pt-6`}>
-                    {t.features.map((feat, idx) => (
-                      <li key={idx} className={`flex items-center space-x-3 text-xs ${themeStyles.textSecondary} font-light`}>
-                        <Check className="w-4 h-4 text-emerald-400 shrink-0" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <button
-                  id={`tier-acquire-btn-${t.id}`}
-                  onClick={() => {
-                    setSelectedProduct({
-                      id: t.id,
-                      name: t.name,
-                      price: t.price,
-                      description: t.description,
-                      category: 'MEMBERSHIP TIER',
-                      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop'
-                    });
-                  }}
-                  className={`w-full mt-8 py-3.5 rounded-xl font-mono text-[10px] tracking-[0.2em] transition-all duration-300 cursor-pointer ${isFeatured
-                    ? `${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 font-bold shadow-lg`
-                    : `${isDarkMode ? 'bg-zinc-900/20 hover:bg-zinc-900/40' : 'bg-zinc-100 hover:bg-zinc-200'} ${themeStyles.textPrimary} border ${themeStyles.borderMuted}`
-                    }`}
-                >
-                  BUY
-                </button>
-              </motion.div>
-            );
-          })}
+          {defaultRanks.map((rank) => (
+            <MembershipCard
+              key={rank.id}
+              rank={rank}
+              activeAtmosphere={activeAtmosphere}
+              isDarkMode={isDarkMode}
+              onAddToCart={(item) => {
+                if (onAddToCart) {
+                  onAddToCart(item);
+                } else {
+                  setSelectedProduct({
+                    id: item.id,
+                    name: item.name,
+                    price: `$${item.price.toFixed(2)}`,
+                    description: rank.description,
+                    category: 'MEMBERSHIP TIER',
+                    image: item.image
+                  } as any);
+                }
+              }}
+            />
+          ))}
         </div>
       </section>
 
-      {/* FAQ Accordion */}
+      {/* Editorial FAQ */}
       <section
         id="home-faq-section"
-        className={`max-w-4xl mx-auto px-6 py-24 border-t ${themeStyles.borderMuted}`}
+        className="max-w-4xl mx-auto px-6 py-20 border-t border-black/10 dark:border-white/10"
       >
         <div className="text-center mb-16 space-y-4">
-          <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
-            04 // HELP CENTER
+          <span className="font-mono text-xs tracking-[0.3em] text-rose-700 dark:text-rose-400 font-bold uppercase block">
+            04 // INFORMATION GATE
           </span>
-          <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${themeStyles.textPrimary}`}>
+          <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-zinc-950 dark:text-white">
             Frequently Asked Questions
           </h2>
         </div>
 
         <div className="space-y-4">
           {faqs.map((faq, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className={`${themeStyles.bgCard} border ${themeStyles.borderMuted} rounded-2xl overflow-hidden transition-all duration-300`}
+              className="glass-panel rounded-2xl overflow-hidden transition-all"
             >
               <button
                 onClick={() => setActiveFaq(activeFaq === i ? null : i)}
-                className={`w-full px-6 py-5 flex items-center justify-between text-left hover:${isDarkMode ? 'bg-zinc-900/40' : 'bg-zinc-100/50'} transition-colors font-sans font-bold ${themeStyles.textPrimary} text-sm md:text-base cursor-pointer`}
+                className="w-full px-6 py-5 flex items-center justify-between text-left font-display font-bold text-zinc-950 dark:text-white text-sm md:text-base cursor-pointer"
               >
                 <span>{faq.q}</span>
-                <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform duration-300 shrink-0 ${activeFaq === i ? `rotate-180 ${themeStyles.textPrimary}` : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform duration-300 ${activeFaq === i ? 'rotate-180 text-rose-500' : ''}`} />
               </button>
               <AnimatePresence initial={false}>
                 {activeFaq === i && (
@@ -725,21 +621,21 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className={`px-6 pb-6 pt-2 border-t ${isDarkMode ? 'border-zinc-800/40' : 'border-zinc-100'} text-xs md:text-sm ${themeStyles.textSecondary} font-light leading-relaxed`}>
+                    <div className="px-6 pb-6 pt-2 border-t border-black/5 dark:border-white/10 text-xs md:text-sm text-zinc-600 dark:text-zinc-400 font-light leading-relaxed">
                       {faq.a}
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Dynamic Product Overlay Drawers */}
+      {/* Dynamic Product Overlay Drawer */}
       <AnimatePresence>
         {selectedProduct && (
           <motion.div
@@ -754,59 +650,58 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
               initial={{ scale: 0.95, y: 15, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.95, y: 15, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 350 }}
-              className={`relative w-full max-w-2xl ${isDarkMode ? 'bg-zinc-950' : 'bg-white'} border ${themeStyles.borderMuted} rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row`}
+              className="relative w-full max-w-2xl bg-white dark:bg-zinc-950 border border-black/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
             >
               <button
                 id="product-drawer-close"
                 onClick={() => setSelectedProduct(null)}
-                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-zinc-900/95 text-zinc-400 hover:text-zinc-100 cursor-pointer"
+                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/10 dark:bg-white/10 text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
 
-              <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[450px] bg-zinc-950">
+              <div className="w-full md:w-1/2 aspect-square md:aspect-auto bg-zinc-900">
                 <img
                   id="product-drawer-img"
                   src={selectedProduct.image}
                   alt={selectedProduct.name}
-                  className="w-full h-full object-cover grayscale"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
               <div className="w-full md:w-1/2 p-8 flex flex-col justify-between">
                 <div>
-                  <span className={`font-mono text-[10px] tracking-widest ${themeStyles.accentText}`}>
+                  <span className="font-mono text-[10px] tracking-widest text-rose-600 dark:text-rose-400 font-bold uppercase">
                     {selectedProduct.category}
                   </span>
-                  <h3 className={`font-sans text-2xl font-light ${themeStyles.textPrimary} mt-1 uppercase`}>
+                  <h3 className="font-display text-2xl font-bold text-zinc-950 dark:text-white mt-1 uppercase">
                     {selectedProduct.name}
                   </h3>
-                  <span className={`font-mono text-lg ${themeStyles.accentText} block mt-2 font-light`}>
+                  <span className="font-mono text-lg text-zinc-900 dark:text-zinc-100 block mt-2 font-bold">
                     {selectedProduct.price}
                   </span>
-                  <p className={`${themeStyles.textSecondary} text-xs mt-6 leading-relaxed font-light`}>
+                  <p className="text-zinc-600 dark:text-zinc-400 text-xs mt-6 leading-relaxed font-light">
                     {selectedProduct.description}
                   </p>
                 </div>
 
                 <div className="mt-8">
                   {acquiredSuccess ? (
-                    <div id="acquire-success-banner" className="w-full py-3 bg-emerald-950/50 border border-emerald-500/30 text-emerald-300 font-mono text-[10px] tracking-widest text-center rounded-lg animate-pulse">
-                      TRANSMISSION INITIALIZED... SECURE PAYMENT LOGGED
+                    <div id="acquire-success-banner" className="w-full py-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-mono text-[10px] tracking-widest text-center rounded-full animate-pulse">
+                      TRANSMISSION INITIALIZED... ACCESS LOGGED
                     </div>
                   ) : (
                     <button
                       id="product-drawer-buy-btn"
                       onClick={handleAcquire}
-                      className={`w-full py-4 ${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 font-mono text-xs tracking-widest font-bold transition-all rounded-lg flex items-center justify-center space-x-2 cursor-pointer shadow-lg`}
+                      className="w-full py-3.5 bg-rose-600 hover:bg-rose-500 text-white font-mono text-xs tracking-widest font-bold transition-all rounded-full flex items-center justify-center space-x-2 cursor-pointer shadow-lg"
                     >
-                      <ShoppingBag className="w-4 h-4 text-zinc-950" />
-                      <span>GET ACCESS</span>
+                      <ShoppingBag className="w-4 h-4" />
+                      <span>ACQUIRE ACCESS</span>
                     </button>
                   )}
-                  <span className={`text-[9px] ${themeStyles.textMuted} font-mono tracking-wide text-center block mt-3`}>
-                    SECURE CRYPTO AND CREDITS ACCEPTS // 128-BIT ENCRYPTION
+                  <span className="text-[9px] text-zinc-400 font-mono tracking-wide text-center block mt-3 uppercase">
+                    SECURE ENCRYPTED ACCESS // INEFFABLE COUTURE
                   </span>
                 </div>
               </div>

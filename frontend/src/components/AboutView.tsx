@@ -314,26 +314,6 @@ const MEMBERS_DATA: MemberProfile[] = [
     description: 'Co-manages support tickets and guides onboarding. Dedicated to making our community space secure, warm, and highly engaging.'
   },
   {
-    id: 'chakli',
-    name: 'Chakli',
-    discordTag: 'chakli_crisp',
-    role: 'Executive',
-    category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=800&auto=format&fit=crop',
-    status: '🥨 twisted logic, clean code',
-    onlineStatus: 'online',
-    joinedDate: 'SEPTEMBER 12, 2021',
-    aboutMe: {
-      name: 'chakli',
-      age: 'nineteen',
-      status: 'working',
-      specialty: 'Operational Efficiency'
-    },
-    badges: ['staff', 'booster'],
-    description: 'Optimizes workflow streams for active moderators and coordinates cross-node server operations.'
-  },
-  {
     id: 'aris',
     name: 'Aris',
     discordTag: 'aris_couture',
@@ -414,111 +394,11 @@ const MEMBERS_DATA: MemberProfile[] = [
     description: 'Curates general content guidelines, plans seasonal aesthetic updates, and acts as a bridge for server feedback.'
   },
   {
-    id: 'sammy',
-    name: 'Sammy',
-    discordTag: 'sammy_admin',
-    role: 'Admin',
-    category: 'admin',
-    avatar: 'https://images.unsplash.com/photo-1628157582853-a796fa650a6a?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
-    status: '📊 monitoring user behavior analytics',
-    onlineStatus: 'online',
-    joinedDate: 'FEBRUARY 14, 2022',
-    aboutMe: {
-      name: 'sammy',
-      age: 'nineteen',
-      status: 'moderating',
-      specialty: 'Data Security'
-    },
-    badges: ['staff'],
-    description: 'Protects system telemetry channels and maintains clean log files across all dynamic node networks.'
-  },
-  {
-    id: 'aren',
-    name: 'Aren',
-    discordTag: 'aren_quantum',
-    role: 'Admin',
-    category: 'admin',
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
-    status: '🛡️ scanning ports for discrepancies...',
-    onlineStatus: 'idle',
-    joinedDate: 'MARCH 02, 2022',
-    aboutMe: {
-      name: 'aren',
-      age: 'twenty-one',
-      status: 'securing',
-      specialty: 'Threat Assessment'
-    },
-    badges: ['staff'],
-    description: 'Administers primary communication vectors, manages moderation queues, and secures community voice chambers.'
-  },
-  {
-    id: 'meera',
-    name: 'Meera',
-    discordTag: 'meera_rose',
-    role: 'Admin',
-    category: 'admin',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1531315630201-bb15abeb1653?q=80&w=800&auto=format&fit=crop',
-    status: '🌿 cultivating peaceful frequencies',
-    onlineStatus: 'online',
-    joinedDate: 'APRIL 10, 2022',
-    aboutMe: {
-      name: 'meera',
-      age: 'twenty',
-      status: 'moderating',
-      specialty: 'Conflict Resolution'
-    },
-    badges: ['staff', 'supporter'],
-    description: 'Guides member onboarding flows and settles community disputes with unbiased, polite administrative grace.'
-  },
-  {
-    id: 'ananya',
-    name: 'Ananya Sharma',
-    discordTag: 'ananya_sharma',
-    role: 'Admin',
-    category: 'admin',
-    avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=800&auto=format&fit=crop',
-    status: '📐 organizing spatial arrangements',
-    onlineStatus: 'online',
-    joinedDate: 'MAY 18, 2022',
-    aboutMe: {
-      name: 'ananya',
-      age: 'twenty-one',
-      status: 'aligning',
-      specialty: 'Structure Design'
-    },
-    badges: ['staff', 'booster'],
-    description: 'Ensures neat organization across chat channels, server categories, and handles integration of automation bots.'
-  },
-  {
-    id: 'krishna',
-    name: 'Krishna',
-    discordTag: 'krishna_eternal',
-    role: 'Admin',
-    category: 'admin',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800&auto=format&fit=crop',
-    status: '🏹 precision moderation active',
-    onlineStatus: 'dnd',
-    joinedDate: 'JUNE 01, 2022',
-    aboutMe: {
-      name: 'krishna',
-      age: 'twenty-two',
-      status: 'guarding',
-      specialty: 'Rule Enforcement'
-    },
-    badges: ['staff'],
-    description: 'Oversees member behavior guidelines and enforces active moderation policies to preserve a clean and friendly forum space.'
-  },
-  {
     id: 'viiiv',
     name: 'Viiiv',
     discordTag: 'viiiv_3',
-    role: 'Admin',
-    category: 'admin',
+    role: 'Co owner',
+    category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop',
     status: '🌟 balancing network polarity',
@@ -527,11 +407,11 @@ const MEMBERS_DATA: MemberProfile[] = [
     aboutMe: {
       name: 'viiiv',
       age: 'twenty',
-      status: 'monitoring',
-      specialty: 'Vibe Watcher'
+      status: 'co-owning',
+      specialty: 'Community Oversight & Co-Owner'
     },
-    badges: ['staff', 'supporter'],
-    description: 'Acts as standard gatekeeper. Guides new recruits, reviews verification requests, and manages support ticket queues.'
+    badges: ['staff', 'supporter', 'booster'],
+    description: 'Co-owner and network stabilizer. Directs community welfare, manages verification gateways, and maintains balance across all nodes.'
   }
 ];
 
@@ -981,31 +861,39 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedMember(null)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-xs cursor-pointer z-[100]"
+              className="fixed inset-0 bg-black/75 backdrop-blur-sm cursor-pointer z-[100]"
             />
 
-            {/* Authentic Discord Popout Card */}
+            {/* Glassy Theme-Adaptive Discord Popout Card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="relative w-full max-w-[340px] max-h-[90vh] overflow-hidden bg-[#111214] text-[#dbdee1] rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] z-[101] border border-[#1f2023] font-sans flex flex-col"
+              className={`relative w-full max-w-[350px] max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl transition-all duration-300 ${
+                isDarkMode
+                  ? 'bg-zinc-950/90 text-zinc-100 border-zinc-800/80 shadow-black/80'
+                  : 'bg-white/95 text-zinc-900 border-zinc-200/90 shadow-2xl'
+              }`}
             >
               {/* LIVE DISCORD GATEWAY CONNECTION HEADER BAR */}
-              <div className="bg-[#1e1f22] border-b border-[#111214] px-3.5 py-1.5 flex items-center justify-between shrink-0 select-none">
+              <div className={`px-3.5 py-2 border-b flex items-center justify-between shrink-0 select-none backdrop-blur-md ${
+                isDarkMode ? 'bg-zinc-900/80 border-zinc-800/80 text-zinc-400' : 'bg-zinc-100/90 border-zinc-200/80 text-zinc-600'
+              }`}>
                 <div className="flex items-center space-x-2">
                   <span className={`w-1.5 h-1.5 rounded-full ${isLanyardLoading ? 'bg-amber-400 animate-pulse' :
                     isLanyardError ? 'bg-rose-500' : 'bg-emerald-500 animate-pulse'
                     }`} />
-                  <span className="font-mono text-[8px] font-black tracking-widest text-[#949ba4] uppercase">
+                  <span className="font-mono text-[8px] font-black tracking-widest uppercase">
                     {isLanyardLoading ? 'GATEWAY // LINKING...' :
                       isLanyardError ? 'OFFLINE // SIMULATED MODE' : 'GATEWAY // LIVE CONNECTED'}
                   </span>
                 </div>
                 <button
                   onClick={() => selectedMember.discordId && fetchLanyardData(selectedMember.discordId)}
-                  className="p-1 rounded text-[#949ba4] hover:text-[#dbdee1] hover:bg-zinc-800/40 transition-colors cursor-pointer"
+                  className={`p-1 rounded transition-colors cursor-pointer ${
+                    isDarkMode ? 'hover:text-white hover:bg-zinc-800' : 'hover:text-zinc-900 hover:bg-zinc-200'
+                  }`}
                   title="Force Reload Gateway Node"
                 >
                   <RefreshCw className={`w-2.5 h-2.5 ${isLanyardLoading ? 'animate-spin' : ''}`} />
@@ -1021,9 +909,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   className="w-full h-full object-cover select-none pointer-events-none filter brightness-90"
                 />
 
-                {/* Authentic Black-Background Badge Overlay for Discord Name on the Banner */}
-                <div className="absolute bottom-2.5 left-2.5 bg-black/85 text-white font-mono text-[9px] tracking-[0.2em] px-3 py-1.5 rounded-md border border-zinc-800/80 flex items-center space-x-2 shadow-lg backdrop-blur-md">
-                  <span className={`w-1.5 h-1.5 rounded-full ${lanyardData ? 'bg-emerald-500 animate-pulse' : 'bg-[#5865f2] animate-pulse'
+                {/* Glassy Badge Overlay for Discord Name on the Banner */}
+                <div className={`absolute bottom-2.5 left-2.5 font-mono text-[9px] tracking-[0.2em] px-3 py-1.5 rounded-md border flex items-center space-x-2 shadow-lg backdrop-blur-md ${
+                  isDarkMode ? 'bg-black/80 text-white border-zinc-800/80' : 'bg-white/90 text-zinc-950 border-zinc-200/80'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${lanyardData ? 'bg-emerald-500 animate-pulse' : 'bg-indigo-500 animate-pulse'
                     }`} />
                   <span className="font-extrabold">
                     {lanyardData?.discord_user ? lanyardData.discord_user.username : selectedMember.discordTag}
@@ -1033,7 +923,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 {/* Subtle Close Button on Top Right */}
                 <button
                   onClick={() => setSelectedMember(null)}
-                  className="absolute top-2.5 right-2.5 p-1.5 rounded-full bg-black/60 text-white/80 hover:bg-black/90 hover:text-white transition-all duration-200 cursor-pointer z-10 border border-zinc-800/40"
+                  className={`absolute top-2.5 right-2.5 p-1.5 rounded-full transition-all duration-200 cursor-pointer z-10 border ${
+                    isDarkMode
+                      ? 'bg-black/60 text-white/80 hover:bg-black/90 hover:text-white border-zinc-800/40'
+                      : 'bg-white/80 text-zinc-800 hover:bg-white hover:text-black border-zinc-300'
+                  }`}
                   aria-label="Close Profile"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -1041,43 +935,49 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               </div>
 
               {/* OVERLAPPING AVATAR & BADGES ROW */}
-              <div className="relative px-4 pb-1 shrink-0 bg-[#111214]">
+              <div className={`relative px-4 pb-1 shrink-0 ${isDarkMode ? 'bg-zinc-950/80' : 'bg-white/80'}`}>
                 <div className="absolute top-[-44px] left-4">
                   <div className="relative">
                     <img
                       src={lanyardData?.discord_user ? getDiscordAvatarUrl(lanyardData.discord_user, selectedMember.avatar) : selectedMember.avatar}
                       alt="Avatar"
                       referrerPolicy="no-referrer"
-                      className="w-[80px] h-[80px] rounded-full ring-[6px] ring-[#111214] object-cover bg-[#111214]"
+                      className={`w-[80px] h-[80px] rounded-full ring-[6px] object-cover ${
+                        isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
+                      }`}
                     />
                     {/* Status Dot with ring */}
-                    <span className={`absolute bottom-0 right-1 w-4.5 h-4.5 rounded-full ring-[4px] ring-[#111214] ${getOnlineDotClass(
+                    <span className={`absolute bottom-0 right-1 w-4.5 h-4.5 rounded-full ring-[4px] ${
+                      isDarkMode ? 'ring-zinc-950' : 'ring-white'
+                    } ${getOnlineDotClass(
                       lanyardData ? lanyardData.discord_status : selectedMember.onlineStatus
                     )}`} />
                   </div>
                 </div>
 
-                {/* Discord Badges aligned perfectly on the right */}
+                {/* Discord Badges aligned on the right */}
                 <div className="flex justify-end items-center h-10 space-x-1 pt-1.5">
-                  <div className="flex bg-[#1e1f22] px-2 py-1 rounded-lg space-x-1.5 border border-zinc-900 shadow-inner">
+                  <div className={`flex px-2 py-1 rounded-lg space-x-1.5 border shadow-xs ${
+                    isDarkMode ? 'bg-zinc-900/80 border-zinc-800/80' : 'bg-zinc-100/90 border-zinc-200/90'
+                  }`}>
                     {selectedMember.badges.includes('staff') && (
                       <div className="cursor-help" title="Ineffable Staff Team">
-                        <Shield className="w-3.5 h-3.5 text-[#5865f2]" />
+                        <Shield className="w-3.5 h-3.5 text-indigo-500" />
                       </div>
                     )}
                     {selectedMember.badges.includes('developer') && (
                       <div className="cursor-help" title="Core Web Developer">
-                        <Code className="w-3.5 h-3.5 text-[#00aff4]" />
+                        <Code className="w-3.5 h-3.5 text-sky-500" />
                       </div>
                     )}
                     {selectedMember.badges.includes('booster') && (
                       <div className="cursor-help" title="Active Nitro Server Booster">
-                        <Flame className="w-3.5 h-3.5 text-[#ff73fa]" />
+                        <Flame className="w-3.5 h-3.5 text-pink-500" />
                       </div>
                     )}
                     {selectedMember.badges.includes('supporter') && (
                       <div className="cursor-help" title="Lifetime Tier Supporter">
-                        <Award className="w-3.5 h-3.5 text-[#ffaa00]" />
+                        <Award className="w-3.5 h-3.5 text-amber-500" />
                       </div>
                     )}
                   </div>
@@ -1085,7 +985,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               </div>
 
               {/* AUTHENTIC TABBED NAVIGATION */}
-              <div className="flex border-b border-zinc-800/60 px-4 shrink-0 bg-[#111214] gap-3">
+              <div className={`flex border-b px-4 shrink-0 gap-3 ${
+                isDarkMode ? 'bg-zinc-950/80 border-zinc-800/60' : 'bg-white/80 border-zinc-200/80'
+              }`}>
                 {[
                   { id: 'profile', label: 'User Profile' },
                   { id: 'servers', label: 'Mutual Servers' },
@@ -1095,8 +997,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
                     className={`pb-2 pt-1 text-[11px] font-bold px-1 border-b-2 transition-all duration-150 cursor-pointer ${activeTab === tab.id
-                      ? 'border-[#5865f2] text-white'
-                      : 'border-transparent text-[#949ba4] hover:text-[#dbdee1]'
+                      ? `${themeStyles.accentText} border-current font-extrabold`
+                      : `${isDarkMode ? 'text-zinc-400 hover:text-zinc-200' : 'text-zinc-500 hover:text-zinc-900'} border-transparent`
                       }`}
                   >
                     {tab.label}
@@ -1104,19 +1006,27 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 ))}
               </div>
 
-              {/* DISCORD INNER CONTAINER PANEL - Styled exactly like Discord client */}
-              <div className="flex-1 overflow-y-auto scrollbar-none p-4 pt-3 pb-3 bg-[#111214] flex flex-col space-y-4">
+              {/* DISCORD INNER CONTAINER PANEL */}
+              <div className={`flex-1 overflow-y-auto scrollbar-none p-4 pt-3 pb-3 flex flex-col space-y-4 ${
+                isDarkMode ? 'bg-zinc-950/60' : 'bg-zinc-50/60'
+              }`}>
 
                 {/* 1. USER PROFILE TAB */}
                 {activeTab === 'profile' && (
                   <>
                     {/* Names block */}
-                    <div className="bg-[#1e1f22] p-4 rounded-xl border border-zinc-800/10 space-y-2 shadow-sm shrink-0">
+                    <div className={`p-4 rounded-xl border space-y-2 shadow-xs shrink-0 transition-colors ${
+                      isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+                    }`}>
                       <div>
-                        <h2 className="text-lg font-bold text-white tracking-wide font-sans flex items-center gap-1.5">
+                        <h2 className={`text-lg font-bold tracking-wide font-sans flex items-center gap-1.5 ${
+                          isDarkMode ? 'text-white' : 'text-zinc-900'
+                        }`}>
                           {lanyardData?.discord_user ? (lanyardData.discord_user.global_name || lanyardData.discord_user.username) : selectedMember.name}
                         </h2>
-                        <p className="text-[11px] text-[#949ba4] font-medium font-mono mt-0.5">
+                        <p className={`text-[11px] font-medium font-mono mt-0.5 ${
+                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                        }`}>
                           @{lanyardData?.discord_user ? lanyardData.discord_user.username : selectedMember.discordTag}
                         </p>
                       </div>
@@ -1129,7 +1039,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                           : selectedMember.status;
 
                         return statusText ? (
-                          <div className="bg-[#2b2d31]/50 border border-zinc-800/10 rounded-lg p-2.5 flex items-center space-x-2 text-[11px] leading-relaxed text-[#f2f3f5] font-light">
+                          <div className={`border rounded-lg p-2.5 flex items-center space-x-2 text-[11px] leading-relaxed font-light ${
+                            isDarkMode ? 'bg-black/30 border-zinc-800/60 text-zinc-200' : 'bg-zinc-100/80 border-zinc-200 text-zinc-800'
+                          }`}>
                             <span className="italic">{statusText}</span>
                           </div>
                         ) : null;
@@ -1148,10 +1060,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         <div className="space-y-4">
                           {/* 1. SPOTIFY ACTIVITY PLAYER */}
                           {isSpotifyActive && spotifyData && (
-                            <div className="bg-[#1e1f22] p-4 rounded-xl border border-zinc-800/10 space-y-3.5 shadow-sm">
+                            <div className={`p-4 rounded-xl border space-y-3.5 shadow-xs transition-colors ${
+                              isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+                            }`}>
                               <div className="flex items-center justify-between">
-                                <h4 className="text-[10px] font-extrabold tracking-wider text-[#1db954] uppercase font-mono flex items-center gap-1.5">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#1db954] animate-ping" />
+                                <h4 className="text-[10px] font-extrabold tracking-wider text-emerald-500 uppercase font-mono flex items-center gap-1.5">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                                   Listening to Spotify
                                 </h4>
                                 <img
@@ -1166,10 +1080,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                   <img
                                     src={spotifyData.album_art_url}
                                     alt="Album Art"
-                                    className="w-16 h-16 rounded-md object-cover border border-zinc-800/40 shadow-md animate-[spin_20s_linear_infinite]"
+                                    className="w-16 h-16 rounded-md object-cover border border-zinc-500/20 shadow-md animate-[spin_20s_linear_infinite]"
                                   />
-                                  <div className="absolute -bottom-1 -right-1 bg-[#1e1f22] p-0.5 rounded-full border border-zinc-800">
-                                    <div className="bg-[#1db954] p-0.5 rounded-full text-white">
+                                  <div className={`absolute -bottom-1 -right-1 p-0.5 rounded-full border ${
+                                    isDarkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'
+                                  }`}>
+                                    <div className="bg-emerald-500 p-0.5 rounded-full text-white">
                                       <Music className="w-2.5 h-2.5" />
                                     </div>
                                   </div>
@@ -1180,14 +1096,20 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                     href={spotifyData.track_id ? `https://open.spotify.com/track/${spotifyData.track_id}` : "https://open.spotify.com"}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-white hover:underline text-xs font-bold font-sans truncate block hover:text-[#1db954] transition-colors"
+                                    className={`text-xs font-bold font-sans truncate block hover:underline transition-colors ${
+                                      isDarkMode ? 'text-white hover:text-emerald-400' : 'text-zinc-900 hover:text-emerald-600'
+                                    }`}
                                   >
                                     {spotifyData.song}
                                   </a>
-                                  <p className="text-[11px] text-[#b5bac1] truncate mt-0.5 font-medium">
+                                  <p className={`text-[11px] truncate mt-0.5 font-medium ${
+                                    isDarkMode ? 'text-zinc-300' : 'text-zinc-700'
+                                  }`}>
                                     by {spotifyData.artist}
                                   </p>
-                                  <p className="text-[9px] text-[#949ba4] truncate mt-0.5 italic font-light">
+                                  <p className={`text-[9px] truncate mt-0.5 italic font-light ${
+                                    isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                                  }`}>
                                     on {spotifyData.album || 'Spotify Node'}
                                   </p>
                                 </div>
@@ -1195,13 +1117,17 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
                               {/* Progress bar */}
                               <div className="space-y-1">
-                                <div className="relative w-full h-1 bg-[#2b2d31] rounded-full overflow-hidden">
+                                <div className={`relative w-full h-1 rounded-full overflow-hidden ${
+                                  isDarkMode ? 'bg-zinc-800' : 'bg-zinc-200'
+                                }`}>
                                   <div
-                                    className="absolute left-0 top-0 h-full bg-[#1db954] rounded-full transition-all duration-1000 ease-linear"
+                                    className="absolute left-0 top-0 h-full bg-emerald-500 rounded-full transition-all duration-1000 ease-linear"
                                     style={{ width: `${spotifyProgress.percentage}%` }}
                                   />
                                 </div>
-                                <div className="flex justify-between text-[9px] font-mono font-bold text-[#949ba4] select-none">
+                                <div className={`flex justify-between text-[9px] font-mono font-bold select-none ${
+                                  isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                                }`}>
                                   <span>{formatTime(spotifyProgress.elapsed)}</span>
                                   <span>{formatTime(spotifyProgress.duration)}</span>
                                 </div>
@@ -1211,8 +1137,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
                           {/* 2. GAME RICH PRESENCE (IF PLAYING) */}
                           {activeGame && (
-                            <div className="bg-[#1e1f22] p-4 rounded-xl border border-zinc-800/10 space-y-3 shadow-sm">
-                              <h4 className="text-[10px] font-extrabold tracking-wider text-[#949ba4] uppercase font-mono">
+                            <div className={`p-4 rounded-xl border space-y-3 shadow-xs ${
+                              isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+                            }`}>
+                              <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
+                                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                              }`}>
                                 PLAYING A GAME
                               </h4>
                               <div className="flex space-x-3.5">
@@ -1221,38 +1151,50 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                     <img
                                       src={getGameImageUrl(activeGame.application_id, activeGame.assets.large_image)}
                                       alt="Game Asset"
-                                      className="w-14 h-14 rounded-lg object-cover border border-zinc-800/30 shadow-inner"
+                                      className="w-14 h-14 rounded-lg object-cover border border-zinc-500/20 shadow-inner"
                                     />
                                     {activeGame.assets.small_image && (
                                       <img
                                         src={getGameImageUrl(activeGame.application_id, activeGame.assets.small_image)}
                                         alt="Small Game Asset"
-                                        className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-[3px] border-[#1e1f22] object-cover"
+                                        className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-[3px] object-cover ${
+                                          isDarkMode ? 'border-zinc-900' : 'border-white'
+                                        }`}
                                       />
                                     )}
                                   </div>
                                 ) : (
-                                  <div className="w-14 h-14 rounded-lg bg-[#2b2d31] flex items-center justify-center text-white/40 shrink-0 border border-zinc-800/40">
+                                  <div className={`w-14 h-14 rounded-lg flex items-center justify-center shrink-0 border ${
+                                    isDarkMode ? 'bg-zinc-800/80 text-white/40 border-zinc-700' : 'bg-zinc-100 text-zinc-400 border-zinc-200'
+                                  }`}>
                                     <Tv className="w-6 h-6" />
                                   </div>
                                 )}
 
                                 <div className="flex-1 min-w-0 space-y-0.5">
-                                  <h5 className="text-white text-xs font-bold font-sans truncate">
+                                  <h5 className={`text-xs font-bold font-sans truncate ${
+                                    isDarkMode ? 'text-white' : 'text-zinc-900'
+                                  }`}>
                                     {activeGame.name}
                                   </h5>
                                   {activeGame.details && (
-                                    <p className="text-[11px] text-[#dbdee1] truncate font-medium">
+                                    <p className={`text-[11px] truncate font-medium ${
+                                      isDarkMode ? 'text-zinc-300' : 'text-zinc-700'
+                                    }`}>
                                       {activeGame.details}
                                     </p>
                                   )}
                                   {activeGame.state && (
-                                    <p className="text-[11px] text-[#b5bac1] truncate font-light">
+                                    <p className={`text-[11px] truncate font-light ${
+                                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                                    }`}>
                                       {activeGame.state}
                                     </p>
                                   )}
                                   {activeGame.timestamps?.start && (
-                                    <p className="text-[10px] text-[#949ba4] font-mono font-medium mt-1">
+                                    <p className={`text-[10px] font-mono font-medium mt-1 ${
+                                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                                    }`}>
                                       elapsed: {formatElapsedTime(activeGame.timestamps.start)}
                                     </p>
                                   )}
@@ -1265,49 +1207,61 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     })()}
 
                     {/* GENERAL DISCORD BIO / DETAILS */}
-                    <div className="bg-[#1e1f22] p-4 rounded-xl border border-zinc-800/10 space-y-4 shadow-sm">
+                    <div className={`p-4 rounded-xl border space-y-4 shadow-xs ${
+                      isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+                    }`}>
                       <div className="space-y-2">
-                        <h4 className="text-[10px] font-extrabold tracking-wider text-[#949ba4] uppercase font-mono">
+                        <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
+                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                        }`}>
                           ABOUT ME
                         </h4>
 
-                        <div className="bg-[#111214] border border-[#232428] rounded-lg p-3.5 font-mono text-[10px] text-[#f2f3f5] space-y-2.5 shadow-inner">
-                          <p className="text-zinc-600 text-center select-none tracking-widest font-extrabold">
+                        <div className={`border rounded-lg p-3.5 font-mono text-[10px] space-y-2.5 shadow-inner ${
+                          isDarkMode ? 'bg-black/40 border-zinc-800/80 text-zinc-200' : 'bg-zinc-100/80 border-zinc-200/80 text-zinc-800'
+                        }`}>
+                          <p className={`text-center select-none tracking-widest font-extrabold ${
+                            isDarkMode ? 'text-zinc-600' : 'text-zinc-400'
+                          }`}>
                             ╭ ── · ✦ · ── ╮
                           </p>
                           <div className="space-y-1.5 pl-3">
                             <p className="flex items-center space-x-2">
                               <span className="text-pink-400 font-bold">★</span>
-                              <span className="text-zinc-500 italic font-semibold">Name</span>
-                              <span className="text-zinc-600">:</span>
-                              <span className="text-white font-medium">{selectedMember.aboutMe.name}</span>
+                              <span className={`italic font-semibold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Name</span>
+                              <span className="text-zinc-400">:</span>
+                              <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedMember.aboutMe.name}</span>
                             </p>
                             <p className="flex items-center space-x-2">
                               <span className="text-pink-400 font-bold">✦</span>
-                              <span className="text-zinc-500 italic font-semibold">Age</span>
-                              <span className="text-zinc-600">:</span>
-                              <span className="text-white font-medium">{selectedMember.aboutMe.age}</span>
+                              <span className={`italic font-semibold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Age</span>
+                              <span className="text-zinc-400">:</span>
+                              <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedMember.aboutMe.age}</span>
                             </p>
                             <p className="flex items-center space-x-2">
                               <span className="text-pink-400 font-bold">✧</span>
-                              <span className="text-zinc-500 italic font-semibold">Status</span>
-                              <span className="text-zinc-600">:</span>
-                              <span className="text-emerald-400 font-medium">{selectedMember.aboutMe.status}</span>
+                              <span className={`italic font-semibold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Status</span>
+                              <span className="text-zinc-400">:</span>
+                              <span className="text-emerald-500 font-medium">{selectedMember.aboutMe.status}</span>
                             </p>
                             {selectedMember.aboutMe.specialty && (
                               <p className="flex items-center space-x-2">
                                 <span className="text-pink-400 font-bold">⬩</span>
-                                <span className="text-zinc-500 italic font-semibold">Special</span>
-                                <span className="text-zinc-600">:</span>
-                                <span className="text-indigo-300 font-medium">{selectedMember.aboutMe.specialty}</span>
+                                <span className={`italic font-semibold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Special</span>
+                                <span className="text-zinc-400">:</span>
+                                <span className="text-indigo-400 font-medium">{selectedMember.aboutMe.specialty}</span>
                               </p>
                             )}
                           </div>
-                          <p className="text-zinc-600 text-center select-none tracking-widest font-extrabold">
+                          <p className={`text-center select-none tracking-widest font-extrabold ${
+                            isDarkMode ? 'text-zinc-600' : 'text-zinc-400'
+                          }`}>
                             ╰ ── · ✦ · ── ╯
                           </p>
 
-                          <p className="font-sans text-[11px] text-[#b5bac1] leading-relaxed pt-2.5 border-t border-zinc-800/40">
+                          <p className={`font-sans text-[11px] leading-relaxed pt-2.5 border-t ${
+                            isDarkMode ? 'border-zinc-800/60 text-zinc-300' : 'border-zinc-200 text-zinc-600'
+                          }`}>
                             {selectedMember.description}
                           </p>
                         </div>
@@ -1315,11 +1269,15 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
                       {/* ROLE CLUSTERS */}
                       <div className="space-y-2">
-                        <h4 className="text-[10px] font-extrabold tracking-wider text-[#949ba4] uppercase font-mono">
+                        <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
+                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                        }`}>
                           ROLES
                         </h4>
                         <div className="flex flex-wrap gap-1.5">
-                          <span className="bg-[#2b2d31] text-[10px] text-[#dbdee1] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border border-zinc-800/30">
+                          <span className={`text-[10px] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border ${
+                            isDarkMode ? 'bg-zinc-800/80 text-zinc-200 border-zinc-700/60' : 'bg-zinc-100 text-zinc-800 border-zinc-300'
+                          }`}>
                             <span className={`w-2 h-2 rounded-full ${selectedMember.category === 'founder' ? 'bg-[#f1c40f]' :
                               selectedMember.category === 'cofounder' ? 'bg-[#e67e22]' :
                                 selectedMember.category === 'owner' ? 'bg-[#9b59b6]' :
@@ -1328,13 +1286,15 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                       selectedMember.category === 'executive' ? 'bg-[#e91e63]' :
                                         selectedMember.category === 'admin' ? 'bg-[#3498db]' : 'bg-[#2ecc71]'
                               }`} />
-                            <span className="text-white">{selectedMember.role}</span>
+                            <span>{selectedMember.role}</span>
                           </span>
-                          <span className="bg-[#2b2d31] text-[10px] text-[#dbdee1] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border border-zinc-800/30">
+                          <span className={`text-[10px] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border ${
+                            isDarkMode ? 'bg-zinc-800/80 text-zinc-200 border-zinc-700/60' : 'bg-zinc-100 text-zinc-800 border-zinc-300'
+                          }`}>
                             <div className={`w-1.5 h-1.5 rounded-full ${getOnlineDotClass(
                               lanyardData ? lanyardData.discord_status : selectedMember.onlineStatus
                             )}`} />
-                            <span className="uppercase text-zinc-300">
+                            <span className="uppercase">
                               {selectedMember.category === 'cofounder' ? 'co founder' : selectedMember.category === 'coowner' ? 'co owner' : selectedMember.category === 'techlead' ? 'tech lead' : selectedMember.category} Node
                             </span>
                           </span>
@@ -1343,23 +1303,33 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
                       {/* MEMBER SINCE */}
                       <div className="space-y-1.5">
-                        <h4 className="text-[10px] font-extrabold tracking-wider text-[#949ba4] uppercase font-mono">
+                        <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
+                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                        }`}>
                           MEMBER SINCE
                         </h4>
-                        <div className="flex items-center space-x-2 text-[11px] text-[#f2f3f5] font-semibold pl-1">
-                          <Calendar className="w-3.5 h-3.5 text-[#949ba4]" />
+                        <div className={`flex items-center space-x-2 text-[11px] font-semibold pl-1 ${
+                          isDarkMode ? 'text-zinc-200' : 'text-zinc-800'
+                        }`}>
+                          <Calendar className={`w-3.5 h-3.5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`} />
                           <span>{selectedMember.joinedDate}</span>
                         </div>
                       </div>
                     </div>
 
                     {/* SYNC CUSTOM DISCORD ID PANEL */}
-                    <div className="bg-[#1e1f22] p-4 rounded-xl border border-zinc-800/10 space-y-2.5 shadow-sm">
-                      <h4 className="text-[10px] font-extrabold tracking-wider text-[#949ba4] uppercase font-mono flex items-center gap-1">
+                    <div className={`p-4 rounded-xl border space-y-2.5 shadow-xs ${
+                      isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+                    }`}>
+                      <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono flex items-center gap-1 ${
+                        isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+                      }`}>
                         <Settings className="w-3 h-3" />
                         SYNC YOUR REAL DISCORD
                       </h4>
-                      <p className="text-[10px] text-[#b5bac1] leading-relaxed font-sans">
+                      <p className={`text-[10px] leading-relaxed font-sans ${
+                        isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+                      }`}>
                         Are you on Lanyard? Enter your Discord snowflake ID to sync your live status, game, and Spotify with this node card!
                       </p>
                       <div className="flex gap-2">
@@ -1368,18 +1338,22 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                           placeholder="Enter Discord User ID..."
                           value={customDiscordId}
                           onChange={(e) => setCustomDiscordId(e.target.value)}
-                          className="bg-[#111214] text-[#f2f3f5] placeholder-[#949ba4] text-xs px-2.5 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:border-[#5865f2] flex-1 font-mono transition-colors"
+                          className={`text-xs px-2.5 py-2 rounded-lg border font-mono transition-colors flex-1 ${
+                            isDarkMode
+                              ? 'bg-black/40 text-white placeholder-zinc-500 border-zinc-800 focus:outline-none focus:border-indigo-500'
+                              : 'bg-zinc-100 text-zinc-900 placeholder-zinc-400 border-zinc-300 focus:outline-none focus:border-indigo-500'
+                          }`}
                         />
                         <button
                           onClick={() => handleSyncCustomId(customDiscordId)}
                           disabled={isSyncingId}
-                          className="bg-[#5865f2] hover:bg-[#4752c4] disabled:bg-[#383a40] text-white font-bold text-xs px-3.5 py-2 rounded-lg transition-colors cursor-pointer shrink-0 shadow-md"
+                          className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-zinc-600 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition-all cursor-pointer shrink-0 shadow-md"
                         >
                           {isSyncingId ? 'Syncing...' : 'Link'}
                         </button>
                       </div>
                       {syncFeedback && (
-                        <p className={`text-[9px] font-mono ${syncFeedback.includes('successfully') || syncFeedback.includes('connected') ? 'text-emerald-400' : 'text-amber-400'
+                        <p className={`text-[9px] font-mono ${syncFeedback.includes('successfully') || syncFeedback.includes('connected') ? 'text-emerald-400' : 'text-amber-500'
                           } mt-1 font-semibold`}>
                           {syncFeedback}
                         </p>
@@ -1390,24 +1364,36 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
                 {/* 2. MUTUAL SERVERS TAB */}
                 {activeTab === 'servers' && (
-                  <div className="bg-[#1e1f22] p-4 rounded-xl border border-zinc-800/10 space-y-4 shadow-sm flex-1 flex flex-col justify-between max-h-[360px] overflow-y-auto">
+                  <div className={`p-4 rounded-xl border space-y-4 shadow-xs flex-1 flex flex-col justify-between max-h-[360px] overflow-y-auto ${
+                    isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+                  }`}>
                     <div className="space-y-3.5">
-                      <h4 className="text-[10px] font-extrabold tracking-wider text-[#949ba4] uppercase font-mono">
+                      <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
+                        isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                      }`}>
                         MUTUAL SERVERS ({MUTUAL_SERVERS.length})
                       </h4>
                       <div className="space-y-3">
                         {MUTUAL_SERVERS.map(server => (
-                          <div key={server.id} className="flex items-center justify-between group/server p-1.5 rounded-lg hover:bg-[#111214]/40 transition-colors">
+                          <div key={server.id} className={`flex items-center justify-between group/server p-2 rounded-lg transition-colors ${
+                            isDarkMode ? 'hover:bg-zinc-800/60' : 'hover:bg-zinc-100'
+                          }`}>
                             <div className="flex items-center space-x-3.5">
-                              <div className={`w-9 h-9 rounded-full ${server.bgColor} flex items-center justify-center text-white font-mono text-xs font-black shadow-md border border-zinc-800/40 relative group-hover/server:scale-105 transition-transform duration-200 select-none`}>
+                              <div className={`w-9 h-9 rounded-full ${server.bgColor} flex items-center justify-center text-white font-mono text-xs font-black shadow-md border border-zinc-500/20 relative group-hover/server:scale-105 transition-transform duration-200 select-none`}>
                                 {server.icon}
-                                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#23a55a] border-2 border-[#1e1f22]" />
+                                <span className={`absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border-2 ${
+                                  isDarkMode ? 'border-zinc-900' : 'border-white'
+                                }`} />
                               </div>
                               <div>
-                                <h5 className="text-xs font-bold text-white group-hover/server:text-[#5865f2] transition-colors">
+                                <h5 className={`text-xs font-bold transition-colors ${
+                                  isDarkMode ? 'text-white group-hover/server:text-indigo-400' : 'text-zinc-900 group-hover/server:text-indigo-600'
+                                }`}>
                                   {server.name}
                                 </h5>
-                                <p className="text-[9px] text-[#949ba4] font-mono mt-0.5 font-bold">
+                                <p className={`text-[9px] font-mono mt-0.5 font-bold ${
+                                  isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                                }`}>
                                   {server.members} members
                                 </p>
                               </div>
@@ -1416,7 +1402,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                               href={server.inviteUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-[9px] bg-[#2b2d31] hover:bg-[#5865f2] hover:text-white text-[#dbdee1] font-sans font-bold px-3 py-1.5 rounded-md transition-all duration-150 shadow-sm"
+                              className={`text-[9px] font-sans font-bold px-3 py-1.5 rounded-md transition-all duration-150 shadow-xs ${
+                                isDarkMode ? 'bg-zinc-800 hover:bg-indigo-600 hover:text-white text-zinc-200' : 'bg-zinc-200 hover:bg-indigo-600 hover:text-white text-zinc-800'
+                              }`}
                             >
                               JOIN
                             </a>
@@ -1429,9 +1417,13 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
                 {/* 3. MUTUAL FRIENDS TAB */}
                 {activeTab === 'friends' && (
-                  <div className="bg-[#1e1f22] p-4 rounded-xl border border-zinc-800/10 space-y-4 shadow-sm flex-1 flex flex-col justify-between max-h-[360px] overflow-y-auto">
+                  <div className={`p-4 rounded-xl border space-y-4 shadow-xs flex-1 flex flex-col justify-between max-h-[360px] overflow-y-auto ${
+                    isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+                  }`}>
                     <div className="space-y-3.5">
-                      <h4 className="text-[10px] font-extrabold tracking-wider text-[#949ba4] uppercase font-mono">
+                      <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
+                        isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                      }`}>
                         MUTUAL FRIENDS ({MEMBERS_DATA.filter(m => m.id !== selectedMember.id).length})
                       </h4>
                       <div className="grid grid-cols-1 gap-2.5">
@@ -1443,22 +1435,32 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                               onClick={() => {
                                 setSelectedMember(friend);
                               }}
-                              className="w-full flex items-center justify-between p-2.5 rounded-lg bg-[#111214]/50 hover:bg-[#111214] border border-zinc-800/10 hover:border-[#5865f2]/40 transition-all duration-200 text-left group/friend cursor-pointer shadow-sm"
+                              className={`w-full flex items-center justify-between p-2.5 rounded-lg border transition-all duration-200 text-left group/friend cursor-pointer shadow-xs ${
+                                isDarkMode
+                                  ? 'bg-zinc-950/40 hover:bg-zinc-900 border-zinc-800/60 hover:border-indigo-500/40'
+                                  : 'bg-zinc-50 hover:bg-zinc-100 border-zinc-200 hover:border-indigo-500/40'
+                              }`}
                             >
                               <div className="flex items-center space-x-3.5 min-w-0">
                                 <div className="relative shrink-0">
                                   <img
                                     src={friend.avatar}
                                     alt={friend.name}
-                                    className="w-8 h-8 rounded-full object-cover border border-zinc-800/30 bg-[#111214]"
+                                    className="w-8 h-8 rounded-full object-cover border border-zinc-500/20"
                                   />
-                                  <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-[#111214] ${getOnlineDotClass(friend.onlineStatus)}`} />
+                                  <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 ${
+                                    isDarkMode ? 'border-zinc-950' : 'border-white'
+                                  } ${getOnlineDotClass(friend.onlineStatus)}`} />
                                 </div>
                                 <div className="min-w-0">
-                                  <h5 className="text-xs font-bold text-white group-hover/friend:text-[#5865f2] transition-colors truncate">
+                                  <h5 className={`text-xs font-bold transition-colors truncate ${
+                                    isDarkMode ? 'text-white group-hover/friend:text-indigo-400' : 'text-zinc-900 group-hover/friend:text-indigo-600'
+                                  }`}>
                                     {friend.name}
                                   </h5>
-                                  <p className="text-[9px] text-[#949ba4] font-mono truncate mt-0.5">
+                                  <p className={`text-[9px] font-mono truncate mt-0.5 ${
+                                    isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                                  }`}>
                                     @{friend.discordTag}
                                   </p>
                                 </div>
@@ -1476,15 +1478,23 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               </div>
 
               {/* AUTHENTIC CHAT INPUT FOOTER BOX */}
-              <div className="bg-[#111214] p-3 border-t border-zinc-800/30 shrink-0">
+              <div className={`p-3 border-t shrink-0 ${
+                isDarkMode ? 'bg-zinc-950/90 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+              }`}>
                 <a
                   href="https://discord.gg/ineffable"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-[#383a40] text-[#b5bac1] hover:text-[#f2f3f5] rounded-md py-2.5 px-3.5 text-[11px] font-sans flex items-center justify-between transition-colors duration-200 cursor-pointer shadow-inner border border-zinc-800/10"
+                  className={`w-full rounded-md py-2.5 px-3.5 text-[11px] font-sans flex items-center justify-between transition-colors duration-200 cursor-pointer shadow-xs border ${
+                    isDarkMode
+                      ? 'bg-zinc-900 text-zinc-300 hover:text-white hover:bg-zinc-800 border-zinc-800'
+                      : 'bg-zinc-100 text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200 border-zinc-200'
+                  }`}
                 >
                   <span className="font-bold">Message @{lanyardData?.discord_user ? lanyardData.discord_user.username : selectedMember.discordTag}</span>
-                  <span className="text-[8px] bg-[#1e1f22] text-[#dbdee1] px-1.5 py-0.5 rounded font-mono font-bold tracking-widest uppercase border border-zinc-800/40 shadow-sm">DM</span>
+                  <span className={`text-[8px] px-1.5 py-0.5 rounded font-mono font-bold tracking-widest uppercase border shadow-xs ${
+                    isDarkMode ? 'bg-zinc-800 text-zinc-300 border-zinc-700' : 'bg-white text-zinc-800 border-zinc-300'
+                  }`}>DM</span>
                 </a>
               </div>
             </motion.div>
