@@ -6,19 +6,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { 
-  Mail, Send, CheckCircle, MapPin, MessageSquare, Shield, Globe, Clock, 
-  Sparkles, Bot, User as UserIcon, RefreshCw, ExternalLink, MessageCircle, 
+import {
+  Mail, Send, CheckCircle, MapPin, MessageSquare, Shield, Globe, Clock,
+  Sparkles, Bot, User as UserIcon, RefreshCw, ExternalLink, MessageCircle,
   Trash2, Download, KeyRound, Check, AlertCircle, Radio, MessageSquareCode
 } from 'lucide-react';
-import { 
-  initGoogleChatAuth, 
-  signInWithGoogleChat, 
-  logoutGoogleChat, 
-  fetchGoogleChatSpaces, 
-  createGoogleChatSpace, 
+import {
+  initGoogleChatAuth,
+  signInWithGoogleChat,
+  logoutGoogleChat,
+  fetchGoogleChatSpaces,
+  createGoogleChatSpace,
   postGoogleChatMessage,
-  GoogleChatSpace 
+  GoogleChatSpace
 } from '../lib/googleChat';
 import { generateConciergeReply } from '../lib/geminiChat';
 
@@ -36,10 +36,10 @@ interface ChatMessage {
   syncedToGoogleChat?: boolean;
 }
 
-export const ContactView: React.FC<ContactViewProps> = ({ 
-  activeAtmosphere, 
-  isDarkMode, 
-  currentUser 
+export const ContactView: React.FC<ContactViewProps> = ({
+  activeAtmosphere,
+  isDarkMode,
+  currentUser
 }) => {
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
@@ -47,10 +47,10 @@ export const ContactView: React.FC<ContactViewProps> = ({
   const [activeTab, setActiveTab] = useState<'live-chat' | 'email-form' | 'global-nodes'>('live-chat');
 
   // Registered User Email state (defaults to user's registered email or kavyanshshakya2@gmail.com)
-  const defaultEmail = currentUser 
-    ? (currentUser.includes('@') ? currentUser : `${currentUser.toLowerCase()}@ineffable.cc`) 
-    : 'kavyanshshakya2@gmail.com';
-    
+  const defaultEmail = currentUser
+    ? (currentUser.includes('@') ? currentUser : `${currentUser.toLowerCase()}@ineffable.cc`)
+    : 'ineffablegg@gmail.com';
+
   const [registeredEmail, setRegisteredEmail] = useState<string>(() => {
     return localStorage.getItem('ineffable_registered_email') || defaultEmail;
   });
@@ -255,7 +255,7 @@ export const ContactView: React.FC<ContactViewProps> = ({
         .then(() => {
           setMessages(prev => prev.map(m => m.id === userMsg.id ? { ...m, syncedToGoogleChat: true } : m));
         })
-        .catch(() => {});
+        .catch(() => { });
     }
 
     // Generate AI Concierge response
@@ -329,41 +329,8 @@ export const ContactView: React.FC<ContactViewProps> = ({
 
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-6 py-24 pt-28 space-y-10">
-      
-      {/* Aesthetic Hero Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-500 text-[10px] md:text-xs font-mono tracking-[0.25em] font-extrabold uppercase shadow-lg shadow-rose-500/10 backdrop-blur-md">
-          <span className="relative flex h-2 w-2 mr-0.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
-          </span>
-          <span>LIVE SANCTUARY CONCIERGE & GOOGLE CHAT</span>
-        </div>
 
-        <h1 className="text-3xl md:text-6xl font-sans font-extrabold text-zinc-950 dark:text-white uppercase tracking-tight leading-tight">
-          CONNECT WITH THE SANCTUARY
-        </h1>
 
-        <p className={`${themeStyles.textSecondary} text-xs md:text-sm max-w-xl mx-auto leading-relaxed`}>
-          Instant real-time support synced with your registered email (<strong className="text-rose-500 font-mono">{registeredEmail}</strong>) and direct Google Chat space integration.
-        </p>
-
-        {/* Live Support Key Metrics */}
-        <div className="pt-2 flex flex-wrap items-center justify-center gap-3 md:gap-6 text-xs font-mono text-zinc-400">
-          <div className={`px-4 py-2 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center space-x-2`}>
-            <Clock className="w-3.5 h-3.5 text-emerald-400" />
-            <span>AVG RESPONSE: <strong className="text-emerald-400">&lt; 12 MINS</strong></span>
-          </div>
-          <div className={`px-4 py-2 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center space-x-2`}>
-            <Shield className="w-3.5 h-3.5 text-rose-400" />
-            <span>SECURITY: <strong className="text-rose-400">AES-256 + OAuth2</strong></span>
-          </div>
-          <div className={`px-4 py-2 rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} flex items-center space-x-2`}>
-            <Radio className="w-3.5 h-3.5 text-sky-400" />
-            <span>GOOGLE CHAT: <strong className="text-sky-400">{googleUser ? 'SYNCED' : 'READY'}</strong></span>
-          </div>
-        </div>
-      </div>
 
       {/* Registered Email Identity Banner */}
       <div className={`p-4 md:p-6 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-4`}>
@@ -411,7 +378,7 @@ export const ContactView: React.FC<ContactViewProps> = ({
                 <h3 className="font-mono text-sm md:text-base font-bold text-zinc-950 dark:text-white truncate">
                   {registeredEmail}
                 </h3>
-                <button 
+                <button
                   onClick={() => { setEmailInput(registeredEmail); setIsEditingEmail(true); }}
                   className="text-[10px] font-mono text-zinc-400 hover:text-rose-400 underline cursor-pointer"
                 >
@@ -429,11 +396,10 @@ export const ContactView: React.FC<ContactViewProps> = ({
         <div className="flex items-center space-x-1 p-1 rounded-2xl bg-black/20 dark:bg-white/5 border border-white/10 w-full md:w-auto overflow-x-auto">
           <button
             onClick={() => setActiveTab('live-chat')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
-              activeTab === 'live-chat'
-                ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
-                : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${activeTab === 'live-chat'
+              ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
+              : 'text-zinc-400 hover:text-white'
+              }`}
           >
             <MessageSquareCode className="w-3.5 h-3.5" />
             <span>Live & Google Chat</span>
@@ -441,11 +407,10 @@ export const ContactView: React.FC<ContactViewProps> = ({
 
           <button
             onClick={() => setActiveTab('email-form')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
-              activeTab === 'email-form'
-                ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
-                : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${activeTab === 'email-form'
+              ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
+              : 'text-zinc-400 hover:text-white'
+              }`}
           >
             <Mail className="w-3.5 h-3.5" />
             <span>Email Transmission</span>
@@ -453,11 +418,10 @@ export const ContactView: React.FC<ContactViewProps> = ({
 
           <button
             onClick={() => setActiveTab('global-nodes')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
-              activeTab === 'global-nodes'
-                ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
-                : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center space-x-2 cursor-pointer whitespace-nowrap ${activeTab === 'global-nodes'
+              ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
+              : 'text-zinc-400 hover:text-white'
+              }`}
           >
             <Globe className="w-3.5 h-3.5" />
             <span>Global Nodes</span>
@@ -470,7 +434,7 @@ export const ContactView: React.FC<ContactViewProps> = ({
          ======================================================================== */}
       {activeTab === 'live-chat' && (
         <div className="space-y-6">
-          
+
           {/* Google Chat Space Integration Top Bar */}
           <div className={`p-5 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-xl space-y-4`}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
@@ -576,11 +540,10 @@ export const ContactView: React.FC<ContactViewProps> = ({
 
             {/* Google Status Notification Message */}
             {googleStatusMsg && (
-              <div className={`p-3 rounded-2xl text-xs font-mono flex items-center justify-between ${
-                googleStatusMsg.type === 'success' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+              <div className={`p-3 rounded-2xl text-xs font-mono flex items-center justify-between ${googleStatusMsg.type === 'success' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
                 googleStatusMsg.type === 'error' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' :
-                'bg-sky-500/10 text-sky-400 border border-sky-500/20'
-              }`}>
+                  'bg-sky-500/10 text-sky-400 border border-sky-500/20'
+                }`}>
                 <span>{googleStatusMsg.text}</span>
                 <button onClick={() => setGoogleStatusMsg(null)} className="text-zinc-400 hover:text-white">✕</button>
               </div>
@@ -589,7 +552,7 @@ export const ContactView: React.FC<ContactViewProps> = ({
 
           {/* Interactive Live Chat Container */}
           <div className={`rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-2xl shadow-2xl overflow-hidden flex flex-col h-[650px]`}>
-            
+
             {/* Chat Room Top Bar */}
             <div className="p-4 md:p-5 border-b border-white/10 bg-black/20 flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -645,11 +608,10 @@ export const ContactView: React.FC<ContactViewProps> = ({
                     className={`flex items-start space-x-3 ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`}
                   >
                     {/* Avatar */}
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 font-mono text-xs font-bold ${
-                      isUser 
-                        ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25' 
-                        : 'bg-zinc-800 text-rose-400 border border-rose-500/30'
-                    }`}>
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 font-mono text-xs font-bold ${isUser
+                      ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
+                      : 'bg-zinc-800 text-rose-400 border border-rose-500/30'
+                      }`}>
                       {isUser ? registeredEmail.charAt(0).toUpperCase() : <Bot className="w-4 h-4" />}
                     </div>
 
@@ -664,11 +626,10 @@ export const ContactView: React.FC<ContactViewProps> = ({
                         )}
                       </div>
 
-                      <div className={`p-4 rounded-2xl text-xs font-sans leading-relaxed shadow-lg ${
-                        isUser
-                          ? 'bg-rose-500 text-white rounded-tr-none font-medium'
-                          : 'bg-black/40 dark:bg-zinc-900/80 border border-white/10 text-zinc-100 rounded-tl-none'
-                      }`}>
+                      <div className={`p-4 rounded-2xl text-xs font-sans leading-relaxed shadow-lg ${isUser
+                        ? 'bg-rose-500 text-white rounded-tr-none font-medium'
+                        : 'bg-black/40 dark:bg-zinc-900/80 border border-white/10 text-zinc-100 rounded-tl-none'
+                        }`}>
                         {msg.text}
                       </div>
                     </div>
@@ -804,11 +765,10 @@ export const ContactView: React.FC<ContactViewProps> = ({
                       type="button"
                       key={sub}
                       onClick={() => setEmailFormData({ ...emailFormData, subject: sub })}
-                      className={`py-2 px-3 rounded-xl border text-xs font-mono transition-all cursor-pointer ${
-                        emailFormData.subject === sub
-                          ? 'bg-rose-500 text-white border-rose-500 font-bold shadow-md'
-                          : 'bg-black/20 border-white/10 text-zinc-400 hover:text-white'
-                      }`}
+                      className={`py-2 px-3 rounded-xl border text-xs font-mono transition-all cursor-pointer ${emailFormData.subject === sub
+                        ? 'bg-rose-500 text-white border-rose-500 font-bold shadow-md'
+                        : 'bg-black/20 border-white/10 text-zinc-400 hover:text-white'
+                        }`}
                     >
                       {sub}
                     </button>
