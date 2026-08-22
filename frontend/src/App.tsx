@@ -46,11 +46,12 @@ const pathPages: Record<string, PageId> = Object.entries(pagePaths).reduce(
 );
 
 const getPageFromLocation = (): PageId => {
+  if (new URLSearchParams(window.location.search).has('order_id')) {
+    return 'payment-success';
+  }
   const pageFromPath = pathPages[window.location.pathname.replace(/\/$/, '') || '/'];
   if (pageFromPath) return pageFromPath;
-  return new URLSearchParams(window.location.search).has('order_id')
-    ? 'payment-success'
-    : 'home';
+  return 'home';
 };
 
 const DiscordIcon = ({ className }: { className?: string }) => (
