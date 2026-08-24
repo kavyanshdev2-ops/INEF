@@ -290,95 +290,14 @@ export const LoginView: React.FC<LoginViewProps> = ({
     ]);
 
     try {
-      const getRedirectUrl = () => {
-        const origin = window.location.origin;
-        if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
-          return `${origin}/`;
-        }
-        return 'https://inef.cc/';
-      };
-
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: getRedirectUrl(),
-          skipBrowserRedirect: true,
+          redirectTo: `${window.location.origin}/login`,
         },
       });
 
       if (error) throw error;
-
-      if (data?.url) {
-        const popup = window.open(data.url, 'sb-google-oauth', 'width=600,height=700');
-        if (!popup) {
-          throw new Error('Popup blocked! Please allow popups to login with Google.');
-        }
-
-        // Poll popup location hash to securely capture the incoming session
-        const timer = setInterval(async () => {
-          if (popup.closed) {
-            clearInterval(timer);
-            setIsAuthenticating(false);
-            return;
-          }
-
-          try {
-            const popupUrl = popup.location.href;
-            const isMatchingOrigin = popupUrl && (
-              popupUrl.includes(window.location.origin) ||
-              popupUrl.includes('inef.cc')
-            );
-            if (isMatchingOrigin) {
-              const hash = popup.location.hash || '';
-              const search = popup.location.search || '';
-
-              if (hash.includes('access_token') || search.includes('code=')) {
-                clearInterval(timer);
-                popup.close();
-
-                setAuthLogs(prev => [
-                  ...prev,
-                  '[SUPABASE] DETECTED INCOMING SECURE OAUTH TOKEN PAYLOAD...',
-                  '[SUPABASE] ESTABLISHING CLOUD CLIENT CONNECTION SEED...'
-                ]);
-
-                // Query and verify session
-                setTimeout(async () => {
-                  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-                  if (sessionError) throw sessionError;
-
-                  if (session?.user) {
-                    const uname = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User';
-                    showNotification('success', 'Successfully authenticated with Google Cloud Sync!');
-                    onLogin(uname);
-                  } else {
-                    // Manual session activation via tokens in hash as fallback
-                    const params = new URLSearchParams(hash.replace('#', '?'));
-                    const access = params.get('access_token');
-                    const refresh = params.get('refresh_token');
-                    if (access && refresh) {
-                      const { data: setSessionData, error: setSessionError } = await supabase.auth.setSession({
-                        access_token: access,
-                        refresh_token: refresh
-                      });
-                      if (setSessionError) throw setSessionError;
-                      const user = setSessionData.user;
-                      if (user) {
-                        const uname = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
-                        showNotification('success', 'Session loaded successfully via token refresh!');
-                        onLogin(uname);
-                      }
-                    }
-                  }
-                  setIsAuthenticating(false);
-                }, 800);
-              }
-            }
-          } catch (e) {
-            // Suppress cross-origin frame exceptions during Google login redirect phase
-          }
-        }, 500);
-      }
     } catch (err: any) {
       console.error('Google Auth Error:', err);
       setAuthLogs(prev => [...prev, `[ERROR] GOOGLE HANDSHAKE INTERRUPTED: ${err.message}`]);
