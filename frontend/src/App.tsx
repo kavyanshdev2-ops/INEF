@@ -209,6 +209,13 @@ export default function App() {
     if (supabase) {
       // Get current session
       supabase.auth.getSession().then(({ data: { session } }) => {
+        const hasOAuthCallback = window.location.hash.includes('access_token') || window.location.hash.includes('error');
+        if (hasOAuthCallback) {
+          const callbackPath = window.location.pathname === '/' ? pagePaths.login : window.location.pathname;
+          window.history.replaceState({}, '', callbackPath);
+          if (callbackPath === pagePaths.login) setCurrentPage('login');
+        }
+
         if (session?.user) {
           const username = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User';
           setCurrentUser(username);
