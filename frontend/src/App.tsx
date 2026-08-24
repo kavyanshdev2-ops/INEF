@@ -25,6 +25,35 @@ import { Disc, Sparkles, MapPin, Instagram, Github, Youtube, Twitter } from 'luc
 import { supabase, isSupabaseConfigured, getDBWishlist, toggleDBWishlist, getDBCart, saveDBCart, getWebsiteSettings } from './lib/supabase';
 const cherryBlossomBg = '/cherry_blossom_bg_1782902853761.jpg';
 
+const pagePaths: Record<PageId, string> = {
+  home: '/',
+  membership: '/membership',
+  shop: '/store',
+  contact: '/contact',
+  journals: '/journals',
+  admin: '/admin',
+  cart: '/cart',
+  login: '/login',
+  gaming: '/gaming',
+  about: '/about',
+  'payment-success': '/payment/success',
+  'payment-failed': '/payment/failed',
+};
+
+const pathPages: Record<string, PageId> = Object.entries(pagePaths).reduce(
+  (pages, [page, path]) => ({ ...pages, [path]: page as PageId }),
+  { '/home': 'home', '/shop': 'shop' } as Record<string, PageId>
+);
+
+const getPageFromLocation = (): PageId => {
+  if (new URLSearchParams(window.location.search).has('order_id')) {
+    return 'payment-success';
+  }
+  const pageFromPath = pathPages[window.location.pathname.replace(/\/$/, '') || '/'];
+  if (pageFromPath) return pageFromPath;
+  return 'home';
+};
+
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg
     viewBox="0 0 127.14 96.36"
@@ -37,7 +66,7 @@ const DiscordIcon = ({ className }: { className?: string }) => (
 
 export default function App() {
   const bgRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState<PageId>('home');
+  const [currentPage, setCurrentPage] = useState<PageId>(getPageFromLocation);
   const [atmosphere, setAtmosphere] = useState<AtmosphereConfig>({
     petalCount: 80,
     driftVelocity: 1.2,
@@ -233,13 +262,11 @@ export default function App() {
     }
   }, [cart, currentUser]);
 
-  // Handle URL params on initial load
+  // Keep browser history navigation in sync with the active view.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const orderId = params.get('order_id');
-    if (orderId) {
-      setCurrentPage('payment-success');
-    }
+    const handlePopState = () => setCurrentPage(getPageFromLocation());
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   const themeStyles = getThemeStyles(atmosphere.colorTheme, isDarkMode);
@@ -248,16 +275,18 @@ export default function App() {
   const navigateToPage = (page: PageId) => {
     const protectedPages: PageId[] = ['journals', 'cart'];
     if (!currentUser && protectedPages.includes(page)) {
+      window.history.pushState({}, '', pagePaths.login);
       setCurrentPage('login');
       return;
     }
+    window.history.pushState({}, '', pagePaths[page]);
     setCurrentPage(page);
   };
 
   // Cart actions
   const handleAddToCart = (newItem: Omit<CartItem, 'quantity'> & { quantity?: number; size?: string }) => {
     if (!currentUser) {
-      setCurrentPage('login');
+      navigateToPage('login');
       return;
     }
     const qtyToAdd = newItem.quantity || 1;
@@ -297,7 +326,7 @@ export default function App() {
   // Wishlist actions
   const handleToggleWishlist = async (productId: string) => {
     if (!currentUser) {
-      setCurrentPage('login');
+      navigateToPage('login');
       return;
     }
 
@@ -321,7 +350,7 @@ export default function App() {
   // Auth actions
   const handleLogin = (username: string) => {
     setCurrentUser(username);
-    setCurrentPage('home'); // Redirect to home after login
+    navigateToPage('home');
   };
 
   const handleLogout = async () => {
@@ -619,7 +648,7 @@ export default function App() {
                     id={`footer-nav-link-${lnk.id}`}
                     key={lnk.id}
                     onClick={() => {
-                      setCurrentPage(lnk.id);
+                      navigateToPage(lnk.id);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     className={`relative px-3 py-2 font-mono text-[10px] tracking-[0.2em] transition-all duration-300 cursor-pointer flex items-center space-x-1.5 rounded-lg w-full text-left ${isActive
