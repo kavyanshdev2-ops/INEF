@@ -28,7 +28,6 @@ interface Petal {
 
 export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDarkMode }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouseRef = useRef({ x: -1000, y: -1000 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -144,96 +143,49 @@ export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDa
       initPetals();
     };
 
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-      targetX = (e.clientX / width) - 0.5;
-      targetY = (e.clientY / height) - 0.5;
-    };
-
-    const handleMouseLeave = () => {
-      mouseRef.current = { x: -1000, y: -1000 };
-      targetX = 0;
-      targetY = 0;
-    };
-
     let lastScrollY = window.scrollY;
     let scrollSpeed = 0;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const diff = Math.abs(currentScrollY - lastScrollY);
-      scrollSpeed = Math.min(25, scrollSpeed + diff * 0.18); // Natural cap
+      scrollSpeed = Math.min(18, scrollSpeed + diff * 0.12);
       lastScrollY = currentScrollY;
     };
 
     window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Main animation loop
-    const render = () => {
+    const render = (timestamp: number) => {
       ctx.clearRect(0, 0, width, height);
-
-      // Smooth interpolation of mouse offset for parallax feel
-      currentX += (targetX - currentX) * 0.06;
-      currentY += (targetY - currentY) * 0.06;
 
       const radAngle = (config.windAngle * Math.PI) / 180;
       const baseWindX = Math.cos(radAngle) * config.driftVelocity;
       const baseWindY = Math.sin(radAngle) * config.driftVelocity + config.gravity;
-
-      // Smooth decay of scroll speed wind boost
-      scrollSpeed *= 0.93;
+      scrollSpeed *= 0.92;
 
       for (let i = 0; i < petals.length; i++) {
         const p = petals[i];
-
-        // Update wobble
         p.wobble += p.wobbleSpeed;
 
-        // Base velocity calculation
-        const windX = baseWindX * p.z;
-        const windY = baseWindY * p.z;
+        const flowX = Math.sin(timestamp * 0.0008 + i * 0.9) * 0.25;
+        const flowY = Math.cos(timestamp * 0.0007 + i * 0.6) * 0.18;
 
-        // Combine base velocities, wobble, and custom scroll-wind gust effect
-        const scrollBoostX = scrollSpeed * 0.12 * p.z * (config.windAngle > 90 ? -1 : 1);
-        const scrollBoostY = scrollSpeed * 0.22 * p.z;
+        const windX = baseWindX * p.z + flowX;
+        const windY = baseWindY * p.z + flowY;
+        const scrollBoostX = scrollSpeed * 0.06 * p.z * (config.windAngle > 90 ? -1 : 1);
+        const scrollBoostY = scrollSpeed * 0.12 * p.z;
 
-        p.vx = windX + Math.sin(p.wobble) * 0.4 + scrollBoostX;
+        p.vx = windX + Math.sin(p.wobble) * 0.35 + scrollBoostX;
         p.vy = windY + Math.cos(p.wobble) * 0.2 + scrollBoostY;
 
-        // Mouse repulsion
-        const dx = p.x - mouseRef.current.x;
-        const dy = p.y - mouseRef.current.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 180) {
-          const force = (180 - dist) / 180;
-          // Drifts away from mouse
-          p.vx += (dx / dist) * force * 4 * p.z;
-          p.vy += (dy / dist) * force * 2 * p.z;
-        }
-
-        // Apply velocities
         p.x += p.vx;
         p.y += p.vy;
         p.angle += p.angleSpeed;
 
-        // Calculate dynamic parallax translation shift based on depth 'p.z'
-        // Closer layers (larger z) shift slightly MORE.
-        // Far layers (smaller z) shift slightly LESS, or shift in opposite directions to create a 3D split.
-        const parallaxOffsetX = currentX * width * 0.045 * (p.z - 0.85);
-        const parallaxOffsetY = currentY * height * 0.045 * (p.z - 0.85);
-        const renderX = p.x + parallaxOffsetX;
-        const renderY = p.y + parallaxOffsetY;
+        const renderX = p.x + Math.sin(timestamp * 0.001 + i) * 0.8 * p.z;
+        const renderY = p.y + Math.cos(timestamp * 0.0012 + i) * 0.6 * p.z;
 
-        // Reset petal if off screen (using its actual rendered position!)
         const padding = 100;
         if (
           renderY > height + padding ||
@@ -241,26 +193,22 @@ export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDa
           renderX > width + padding
         ) {
           petals[i] = createPetal(false);
-          // Distribute new petals across the top screen
           petals[i].x = Math.random() * width;
-          petals[i].y = -20; // reset to top
+          petals[i].y = -20;
         }
 
-        // Draw petal
         ctx.save();
         ctx.translate(renderX, renderY);
         ctx.rotate(p.angle);
 
-        // Simulated blur for back layers
         if (p.z < 0.5) {
-          ctx.shadowBlur = 4;
+          ctx.shadowBlur = 3;
           ctx.shadowColor = p.color;
         }
 
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.opacity;
 
-        // Draw elegant leaf/petal path
         ctx.beginPath();
         ctx.moveTo(0, 0);
         ctx.bezierCurveTo(p.size / 2, -p.size / 3, p.size, -p.size / 3, p.size, 0);
@@ -268,12 +216,10 @@ export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDa
         ctx.closePath();
         ctx.fill();
 
-        // Soft dark outline to make them look solid and "a bit dark"
         ctx.strokeStyle = isDarkMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.15)';
         ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Soft highlight line
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -287,13 +233,11 @@ export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDa
       animationId = requestAnimationFrame(render);
     };
 
-    render();
+    render(performance.now());
 
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('scroll', handleScroll);
     };
   }, [config, isDarkMode]);
@@ -303,7 +247,7 @@ export const PetalDriftCanvas: React.FC<PetalDriftCanvasProps> = ({ config, isDa
       ref={canvasRef}
       id="petal-drift-canvas"
       className="fixed inset-0 pointer-events-none z-10 w-full h-full block"
-      style={{ mixBlendMode: isDarkMode ? 'screen' : 'normal' }}
+      style={{ mixBlendMode: isDarkMode ? 'screen' : 'normal', transform: 'translate3d(0,0,0)', willChange: 'transform' }}
     />
   );
 };

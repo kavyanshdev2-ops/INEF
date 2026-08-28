@@ -6,7 +6,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { PageId, AtmosphereConfig, CartItem } from './types';
 import { PetalDriftCanvas } from './components/PetalDriftCanvas';
-import { MouseGlowTracker } from './components/MouseGlowTracker';
 import { Navbar } from './components/Navbar';
 import { HomeView } from './components/HomeView';
 import { MembershipView } from './components/MembershipView';
@@ -478,9 +477,6 @@ export default function App() {
 
       {/* Background Interactive Canvas Particle simulation */}
       <PetalDriftCanvas config={atmosphere} isDarkMode={isDarkMode} />
-
-      {/* Mouse Tracking Radial Liquid Glow Effect */}
-      <MouseGlowTracker atmosphere={atmosphere} isDarkMode={isDarkMode} />
 
       {/* Global Navigation Header with Glassmorphism blur */}
       <Navbar
