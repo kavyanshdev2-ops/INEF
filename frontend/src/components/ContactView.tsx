@@ -46,7 +46,7 @@ export const ContactView: React.FC<ContactViewProps> = ({
   // Active view tab
   const [activeTab, setActiveTab] = useState<'live-chat' | 'email-form' | 'global-nodes'>('live-chat');
 
-  // Registered User Email state (defaults to user's registered email or kavyanshshakya2@gmail.com)
+  // Registered User Email state (defaults to user's registered email or overyshakya2@gmail.com)
   const defaultEmail = currentUser
     ? (currentUser.includes('@') ? currentUser : `${currentUser.toLowerCase()}@ineffable.cc`)
     : 'ineffablegg@gmail.com';
@@ -300,7 +300,7 @@ export const ContactView: React.FC<ContactViewProps> = ({
         {
           id: 'welcome-msg-reset',
           sender: 'concierge',
-          text: `Chat session reset for ${registeredEmail}. How may Concierge Unit Alpha assist you?`,
+          text: `Chat session reset for ${registeredEmail}. How may inef assist you?`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ]);
