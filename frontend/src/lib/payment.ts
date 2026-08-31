@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '');
 
 interface CreateOrderRequest {
   customerName: string;
@@ -22,12 +22,13 @@ declare global {
   interface Window {
     Cashfree: {
       (config: {
+        mode?: 'sandbox' | 'production';
         paymentSessionId: string;
         returnUrl?: string;
         notifyUrl?: string;
         onSuccess: (orderId: string) => void;
         onFailure: (error: any) => void;
-      }): void;
+      }): { checkout: (options: { paymentSessionId: string; redirectTarget?: string }) => void };
       checkout: (options: any) => void;
     };
   }
@@ -109,7 +110,10 @@ export const initiateCashfreeCheckout = async ({
       onFailure,
     };
 
-    window.Cashfree(checkoutOptions);
+    window.Cashfree({ mode: import.meta.env.VITE_CASHFREE_ENV === 'SANDBOX' ? 'sandbox' : 'production' }).checkout({
+      paymentSessionId,
+      redirectTarget: '_self'
+    });
   } catch (error) {
     onFailure(error);
   }

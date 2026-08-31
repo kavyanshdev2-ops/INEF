@@ -518,9 +518,10 @@ export default function App() {
         {currentPage === 'admin' && (
           <AdminView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} setCurrentPage={navigateToPage} />
         )}
-        {currentPage === 'contact' && (
+        {/* TEMPORARILY DISABLED - Contact Section */}
+        {/* {currentPage === 'contact' && (
           <ContactView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} currentUser={currentUser} />
-        )}
+        )} */}
         {currentPage === 'about' && (
           <AboutView activeAtmosphere={atmosphere} isDarkMode={isDarkMode} />
         )}
