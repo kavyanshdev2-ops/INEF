@@ -6,7 +6,9 @@
 import React, { useState } from 'react';
 import { AtmosphereConfig, CartItem, PageId } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck, Check } from 'lucide-react';
+import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck, Check, X } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { createPaymentOrder, initiateCashfreeCheckout } from '../lib/payment';
 
 interface CartViewProps {
   setCurrentPage: (page: PageId) => void;
@@ -29,17 +31,50 @@ export const CartView: React.FC<CartViewProps> = ({
   onClearCart
 }) => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [customerDetails, setCustomerDetails] = useState({ name: '', email: '', phone: '' });
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const total = subtotal;
 
-  const handleCheckout = () => {
+  const openCheckout = async () => {
+    setCheckoutError(null);
+    if (!customerDetails.name.trim() || !customerDetails.email.trim() || !customerDetails.phone.trim()) {
+      setCheckoutError('Enter your name, email, and 10-digit phone number to continue.');
+      return;
+    }
+    if (!supabase) {
+      setCheckoutError('Secure payment requires Supabase login configuration.');
+      return;
+    }
+
     setIsCheckingOut(true);
-    setTimeout(() => {
-      onClearCart();
-      setCurrentPage('payment-success');
-    }, 1500);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Please log in before starting payment.');
+      const { paymentSessionId } = await createPaymentOrder({
+        customerName: customerDetails.name,
+        customerEmail: customerDetails.email,
+        customerPhone: customerDetails.phone,
+        userId: user.id,
+        cartItems: cart.map(({ id, name, price, quantity }) => ({ id, name, price, quantity }))
+      });
+      await initiateCashfreeCheckout({
+        paymentSessionId,
+        onSuccess: () => {
+          setIsPaymentModalOpen(false);
+          onClearCart();
+          setCurrentPage('payment-success');
+        },
+        onFailure: (error) => setCheckoutError(error?.message || 'Payment could not be started.')
+      });
+    } catch (error: any) {
+      setCheckoutError(error?.message || 'Payment could not be started.');
+    } finally {
+      setIsCheckingOut(false);
+    }
   };
 
   return (
@@ -145,17 +180,47 @@ export const CartView: React.FC<CartViewProps> = ({
               </div>
 
               <button
-                onClick={handleCheckout}
-                disabled={isCheckingOut}
+                onClick={() => setIsPaymentModalOpen(true)}
                 className="w-full py-4 bg-rose-600 hover:bg-rose-500 text-white rounded-full font-mono text-xs tracking-widest font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-lg shadow-rose-600/30"
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>{isCheckingOut ? 'PROCESSING TRANSACTION...' : 'EXECUTE CHECKOUT'}</span>
+                <span>EXECUTE CHECKOUT</span>
               </button>
             </div>
           </div>
         </div>
       )}
+
+      {isPaymentModalOpen && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
+        <div className={`w-full max-w-md p-6 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} shadow-2xl`}>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-display text-lg font-bold text-zinc-950 dark:text-white uppercase">PAYMENT DETAILS</h2>
+            <button onClick={() => { setIsPaymentModalOpen(false); setCheckoutError(null); }} className="p-2 text-zinc-500 hover:text-rose-500 cursor-pointer" aria-label="Close payment details"><X className="w-4 h-4" /></button>
+          </div>
+          <form onSubmit={(event) => { event.preventDefault(); void openCheckout(); }} className="space-y-4">
+            {(['name', 'email', 'phone'] as const).map((field) => (
+              <input
+                key={field}
+                required
+                type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
+                value={customerDetails[field]}
+                onChange={(event) => setCustomerDetails((previous) => ({ ...previous, [field]: event.target.value }))}
+                placeholder={field === 'name' ? 'Full name' : field === 'email' ? 'Email address' : '10-digit phone number'}
+                className="w-full px-4 py-3 rounded-2xl bg-black/20 border border-white/10 text-sm text-zinc-950 dark:text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500"
+              />
+            ))}
+            {checkoutError && <p className="text-xs font-mono text-rose-500">{checkoutError}</p>}
+            <button
+              type="submit"
+              disabled={isCheckingOut}
+              className="w-full py-4 bg-rose-600 hover:bg-rose-500 disabled:opacity-50 text-white rounded-full font-mono text-xs tracking-widest font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>{isCheckingOut ? 'CONNECTING TO CASHFREE...' : 'CONTINUE TO CASHFREE'}</span>
+            </button>
+          </form>
+        </div>
+      </div>}
     </div>
   );
 };

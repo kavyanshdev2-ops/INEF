@@ -1,0 +1,86 @@
+# backend todo list
+
+- [ ] add backend env values on the server
+- [ ] set `CASHFREE_APP_ID`
+- [ ] set `CASHFREE_SECRET_KEY`
+- [ ] set `CASHFREE_ENV=SANDBOX` for testing
+- [ ] change to `CASHFREE_ENV=PRODUCTION` after testing
+- [ ] set `FRONTEND_URL=https://inef.cc`
+- [ ] set `FRONTEND_URLS` with all allowed website urls
+- [ ] set `CASHFREE_NOTIFY_URL`
+- [ ] deploy the backend server
+- [ ] check `/health` api
+- [ ] add backend url to frontend `VITE_API_URL`
+- [ ] test order creation in Cashfree sandbox
+- [ ] test payment success flow
+- [ ] test payment failed flow
+- [ ] check payment status after payment
+- [ ] add Cashfree webhook handling
+- [ ] save orders in Supabase
+- [ ] save payment logs in Supabase
+- [ ] check cart is cleared only after paid status
+- [ ] add order details in user account
+- [ ] test phone number and email checks
+- [ ] test empty cart checkout
+- [ ] test mobile checkout
+- [ ] rotate old Cashfree secret key
+- [ ] remove `backend/.env` from Git tracking
+- [ ] remove `frontend/.env` from Git tracking
+- [ ] add `.env` files to `.gitignore`
+- [ ] remove old secrets from Git history
+- [ ] never put secret key in frontend env
+- [ ] never push `.env` files to GitHub
+- [ ] use HTTPS for frontend and backend
+- [ ] allow only trusted frontend urls in CORS
+- [ ] add request rate limits
+- [ ] add request timeouts
+- [ ] do not trust price values from the frontend
+- [ ] load product prices from the database
+- [ ] check stock before creating an order
+- [ ] check user login on every order request
+- [ ] check the order belongs to the logged in user
+- [ ] create one unique order id for every checkout
+- [ ] stop duplicate orders on repeated requests
+- [ ] add payment request id for safe retries
+- [ ] verify Cashfree payment status on the backend
+- [ ] never mark an order paid from the frontend callback
+- [ ] verify Cashfree webhook signatures
+- [ ] handle failed and cancelled webhooks
+- [ ] handle delayed payments
+- [ ] handle refunded payments
+- [ ] save Cashfree order id in Supabase
+- [ ] save Cashfree payment id in Supabase
+- [ ] save the final payment status in Supabase
+- [ ] save the exact paid amount in Supabase
+- [ ] save customer and order items in Supabase
+- [ ] use database row security policies
+- [ ] stop users from reading other orders
+- [ ] add order status history
+- [ ] send order confirmation after verified payment
+- [ ] send payment failed message when needed
+- [ ] add admin order search
+- [ ] add admin refund status
+- [ ] hide secret values from logs
+- [ ] add useful backend error logs
+- [ ] add payment error alerts
+- [ ] add uptime monitoring
+- [ ] test backend restart during payment
+- [ ] test webhook sent more than once
+- [ ] test payment timeout
+- [ ] test payment after browser close
+- [ ] test two checkout clicks
+- [ ] test wrong item price from the browser
+- [ ] test wrong user id from the browser
+- [ ] test invalid phone number
+- [ ] test invalid email address
+- [ ] test very large cart quantity
+- [ ] test sold out product
+- [ ] test order amount rounding
+- [ ] test sandbox card and UPI payment
+- [ ] test production payment with a small amount
+- [ ] keep sandbox and production credentials separate
+- [ ] back up the database
+- [ ] check database backups can be restored
+- [ ] keep Node and packages updated
+- [ ] run security checks before every deploy
+- [ ] keep a rollback version ready
