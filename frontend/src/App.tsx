@@ -35,6 +35,7 @@ const pagePaths: Record<PageId, string> = {
   login: '/login',
   gaming: '/gaming',
   about: '/about',
+  sivy: '/sivy',
   'payment-success': '/payment/success',
   'payment-failed': '/payment/failed',
 };
@@ -48,7 +49,9 @@ const getPageFromLocation = (): PageId => {
   if (new URLSearchParams(window.location.search).has('order_id')) {
     return 'payment-success';
   }
-  const pageFromPath = pathPages[window.location.pathname.replace(/\/$/, '') || '/'];
+  const normalizedPath = window.location.pathname.replace(/\/$/, '') || '/';
+  if (normalizedPath === '/sivy') return 'sivy';
+  const pageFromPath = pathPages[normalizedPath];
   if (pageFromPath) return pageFromPath;
   return 'home';
 };
@@ -431,6 +434,16 @@ export default function App() {
         return cherryBlossomBg; // Soft dynamic cherry blossom branches
     }
   };
+
+  if (currentPage === 'sivy') {
+    return (
+      <div className="min-h-screen w-full bg-white flex items-center justify-center px-6">
+        <h2 className="text-center text-2xl font-medium tracking-tight text-black sm:text-3xl md:text-5xl">
+          One day, I will grow wings
+        </h2>
+      </div>
+    );
+  }
 
   return (
     <div
