@@ -439,7 +439,7 @@ export default function App() {
     return (
       <div className="min-h-screen w-full bg-white flex items-center justify-center px-6">
         <h2 className="text-center text-2xl font-medium tracking-tight text-black sm:text-3xl md:text-5xl">
-          One day, I will grow wings
+          Cigarettes Out The Window
         </h2>
       </div>
     );
