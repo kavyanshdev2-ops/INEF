@@ -642,7 +642,7 @@ export default function App() {
                 { id: 'membership' as PageId, label: 'MEMBERSHIP' },
                 { id: 'shop' as PageId, label: 'SHOP' },
                 { id: 'journals' as PageId, label: 'COMMUNITY JOURNALS' },
-                { id: 'contact' as PageId, label: 'CONTACT' },
+                // { id: 'contact' as PageId, label: 'CONTACT' }, // TEMPORARILY DISABLED
                 { id: 'cart' as PageId, label: 'CART' },
                 { id: 'login' as PageId, label: 'LOGIN' },
               ].map((lnk) => {
