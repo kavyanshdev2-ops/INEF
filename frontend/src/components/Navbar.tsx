@@ -48,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'membership' as PageId, label: 'MEMBERSHIP', icon: Crown },
     { id: 'gaming' as PageId, label: 'GAMING', icon: Gamepad2 },
     { id: 'about' as PageId, label: 'ABOUT', icon: Info },
-    { id: 'contact' as PageId, label: 'CONTACT', icon: Mail },
+    // { id: 'contact' as PageId, label: 'CONTACT', icon: Mail }, // TEMPORARILY DISABLED
     ...(isAdmin ? [{ id: 'admin' as PageId, label: 'ADMIN', icon: ShieldAlert }] : []),
   ];
 
