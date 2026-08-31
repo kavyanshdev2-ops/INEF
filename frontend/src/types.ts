@@ -14,6 +14,7 @@ export type PageId =
   | 'login'
   | 'gaming'
   | 'about'
+  | 'sivy'
   | 'payment-success'
   | 'payment-failed';
 
