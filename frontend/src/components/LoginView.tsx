@@ -1110,13 +1110,13 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   type="button"
                   onClick={handleGoogleLogin}
                   disabled={isAuthenticating || !isSupabaseConfigured}
-                  className={`w-full py-3.5 mt-3 font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer border ${
+                  className={`w-full py-3.5 mt-3 font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer border backdrop-blur-md ${
                     isSupabaseConfigured
-                      ? `${isDarkMode ? 'bg-white text-zinc-900 border-white hover:bg-zinc-100' : 'bg-white text-zinc-900 border-zinc-300 hover:bg-zinc-50'} shadow-sm`
+                      ? `${isDarkMode ? 'bg-white/85 text-zinc-900 border-white/70 hover:bg-white' : 'bg-white/75 text-zinc-900 border-white/80 hover:bg-white'} shadow-[0_8px_24px_rgba(255,255,255,0.08)]`
                       : 'bg-zinc-800 text-zinc-500 border-zinc-700/50 cursor-not-allowed'
                   } disabled:opacity-50`}
                 >
-                  <img src="/sivyassets/google.png" alt="" className="w-4 h-4 object-contain" />
+                  <img src="/sivyassets/google.png" alt="Google" className="w-4 h-4 object-contain" />
                   <span>{authMode === 'login' ? 'SIGN IN WITH GOOGLE' : 'SIGN UP WITH GOOGLE'}</span>
                 </button>
 
