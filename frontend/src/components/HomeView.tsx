@@ -55,7 +55,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
   const statsSectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const targets = { members: 2500, sanctuaries: 50, years: 6 };
+    const targets = { members: 13000, sanctuaries: 50, years: 6 };
     const duration = 3200;
     let animationFrame = 0;
     let hasStarted = false;
@@ -422,7 +422,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       >
         <div className="glass-panel rounded-3xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-black/10 dark:divide-white/10">
           <div className="space-y-2 pb-6 md:pb-0">
-            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">{stats.members.toLocaleString()}</div>
+            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">{stats.members.toLocaleString()}+</div>
             <div className={`font-mono text-[10px] tracking-[0.25em] ${themeStyles.accentText} uppercase font-semibold`}>VERIFIED MEMBERS</div>
           </div>
           <div className="space-y-2 py-6 md:py-0 md:px-6">
