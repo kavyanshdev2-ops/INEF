@@ -38,7 +38,7 @@ export const PaymentSuccessView: React.FC<PaymentSuccessViewProps> = ({
         </div>
 
         <p className="text-xs text-zinc-400 font-mono leading-relaxed max-w-md mx-auto">
-          Your order transmission has been processed by the node network. An acquisition receipt and rank activation key have been sent to your email.
+          Your order transmission has been processed by the network. An acquisition receipt and rank activation key have been sent to your email.
         </p>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">

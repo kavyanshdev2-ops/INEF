@@ -278,7 +278,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
   const pageTitle = activeTab === 'discord' ? 'COMMUNITY MEMBERSHIPS' : 'MINECRAFT SERVER RANKS';
   const pageTagline = activeTab === 'discord' ? 'UPGRADES // MEMBERSHIP PLANS' : 'SERVER STORE // LIFETIME DONATIONS';
   const pageSub = activeTab === 'discord'
-    ? 'Support Ineffable hosting nodes and fund active development. Gain immediate, automated premium roles, custom cosmetic permissions, and exclusive Discord perks linked to your account.'
+    ? 'Support Ineffable hosting and fund active development. Gain immediate, automated premium roles, custom cosmetic permissions, and exclusive Discord perks linked to your account.'
     : 'Enhance your survival gameplay on the Ineffable SMP server with premium donor ranks. Experience fully customizable glassy cards featuring tabbed sub-sections for commands, kits, and cosmetics.';
 
   return (
@@ -478,7 +478,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
               Minecraft Connection Info
             </h5>
             <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed`}>
-              Connect to the Survival server using our custom play node address below. Ranks apply globally to all server areas and lobby nodes immediately.
+              Connect to the Survival server using our custom play address below. Ranks apply globally to all server areas and lobbies immediately.
             </p>
             <div className={`p-3 rounded-lg font-mono text-xs flex justify-between items-center ${isDarkMode ? 'bg-zinc-950 text-emerald-400 border border-zinc-900' : 'bg-white text-emerald-600 border border-zinc-200'
               }`}>

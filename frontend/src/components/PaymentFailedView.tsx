@@ -38,7 +38,7 @@ export const PaymentFailedView: React.FC<PaymentFailedViewProps> = ({
         </div>
 
         <p className="text-xs text-zinc-400 font-mono leading-relaxed max-w-md mx-auto">
-          The payment node declined the request or timed out. Your cart items remain saved in your session.
+          The payment service declined the request or timed out. Your cart items remain saved in your session.
         </p>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">

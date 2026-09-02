@@ -568,7 +568,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
           <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
-            PROFILE // SYNCED PROFILE NODES
+            PROFILE // SYNCED PROFILES
           </span>
           <h2 className="text-4xl md:text-5xl font-sans tracking-tight font-extrabold uppercase">
             MEMBER TERMINAL
@@ -899,7 +899,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   {ordersHistory.length === 0 ? (
                     <div className="text-center py-12 text-zinc-500 font-mono text-xs">
                       <ClipboardList className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                      <p>No orders recorded under this account node.</p>
+                      <p>No orders recorded under this account.</p>
                       <p className="text-[10px] text-zinc-600 mt-1 uppercase">Sync checkouts via the Cart menu.</p>
                     </div>
                   ) : (
@@ -1108,7 +1108,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                             onClick={() => setAuthMode('forgot')}
                             className="font-mono text-[8px] text-rose-400 hover:text-rose-300 uppercase tracking-widest cursor-pointer"
                           >
-                            Forgot key?
+                            Forget password?
                           </button>
                         )}
                       </div>
@@ -1136,7 +1136,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                     } disabled:cursor-not-allowed`}
                   >
                     <KeyRound className="w-4 h-4" />
-                    <span>{authMode === 'login' ? 'TRANSMIT SECURITY PASS' : 'PROVISION ACCOUNT NODE'}</span>
+                    <span>{authMode === 'login' ? 'LOG IN' : 'SIGN UP'}</span>
                   </button>
                 </form>
 

@@ -262,7 +262,7 @@ export const ResourceLab: React.FC<ResourceLabProps> = ({ activeAtmosphere, isDa
     {
       id: 'bio-goth',
       title: 'Brutalist Terminal',
-      content: `◤━━━━━━━━━━━━━━━━━━━━◥\n   SYSTEM: ONLINE // 2026\n   NODE: OSAKA CHASSIS\n   VIBE: MONOCHROMATIC\n◣━━━━━━━━━━━━━━━━━━━━◢`
+      content: `◤━━━━━━━━━━━━━━━━━━━━◥\n   SYSTEM: ONLINE // 2026\n   OSAKA CHASSIS\n   VIBE: MONOCHROMATIC\n◣━━━━━━━━━━━━━━━━━━━━◢`
     }
   ];
 
@@ -293,7 +293,7 @@ export const ResourceLab: React.FC<ResourceLabProps> = ({ activeAtmosphere, isDa
         { type: 'text', name: '💬・general-comms' },
         { type: 'text', name: '🛠️・sandbox-code' },
         { type: 'category', name: '🔊・voice lines' },
-        { type: 'voice', name: 'SANDBOX_NODE_A' },
+        { type: 'voice', name: 'SANDBOX_A' },
         { type: 'voice', name: 'AUDIO_STREAM_01' }
       ]
     }
@@ -1074,7 +1074,7 @@ export const ResourceLab: React.FC<ResourceLabProps> = ({ activeAtmosphere, isDa
                       {/* ABOUT ME SECTION */}
                       <div className="space-y-2">
                         <span className={`block text-[9px] font-bold ${cardTheme.textSecondary} uppercase tracking-widest opacity-80`}>
-                          ABOUT ME
+                          ABOUT US
                         </span>
                         <pre className={`font-mono text-[10px] ${cardTheme.textPrimary} ${cardTheme.preBg} p-3 rounded-xl border ${cardTheme.innerBorder} overflow-x-auto whitespace-pre leading-relaxed font-light transition-colors duration-300`}>
                           {customBio || 'No biography written...'}

@@ -70,7 +70,7 @@ const MEMBERS_DATA: MemberProfile[] = [
       specialty: 'System Director'
     },
     badges: ['staff', 'booster', 'supporter'],
-    description: 'Supreme founder and architect of the Ineffable node. Directs global branding, long-term server infrastructure, and strategic digital drops.'
+    description: 'Supreme founder and architect of the Ineffable. Directs global branding, long-term server infrastructure, and strategic digital drops.'
   },
   {
     id: 'harshil',
@@ -90,7 +90,7 @@ const MEMBERS_DATA: MemberProfile[] = [
       specialty: 'Network Pipeline'
     },
     badges: ['staff', 'developer'],
-    description: 'Pioneers real-time system performance and backend optimization. Keeps our node pipeline running at extreme scale without latency.'
+    description: 'Pioneers real-time system performance and backend optimization. Keeps our pipeline running at extreme scale without latency.'
   },
   {
     id: 'mrityunjay',
@@ -110,7 +110,7 @@ const MEMBERS_DATA: MemberProfile[] = [
       specialty: 'Database Architect'
     },
     badges: ['staff', 'supporter'],
-    description: 'Co-founder of core database protocols. Directs structured query channels and safe replication algorithms for high-availability nodes.'
+    description: 'Co-founder of core database protocols. Directs structured query channels and safe replication algorithms for high-availability.'
   },
   {
     id: 'aaryan',
@@ -160,7 +160,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
-    status: '🛡️ guarding the node hierarchy',
+    status: '🛡️ guarding the hierarchy',
     onlineStatus: 'online',
     joinedDate: 'JANUARY 15, 2021',
     aboutMe: {
@@ -228,7 +228,7 @@ const MEMBERS_DATA: MemberProfile[] = [
       name: 'vixen',
       age: 'twenty-one',
       status: 'lurking',
-      specialty: 'Security Node'
+      specialty: 'Security'
     },
     badges: ['staff', 'booster'],
     description: 'Directs network operations and security configurations. Monitors gateway logs and protects system integrity from malicious intrusions.'
@@ -308,7 +308,7 @@ const MEMBERS_DATA: MemberProfile[] = [
       name: 'hannah',
       age: 'twenty-two',
       status: 'smiling',
-      specialty: 'Welfare Node'
+      specialty: 'Welfare'
     },
     badges: ['staff', 'supporter'],
     description: 'Co-manages support tickets and guides onboarding. Dedicated to making our community space secure, warm, and highly engaging.'
@@ -411,7 +411,7 @@ const MEMBERS_DATA: MemberProfile[] = [
       specialty: 'Community Oversight & Co-Owner'
     },
     badges: ['staff', 'supporter', 'booster'],
-    description: 'Co-owner and network stabilizer. Directs community welfare, manages verification gateways, and maintains balance across all nodes.'
+    description: 'Co-owner and network stabilizer. Directs community welfare, manages verification gateways, and maintains balance across all.'
   }
 ];
 
@@ -511,7 +511,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
       const json = await response.json();
       if (json.success && json.data) {
         setLanyardData(json.data);
-        setSyncFeedback('Node connected successfully!');
+        setSyncFeedback('Connected successfully!');
         // Update local selectedMember's ID temporarily so we can track it
         if (selectedMember) {
           selectedMember.discordId = id;
@@ -682,7 +682,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
         <div className="inline-flex items-center space-x-2">
           <div className={`h-[1px] w-8 ${themeStyles.accentLine} bg-linear-to-r`} />
           <span className={`font-mono text-[9px] tracking-[0.4em] uppercase ${themeStyles.accentText} font-extrabold`}>
-            CONVERGENCE NODE // SPECIFICATIONS
+            CONVERGENCE // SPECIFICATIONS
           </span>
           <div className={`h-[1px] w-8 ${themeStyles.accentLine} bg-linear-to-l`} />
         </div>
@@ -894,7 +894,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   className={`p-1 rounded transition-colors cursor-pointer ${
                     isDarkMode ? 'hover:text-white hover:bg-zinc-800' : 'hover:text-zinc-900 hover:bg-zinc-200'
                   }`}
-                  title="Force Reload Gateway Node"
+                  title="Force Reload Gateway"
                 >
                   <RefreshCw className={`w-2.5 h-2.5 ${isLanyardLoading ? 'animate-spin' : ''}`} />
                 </button>
@@ -1110,7 +1110,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                   <p className={`text-[9px] truncate mt-0.5 italic font-light ${
                                     isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                                   }`}>
-                                    on {spotifyData.album || 'Spotify Node'}
+                                    on {spotifyData.album || 'Spotify'}
                                   </p>
                                 </div>
                               </div>
@@ -1214,7 +1214,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
                           isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                         }`}>
-                          ABOUT ME
+                          ABOUT US
                         </h4>
 
                         <div className={`border rounded-lg p-3.5 font-mono text-[10px] space-y-2.5 shadow-inner ${
@@ -1295,7 +1295,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                               lanyardData ? lanyardData.discord_status : selectedMember.onlineStatus
                             )}`} />
                             <span className="uppercase">
-                              {selectedMember.category === 'cofounder' ? 'co founder' : selectedMember.category === 'coowner' ? 'co owner' : selectedMember.category === 'techlead' ? 'tech lead' : selectedMember.category} Node
+                              {selectedMember.category === 'cofounder' ? 'co founder' : selectedMember.category === 'coowner' ? 'co owner' : selectedMember.category === 'techlead' ? 'tech lead' : selectedMember.category}
                             </span>
                           </span>
                         </div>
@@ -1330,7 +1330,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       <p className={`text-[10px] leading-relaxed font-sans ${
                         isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
                       }`}>
-                        Are you on Lanyard? Enter your Discord snowflake ID to sync your live status, game, and Spotify with this node card!
+                        Are you on Lanyard? Enter your Discord snowflake ID to sync your live status, game, and Spotify with this card!
                       </p>
                       <div className="flex gap-2">
                         <input

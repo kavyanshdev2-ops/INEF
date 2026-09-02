@@ -803,7 +803,7 @@ export function GamingView({ activeAtmosphere, isDarkMode }: GamingViewProps) {
           >
             <div className={`flex flex-col md:flex-row items-center justify-between gap-6 border-b ${isDarkMode ? 'border-zinc-800' : 'border-zinc-200'} pb-6`}>
               <div className="space-y-2 text-center md:text-left">
-                <span className="text-[9px] text-rose-400 uppercase font-mono tracking-wider">INEFFABLE EXPERIENCE NODE</span>
+                <span className="text-[9px] text-rose-400 uppercase font-mono tracking-wider">INEFFABLE EXPERIENCE</span>
                 <h2 className={`font-mono text-2xl tracking-widest ${themeStyles.textPrimary} font-bold`}>
                   ROBLOX FASHION SANCTUARY
                 </h2>
