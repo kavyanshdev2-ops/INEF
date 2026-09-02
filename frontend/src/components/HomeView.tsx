@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId, ApparelItem, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
@@ -52,29 +52,51 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
   const [acquiredSuccess, setAcquiredSuccess] = useState<boolean>(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [stats, setStats] = useState({ members: 0, sanctuaries: 0, years: 0 });
+  const statsSectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const targets = { members: 13000, sanctuaries: 50, years: 6 };
-    const duration = 1400;
-    const startedAt = performance.now();
+    const targets = { members: 2500, sanctuaries: 50, years: 6 };
+    const duration = 3200;
     let animationFrame = 0;
+    let hasStarted = false;
 
-    const animateStats = (now: number) => {
-      const progress = Math.min((now - startedAt) / duration, 1);
-      const easedProgress = 1 - Math.pow(1 - progress, 3);
-      setStats({
-        members: Math.floor(targets.members * easedProgress),
-        sanctuaries: Math.floor(targets.sanctuaries * easedProgress),
-        years: Math.floor(targets.years * easedProgress),
-      });
+    const startAnimation = () => {
+      if (hasStarted) return;
+      hasStarted = true;
+      const startedAt = performance.now();
 
-      if (progress < 1) {
-        animationFrame = requestAnimationFrame(animateStats);
-      }
+      const animateStats = (now: number) => {
+        const progress = Math.min((now - startedAt) / duration, 1);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        setStats({
+          members: Math.floor(targets.members * easedProgress),
+          sanctuaries: Math.floor(targets.sanctuaries * easedProgress),
+          years: Math.floor(targets.years * easedProgress),
+        });
+
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(animateStats);
+        }
+      };
+
+      animationFrame = requestAnimationFrame(animateStats);
     };
 
-    animationFrame = requestAnimationFrame(animateStats);
-    return () => cancelAnimationFrame(animationFrame);
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        startAnimation();
+        observer.disconnect();
+      }
+    }, { threshold: 0.25 });
+
+    if (statsSectionRef.current) {
+      observer.observe(statsSectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(animationFrame);
+    };
   }, []);
 
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
@@ -391,6 +413,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       {/* Real-time Editorial Metrics Board */}
       <motion.section
         id="home-stats-section"
+        ref={statsSectionRef}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
