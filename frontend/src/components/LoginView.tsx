@@ -973,45 +973,10 @@ export const LoginView: React.FC<LoginViewProps> = ({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-3xl mx-auto items-stretch">
+      <div className="grid grid-cols-1 gap-8 max-w-3xl mx-auto items-stretch">
         
-        {/* Google Supabase Login - Full Width in OAuth column */}
-        <div className={`col-span-12 md:col-span-6 ${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-3xl p-6 space-y-6 text-center relative overflow-hidden flex flex-col justify-between`}>
-          {isSupabaseConfigured && (
-            <span className="absolute top-2 right-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-mono text-[7px] tracking-wider uppercase font-bold">
-              ● SECURE GATEWAY
-            </span>
-          )}
-          
-          <div className="space-y-2">
-            <h3 className={`font-sans text-lg font-bold ${themeStyles.textPrimary} uppercase tracking-wider flex items-center justify-center gap-2`}>
-              <Chrome className="w-5 h-5 text-rose-400" />
-              <span>Google Cloud Sync</span>
-            </h3>
-            <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed`}>
-              {isSupabaseConfigured 
-                ? 'Primary secure oauth link. Synchronize your account automatically, load active server badges, and unlock custom vanity roles.'
-                : 'Supabase credentials missing. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to activate Google cloud sync features.'}
-            </p>
-          </div>
-
-          <button
-            id="btn-google-oauth"
-            onClick={handleGoogleLogin}
-            disabled={isAuthenticating || !isSupabaseConfigured}
-            className={`w-full py-4 ${
-              isSupabaseConfigured 
-                ? 'bg-rose-500 hover:bg-rose-600 text-white cursor-pointer shadow-lg shadow-rose-500/10' 
-                : 'bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700/50'
-            } font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2.5 disabled:opacity-50`}
-          >
-            <Chrome className="w-4.5 h-4.5" />
-            <span>LOG IN WITH GOOGLE</span>
-          </button>
-        </div>
-
-        {/* Credentials Form column (Login, Signup, Forgot password toggle) */}
-        <div className={`col-span-12 md:col-span-6 ${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-3xl p-6 space-y-5 flex flex-col justify-between`}>
+        {/* Credentials Form (Login, Signup, Forgot password toggle) */}
+        <div className={`${themeStyles.bgCard} border ${themeStyles.borderMain} rounded-3xl p-6 space-y-5 flex flex-col justify-between`}>
           <div>
             <div className={`flex border-b ${isDarkMode ? 'border-zinc-800/80' : 'border-zinc-200'} mb-4 pb-0.5 justify-start`}>
               <button
@@ -1140,6 +1105,20 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   </button>
                 </form>
 
+                <button
+                  id="btn-google-oauth"
+                  type="button"
+                  onClick={handleGoogleLogin}
+                  disabled={isAuthenticating || !isSupabaseConfigured}
+                  className={`w-full py-3.5 mt-3 font-mono text-xs tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer border ${
+                    isSupabaseConfigured
+                      ? `${isDarkMode ? 'bg-white text-zinc-900 border-white hover:bg-zinc-100' : 'bg-white text-zinc-900 border-zinc-300 hover:bg-zinc-50'} shadow-sm`
+                      : 'bg-zinc-800 text-zinc-500 border-zinc-700/50 cursor-not-allowed'
+                  } disabled:opacity-50`}
+                >
+                  <img src="/sivyassets/google.png" alt="" className="w-4 h-4 object-contain" />
+                  <span>{authMode === 'login' ? 'SIGN IN WITH GOOGLE' : 'SIGN UP WITH GOOGLE'}</span>
+                </button>
 
               </>
             )}
