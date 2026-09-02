@@ -45,7 +45,7 @@ export const MinecraftStatusWidget: React.FC<MinecraftStatusWidgetProps> = ({
           </div>
           <div>
             <h4 className="font-display font-bold text-sm text-zinc-950 dark:text-white uppercase">
-              MC SURVIVAL NODE
+              MC SURVIVAL
             </h4>
             <div className="flex items-center space-x-2 text-[10px] font-mono text-emerald-500">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

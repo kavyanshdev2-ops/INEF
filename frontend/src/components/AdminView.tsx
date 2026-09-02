@@ -25,7 +25,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
   const [saved, setSaved] = useState(false);
   const [settings, setSettings] = useState({
     siteName: 'INEFFABLE',
-    announcement: 'Mystical Tier Ranks are now active across all nodes.',
+    announcement: 'Mystical Tier Ranks are now active across the server.',
     maintenanceMode: false
   });
 
@@ -67,7 +67,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
           <span className="text-3xl font-mono font-bold text-emerald-400 mt-2 block">$14,290</span>
         </div>
         <div className={`p-6 rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} backdrop-blur-xl`}>
-          <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">NODE HEALTH</span>
+          <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">HEALTH</span>
           <span className="text-3xl font-mono font-bold text-sky-400 mt-2 block">99.98%</span>
         </div>
       </div>

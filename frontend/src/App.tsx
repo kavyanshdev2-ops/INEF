@@ -604,10 +604,15 @@ export default function App() {
               INEFFABLE is an open-ended digital experimental brand blurring the boundary of cyber couture clothing, brutalist architecture, and dynamic physics loops.
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-1">
-              <div className={`flex items-center space-x-2 ${themeStyles.textMuted} font-mono text-[9px] tracking-wider`}>
+              <a
+                href="https://www.google.com/maps?q=18.97010713391398%2C72.8181049264994&utm_source=chatgpt.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center space-x-2 ${themeStyles.textMuted} hover:text-rose-500 transition-colors font-mono text-[9px] tracking-wider`}
+              >
                 <MapPin className={`w-3.5 h-3.5 ${themeStyles.accentTextMuted}`} />
-                <span>IN UR HEART AND ALWAYS LOVING</span>
-              </div>
+                <span>Mumbai, India</span>
+              </a>
               <div className="flex items-center space-x-3 font-mono text-[10px]">
                 <a
                   href="https://discord.gg/ineffable"

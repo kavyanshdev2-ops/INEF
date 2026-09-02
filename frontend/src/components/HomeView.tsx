@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId, ApparelItem, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
@@ -51,6 +51,31 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
   const [selectedProduct, setSelectedProduct] = useState<ApparelItem | null>(null);
   const [acquiredSuccess, setAcquiredSuccess] = useState<boolean>(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [stats, setStats] = useState({ members: 0, sanctuaries: 0, years: 0 });
+
+  useEffect(() => {
+    const targets = { members: 13000, sanctuaries: 50, years: 6 };
+    const duration = 1400;
+    const startedAt = performance.now();
+    let animationFrame = 0;
+
+    const animateStats = (now: number) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      setStats({
+        members: Math.floor(targets.members * easedProgress),
+        sanctuaries: Math.floor(targets.sanctuaries * easedProgress),
+        years: Math.floor(targets.years * easedProgress),
+      });
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animateStats);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animateStats);
+    return () => cancelAnimationFrame(animationFrame);
+  }, []);
 
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
@@ -241,13 +266,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       name: 'Survival SMP Access',
       category: 'GAMING HUB',
       price: 'Free for Members',
-      description: 'Jump into blocky chaos, community builds, and laid-back custom survival perks on our 24/7 dedicated Minecraft node.',
+      description: 'Jump into blocky chaos, community builds, and laid-back custom survival perks on our 24/7 dedicated Minecraft server.',
       image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=800&auto=format&fit=crop'
     },
     {
       id: 'node-events',
       name: 'Weekly Movie & Sound',
-      category: 'COMMUNITY NODE',
+      category: 'COMMUNITY',
       price: 'Included',
       description: 'Access movie nights, karaoke, game tournaments, and live music jam sessions hosted by our awesome event coordinators.',
       image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop'
@@ -269,7 +294,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
     },
     {
       q: "How do I upgrade to Platinum, Diamond, or Titanium Access?",
-      a: "You can purchase any of our premium membership tiers directly here or through our Discord Server Shop. These tiers help cover our hosting nodes and grant you immediate premium roles, extra reactions, custom colors, and soundboard permissions."
+      a: "You can purchase any of our premium membership tiers directly here or through our Discord Server Shop. These tiers help cover our hosting and grant you immediate premium roles, extra reactions, custom colors, and soundboard permissions."
     },
     {
       q: "Are the Minecraft server and weekly gaming events free?",
@@ -277,7 +302,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
     },
     {
       q: "How can I partner or promote my brand within Inefontop?",
-      a: "We offer dedicated promotion slots, spotlight text announcements, and event sponsorship opportunities. Click on 'PREVIEW' under the Premium Promotions node above or contact our administration team through the Connect page."
+      a: "We offer dedicated promotion slots, spotlight text announcements, and event sponsorship opportunities. Click on 'PREVIEW' under the Premium Promotions section above or contact our administration team through the Connect page."
     }
   ];
 
@@ -344,7 +369,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                 className={`flex items-center space-x-3 ${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 font-mono text-xs tracking-[0.2em] font-extrabold py-3.5 px-8 rounded-full shadow-[0_4px_20px_rgba(244,63,94,0.3)] transition-all duration-300 hover:scale-[1.03] active:scale-95 cursor-pointer`}
               >
                 <Radio className="w-4 h-4 animate-pulse text-zinc-950" />
-                <span>JOIN DISCORD NODE</span>
+                <span>JOIN DISCORD</span>
                 <ExternalLink className="w-3.5 h-3.5 opacity-80 text-zinc-950" />
               </a>
 
@@ -354,7 +379,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                 className={`flex items-center space-x-3 ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-400 ${themeStyles.textPrimary} font-mono text-xs tracking-[0.2em] font-bold py-3.5 px-8 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-95 cursor-pointer backdrop-blur-xl shadow-xs`}
               >
                 <Users className={`w-4 h-4 ${themeStyles.accentIconColor}`} />
-                <span>ABOUT ME</span>
+                <span>ABOUT US</span>
                 <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
               </button>
             </div>
@@ -374,15 +399,15 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
       >
         <div className="glass-panel rounded-3xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-black/10 dark:divide-white/10">
           <div className="space-y-2 pb-6 md:pb-0">
-            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">13,000+</div>
+            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">{stats.members.toLocaleString()}</div>
             <div className={`font-mono text-[10px] tracking-[0.25em] ${themeStyles.accentText} uppercase font-semibold`}>VERIFIED MEMBERS</div>
           </div>
           <div className="space-y-2 py-6 md:py-0 md:px-6">
-            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">50+</div>
+            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">{stats.sanctuaries}+</div>
             <div className={`font-mono text-[10px] tracking-[0.25em] ${themeStyles.accentText} uppercase font-semibold`}>VOICE SANCTUARIES</div>
           </div>
           <div className="space-y-2 pt-6 md:pt-0">
-            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">6 YEARS</div>
+            <div className="text-4xl lg:text-5xl font-display font-black text-zinc-950 dark:text-white">{stats.years} YEARS</div>
             <div className={`font-mono text-[10px] tracking-[0.25em] ${themeStyles.accentText} uppercase font-semibold`}>CONTINUOUS HERITAGE</div>
           </div>
         </div>
@@ -465,14 +490,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
             </div>
             <h3 className="text-lg font-display font-bold text-zinc-950 dark:text-white mb-2">Voice Sanctuaries</h3>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
-              24/7 active voice nodes to chill, share screens, or unwind with global members.
+              24/7 active voice rooms to chill, share screens, or unwind with global members.
             </p>
           </motion.div>
 
         </div>
       </section>
 
-      {/* Exclusive Services & Nodes Grid */}
+      {/* Exclusive Services Grid */}
       <section
         id="home-apparel-section"
         className="max-w-7xl mx-auto px-6 py-20 border-t border-black/10 dark:border-white/10"
@@ -483,7 +508,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
               02 // EXCLUSIVE CHANNELS
             </span>
             <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-zinc-950 dark:text-white">
-              Featured Nodes & Services
+              Featured Services
             </h2>
           </div>
           <span className="font-mono text-[10px] tracking-[0.2em] text-zinc-400 uppercase mt-2 md:mt-0">

@@ -424,7 +424,7 @@ export const ContactView: React.FC<ContactViewProps> = ({
               }`}
           >
             <Globe className="w-3.5 h-3.5" />
-            <span>Global Nodes</span>
+            <span>Global</span>
           </button>
         </div>
       </div>
@@ -802,13 +802,13 @@ export const ContactView: React.FC<ContactViewProps> = ({
       )}
 
       {/* ========================================================================
-          TAB 3: GLOBAL HEADQUARTERS & SUPPORT NODES
+          TAB 3: GLOBAL HEADQUARTERS & SUPPORT
          ======================================================================== */}
       {activeTab === 'global-nodes' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
             {
-              city: 'TOKYO SANCTUARY NODE',
+              city: 'TOKYO SANCTUARY',
               location: 'Aoyama, Minato City, Tokyo 107-0062',
               hours: '10:00 - 22:00 JST',
               email: 'tokyo@ineffable.cc',
@@ -846,7 +846,7 @@ export const ContactView: React.FC<ContactViewProps> = ({
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] tracking-widest text-rose-500 uppercase font-bold">
-                  ● OPERATIONAL NODE
+                  ● OPERATIONAL
                 </span>
                 <span className="text-xs font-mono text-zinc-400 flex items-center space-x-1">
                   <Clock className="w-3 h-3 text-emerald-400" />
