@@ -93,46 +93,6 @@ const MEMBERS_DATA: MemberProfile[] = [
     description: 'Pioneers real-time system performance and backend optimization. Keeps our pipeline running at extreme scale without latency.'
   },
   {
-    id: 'mrityunjay',
-    name: 'Mrityunjay',
-    discordTag: 'mrityunjay_op',
-    role: 'Co founder',
-    category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
-    status: '🧘 mastering quantum compilation',
-    onlineStatus: 'dnd',
-    joinedDate: 'SEPTEMBER 05, 2020',
-    aboutMe: {
-      name: 'mrityunjay',
-      age: 'twenty-two',
-      status: 'focused',
-      specialty: 'Database Architect'
-    },
-    badges: ['staff', 'supporter'],
-    description: 'Co-founder of core database protocols. Directs structured query channels and safe replication algorithms for high-availability.'
-  },
-  {
-    id: 'aaryan',
-    name: 'Aaryan',
-    discordTag: 'aaryan_nexus',
-    role: 'Co founder',
-    category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
-    status: '🌌 synchronizing starlight servers',
-    onlineStatus: 'online',
-    joinedDate: 'OCTOBER 10, 2020',
-    aboutMe: {
-      name: 'aaryan',
-      age: 'twenty',
-      status: 'exploring',
-      specialty: 'Lattice Security'
-    },
-    badges: ['staff', 'developer', 'booster'],
-    description: 'Architects decentralized routing systems. Establishes firewall perimeters and manages the integrity of Ineffable\'s digital network.'
-  },
-  {
     id: 'abhi',
     name: 'Abhi',
     discordTag: 'abhi_quantum',
@@ -254,26 +214,6 @@ const MEMBERS_DATA: MemberProfile[] = [
     description: 'Co-manages community events and branding. Drives engagement strategies to foster a dynamic and vibrant community culture.'
   },
   {
-    id: 'maple',
-    name: 'Maple',
-    discordTag: 'maple_leaf',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800&auto=format&fit=crop',
-    status: '🍁 autumn leaves drifting...',
-    onlineStatus: 'idle',
-    joinedDate: 'JUNE 01, 2021',
-    aboutMe: {
-      name: 'maple',
-      age: 'nineteen',
-      status: 'designing',
-      specialty: 'Aesthetic Director'
-    },
-    badges: ['staff', 'supporter'],
-    description: 'Co-owner and visual curator. Keeps the server\'s layout, imagery, and theme matching our strict seasonal mood blueprints.'
-  },
-  {
     id: 'noobie',
     name: 'Noobie',
     discordTag: 'noobie_dev',
@@ -292,26 +232,6 @@ const MEMBERS_DATA: MemberProfile[] = [
     },
     badges: ['staff', 'developer'],
     description: 'Coordinates server partnerships and custom esports tournaments. Expert in building low-latency community gaming leagues.'
-  },
-  {
-    id: 'hannah',
-    name: 'Hannah',
-    discordTag: 'hannah_grace',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop',
-    status: '🌸 crafting cozy digital corners',
-    onlineStatus: 'online',
-    joinedDate: 'AUGUST 10, 2021',
-    aboutMe: {
-      name: 'hannah',
-      age: 'twenty-two',
-      status: 'smiling',
-      specialty: 'Welfare'
-    },
-    badges: ['staff', 'supporter'],
-    description: 'Co-manages support tickets and guides onboarding. Dedicated to making our community space secure, warm, and highly engaging.'
   },
   {
     id: 'aris',
@@ -334,26 +254,6 @@ const MEMBERS_DATA: MemberProfile[] = [
     description: 'Shapes high-level community layouts. Ensures clean UX boundaries and manages visual assets for physical-digital drops.'
   },
   {
-    id: 'goku',
-    name: 'Goku',
-    discordTag: 'goku_ultra',
-    role: 'Executive',
-    category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop',
-    status: '🔥 training at 100x gravity',
-    onlineStatus: 'online',
-    joinedDate: 'NOVEMBER 10, 2021',
-    aboutMe: {
-      name: 'goku',
-      age: 'twenty-two',
-      status: 'powering-up',
-      specialty: 'Event Logistics'
-    },
-    badges: ['staff', 'supporter'],
-    description: 'Maintains dynamic server momentum, plans grand community events, and leads competitive virtual skirmishes.'
-  },
-  {
     id: 'khushal',
     name: 'Khushal Mhatre',
     discordTag: 'khushal_mhatre',
@@ -372,26 +272,6 @@ const MEMBERS_DATA: MemberProfile[] = [
     },
     badges: ['staff', 'booster'],
     description: 'Directs public relations, manages community welfare campaigns, and designs digital onboarding materials.'
-  },
-  {
-    id: 'zara',
-    name: 'Zara',
-    discordTag: 'zara_bloom',
-    role: 'Executive',
-    category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
-    status: '🌺 compiling cozy aesthetics...',
-    onlineStatus: 'online',
-    joinedDate: 'JANUARY 18, 2022',
-    aboutMe: {
-      name: 'zara',
-      age: 'twenty',
-      status: 'curating',
-      specialty: 'Content Strategy'
-    },
-    badges: ['staff', 'supporter'],
-    description: 'Curates general content guidelines, plans seasonal aesthetic updates, and acts as a bridge for server feedback.'
   },
   {
     id: 'viiiv',
