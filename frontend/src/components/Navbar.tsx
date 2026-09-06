@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageId, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { Menu, X, Sun, Moon, ShoppingCart, Search, User, ChevronDown, ChevronRight, Compass, Home, ShoppingBag, BookOpen, Crown, Gamepad2, Info, Mail, ShieldAlert, MoreVertical, SlidersHorizontal, Sparkles } from 'lucide-react';
+import { Menu, X, Sun, Moon, ShoppingCart, Search, User, ChevronDown, ChevronRight, Compass, Home, ShoppingBag, BookOpen, Crown, Gamepad2, Info, Mail, ShieldAlert, MoreVertical, SlidersHorizontal, Sparkles, RotateCw } from 'lucide-react';
 import { LanguageTranslator } from './LanguageTranslator';
 import { motion, AnimatePresence } from 'motion/react';
 import { AnimatedThemeToggler } from '@/registry/magicui/animated-theme-toggler';
@@ -20,6 +20,7 @@ interface NavbarProps {
   cartCount: number;
   currentUser: any;
   websiteSettings?: Record<string, any>;
+  onReload?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -30,7 +31,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleDarkMode,
   cartCount,
   currentUser,
-  websiteSettings = {} as Record<string, any>
+  websiteSettings = {} as Record<string, any>,
+  onReload,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
@@ -216,7 +218,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <User className="w-3.5 h-3.5" />
           </button>
 
-          {/* Cart Button */}
+          {/* Shopping Cart Button */}
           <button
             id="nav-cart-btn-desktop"
             onClick={() => setCurrentPage('cart')}
@@ -234,6 +236,18 @@ export const Navbar: React.FC<NavbarProps> = ({
               </span>
             )}
           </button>
+
+          {/* Page Reloader Button */}
+          {onReload && (
+            <button
+              id="nav-reload-btn-desktop"
+              onClick={onReload}
+              className={`group w-9 h-9 rounded-md ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:${themeStyles.borderMain} ${themeStyles.textPrimary} hover:${themeStyles.accentText} transition-all cursor-pointer flex items-center justify-center shadow-xs active:scale-95`}
+              title="Reload System [R]"
+            >
+              <RotateCw className="w-3.5 h-3.5 transition-transform duration-500 group-hover:rotate-180" />
+            </button>
+          )}
 
           {/* Light / Dark Mode Switcher */}
           <AnimatedThemeToggler
@@ -281,8 +295,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             transition={{ duration: 0.2, ease: 'easeInOut' }}
             className={`lg:hidden mt-3 pt-3 pb-3 px-1 border-t ${themeStyles.borderMuted} flex flex-col space-y-4 font-mono text-xs relative z-10 overflow-hidden`}
           >
-            {/* Quick Action Controls (Cart, Theme, Search, Account) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 px-1 pt-1">
+            {/* Quick Action Controls (Cart, Theme, Search, Account, Reload) */}
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 px-1 pt-1">
               {/* Cart Button */}
               <button
                 onClick={() => { setCurrentPage('cart'); setIsOpen(false); }}
@@ -331,6 +345,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <User className="w-4 h-4 shrink-0" />
                 <span className="text-[11px] font-bold truncate">{currentUser ? currentUser : 'LOGIN'}</span>
               </button>
+
+              {/* Reload Page Button */}
+              {onReload && (
+                <button
+                  onClick={() => { onReload(); setIsOpen(false); }}
+                  className={`flex items-center space-x-2 px-3 py-2.5 rounded-md border ${themeStyles.bgCard} ${themeStyles.textPrimary} ${themeStyles.borderMuted} hover:${themeStyles.borderMain} transition-all cursor-pointer col-span-2 sm:col-span-1`}
+                  title="Reload Page [R]"
+                >
+                  <RotateCw className="w-4 h-4 text-[#FA5F88]" />
+                  <span className="text-[11px] font-bold">RELOAD</span>
+                </button>
+              )}
             </div>
 
             {/* Section Divider & Header */}
