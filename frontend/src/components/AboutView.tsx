@@ -10,6 +10,7 @@ import {
   ArrowUpRight,
   Shield,
   Code,
+<<<<<<< HEAD
   Flame,
   Award,
   X,
@@ -19,6 +20,12 @@ import {
   MessageSquare,
   Linkedin,
   Globe
+=======
+  Sparkles,
+  X,
+  Award,
+  Flame,
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 } from 'lucide-react';
 
 const CHERRY_PINK = '#FA5F88';
@@ -38,6 +45,7 @@ export interface TeamMemberProfile {
   category: 'founder' | 'cofounder' | 'owner' | 'coowner' | 'executive';
   avatar: string;
   banner: string;
+<<<<<<< HEAD
   discordTag: string;
   discordId?: string;
   badges: ('staff' | 'developer' | 'booster' | 'supporter')[];
@@ -46,6 +54,9 @@ export interface TeamMemberProfile {
   twitter?: string;
   linkedin?: string;
   website?: string;
+=======
+  badges: ('staff' | 'booster' | 'developer' | 'supporter')[];
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 }
 
 // Custom X icon (Twitter)
@@ -63,6 +74,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Founder',
     category: 'founder',
     avatar: akarshAvatar,
+<<<<<<< HEAD
     banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'akarsh.arya',
     discordId: '121287965938483200',
@@ -72,6 +84,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'booster', 'supporter'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
 
   // ================= CO FOUNDER =================
@@ -83,18 +99,27 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'Harshil_joshi',
+<<<<<<< HEAD
     badges: ['staff', 'developer'],
     bio: 'Co-founder driving strategic planning, operations, and ecosystem expansion.',
     since: 'EST. 2020 // CO-FOUNDING',
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    role: 'Co founder',
+    category: 'cofounder',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'developer'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'abhi',
     name: 'Abhi',
     role: 'Co founder',
     category: 'cofounder',
+<<<<<<< HEAD
     avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'abhi_quantum',
@@ -104,6 +129,32 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'developer'],
+  },
+  {
+    id: 'ankeet',
+    name: 'Ankeet',
+    discordTag: 'ankeet_primal',
+    role: 'Owner',
+    category: 'owner',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'booster'],
+  },
+  {
+    id: 'kavyansh',
+    name: 'Kavyansh',
+    discordTag: 'kavyanshshakya',
+    discordId: '241214041187123201',
+    role: 'Owner',
+    category: 'owner',
+    avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'developer', 'booster'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'rajarshi',
@@ -113,6 +164,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'rajarshi_mukherjee',
+<<<<<<< HEAD
     badges: ['staff', 'supporter'],
     bio: 'Co-founder leading brand strategy, public relations, and partnerships.',
     since: 'EST. 2021 // STRATEGY',
@@ -167,12 +219,20 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    role: 'Co founder',
+    category: 'cofounder',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'supporter'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'vixen',
     name: 'Vixen',
     role: 'Owner',
     category: 'owner',
+<<<<<<< HEAD
     avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'vixen_cyber',
@@ -182,6 +242,11 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'booster'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'kiwi',
@@ -191,6 +256,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'kiwi_slice',
+<<<<<<< HEAD
     badges: ['staff', 'booster'],
     bio: 'Owner supervising event planning, member coordination, and custom perks.',
     since: 'EST. 2022 // DIRECTOR',
@@ -229,10 +295,28 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    role: 'Owner',
+    category: 'owner',
+    avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'booster'],
+  },
+  {
+    id: 'Nancy',
+    name: 'Nancy',
+    discordTag: 'aw.nvm',
+    role: 'Co owner',
+    category: 'coowner',
+    avatar: nancyAvatar,
+    banner: '',
+    badges: ['staff'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'aris',
     name: 'Aris',
+<<<<<<< HEAD
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
@@ -263,10 +347,34 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
   {
     id: 'lavanya',
     name: 'Lavanya Singh',
+=======
+    discordTag: 'aris_couture',
+    role: 'Co owner',
+    category: 'coowner',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'supporter'],
+  },
+  {
+    id: 'viiiv',
+    name: 'Viiv',
+    discordTag: 'viiiv_3',
+    role: 'Co owner',
+    category: 'coowner',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'supporter', 'booster'],
+  },
+  {
+    id: 'lavanya-singh',
+    name: 'Lavanya Singh',
+    discordTag: 'lavanya_singh',
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
     role: 'Co owner',
     category: 'coowner',
     avatar: lavanyaAvatar,
     banner: lavanyaBanner,
+<<<<<<< HEAD
     discordTag: 'lavanya_singh',
     badges: ['staff', 'supporter'],
     bio: 'Co-owner and community moderator facilitating member onboarding.',
@@ -274,10 +382,34 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    badges: ['staff'],
+  },
+  {
+    id: 'aarav',
+    name: 'Aarav',
+    discordTag: 'aarav',
+    role: 'Co founder',
+    category: 'cofounder',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'developer'],
+  },
+  {
+    id: 'poppy',
+    name: 'Poppy',
+    discordTag: 'poppy',
+    role: 'Owner',
+    category: 'owner',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'supporter'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'aloo-puri',
     name: 'Aloo Puri',
+<<<<<<< HEAD
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
@@ -289,10 +421,19 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    discordTag: 'aloo_puri',
+    role: 'Co owner',
+    category: 'coowner',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'supporter'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'machi',
     name: 'Machi',
+<<<<<<< HEAD
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
@@ -321,10 +462,29 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    discordTag: 'machi',
+    role: 'Co owner',
+    category: 'coowner',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'booster'],
+  },
+  {
+    id: 'kiara',
+    name: 'Kiara',
+    discordTag: 'kiara',
+    role: 'Executive',
+    category: 'executive',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'supporter'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'wayne',
     name: 'Wayne',
+<<<<<<< HEAD
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop',
@@ -336,10 +496,19 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    discordTag: 'wayne',
+    role: 'Executive',
+    category: 'executive',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'developer'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'kaz',
     name: 'Kaz',
+<<<<<<< HEAD
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&auto=format&fit=crop',
@@ -351,10 +520,19 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    discordTag: 'kaz',
+    role: 'Executive',
+    category: 'executive',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'supporter'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'ritwik',
     name: 'Ritwik',
+<<<<<<< HEAD
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop',
@@ -366,6 +544,14 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
+=======
+    discordTag: 'ritwik',
+    role: 'Executive',
+    category: 'executive',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop',
+    badges: ['staff', 'booster'],
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   }
 ];
 
@@ -379,9 +565,15 @@ const FILTER_TABS: { id: MemberCategory; label: string }[] = [
 ];
 
 export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMode }) => {
+<<<<<<< HEAD
   const [selectedCategory, setSelectedCategory] = useState<MemberCategory>('all');
   const [selectedMember, setSelectedMember] = useState<TeamMemberProfile | null>(null);
   const [copiedId, setCopiedId] = useState(false);
+=======
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'founder' | 'co-founder' | 'owner' | 'co-owner' | 'techlead' | 'executive' | 'admin'>('all');
+  const [hoveredMember, setHoveredMember] = useState<string | null>(null);
+  const [selectedMember, setSelectedMember] = useState<MemberProfile | null>(null);
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
@@ -401,6 +593,21 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
     return member.category === selectedCategory;
   });
 
+<<<<<<< HEAD
+=======
+  // Category counts
+  const categoryCounts = {
+    all: MEMBERS_DATA.length,
+    founder: MEMBERS_DATA.filter(m => m.category === 'founder').length,
+    cofounder: MEMBERS_DATA.filter(m => m.category === 'cofounder').length,
+    owner: MEMBERS_DATA.filter(m => m.category === 'owner').length,
+    coowner: MEMBERS_DATA.filter(m => m.category === 'coowner').length,
+    techlead: MEMBERS_DATA.filter(m => m.category === 'techlead').length,
+    executive: MEMBERS_DATA.filter(m => m.category === 'executive').length,
+    admin: MEMBERS_DATA.filter(m => m.category === 'admin').length,
+  };
+
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   return (
     <div className="relative min-h-screen py-24 pt-32 transition-colors duration-300">
       
@@ -508,6 +715,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 </div>
               </div>
 
+<<<<<<< HEAD
               {/* Stat 3 */}
               <div className="space-y-1.5">
                 <div 
@@ -520,6 +728,17 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   Global downloads
                 </div>
               </div>
+=======
+                          {/* Avatar Section */}
+                          <div className="relative shrink-0">
+                            <img
+                              src={member.avatar}
+                              alt={member.name}
+                              referrerPolicy="no-referrer"
+                              className="w-10 h-10 object-cover rounded-md border border-zinc-500/15"
+                            />
+                          </div>
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 
               {/* Stat 4 */}
               <div className="space-y-1.5">
@@ -810,18 +1029,29 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer z-[100]"
             />
 
+<<<<<<< HEAD
             {/* Huge Profile Card */}
+=======
+            {/* Static profile card */}
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
             <motion.div
               initial={{ opacity: 0, scale: 0.92, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
+<<<<<<< HEAD
               exit={{ opacity: 0, scale: 0.94, y: 15 }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
               className={`relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl my-auto ${
+=======
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className={`relative w-full max-w-[620px] max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl transition-all duration-300 ${
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
                 isDarkMode
                   ? 'bg-zinc-950/95 text-zinc-100 border-white/10 shadow-black/90'
                   : 'bg-white/95 text-zinc-900 border-zinc-200 shadow-2xl'
               }`}
             >
+<<<<<<< HEAD
               
               {/* Modal Top Mini Bar */}
               <div className={`px-4 py-2 border-b flex items-center justify-between shrink-0 select-none ${
@@ -842,6 +1072,15 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 >
                   <X className="w-4 h-4" />
                 </button>
+=======
+              {/* PROFILE HEADER */}
+              <div className={`px-3.5 py-2 border-b flex items-center justify-between shrink-0 select-none backdrop-blur-md ${
+                isDarkMode ? 'bg-zinc-900/80 border-zinc-800/80 text-zinc-400' : 'bg-zinc-100/90 border-zinc-200/80 text-zinc-600'
+              }`}>
+                <span className="font-mono text-[8px] font-black tracking-widest uppercase">
+                  INEFFABLE // PROFILE
+                </span>
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
               </div>
 
               {/* Huge Banner Header */}
@@ -854,10 +1093,21 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
+<<<<<<< HEAD
                 {/* Glassy Tag Badge Overlay on Banner */}
                 <div className="absolute bottom-3 left-4 flex items-center space-x-2 font-mono text-[10px] tracking-wider px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md text-white shadow-lg">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
                   <span className="font-bold">@{selectedMember.discordTag}</span>
+=======
+                {/* Glassy Badge Overlay for Discord Name on the Banner */}
+                <div className={`absolute bottom-2.5 left-2.5 font-mono text-[9px] tracking-[0.2em] px-3 py-1.5 rounded-md border flex items-center space-x-2 shadow-lg backdrop-blur-md ${
+                  isDarkMode ? 'bg-black/80 text-white border-zinc-800/80' : 'bg-white/90 text-zinc-950 border-zinc-200/80'
+                }`}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                  <span className="font-extrabold">
+                    {selectedMember.discordTag}
+                  </span>
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
                 </div>
 
                 <div className="absolute top-3 right-4 font-mono text-[9px] tracking-widest px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-zinc-300">
@@ -874,13 +1124,20 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   <div className="relative">
                     <img
                       src={selectedMember.avatar}
+<<<<<<< HEAD
                       alt={selectedMember.name}
+=======
+                      alt="Avatar"
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
                       referrerPolicy="no-referrer"
                       className={`w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover ring-4 shadow-2xl ${
                         isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
                       }`}
                     />
+<<<<<<< HEAD
                     <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-3 border-zinc-950 rounded-full" />
+=======
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
                   </div>
 
                   {/* Discord Staff & Achievement Badges */}
@@ -935,6 +1192,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               </div>
 
+<<<<<<< HEAD
               {/* Body Content */}
               <div className="p-6 space-y-6 overflow-y-auto max-h-[40vh]">
                 
@@ -1012,6 +1270,58 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     <ExternalLink className="w-3 h-3 ml-1 opacity-75" />
                   </a>
                 </div>
+=======
+              {/* DISCORD INNER CONTAINER PANEL */}
+              <div className={`flex-1 overflow-y-auto scrollbar-none p-4 pt-3 pb-3 flex flex-col space-y-4 ${
+                isDarkMode ? 'bg-zinc-950/60' : 'bg-zinc-50/60'
+              }`}>
+
+                <>
+                    {/* Names block */}
+                    <div className={`p-4 rounded-xl border space-y-2 shadow-xs shrink-0 transition-colors ${
+                      isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
+                    }`}>
+                      <div>
+                        <h2 className={`text-lg font-bold tracking-wide font-sans flex items-center gap-1.5 ${
+                          isDarkMode ? 'text-white' : 'text-zinc-900'
+                        }`}>
+                          {selectedMember.name}
+                        </h2>
+                        <p className={`text-[11px] font-medium font-mono mt-0.5 ${
+                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                        }`}>
+                          @{selectedMember.discordTag}
+                        </p>
+                      </div>
+
+                    </div>
+
+                    {/* ROLE CLUSTERS */}
+                      <div className="space-y-2">
+                        <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
+                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
+                        }`}>
+                          ROLES
+                        </h4>
+                        <div className="flex flex-wrap gap-1.5">
+                          <span className={`text-[10px] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border ${
+                            isDarkMode ? 'bg-zinc-800/80 text-zinc-200 border-zinc-700/60' : 'bg-zinc-100 text-zinc-800 border-zinc-300'
+                          }`}>
+                            <span className={`w-2 h-2 rounded-full ${selectedMember.category === 'founder' ? 'bg-[#f1c40f]' :
+                              selectedMember.category === 'cofounder' ? 'bg-[#e67e22]' :
+                                selectedMember.category === 'owner' ? 'bg-[#9b59b6]' :
+                                  selectedMember.category === 'coowner' ? 'bg-[#34495e]' :
+                                    selectedMember.category === 'techlead' ? 'bg-[#1abc9c]' :
+                                      selectedMember.category === 'executive' ? 'bg-[#e91e63]' :
+                                        selectedMember.category === 'admin' ? 'bg-[#3498db]' : 'bg-[#2ecc71]'
+                              }`} />
+                            <span>{selectedMember.role}</span>
+                          </span>
+                        </div>
+                      </div>
+
+                </>
+>>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 
               </div>
 

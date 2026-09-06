@@ -615,7 +615,7 @@ export default function App() {
               </a>
               <div className="flex items-center space-x-3 font-mono text-[10px]">
                 <a
-                  href="https://discord.gg/ineffable"
+                  href="https://discord.gg/inefontop"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-zinc-500 hover:text-[#5865F2] transition-colors duration-300"
