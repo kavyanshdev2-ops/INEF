@@ -606,26 +606,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               </div>
 
-              {/* AUTHENTIC CHAT INPUT FOOTER BOX */}
-              <div className={`p-3 border-t shrink-0 ${
-                isDarkMode ? 'bg-zinc-950/90 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
-              }`}>
-                <a
-                  href="https://discord.gg/ineffable"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-full rounded-md py-2.5 px-3.5 text-[11px] font-sans flex items-center justify-between transition-colors duration-200 cursor-pointer shadow-xs border ${
-                    isDarkMode
-                      ? 'bg-zinc-900 text-zinc-300 hover:text-white hover:bg-zinc-800 border-zinc-800'
-                      : 'bg-zinc-100 text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200 border-zinc-200'
-                  }`}
-                >
-                  <span className="font-bold">Message @{selectedMember.discordTag}</span>
-                  <span className={`text-[8px] px-1.5 py-0.5 rounded font-mono font-bold tracking-widest uppercase border shadow-xs ${
-                    isDarkMode ? 'bg-zinc-800 text-zinc-300 border-zinc-700' : 'bg-white text-zinc-800 border-zinc-300'
-                  }`}>DM</span>
-                </a>
-              </div>
             </motion.div>
           </div>
         )}
