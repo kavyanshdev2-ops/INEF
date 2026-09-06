@@ -8,7 +8,6 @@ import {
   Crown,
   Code,
   Sparkles,
-  Calendar,
   X,
   ExternalLink,
   MessageSquare,
@@ -37,17 +36,7 @@ interface MemberProfile {
   category: 'founder' | 'cofounder' | 'owner' | 'coowner' | 'techlead' | 'executive' | 'admin';
   avatar: string;
   banner: string;
-  status: string;
-  onlineStatus: 'online' | 'idle' | 'dnd' | 'offline';
-  joinedDate: string;
-  aboutMe: {
-    name: string;
-    age: string;
-    status: string;
-    specialty?: string;
-  };
   badges: ('staff' | 'booster' | 'developer' | 'supporter')[];
-  description: string;
 }
 
 const MEMBERS_DATA: MemberProfile[] = [
@@ -58,19 +47,9 @@ const MEMBERS_DATA: MemberProfile[] = [
     discordId: '121287965938483200',
     role: 'Founder',
     category: 'founder',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop',
+    avatar: '/sivyassets/akarsh.webp',
     banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
-    status: '👑 weaving the infinite lattice...',
-    onlineStatus: 'online',
-    joinedDate: 'JULY 14, 2020',
-    aboutMe: {
-      name: 'Akarsh Arya',
-      age: 'twenty-one',
-      status: 'pioneering',
-      specialty: 'System Director'
-    },
     badges: ['staff', 'booster', 'supporter'],
-    description: 'Supreme founder and architect of the Ineffable. Directs global branding, long-term server infrastructure, and strategic digital drops.'
   },
   {
     id: 'harshil',
@@ -80,17 +59,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'cofounder',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=800&auto=format&fit=crop',
-    status: '🚀 launching high-velocity clusters',
-    onlineStatus: 'online',
-    joinedDate: 'AUGUST 12, 2020',
-    aboutMe: {
-      name: 'Harshil',
-      age: 'twenty-one',
-      status: 'deploying',
-      specialty: 'Network Pipeline'
-    },
     badges: ['staff', 'developer'],
-    description: 'Pioneers real-time system performance and backend optimization. Keeps our pipeline running at extreme scale without latency.'
   },
   {
     id: 'abhi',
@@ -100,17 +69,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'cofounder',
     avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
-    status: '⚡ overclocking the logic core',
-    onlineStatus: 'idle',
-    joinedDate: 'NOVEMBER 01, 2020',
-    aboutMe: {
-      name: 'abhi',
-      age: 'twenty-one',
-      status: 'calibrating',
-      specialty: 'Quantum Computing'
-    },
     badges: ['staff', 'developer'],
-    description: 'Oversees system integration, custom developer toolkits, and dynamic runtime setups to keep our framework resilient and fast.'
   },
   {
     id: 'ankeet',
@@ -120,17 +79,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
-    status: '🛡️ guarding the hierarchy',
-    onlineStatus: 'online',
-    joinedDate: 'JANUARY 15, 2021',
-    aboutMe: {
-      name: 'ankeet',
-      age: 'twenty-three',
-      status: 'moderating',
-      specialty: 'Platform Owner'
-    },
     badges: ['staff', 'booster'],
-    description: 'Primary platform owner. Handles global operations, sets community guidelines, and drives community expansion initiatives.'
   },
   {
     id: 'kavyansh',
@@ -141,17 +90,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop',
-    status: '⚡ commanding the logic gateway',
-    onlineStatus: 'dnd',
-    joinedDate: 'OCTOBER 21, 2020',
-    aboutMe: {
-      name: 'kavyansh',
-      age: 'twenty',
-      status: 'hyper-focused',
-      specialty: 'Core Logistics'
-    },
     badges: ['staff', 'developer', 'booster'],
-    description: 'Commanding officer and system co-owner. Orchestrates database performance, server environments, and keeps operations running flawlessly.'
   },
   {
     id: 'rajarshi',
@@ -161,17 +100,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'cofounder',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=800&auto=format&fit=crop',
-    status: '🔮 dreaming in binary',
-    onlineStatus: 'online',
-    joinedDate: 'FEBRUARY 11, 2021',
-    aboutMe: {
-      name: 'rajarshi',
-      age: 'twenty-two',
-      status: 'analyzing',
-      specialty: 'Operations Lead'
-    },
     badges: ['staff', 'supporter'],
-    description: 'Platform operations owner. Directs resource allocation, maintains legal compliance, and designs system integrations.'
   },
   {
     id: 'vixen',
@@ -181,17 +110,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop',
-    status: '🦊 quiet in the shadows...',
-    onlineStatus: 'idle',
-    joinedDate: 'MARCH 01, 2021',
-    aboutMe: {
-      name: 'vixen',
-      age: 'twenty-one',
-      status: 'lurking',
-      specialty: 'Security'
-    },
     badges: ['staff', 'booster'],
-    description: 'Directs network operations and security configurations. Monitors gateway logs and protects system integrity from malicious intrusions.'
   },
   {
     id: 'kiwi',
@@ -201,37 +120,17 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
-    status: '🥝 fresh perspective, always.',
-    onlineStatus: 'online',
-    joinedDate: 'MAY 12, 2021',
-    aboutMe: {
-      name: 'kiwi',
-      age: 'twenty',
-      status: 'vibe-checking',
-      specialty: 'Community Owner'
-    },
     badges: ['staff', 'booster'],
-    description: 'Co-manages community events and branding. Drives engagement strategies to foster a dynamic and vibrant community culture.'
   },
   {
-    id: 'noobie',
-    name: 'Noobie',
-    discordTag: 'noobie_dev',
+    id: 'Nancy',
+    name: 'Nancy',
+    discordTag: 'aw.nvm',
     role: 'Co owner',
     category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1628157582853-a796fa650a6a?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
-    status: '🎮 pro speedrunner masquerading as beginner',
-    onlineStatus: 'online',
-    joinedDate: 'JULY 15, 2021',
-    aboutMe: {
-      name: 'noobie',
-      age: 'twenty-one',
-      status: 'gaming',
-      specialty: 'Tournament Host'
-    },
-    badges: ['staff', 'developer'],
-    description: 'Coordinates server partnerships and custom esports tournaments. Expert in building low-latency community gaming leagues.'
+    avatar: '/sivyassets/nancy.png',
+    banner: '',
+    badges: ['staff'],
   },
   {
     id: 'aris',
@@ -241,37 +140,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
-    status: '📏 drafting clean wireframes',
-    onlineStatus: 'idle',
-    joinedDate: 'OCTOBER 01, 2021',
-    aboutMe: {
-      name: 'aris',
-      age: 'twenty',
-      status: 'drafting',
-      specialty: 'User Experience'
-    },
     badges: ['staff', 'supporter'],
-    description: 'Shapes high-level community layouts. Ensures clean UX boundaries and manages visual assets for physical-digital drops.'
-  },
-  {
-    id: 'khushal',
-    name: 'Khushal Mhatre',
-    discordTag: 'khushal_mhatre',
-    role: 'Executive',
-    category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800&auto=format&fit=crop',
-    status: '✨ spreading joy & positive waves',
-    onlineStatus: 'online',
-    joinedDate: 'DECEMBER 05, 2021',
-    aboutMe: {
-      name: 'khushal',
-      age: 'twenty-one',
-      status: 'smiling',
-      specialty: 'Outreach Manager'
-    },
-    badges: ['staff', 'booster'],
-    description: 'Directs public relations, manages community welfare campaigns, and designs digital onboarding materials.'
   },
   {
     id: 'viiiv',
@@ -281,17 +150,17 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop',
-    status: '🌟 balancing network polarity',
-    onlineStatus: 'online',
-    joinedDate: 'JULY 15, 2022',
-    aboutMe: {
-      name: 'viiiv',
-      age: 'twenty',
-      status: 'co-owning',
-      specialty: 'Community Oversight & Co-Owner'
-    },
     badges: ['staff', 'supporter', 'booster'],
-    description: 'Co-owner and network stabilizer. Directs community welfare, manages verification gateways, and maintains balance across all.'
+  },
+  {
+    id: 'lavanya-singh',
+    name: 'Lavanya Singh',
+    discordTag: 'lavanya_singh',
+    role: 'Co owner',
+    category: 'coowner',
+    avatar: '/sivyassets/lavanya.webp',
+    banner: '/sivyassets/lavanya_banner.webp',
+    badges: ['staff'],
   },
   {
     id: 'aarav',
@@ -301,12 +170,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'cofounder',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
-    status: 'building the next connection',
-    onlineStatus: 'online',
-    joinedDate: 'AUGUST 01, 2022',
-    aboutMe: { name: 'Aarav', age: 'twenty-one', status: 'building', specialty: 'Community Systems' },
     badges: ['staff', 'developer'],
-    description: 'Supports the co-founder team across community systems and digital operations.'
   },
   {
     id: 'poppy',
@@ -316,12 +180,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
-    status: 'keeping the network in bloom',
-    onlineStatus: 'online',
-    joinedDate: 'SEPTEMBER 01, 2022',
-    aboutMe: { name: 'Poppy', age: 'twenty-one', status: 'curating', specialty: 'Community Direction' },
     badges: ['staff', 'supporter'],
-    description: 'Guides community direction and keeps the wider network connected.'
   },
   {
     id: 'aloo-puri',
@@ -331,12 +190,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=800&auto=format&fit=crop',
-    status: 'keeping the community lively',
-    onlineStatus: 'online',
-    joinedDate: 'OCTOBER 01, 2022',
-    aboutMe: { name: 'Aloo Puri', age: 'twenty', status: 'co-owning', specialty: 'Community Operations' },
     badges: ['staff', 'supporter'],
-    description: 'Helps maintain community operations and the day-to-day server experience.'
   },
   {
     id: 'machi',
@@ -346,12 +200,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=800&auto=format&fit=crop',
-    status: 'steady hands on the controls',
-    onlineStatus: 'idle',
-    joinedDate: 'NOVEMBER 01, 2022',
-    aboutMe: { name: 'Machi', age: 'twenty-one', status: 'co-owning', specialty: 'Server Coordination' },
     badges: ['staff', 'booster'],
-    description: 'Coordinates server activity and supports the co-owner team.'
   },
   {
     id: 'kiara',
@@ -361,12 +210,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop',
-    status: 'shaping the next chapter',
-    onlineStatus: 'online',
-    joinedDate: 'DECEMBER 01, 2022',
-    aboutMe: { name: 'Kiara', age: 'twenty-one', status: 'creating', specialty: 'Creative Direction' },
     badges: ['staff', 'supporter'],
-    description: 'Leads creative coordination and helps shape the community experience.'
   },
   {
     id: 'wayne',
@@ -376,12 +220,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
-    status: 'moving operations forward',
-    onlineStatus: 'online',
-    joinedDate: 'JANUARY 01, 2023',
-    aboutMe: { name: 'Wayne', age: 'twenty-two', status: 'coordinating', specialty: 'Operations' },
     badges: ['staff', 'developer'],
-    description: 'Coordinates executive operations and keeps ongoing initiatives moving.'
   },
   {
     id: 'kaz',
@@ -391,12 +230,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
-    status: 'tuning the signal',
-    onlineStatus: 'idle',
-    joinedDate: 'FEBRUARY 01, 2023',
-    aboutMe: { name: 'Kaz', age: 'twenty', status: 'tuning', specialty: 'Digital Strategy' },
     badges: ['staff', 'supporter'],
-    description: 'Supports digital strategy and executive coordination across the community.'
   },
   {
     id: 'ritwik',
@@ -406,12 +240,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop',
-    status: 'connecting every moving part',
-    onlineStatus: 'online',
-    joinedDate: 'MARCH 01, 2023',
-    aboutMe: { name: 'Ritwik', age: 'twenty-one', status: 'connecting', specialty: 'Event Coordination' },
     badges: ['staff', 'booster'],
-    description: 'Helps coordinate events and keeps executive initiatives connected.'
   }
 ];
 
@@ -660,16 +489,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
     admin: MEMBERS_DATA.filter(m => m.category === 'admin').length,
   };
 
-  // Get online status dot class
-  const getOnlineDotClass = (status: MemberProfile['onlineStatus']) => {
-    switch (status) {
-      case 'online': return 'bg-[#23a55a]';
-      case 'idle': return 'bg-[#f0b232]';
-      case 'dnd': return 'bg-[#f23f43]';
-      case 'offline': default: return 'bg-[#80848e]';
-    }
-  };
-
   return (
     <div className="max-w-7xl mx-auto px-6 pt-32 pb-24 relative">
 
@@ -801,8 +620,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                               referrerPolicy="no-referrer"
                               className="w-10 h-10 object-cover rounded-md border border-zinc-500/15"
                             />
-                            {/* Online status indicator */}
-                            <span className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 ${isDarkMode ? 'border-zinc-950' : 'border-white'} ${getOnlineDotClass(member.onlineStatus)}`} />
                           </div>
 
                           {/* Text Info Section */}
@@ -946,12 +763,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
                       }`}
                     />
-                    {/* Status Dot with ring */}
-                    <span className={`absolute bottom-0 right-1 w-4.5 h-4.5 rounded-full ring-[4px] ${
-                      isDarkMode ? 'ring-zinc-950' : 'ring-white'
-                    } ${getOnlineDotClass(
-                      lanyardData ? lanyardData.discord_status : selectedMember.onlineStatus
-                    )}`} />
                   </div>
                 </div>
 
@@ -1031,21 +842,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         </p>
                       </div>
 
-                      {/* CUSTOM STATUS */}
-                      {(() => {
-                        const customStatusActivity = lanyardData?.activities?.find((act: any) => act.type === 4);
-                        const statusText = customStatusActivity
-                          ? `${customStatusActivity.emoji ? customStatusActivity.emoji.name + ' ' : ''}${customStatusActivity.state || ''}`
-                          : selectedMember.status;
-
-                        return statusText ? (
-                          <div className={`border rounded-lg p-2.5 flex items-center space-x-2 text-[11px] leading-relaxed font-light ${
-                            isDarkMode ? 'bg-black/30 border-zinc-800/60 text-zinc-200' : 'bg-zinc-100/80 border-zinc-200 text-zinc-800'
-                          }`}>
-                            <span className="italic">{statusText}</span>
-                          </div>
-                        ) : null;
-                      })()}
                     </div>
 
                     {/* DYNAMIC ACTIVITY & SPOTIFY PANEL */}
@@ -1206,68 +1002,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       );
                     })()}
 
-                    {/* GENERAL DISCORD BIO / DETAILS */}
-                    <div className={`p-4 rounded-xl border space-y-4 shadow-xs ${
-                      isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
-                    }`}>
-                      <div className="space-y-2">
-                        <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
-                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                        }`}>
-                          ABOUT US
-                        </h4>
-
-                        <div className={`border rounded-lg p-3.5 font-mono text-[10px] space-y-2.5 shadow-inner ${
-                          isDarkMode ? 'bg-black/40 border-zinc-800/80 text-zinc-200' : 'bg-zinc-100/80 border-zinc-200/80 text-zinc-800'
-                        }`}>
-                          <p className={`text-center select-none tracking-widest font-extrabold ${
-                            isDarkMode ? 'text-zinc-600' : 'text-zinc-400'
-                          }`}>
-                            ╭ ── · ✦ · ── ╮
-                          </p>
-                          <div className="space-y-1.5 pl-3">
-                            <p className="flex items-center space-x-2">
-                              <span className="text-pink-400 font-bold">★</span>
-                              <span className={`italic font-semibold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Name</span>
-                              <span className="text-zinc-400">:</span>
-                              <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedMember.aboutMe.name}</span>
-                            </p>
-                            <p className="flex items-center space-x-2">
-                              <span className="text-pink-400 font-bold">✦</span>
-                              <span className={`italic font-semibold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Age</span>
-                              <span className="text-zinc-400">:</span>
-                              <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedMember.aboutMe.age}</span>
-                            </p>
-                            <p className="flex items-center space-x-2">
-                              <span className="text-pink-400 font-bold">✧</span>
-                              <span className={`italic font-semibold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Status</span>
-                              <span className="text-zinc-400">:</span>
-                              <span className="text-emerald-500 font-medium">{selectedMember.aboutMe.status}</span>
-                            </p>
-                            {selectedMember.aboutMe.specialty && (
-                              <p className="flex items-center space-x-2">
-                                <span className="text-pink-400 font-bold">⬩</span>
-                                <span className={`italic font-semibold ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>Special</span>
-                                <span className="text-zinc-400">:</span>
-                                <span className="text-indigo-400 font-medium">{selectedMember.aboutMe.specialty}</span>
-                              </p>
-                            )}
-                          </div>
-                          <p className={`text-center select-none tracking-widest font-extrabold ${
-                            isDarkMode ? 'text-zinc-600' : 'text-zinc-400'
-                          }`}>
-                            ╰ ── · ✦ · ── ╯
-                          </p>
-
-                          <p className={`font-sans text-[11px] leading-relaxed pt-2.5 border-t ${
-                            isDarkMode ? 'border-zinc-800/60 text-zinc-300' : 'border-zinc-200 text-zinc-600'
-                          }`}>
-                            {selectedMember.description}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* ROLE CLUSTERS */}
+                    {/* ROLE CLUSTERS */}
                       <div className="space-y-2">
                         <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
                           isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
@@ -1288,34 +1023,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                               }`} />
                             <span>{selectedMember.role}</span>
                           </span>
-                          <span className={`text-[10px] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border ${
-                            isDarkMode ? 'bg-zinc-800/80 text-zinc-200 border-zinc-700/60' : 'bg-zinc-100 text-zinc-800 border-zinc-300'
-                          }`}>
-                            <div className={`w-1.5 h-1.5 rounded-full ${getOnlineDotClass(
-                              lanyardData ? lanyardData.discord_status : selectedMember.onlineStatus
-                            )}`} />
-                            <span className="uppercase">
-                              {selectedMember.category === 'cofounder' ? 'co founder' : selectedMember.category === 'coowner' ? 'co owner' : selectedMember.category === 'techlead' ? 'tech lead' : selectedMember.category}
-                            </span>
-                          </span>
                         </div>
                       </div>
-
-                      {/* MEMBER SINCE */}
-                      <div className="space-y-1.5">
-                        <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
-                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                        }`}>
-                          MEMBER SINCE
-                        </h4>
-                        <div className={`flex items-center space-x-2 text-[11px] font-semibold pl-1 ${
-                          isDarkMode ? 'text-zinc-200' : 'text-zinc-800'
-                        }`}>
-                          <Calendar className={`w-3.5 h-3.5 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`} />
-                          <span>{selectedMember.joinedDate}</span>
-                        </div>
-                      </div>
-                    </div>
 
                     {/* SYNC CUSTOM DISCORD ID PANEL */}
                     <div className={`p-4 rounded-xl border space-y-2.5 shadow-xs ${
@@ -1448,9 +1157,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                                     alt={friend.name}
                                     className="w-8 h-8 rounded-full object-cover border border-zinc-500/20"
                                   />
-                                  <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 ${
-                                    isDarkMode ? 'border-zinc-950' : 'border-white'
-                                  } ${getOnlineDotClass(friend.onlineStatus)}`} />
                                 </div>
                                 <div className="min-w-0">
                                   <h5 className={`text-xs font-bold transition-colors truncate ${
