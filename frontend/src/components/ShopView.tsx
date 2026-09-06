@@ -3,35 +3,26 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AtmosphereConfig, CartItem } from '../types';
 import { getThemeStyles } from '../lib/theme';
 import { 
-  ShoppingBag, 
-  ShoppingCart, 
-  CheckCircle2, 
-  Tag, 
-  Star, 
-  Sparkles, 
-  Filter, 
-  Heart, 
-  Eye, 
+  Search, 
   X, 
-  ChevronRight, 
-  ChevronLeft, 
-  ChevronDown,
-  ChevronUp,
-  Zap,
-  Ruler, 
+  Star, 
+  Heart, 
+  ShoppingCart, 
+  Zap, 
+  ArrowLeft, 
+  SlidersHorizontal, 
   Truck, 
   RotateCcw, 
-  Search, 
-  ArrowLeft, 
-  Package, 
-  Calendar,
-  Layers,
-  Sparkle
+  ShieldCheck, 
+  Tag, 
+  Ruler, 
+  Check, 
+  MapPin
 } from 'lucide-react';
 
 interface ShopViewProps {
@@ -44,133 +35,276 @@ interface ShopViewProps {
   currentUser?: any;
 }
 
-// Hardcoded streetwear catalog focusing exclusively on high-end cyber couture merchandise
-const products = [
-  {
-    id: 'couture-hoodie-white',
-    name: 'Inefontop "Signature" Oversized Hoodie',
-    price: 85.00,
-    category: 'hoodies',
-    description: 'Heavyweight 450GSM organic French Terry cotton hoodie. Features a double-lined hood without drawstrings for a clean minimalist drape, dropped shoulders, kangaroo pocket, and high-density branding puff print on the chest canvas.',
-    images: [
-      'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=600&auto=format&fit=crop'
-    ],
-    rating: 4.9,
-    badge: 'BEST SELLER',
-    stock: 8,
-    fabric: '100% Organic French Terry Cotton, 450GSM',
-    care: 'Machine wash cold inside out. Tumble dry low. Do not iron directly on graphics.'
-  },
-  {
-    id: 'couture-tshirt-black',
-    name: 'Inefontop "Drift" Heavyweight Tee',
-    price: 45.00,
-    category: 'tees',
-    description: 'Boxy, oversized streetwear tee in a deep custom dyed coal tone. Tight-knit mock collar double-stitched for durability. Front artwork displays custom cherry blossom drift equations printed in high-definition ink.',
-    images: [
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1562157873-818bc0726f68?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop'
-    ],
-    rating: 4.8,
-    badge: 'NEW DROP',
-    stock: 15,
-    fabric: '100% Ringspun Combed Organic Cotton, 280GSM',
-    care: 'Gentle cold wash. Line dry in shade. Do not bleach.'
-  },
-  {
-    id: 'couture-cargo-pants',
-    name: 'Inefontop "Genesis" Cargoes',
-    price: 110.00,
-    category: 'pants',
-    description: 'Relaxed technical fit cargo pants with ergonomic articulating paneling. Adjustable webbing waist belt and elastic drawcords at cuffs. Outfitted with multiple geometric pockets and solid laser-etched metal hardware.',
-    images: [
-      'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1517423568366-8b83523034fd?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?q=80&w=600&auto=format&fit=crop'
-    ],
-    rating: 5.0,
-    badge: 'LIMITED',
-    stock: 4,
-    fabric: '70% Cotton Twill, 30% Cordura Nylon Ripstop with DWR coating',
-    care: 'Machine wash cold on delicate cycle. Air dry flat. Do not dry clean.'
-  },
-  {
-    id: 'couture-varsity-jacket',
-    name: 'Inefontop "Blossom" Varsity',
-    price: 185.00,
-    category: 'jackets',
-    description: 'Bespoke heavy collegiate varsity jacket constructed from dense premium Melton wool with ultra-soft vegan PU leather sleeve drapes. Embellished with custom quilted satin linings, heavy rib trims, and complex chenille floral embroidery.',
-    images: [
-      'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1544022613-e87ca75a784a?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1508127269354-76811ff3f584?q=80&w=600&auto=format&fit=crop'
-    ],
-    rating: 4.9,
-    badge: 'LIMITED',
-    stock: 3,
-    fabric: '80% Premium Melton Wool Body, 20% Vegan Leather Sleeves. 100% Polyester Satin Lining.',
-    care: 'Professional dry clean only.'
-  },
-  {
-    id: 'couture-cap-black',
-    name: 'Inefontop "Oracle" Distressed Cap',
-    price: 35.00,
-    category: 'accessories',
-    description: 'Six-panel low-profile dad cap crafted from vintage washed heavy cotton twill. Detailed with manual distressing at the brim edge, metal buckle adjuster on the back, and tonally embroidered front branding.',
-    images: [
-      'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1576871337622-98d48d4aa53e?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1534215754734-18e55d13ce35?q=80&w=600&auto=format&fit=crop'
-    ],
-    rating: 4.7,
-    badge: 'NEW DROP',
-    stock: 22,
-    fabric: '100% Heavy Washed Cotton Twill',
-    care: 'Spot clean only with a cold damp cloth.'
-  },
-  {
-    id: 'couture-brutalist-crew',
-    name: 'Inefontop "Brutalist" Knit Crew',
-    price: 95.00,
-    category: 'hoodies',
-    description: 'Deconstructed loose knit crewneck crafted from a soft, bulky cotton-blend yarn. Features stylized distressed knit holes, chunky ribbed edges, dropped armholes, and subtle raw edge highlights throughout.',
-    images: [
-      'https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=600&auto=format&fit=crop'
-    ],
-    rating: 4.9,
-    badge: 'BEST SELLER',
-    stock: 6,
-    fabric: '60% Recycled Cotton Yarn, 40% Chunky Acrylic Blend',
-    care: 'Hand wash cold. Dry flat. Never hang to store as weight will stretch the knit.'
-  },
-  {
-    id: 'couture-phantom-vest',
-    name: 'Inefontop "Phantom" Tech Vest',
-    price: 125.00,
-    category: 'jackets',
-    description: 'High-utility tactical gilet designed for urban exploration. Boasts modular clip-on utility chest bags, quick-release fidlock magnetic buckles, water-repellent zippers, and a mesh harness core.',
-    images: [
-      'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=600&auto=format&fit=crop'
-    ],
-    rating: 4.8,
-    badge: 'SOLD OUT',
-    stock: 0,
-    fabric: '100% Cordura Ballistic Waterproof Nylon',
-    care: 'Wipe with damp cloth. Do not wash or iron.'
-  }
-];
+export interface ProductItem {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice: number;
+  discount: number;
+  category: 'hoodies' | 'tees' | 'pants' | 'jackets' | 'accessories';
+  isSakura: boolean;
+  isAssured: boolean;
+  rating: number;
+  reviewsCount: number;
+  images: string[];
+  colors: string[];
+  sizes: string[];
+  stock: number;
+  description: string;
+  specs: Record<string, string>;
+  offers: string[];
+}
 
-const REVIEWS_MOCK = [
-  { id: 'rev-1', author: 'Kaleb J.', rating: 5, date: 'May 14, 2026', title: 'Absolute Grail piece!', text: 'The weight of this French Terry cotton is unreal. Standard oversized hoodies usually fit weird, but this drape is perfect. Well worth the price.', verified: true },
-  { id: 'rev-2', author: 'Kenji O.', rating: 5, date: 'April 28, 2026', title: 'Exceptional details', text: 'The structural stitching is incredibly robust. Reflector details are highly responsive under ambient light. Beautiful luxury presentation boxes.', verified: true },
-  { id: 'rev-3', author: 'Clara S.', rating: 4, date: 'April 09, 2026', title: 'Top-tier materials', text: 'Super soft inside and very heavy. I sized down for a slightly less boxy streetwear look and it fits incredibly well. Shipping was very rapid.', verified: true }
+// Exact Theme Colors from User Swatch (#FA5F88)
+const CHERRY_PINK = '#FA5F88';
+const CHERRY_PINK_HOVER = '#e64f77';
+
+const PRODUCTS: ProductItem[] = [
+  {
+    id: 'sakura-drift-hoodie',
+    name: 'Ineffable "Sakura Drift" 450GSM Heavyweight Oversized Hoodie',
+    price: 88.00,
+    originalPrice: 120.00,
+    discount: 26,
+    category: 'hoodies',
+    isSakura: true,
+    isAssured: true,
+    rating: 4.9,
+    reviewsCount: 184,
+    images: [
+      'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800&auto=format&fit=crop'
+    ],
+    colors: ['Sakura Cherry Pink', 'Obsidian Black', 'Pure White'],
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    stock: 8,
+    description: 'Constructed from 450GSM double-faced French Terry organic cotton. Features dropped shoulders, clean seamless kangaroo pocket, and high-density embossed cherry blossom drift graphics on the back.',
+    specs: {
+      'Fabric': '100% Organic French Terry Cotton (450 GSM)',
+      'Fit': 'Oversized Boxy Streetwear Drape',
+      'Neck': 'Double-Layered Structured Hood',
+      'Sleeve': 'Full Sleeve with Ribbed Cuffs',
+      'Pattern': 'Embossed Sakura Drift Puff Print',
+      'Wash Care': 'Machine Wash Cold Inside Out, Tumble Dry Low'
+    },
+    offers: [
+      'Special Price: Extra $32 off (Included in price)',
+      'Bank Offer: 10% Instant Discount on credit & debit cards',
+      'Sakura Perk: Complimentary holographic Ineffable sticker pack',
+      'Free Express Delivery on orders above $75'
+    ]
+  },
+  {
+    id: 'hanami-varsity-jacket',
+    name: 'Ineffable "Hanami" Chenille Embroidered Melton Varsity Bomber',
+    price: 185.00,
+    originalPrice: 240.00,
+    discount: 23,
+    category: 'jackets',
+    isSakura: true,
+    isAssured: true,
+    rating: 5.0,
+    reviewsCount: 92,
+    images: [
+      'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544022613-e87ca75a784a?q=80&w=800&auto=format&fit=crop'
+    ],
+    colors: ['Cherry Blossom & Bone Leather', 'Charcoal Midnight'],
+    sizes: ['M', 'L', 'XL'],
+    stock: 4,
+    description: 'Heavyweight Melton wool collegiate bomber outfitted with ultra-soft vegan bone leather sleeves, chenille cherry blossom crest embroidery, and quilted cherry pink satin thermal lining.',
+    specs: {
+      'Fabric': '80% Heavy Melton Wool, 20% Vegan Leather',
+      'Lining': '100% Quilted Satin Lining (Blossom Pink)',
+      'Fit': 'Regular Bomber Fit',
+      'Closure': 'Heavy Duty Matte Metal Snap Buttons',
+      'Wash Care': 'Dry Clean Only'
+    },
+    offers: [
+      'Special Price: $55 flat discount applied',
+      'Bank Offer: 5% Unlimited Cashback on Ineffable Card',
+      'Partner Offer: Free Garment Dust Bag included'
+    ]
+  },
+  {
+    id: 'sakura-blossom-tee',
+    name: 'Ineffable "Petal Drift" 280GSM Heavyweight Streetwear Boxy Tee',
+    price: 48.00,
+    originalPrice: 65.00,
+    discount: 26,
+    category: 'tees',
+    isSakura: true,
+    isAssured: true,
+    rating: 4.8,
+    reviewsCount: 135,
+    images: [
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800&auto=format&fit=crop'
+    ],
+    colors: ['Vintage Blossom Pink', 'Washed Black', 'Snow White'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    stock: 19,
+    description: 'Heavy 280GSM combed ringspun cotton tee with tight mock neck collar. Front features cyber-zen cherry blossom equation artwork printed with breathable reactive dye.',
+    specs: {
+      'Fabric': '100% Ringspun Combed Cotton (280 GSM)',
+      'Fit': 'Boxy Relaxed Fit',
+      'Neck': 'Reinforced Mock Ribbed Collar',
+      'Pattern': 'Screen Printed Graphic',
+      'Wash Care': 'Machine Wash Cold, Hang to Dry'
+    },
+    offers: [
+      'Combo Offer: Buy with Sakura Hoodie and get 15% off',
+      'Bank Offer: Flat $5 instant off with UPI'
+    ]
+  },
+  {
+    id: 'petal-tech-cargo',
+    name: 'Ineffable "Petal-Tech" Articulated Tactical Ripstop Cargo Trousers',
+    price: 115.00,
+    originalPrice: 150.00,
+    discount: 23,
+    category: 'pants',
+    isSakura: false,
+    isAssured: true,
+    rating: 4.7,
+    reviewsCount: 78,
+    images: [
+      'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1517423568366-8b83523034fd?q=80&w=800&auto=format&fit=crop'
+    ],
+    colors: ['Slate Charcoal', 'Stealth Black'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    stock: 11,
+    description: 'Durable Cordura ripstop cargo pants featuring articulated knee darts, magnetic Fidlock buckle belt, 6 utility cargo pockets, and adjustable cherry blossom ankle pull-cords.',
+    specs: {
+      'Fabric': '70% Cotton, 30% Cordura Nylon Ripstop',
+      'Fit': 'Relaxed Tapered Fit',
+      'Pockets': '6 Multi-Utility Pockets',
+      'Finish': 'DWR Water-Repellent Coating'
+    },
+    offers: [
+      'Special Price: Extra $35 off',
+      'Bank Offer: 10% Instant Discount on debit cards'
+    ]
+  },
+  {
+    id: 'komorebi-knit-crew',
+    name: 'Ineffable "Komorebi" Hand-Distressed Chunky Slub Knit Crewneck',
+    price: 98.00,
+    originalPrice: 135.00,
+    discount: 27,
+    category: 'hoodies',
+    isSakura: true,
+    isAssured: true,
+    rating: 4.9,
+    reviewsCount: 64,
+    images: [
+      'https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?q=80&w=800&auto=format&fit=crop'
+    ],
+    colors: ['Cherry Pink & Ash', 'Oatmeal Heather'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    stock: 5,
+    description: 'Chunky loose-knit sweater woven from breathable cotton-linen yarn with subtle cherry blossom pink contrast threads and hand-finished deconstructed fray details.',
+    specs: {
+      'Fabric': '65% Recycled Cotton, 35% Slub Linen',
+      'Fit': 'Dropped Shoulder Relaxed Fit',
+      'Neck': 'Chunky Ribbed Crewneck',
+      'Wash Care': 'Hand Wash Cold, Lay Flat to Dry'
+    },
+    offers: [
+      'Special Price: Flat $37 off',
+      'Complimentary Express Doorstep Shipping'
+    ]
+  },
+  {
+    id: 'sakura-cyber-vest',
+    name: 'Ineffable "Sakura Blade" Waterproof Modular Urban Tactical Gilet',
+    price: 130.00,
+    originalPrice: 175.00,
+    discount: 25,
+    category: 'jackets',
+    isSakura: true,
+    isAssured: true,
+    rating: 4.8,
+    reviewsCount: 42,
+    images: [
+      'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop'
+    ],
+    colors: ['Cherry Pink & Black', 'Midnight Stealth'],
+    sizes: ['M', 'L', 'XL'],
+    stock: 7,
+    description: 'Urban technical vest with magnetic quick-release chest rigs, heat-sealed YKK Aquaguard zippers, and cherry pink reinforced nylon webbing straps.',
+    specs: {
+      'Fabric': '500D Cordura Waterproof Ballistic Nylon',
+      'Hardware': 'Fidlock Magnetic Buckles + YKK Aquaguard Zips',
+      'Fit': 'Adjustable Modular Fit'
+    },
+    offers: [
+      'Special Price: Extra $45 off',
+      'Bank Offer: Extra 5% with UPI payments'
+    ]
+  },
+  {
+    id: 'sakura-blossom-cap',
+    name: 'Ineffable "Bloom" Vintage Pigment-Dyed Washed Cotton Cap',
+    price: 38.00,
+    originalPrice: 50.00,
+    discount: 24,
+    category: 'accessories',
+    isSakura: true,
+    isAssured: false,
+    rating: 4.7,
+    reviewsCount: 110,
+    images: [
+      'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1576871337622-98d48d4aa53e?q=80&w=800&auto=format&fit=crop'
+    ],
+    colors: ['Washed Charcoal', 'Cherry Pink'],
+    sizes: ['Free Size'],
+    stock: 22,
+    description: 'Low profile 6-panel unstructured dad cap with subtle distressed brim and tonally embroidered cherry blossom branch emblem. Solid brass strap adjuster.',
+    specs: {
+      'Fabric': '100% Washed Heavy Cotton Twill',
+      'Closure': 'Solid Brass Tri-Glide Buckle',
+      'Fit': 'Adjustable One Size'
+    },
+    offers: [
+      'Special Price: Extra $12 off',
+      'Add with any hoodie for free shipping'
+    ]
+  },
+  {
+    id: 'sakura-key-pendant',
+    name: 'Ineffable "Petal Key" Grade-5 Anodized Titanium Artifact Pendant',
+    price: 55.00,
+    originalPrice: 75.00,
+    discount: 26,
+    category: 'accessories',
+    isSakura: true,
+    isAssured: true,
+    rating: 5.0,
+    reviewsCount: 57,
+    images: [
+      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop'
+    ],
+    colors: ['Cherry Pink Anodized', 'Raw Titanium Silver'],
+    sizes: ['One Size'],
+    stock: 14,
+    description: 'Machined from aerospace Grade 5 titanium billet on a 5-axis CNC. Features laser-etched cherry blossom motif and dual-mount for mechanical switch or included steel chain.',
+    specs: {
+      'Material': 'Grade 5 Aerospace Titanium',
+      'Finish': 'PVD Cherry Pink Anodized',
+      'Chain': '55cm 2.5mm Stainless Steel Curb Chain'
+    },
+    offers: [
+      'Limited Collectible: Only 50 units produced worldwide',
+      'Bank Offer: Flat 5% off on online payments'
+    ]
+  }
 ];
 
 export const ShopView: React.FC<ShopViewProps> = ({
@@ -180,1234 +314,1075 @@ export const ShopView: React.FC<ShopViewProps> = ({
   setCurrentPage,
   wishlist = [],
   onToggleWishlist,
-  currentUser,
 }) => {
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
-  // Navigation & Dropdown states for Shop Sub-Navbar
-  const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
-  const [isTrackOrderModalOpen, setIsTrackOrderModalOpen] = useState(false);
-  const [orderTrackingInput, setOrderTrackingInput] = useState('');
-  const [orderTrackingResult, setOrderTrackingResult] = useState<string | null>(null);
-
-  // Filter & Search states
+  // Search and Filters (Flipkart Style)
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'hoodies' | 'tees' | 'pants' | 'jackets' | 'accessories'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [priceRange, setPriceRange] = useState<'all' | 'under-50' | '50-100' | '100-plus'>('all');
+  const [minRating, setMinRating] = useState<number>(0);
+  const [onlySakura, setOnlySakura] = useState<boolean>(false);
+  const [onlyAssured, setOnlyAssured] = useState<boolean>(false);
+  const [onlyInStock, setOnlyInStock] = useState<boolean>(false);
   const [selectedSizeFilter, setSelectedSizeFilter] = useState<string>('all');
-  const [selectedPriceFilter, setSelectedPriceFilter] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<'newest' | 'price-low' | 'price-high' | 'popularity'>('popularity');
+  const [sortBy, setSortBy] = useState<'popularity' | 'price-low' | 'price-high' | 'newest' | 'discount'>('popularity');
 
-  // Interactive View States
-  const [quickViewProduct, setQuickViewProduct] = useState<typeof products[0] | null>(null);
+  // Mobile Filter Drawer Toggle
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  // Product Detail Page State
   const [activeProductId, setActiveProductId] = useState<string | null>(null);
-  const [isFilterLoading, setIsFilterLoading] = useState(false);
-  const [addedItemToast, setAddedItemToast] = useState<string | null>(null);
-
-  // Product page interactive states
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
-  const [selectedSize, setSelectedSize] = useState<'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'>('M');
+  const [selectedSize, setSelectedSize] = useState<string>('M');
   const [selectedQty, setSelectedQty] = useState(1);
+  const [pincode, setPincode] = useState('');
+  const [pincodeStatus, setPincodeStatus] = useState<string | null>(null);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
-  const [hoveredImageZoom, setHoveredImageZoom] = useState(false);
-  const [zoomCoords, setZoomCoords] = useState({ x: 0, y: 0 });
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Accordion expanded states (Product page)
-  const [expandedSection, setExpandedSection] = useState<'fabric' | 'shipping' | 'returns' | null>('fabric');
-
-  // Recently viewed states
-  const [recentlyViewedIds, setRecentlyViewedIds] = useState<string[]>([]);
-
-  const categories = [
-    { id: 'all', label: 'ALL COLLECTIONS' },
-    { id: 'hoodies', label: 'HOODIES & KNITS' },
-    { id: 'tees', label: 'PREMIUM TEES' },
-    { id: 'pants', label: 'UTILITY PANTS' },
-    { id: 'jackets', label: 'OUTERWEAR' },
-    { id: 'accessories', label: 'ACCESSORIES' }
-  ];
-
-  // Estimated delivery date calculator (standard: 3-5 days, express: 1-2 days)
-  const getDeliveryDateStr = (isExpress = false) => {
-    const daysToAdd = isExpress ? 2 : 4;
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + daysToAdd);
-    return targetDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-  };
-
-  // Load recently viewed
-  useEffect(() => {
-    const cached = localStorage.getItem('inefontop_recently_viewed');
-    if (cached) {
-      setRecentlyViewedIds(JSON.parse(cached));
-    }
+  const activeProduct = useMemo(() => {
+    return PRODUCTS.find(p => p.id === activeProductId);
   }, [activeProductId]);
 
-  // Track recently viewed
-  const trackRecentlyViewed = (id: string) => {
-    setRecentlyViewedIds((prev) => {
-      const updated = [id, ...prev.filter((item) => item !== id)].slice(0, 4);
-      localStorage.setItem('inefontop_recently_viewed', JSON.stringify(updated));
-      return updated;
+  // Delivery date string
+  const getDeliveryDate = () => {
+    const d = new Date();
+    d.setDate(d.getDate() + 3);
+    return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  };
+
+  // Filter products logic
+  const filteredProducts = useMemo(() => {
+    return PRODUCTS.filter(p => {
+      // Search
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const match = p.name.toLowerCase().includes(q) || 
+                      p.category.toLowerCase().includes(q) || 
+                      p.description.toLowerCase().includes(q);
+        if (!match) return false;
+      }
+
+      // Category
+      if (selectedCategory !== 'all' && p.category !== selectedCategory) {
+        return false;
+      }
+
+      // Sakura Theme Filter
+      if (onlySakura && !p.isSakura) return false;
+
+      // Assured
+      if (onlyAssured && !p.isAssured) return false;
+
+      // In Stock
+      if (onlyInStock && p.stock <= 0) return false;
+
+      // Min Rating
+      if (minRating > 0 && p.rating < minRating) return false;
+
+      // Price Range
+      if (priceRange === 'under-50' && p.price >= 50) return false;
+      if (priceRange === '50-100' && (p.price < 50 || p.price > 100)) return false;
+      if (priceRange === '100-plus' && p.price < 100) return false;
+
+      // Size
+      if (selectedSizeFilter !== 'all' && !p.sizes.includes(selectedSizeFilter)) {
+        return false;
+      }
+
+      return true;
     });
-  };
+  }, [searchQuery, selectedCategory, onlySakura, onlyAssured, onlyInStock, minRating, priceRange, selectedSizeFilter]);
 
-  // Handle opening a product page
-  const handleProductClick = (product: typeof products[0]) => {
-    setActiveProductId(product.id);
-    setSelectedImageIdx(0);
-    setSelectedSize('M');
-    setSelectedQty(1);
-    trackRecentlyViewed(product.id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Trigger loading skeleton simulation on filter changes
-  const triggerFilterRefreshes = () => {
-    setIsFilterLoading(true);
-    setTimeout(() => {
-      setIsFilterLoading(false);
-    }, 550);
-  };
-
-  useEffect(() => {
-    triggerFilterRefreshes();
-  }, [selectedCategory, selectedSizeFilter, selectedPriceFilter, sortBy, searchQuery]);
-
-  // Apply filters and sorting
-  const filteredProducts = products.filter((p) => {
-    // Category match
-    const categoryMatch = selectedCategory === 'all' || p.category === selectedCategory;
-
-    // Search query match
-    const searchMatch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                        p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        p.badge.toLowerCase().includes(searchQuery.toLowerCase());
-
-    // Price match
-    let priceMatch = true;
-    if (selectedPriceFilter === 'under-50') priceMatch = p.price < 50;
-    else if (selectedPriceFilter === '50-100') priceMatch = p.price >= 50 && p.price <= 100;
-    else if (selectedPriceFilter === 'over-100') priceMatch = p.price > 100;
-
-    // Size filter simulation
-    // All of our clothing has sizes XS to XXL, so it fits, but Accessories (caps) don't have clothing sizes
-    let sizeMatch = true;
-    if (selectedSizeFilter !== 'all') {
-      if (p.category === 'accessories') sizeMatch = false; // Caps are OS (One size)
+  // Sort products
+  const sortedProducts = useMemo(() => {
+    const list = [...filteredProducts];
+    if (sortBy === 'popularity') {
+      return list.sort((a, b) => b.reviewsCount - a.reviewsCount);
     }
+    if (sortBy === 'price-low') {
+      return list.sort((a, b) => a.price - b.price);
+    }
+    if (sortBy === 'price-high') {
+      return list.sort((a, b) => b.price - a.price);
+    }
+    if (sortBy === 'newest') {
+      return list.sort((a, b) => (b.isSakura ? 1 : 0) - (a.isSakura ? 1 : 0));
+    }
+    if (sortBy === 'discount') {
+      return list.sort((a, b) => b.discount - a.discount);
+    }
+    return list;
+  }, [filteredProducts, sortBy]);
 
-    return categoryMatch && searchMatch && priceMatch && sizeMatch;
-  });
+  const clearAllFilters = () => {
+    setSelectedCategory('all');
+    setPriceRange('all');
+    setMinRating(0);
+    setOnlySakura(false);
+    setOnlyAssured(false);
+    setOnlyInStock(false);
+    setSelectedSizeFilter('all');
+    setSearchQuery('');
+  };
 
-  // Apply Sorting
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === 'price-low') return a.price - b.price;
-    if (sortBy === 'price-high') return b.price - a.price;
-    if (sortBy === 'newest') return a.badge === 'NEW DROP' ? -1 : 1;
-    // Popularity sorting (descending rating)
-    return b.rating - a.rating;
-  });
-
-  const handleAddToCart = (product: typeof products[0], customSize?: string, customQty?: number) => {
-    const finalSize = customSize || (product.category === 'accessories' ? 'ONE SIZE' : 'M');
-    const finalQty = customQty || 1;
+  const handleAddProductToCart = (prod: ProductItem, sizeToUse?: string, qtyToUse?: number) => {
+    const chosenSize = sizeToUse || (prod.sizes[0] || 'M');
+    const chosenQty = qtyToUse || 1;
 
     onAddToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.images[0],
+      id: `${prod.id}-${chosenSize}`,
+      name: prod.name,
+      price: prod.price,
+      image: prod.images[0],
       type: 'shop',
-      size: finalSize,
-      quantity: finalQty
+      size: chosenSize,
+      quantity: chosenQty
     } as any);
 
-    setAddedItemToast(`${finalQty}X ${product.name.toUpperCase()} (${finalSize})`);
-    setTimeout(() => setAddedItemToast(null), 3000);
+    setToastMessage(`Added 1 item: ${prod.name} (${chosenSize}) to cart`);
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // Zoom tracker helper
-  const handleZoomMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
-    setZoomCoords({ x, y });
+  const handleCheckPincode = () => {
+    if (!pincode || pincode.trim().length < 5) {
+      setPincodeStatus('Please enter a valid 5-6 digit postal code');
+      return;
+    }
+    setPincodeStatus(`Available! Express Delivery by ${getDeliveryDate()} | Free Shipping`);
   };
-
-  // Render Product Page Detail mode
-  const activeProduct = products.find((p) => p.id === activeProductId);
-  const relatedProducts = activeProduct 
-    ? products.filter((p) => p.id !== activeProduct.id && (p.category === activeProduct.category || Math.random() > 0.5)).slice(0, 3)
-    : [];
-  const recentlyViewedProducts = products.filter((p) => recentlyViewedIds.includes(p.id) && p.id !== activeProductId).slice(0, 3);
 
   return (
-    <div id="shop-view-container" className={`max-w-7xl mx-auto px-4 md:px-8 py-24 pt-32 ${themeStyles.textPrimary}`}>
-      
-      {/* Toast alert popup */}
-      <AnimatePresence>
-        {addedItemToast && (
-          <motion.div 
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            id="added-cart-toast" 
-            className="fixed bottom-6 right-6 z-50 bg-zinc-950 border border-emerald-500/30 text-white font-mono text-[10px] tracking-widest px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3"
-          >
-            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            <div className="flex flex-col">
-              <span className="text-emerald-400 font-bold">ADDED TO BASKET</span>
-              <span className="text-[9px] text-zinc-400 mt-0.5">{addedItemToast}</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div id="flipkart-shop-container" className="relative min-h-screen font-sans">
+      <div className={`pt-24 pb-20 px-3 sm:px-6 max-w-7xl mx-auto relative z-10 ${isDarkMode ? 'text-zinc-100' : 'text-zinc-800'}`}>
 
-      <AnimatePresence mode="wait">
-        {!activeProductId ? (
-          /* ========================================================
-             1. SHOP MAIN CATALOG INDEX VIEW
-             ======================================================== */
-          <motion.div
-            key="catalog-list"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.5 }}
-            id="shop-catalog-view"
-          >
-            {/* Top Announcement Bar */}
-            <div className={`w-full bg-zinc-950 text-zinc-100 text-[10px] md:text-[11px] font-mono tracking-widest text-center py-2 rounded-xl border border-zinc-800/80 uppercase font-semibold flex items-center justify-center space-x-2 mb-8 shadow-sm`}>
-              <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-              <span>Orders Dispatch Within 24 Hours</span>
-            </div>
+        {/* Toast Notification */}
+        <AnimatePresence>
+          {toastMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              id="shop-alert-toast"
+              style={{ backgroundColor: CHERRY_PINK }}
+              className="fixed top-24 right-6 z-50 text-white font-medium text-xs px-4 py-3 rounded-lg shadow-xl flex items-center space-x-2"
+            >
+              <Check className="w-4 h-4" />
+              <span>{toastMessage}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-            {/* Simple Clean Header */}
-            <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-              <h2 className="text-3xl md:text-5xl font-sans tracking-tight font-black uppercase text-glow">
-                SHOPPING AREA
-              </h2>
-              <div className="w-12 h-[2px] bg-rose-500/75 mx-auto rounded-full" />
-            </div>
+        {/* TOP FLIPKART-STYLE SEARCH HEADER WITH CHERRY PINK THEME (#FA5F88) & TRANSLUCENT AESTHETIC */}
+        <div className={`mb-6 p-4 rounded-xl border ${
+          isDarkMode 
+            ? 'bg-black/30 backdrop-blur-md border-white/10 shadow-lg' 
+            : 'bg-white/50 backdrop-blur-md border-zinc-200/80 shadow-sm'
+        } space-y-3`}>
+          <div className="flex items-center gap-3">
 
-            {/* Filter and Live Search Panel */}
-            <div id="shop-controls-container" className={`p-6 rounded-2xl border ${themeStyles.borderMuted} ${themeStyles.bgCard} mb-12 space-y-6 shadow-md`}>
-              <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
-                {/* Live Search */}
-                <div className="relative w-full lg:max-w-md">
-                  <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 ${themeStyles.textMuted}`} />
-                  <input
-                    id="shop-live-search"
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="SEARCH PRODUCTS..."
-                    className={`w-full ${isDarkMode ? 'bg-zinc-950/80 border-zinc-900 text-zinc-100 placeholder-zinc-600 focus:border-rose-500/55' : 'bg-white border-zinc-200 text-zinc-900 placeholder-zinc-400 focus:border-rose-500/50'} pl-11 pr-4 py-3 rounded-xl border text-xs font-mono tracking-wider focus:outline-none transition-all duration-300`}
-                  />
-                  {searchQuery && (
-                    <button 
-                      onClick={() => setSearchQuery('')}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-                </div>
-
-                {/* Sub-Filters: Sort, Price, Size */}
-                <div className="flex flex-wrap gap-3 items-center justify-end w-full lg:w-auto">
-                  {/* Price Filter */}
-                  <div className="flex items-center space-x-1.5">
-                    <span className="font-mono text-[9px] text-zinc-500 tracking-wider">PRICE:</span>
-                    <select
-                      id="price-filter-select"
-                      value={selectedPriceFilter}
-                      onChange={(e) => setSelectedPriceFilter(e.target.value)}
-                      className={`px-3 py-2 font-mono text-[10px] tracking-widest rounded-xl border ${themeStyles.bgCard} ${themeStyles.borderMuted} ${themeStyles.textPrimary} focus:outline-none`}
-                    >
-                      <option value="all">ALL PRICES</option>
-                      <option value="under-50">UNDER $50</option>
-                      <option value="50-100">$50 - $100</option>
-                      <option value="over-100">OVER $100</option>
-                    </select>
-                  </div>
-
-                  {/* Size Filter */}
-                  <div className="flex items-center space-x-1.5">
-                    <span className="font-mono text-[9px] text-zinc-500 tracking-wider">SIZE:</span>
-                    <select
-                      id="size-filter-select"
-                      value={selectedSizeFilter}
-                      onChange={(e) => setSelectedSizeFilter(e.target.value)}
-                      className={`px-3 py-2 font-mono text-[10px] tracking-widest rounded-xl border ${themeStyles.bgCard} ${themeStyles.borderMuted} ${themeStyles.textPrimary} focus:outline-none`}
-                    >
-                      <option value="all">ALL SIZES</option>
-                      <option value="XS">XS</option>
-                      <option value="S">S</option>
-                      <option value="M">M</option>
-                      <option value="L">L</option>
-                      <option value="XL">XL</option>
-                      <option value="XXL">XXL</option>
-                    </select>
-                  </div>
-
-                  {/* Sort By */}
-                  <div className="flex items-center space-x-1.5">
-                    <span className="font-mono text-[9px] text-zinc-500 tracking-wider">SORT:</span>
-                    <select
-                      id="sort-select"
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value as any)}
-                      className={`px-3 py-2 font-mono text-[10px] tracking-widest rounded-xl border ${themeStyles.bgCard} ${themeStyles.borderMuted} ${themeStyles.textPrimary} focus:outline-none`}
-                    >
-                      <option value="popularity">BEST SELLING</option>
-                      <option value="newest">NEW RELEASES</option>
-                      <option value="price-low">PRICE: LOW TO HIGH</option>
-                      <option value="price-high">PRICE: HIGH TO LOW</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Category Filter Pills */}
-              <div id="shop-category-filters" className="flex flex-wrap items-center justify-start gap-2 pt-2 border-t border-zinc-800/20">
-                {categories.map((cat) => {
-                  const isActive = selectedCategory === cat.id;
-                  return (
-                    <button
-                      id={`shop-filter-${cat.id}`}
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id as any)}
-                      className={`px-4 py-2 font-mono text-[9px] tracking-widest rounded-lg border transition-all duration-300 cursor-pointer ${
-                        isActive
-                          ? `${themeStyles.accentBg} text-zinc-950 border-white font-bold scale-[1.03] shadow-md`
-                          : `${themeStyles.bgCard} ${themeStyles.textSecondary} ${themeStyles.borderMuted} hover:${themeStyles.textPrimary}`
-                      }`}
-                    >
-                      {cat.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Products Listing and Loading Skeletons */}
-            {isFilterLoading ? (
-              <div id="shop-skeletons" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className={`h-[420px] rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMuted} animate-pulse overflow-hidden p-6 flex flex-col justify-between`}>
-                    <div className="w-full h-56 bg-zinc-800/40 rounded-xl" />
-                    <div className="space-y-3 mt-4">
-                      <div className="h-4 bg-zinc-800/50 w-2/3 rounded-md" />
-                      <div className="h-3 bg-zinc-800/30 w-full rounded-md" />
-                      <div className="h-3 bg-zinc-800/30 w-5/6 rounded-md" />
-                    </div>
-                    <div className="h-10 bg-zinc-800/50 rounded-xl mt-6 w-full" />
-                  </div>
-                ))}
-              </div>
-            ) : sortedProducts.length === 0 ? (
-              /* Beautiful Empty State */
-              <div id="shop-empty-state" className="text-center py-24 max-w-md mx-auto space-y-6">
-                <div className={`w-20 h-20 rounded-full border border-dashed ${themeStyles.borderMuted} flex items-center justify-center mx-auto text-zinc-500`}>
-                  <ShoppingBag className="w-8 h-8 opacity-40" />
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-sans text-xl font-bold uppercase tracking-wider">No Items Found</h3>
-                  <p className={`${themeStyles.textSecondary} text-xs leading-relaxed`}>
-                    We could not find any apparel matching your active filters. Try adjusting your search query, price ranges, or sizes.
-                  </p>
-                </div>
-                <button
-                  id="reset-shop-filters"
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSelectedCategory('all');
-                    setSelectedPriceFilter('all');
-                    setSelectedSizeFilter('all');
-                    setSortBy('popularity');
-                  }}
-                  className={`px-6 py-3 border font-mono text-[10px] tracking-widest font-bold rounded-xl transition-all cursor-pointer ${isDarkMode ? 'bg-zinc-100 hover:bg-white text-zinc-950 border-white' : 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-900'}`}
+            {/* Flipkart Style Search Box with Exact Cherry Pink Accents */}
+            <div className="relative flex-grow">
+              <input
+                id="flipkart-search-input"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for hoodies, graphic tees, cargo pants, sakura collection..."
+                className={`w-full pl-10 pr-10 py-2.5 rounded-lg border text-xs sm:text-sm transition-all focus:outline-none ${
+                  isDarkMode 
+                    ? 'bg-black/30 border-white/10 text-white placeholder-zinc-400 focus:border-[#FA5F88]' 
+                    : 'bg-white/60 border-zinc-300 text-zinc-900 placeholder-zinc-400 focus:border-[#FA5F88] focus:bg-white'
+                }`}
+              />
+              <Search 
+                style={{ color: CHERRY_PINK }}
+                className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2" 
+              />
+              {searchQuery && (
+                <button 
+                  id="clear-search-btn"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-zinc-400 hover:text-zinc-200"
                 >
-                  RESET FILTERS
+                  <X className="w-3.5 h-3.5" />
                 </button>
-              </div>
-            ) : (
-              /* Product Grid */
-              <div id="shop-products-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-                {sortedProducts.map((product) => {
-                  const isSoldOut = product.stock === 0;
-                  const isWishlisted = wishlist.includes(product.id);
-                  return (
-                    <motion.div
-                      layout
-                      initial={{ opacity: 0, scale: 0.98 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      whileHover={{ y: -6 }}
-                      id={`shop-product-card-${product.id}`}
-                      key={product.id}
-                      className={`group glass-panel rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-500 relative hover:border-rose-500/40 hover:shadow-[0_20px_50px_rgba(244,63,94,0.15)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)]`}
-                    >
-                      {/* Product Image and Hover Actions */}
-                      <div 
-                        onClick={() => !isSoldOut && handleProductClick(product)}
-                        className="relative h-72 overflow-hidden bg-zinc-950 cursor-pointer"
-                      >
-                        <img
-                          src={product.images[0]}
-                          alt={product.name}
-                          referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-110 filter brightness-90 group-hover:brightness-95"
-                        />
-                        {/* Elegant gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-transparent to-transparent opacity-80" />
+              )}
+            </div>
 
-                        {/* Badges */}
-                        <div className="absolute top-4 left-4 flex flex-col gap-2">
-                          {isSoldOut ? (
-                            <span className="bg-red-600 text-white font-mono text-[8px] tracking-widest px-3 py-1 rounded-md font-bold shadow-md">
-                              SOLD OUT
-                            </span>
-                          ) : (
-                            <span className={`bg-zinc-950/80 backdrop-blur-md text-white border border-zinc-800/60 px-3 py-1 rounded-md font-mono text-[8px] tracking-widest font-bold uppercase`}>
-                              {product.badge}
-                            </span>
-                          )}
-                        </div>
+            {/* Cart Quick Button in User's Exact Cherry Pink (#FA5F88) */}
+            <button
+              id="nav-cart-btn"
+              onClick={() => setCurrentPage('cart')}
+              style={{ backgroundColor: CHERRY_PINK }}
+              className="flex items-center space-x-1.5 px-4 py-2.5 rounded-lg text-white text-xs font-bold transition-all hover:opacity-90 cursor-pointer shrink-0 shadow-md"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              <span className="hidden md:inline">Cart</span>
+            </button>
+          </div>
 
-                        {/* Quick Actions Panel */}
-                        {!isSoldOut && (
-                          <div className="absolute inset-0 bg-zinc-950/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-                            <button
-                              id={`quick-preview-${product.id}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setQuickViewProduct(product);
-                              }}
-                              className="p-3 bg-white text-zinc-950 hover:bg-zinc-100 rounded-full shadow-lg transition-transform hover:scale-110 cursor-pointer"
-                              title="Quick View"
-                            >
-                              <Eye className="w-4 h-4" />
-                            </button>
-                            <button
-                              id={`detail-page-${product.id}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleProductClick(product);
-                              }}
-                              className="p-3 bg-zinc-900 text-white hover:bg-zinc-800 border border-zinc-700/50 rounded-full shadow-lg transition-transform hover:scale-110 cursor-pointer"
-                              title="Full Details"
-                            >
-                              <ChevronRight className="w-4 h-4" />
-                            </button>
-                          </div>
-                        )}
-
-                        {/* Ratings floating badge */}
-                        <div className="absolute bottom-4 right-4 bg-zinc-950/80 backdrop-blur-md border border-zinc-800/40 px-2.5 py-1 rounded-lg flex items-center space-x-1 shadow-sm">
-                          <Star className="w-3 h-3 text-rose-400 fill-rose-400" />
-                          <span className="text-white font-mono text-[9px] font-bold">{product.rating}</span>
-                        </div>
-                      </div>
-
-                      {/* Info Section */}
-                      <div className="p-6 space-y-4 flex-grow flex flex-col justify-between">
-                        <div className="space-y-1.5">
-                          <div className="flex justify-between items-start gap-4">
-                            <h3 
-                              onClick={() => !isSoldOut && handleProductClick(product)}
-                              className={`font-sans text-sm md:text-base font-extrabold ${isDarkMode ? 'text-white' : 'text-zinc-900'} uppercase tracking-wide cursor-pointer hover:text-rose-500 transition-colors leading-snug`}
-                            >
-                              {product.name}
-                            </h3>
-                            <span className={`font-mono text-xs md:text-sm font-black ${isDarkMode ? 'text-white' : 'text-zinc-900'} shrink-0 mt-0.5`}>
-                              ${product.price.toFixed(2)}
-                            </span>
-                          </div>
-                          <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed line-clamp-2`}>
-                            {product.description}
-                          </p>
-                        </div>
-
-                        {/* Buy/Wishlist Action bar */}
-                        <div className="flex items-center gap-3 pt-2">
-                          <button
-                            id={`add-cart-product-${product.id}`}
-                            disabled={isSoldOut}
-                            onClick={() => handleAddToCart(product)}
-                            className={`flex-grow py-3 px-4 border font-mono text-[9px] tracking-widest font-bold rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer ${
-                              isSoldOut 
-                                ? 'bg-zinc-800/30 border-zinc-800 text-zinc-500 cursor-not-allowed'
-                                : isDarkMode
-                                  ? 'bg-zinc-900/60 border-zinc-800 text-white hover:bg-zinc-100 hover:border-white hover:text-zinc-950 shadow-sm'
-                                  : 'bg-zinc-950 border-zinc-950 text-white hover:bg-zinc-800 hover:border-zinc-800 shadow-sm'
-                            }`}
-                          >
-                            <ShoppingCart className="w-3.5 h-3.5" />
-                            <span>{isSoldOut ? 'SOLD OUT' : 'ADD TO BASKET'}</span>
-                          </button>
-
-                          {/* Wishlist button */}
-                          <button
-                            id={`wishlist-toggle-${product.id}`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (onToggleWishlist) onToggleWishlist(product.id);
-                            }}
-                            className={`p-3 rounded-xl border transition-all cursor-pointer ${
-                              isWishlisted
-                                ? 'bg-rose-500 border-rose-400 text-white shadow-md'
-                                : `${themeStyles.bgCard} ${themeStyles.borderMuted} ${themeStyles.textSecondary} hover:text-rose-500 hover:border-rose-500/40`
-                            }`}
-                            title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
-                          >
-                            <Heart className={`w-3.5 h-3.5 ${isWishlisted ? 'fill-current' : ''}`} />
-                          </button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* Premium Guarantee Info / Trust Banner */}
-            <div id="shop-guarantee-banner" className={`rounded-3xl border ${themeStyles.borderMuted} bg-gradient-to-r ${isDarkMode ? 'from-zinc-950/40 via-zinc-900/10 to-transparent' : 'from-white via-zinc-100/10 to-transparent'} p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-md`}>
-              <div className="space-y-4 max-w-xl">
-                <div className="flex items-center space-x-2">
-                  <Tag className={`w-4 h-4 ${themeStyles.accentText}`} />
-                  <span className="font-mono text-[9px] tracking-widest text-zinc-400 uppercase font-bold">LIMITED QUANTITY RUNS</span>
-                </div>
-                <h4 className="text-xl md:text-2xl font-sans tracking-tight font-black uppercase">
-                  PREMIUM COUTURE GUARANTEE
-                </h4>
-                <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed`}>
-                  All items are tailored in small capsule batches with strict eco-certifications. We offer tracked door-to-door express deliveries worldwide, 14-day hassle-free return labels, and complete digital ownership audits synced securely to your portal.
-                </p>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pt-2">
-                  <div className="flex items-center space-x-2 font-mono text-[9px] text-zinc-400">
-                    <Truck className="w-3.5 h-3.5 text-rose-500" />
-                    <span>SECURED DISPATCH</span>
-                  </div>
-                  <div className="flex items-center space-x-2 font-mono text-[9px] text-zinc-400">
-                    <RotateCcw className="w-3.5 h-3.5 text-rose-500" />
-                    <span>HASSLE-FREE RETURNS</span>
-                  </div>
-                  <div className="flex items-center space-x-2 font-mono text-[9px] text-zinc-400 col-span-2 md:col-span-1">
-                    <Package className="w-3.5 h-3.5 text-rose-500" />
-                    <span>100% ECO-COTTON</span>
-                  </div>
-                </div>
-              </div>
+          {/* Quick Search Chips with Cherry Pink Hover */}
+          <div className="flex items-center space-x-2 overflow-x-auto pb-1 text-xs no-scrollbar">
+            <span className="text-zinc-500 text-[11px] shrink-0 font-medium">Popular:</span>
+            {['Sakura Drift Hoodie', 'Graphic Tees', 'Hanami Varsity', 'Cargo Pants', 'Komorebi Knit'].map((chip) => (
               <button
-                id="cta-shop-tiers"
-                onClick={() => setCurrentPage('membership')}
-                className={`px-8 py-4 font-mono text-xs tracking-widest font-bold rounded-xl transition-all shrink-0 shadow-md border cursor-pointer ${
-                  isDarkMode
-                    ? 'bg-zinc-100 hover:bg-white text-zinc-950 border-white'
-                    : 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-900'
+                key={chip}
+                onClick={() => setSearchQuery(chip.split(' ')[0])}
+                className={`px-2.5 py-1 rounded-full text-[11px] border shrink-0 transition-colors cursor-pointer ${
+                  isDarkMode 
+                    ? 'bg-black/30 border-white/10 text-zinc-300 hover:border-[#FA5F88] hover:text-[#FA5F88]' 
+                    : 'bg-white/60 border-zinc-200 text-zinc-700 hover:border-[#FA5F88] hover:text-[#FA5F88]'
                 }`}
               >
-                VIEW DISCORD MEMBERSHIPS INSTEAD
+                {chip}
               </button>
-            </div>
-          </motion.div>
-        ) : (
-          /* ========================================================
-             2. IMMERSIVE PRODUCT DETAIL PAGE VIEW
-             ======================================================== */
-          <motion.div
-            key="product-detail-view"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.5 }}
-            id={`product-page-${activeProduct?.id}`}
-            className="space-y-16"
-          >
-            {/* Back Button and Navigation indicator */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/20 pb-6">
-              <button
-                id="back-to-catalog"
-                onClick={() => setActiveProductId(null)}
-                className={`flex items-center space-x-2 font-mono text-xs tracking-widest font-semibold cursor-pointer ${themeStyles.textSecondary} hover:${themeStyles.textPrimary} transition-colors`}
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>BACK TO COLLECTIONS</span>
-              </button>
-              <div className="font-mono text-[10px] text-zinc-500 tracking-wider flex items-center space-x-2">
-                <span className="uppercase">STORE</span>
-                <span>/</span>
-                <span className="uppercase">{activeProduct?.category}</span>
-                <span>/</span>
-                <span className={`uppercase font-bold ${themeStyles.accentText}`}>{activeProduct?.name}</span>
-              </div>
-            </div>
+            ))}
+          </div>
+        </div>
 
-            {/* Product Layout: Dual Column */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-              {/* Left Column: Product Image Gallery */}
-              <div className="lg:col-span-7 space-y-4">
-                {/* Large main stage image */}
-                <div 
-                  className="relative h-[480px] md:h-[600px] rounded-2xl bg-zinc-950 border border-zinc-800/30 overflow-hidden cursor-crosshair select-none"
-                  onMouseEnter={() => setHoveredImageZoom(true)}
-                  onMouseLeave={() => setHoveredImageZoom(false)}
-                  onMouseMove={handleZoomMouseMove}
+        <AnimatePresence mode="wait">
+          {!activeProductId ? (
+            /* =========================================================================
+               FLIPKART CATALOG LAYOUT: TRANSLUCENT FILTERS + TRANSLUCENT PRODUCT GRID
+               ========================================================================= */
+            <motion.div
+              key="catalog-list"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start"
+            >
+              {/* MOBILE FILTER TRIGGER BUTTON */}
+              <div className={`lg:hidden col-span-1 flex items-center justify-between p-3 rounded-lg border ${
+                isDarkMode ? 'bg-black/30 backdrop-blur-md border-white/10' : 'bg-white/50 backdrop-blur-md border-zinc-200'
+              }`}>
+                <span className="text-xs font-bold uppercase">Showing {sortedProducts.length} Items</span>
+                <button
+                  id="mobile-filter-open-btn"
+                  onClick={() => setIsMobileFilterOpen(true)}
+                  style={{ backgroundColor: CHERRY_PINK }}
+                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-white text-xs font-bold"
                 >
-                  <img
-                    src={activeProduct?.images[selectedImageIdx]}
-                    alt={activeProduct?.name}
-                    referrerPolicy="no-referrer"
-                    style={
-                      hoveredImageZoom
-                        ? {
-                            transform: 'scale(1.8)',
-                            transformOrigin: `${zoomCoords.x}% ${zoomCoords.y}%`,
-                          }
-                        : undefined
-                    }
-                    className="w-full h-full object-cover transition-transform duration-100 filter brightness-95"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 via-transparent to-transparent pointer-events-none" />
-                  
-                  {/* Floating badge inside detail gallery */}
-                  <div className="absolute top-4 left-4 pointer-events-none">
-                    <span className="bg-zinc-950/80 backdrop-blur-md text-white border border-zinc-800/60 px-4 py-1.5 rounded-lg font-mono text-[9px] tracking-widest font-bold uppercase">
-                      {activeProduct?.badge}
-                    </span>
-                  </div>
-
-                  {/* Rating Badge */}
-                  <div className="absolute bottom-4 right-4 bg-zinc-950/80 backdrop-blur-md border border-zinc-800/40 px-3 py-1.5 rounded-xl flex items-center space-x-1.5 pointer-events-none">
-                    <Star className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
-                    <span className="text-white font-mono text-[10px] font-bold">{activeProduct?.rating} // 5.0</span>
-                  </div>
-                </div>
-
-                {/* Grid Thumbnails */}
-                <div className="grid grid-cols-3 gap-4">
-                  {activeProduct?.images.map((imgUrl, idx) => (
-                    <button
-                      id={`gallery-thumb-${idx}`}
-                      key={idx}
-                      onClick={() => setSelectedImageIdx(idx)}
-                      className={`h-24 md:h-32 rounded-xl bg-zinc-900 border overflow-hidden cursor-pointer transition-all duration-300 ${
-                        selectedImageIdx === idx 
-                          ? 'border-rose-500 scale-98 shadow-md' 
-                          : 'border-zinc-800/40 hover:border-zinc-500 opacity-60 hover:opacity-100'
-                      }`}
-                    >
-                      <img
-                        src={imgUrl}
-                        alt="Product thumbnail"
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
+                  <SlidersHorizontal className="w-3.5 h-3.5" />
+                  <span>Filters</span>
+                </button>
               </div>
 
-              {/* Right Column: Product purchasing control */}
-              <div className="lg:col-span-5 space-y-8">
-                {/* Branding, Name, Price */}
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-2 text-rose-500">
-                    <Sparkles className="w-4 h-4 animate-pulse" />
-                    <span className="font-mono text-[9px] tracking-[0.3em] font-extrabold uppercase">INEFFABLE DIVISION // BRAND ORIGINAL</span>
-                  </div>
-                  <h1 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tight leading-none">
-                    {activeProduct?.name}
-                  </h1>
-                  <div className="flex items-baseline space-x-3 pt-2">
-                    <span className="text-2xl md:text-3xl font-mono font-black">${activeProduct?.price.toFixed(2)}</span>
-                    <span className="font-mono text-[9px] text-zinc-500 tracking-wider">SECURE TRANSACTION GATEWAY</span>
-                  </div>
-                </div>
-
-                {/* Stock availability & Delivery info */}
-                <div className={`p-4 rounded-xl border ${activeProduct && activeProduct.stock > 0 
-                  ? (isDarkMode ? 'bg-emerald-950/20 border-emerald-500/20' : 'bg-emerald-50/90 border-emerald-300/80') 
-                  : (isDarkMode ? 'bg-red-950/20 border-red-500/20' : 'bg-red-50/90 border-red-300/80')} space-y-2`}>
-                  <div className="flex items-center space-x-2">
-                    <Package className={`w-4 h-4 ${activeProduct && activeProduct.stock > 0 
-                      ? (isDarkMode ? 'text-emerald-400' : 'text-emerald-700') 
-                      : (isDarkMode ? 'text-red-400' : 'text-red-700')}`} />
-                    <span className={`font-mono text-[10px] tracking-widest font-extrabold ${activeProduct && activeProduct.stock > 0 
-                      ? (isDarkMode ? 'text-emerald-400' : 'text-emerald-700') 
-                      : (isDarkMode ? 'text-red-400' : 'text-red-700')} uppercase`}>
-                      {activeProduct && activeProduct.stock > 0 
-                        ? `IN STOCK // ONLY ${activeProduct.stock} BATCHES LEFT` 
-                        : 'SOLD OUT // JOIN WAITLIST'}
-                    </span>
-                  </div>
-                  {activeProduct && activeProduct.stock > 0 && (
-                    <div className={`flex items-center space-x-2 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-700 font-medium'} font-mono text-[9px] tracking-wider`}>
-                      <Calendar className={`w-3.5 h-3.5 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-500'}`} />
-                      <span>Est. standard delivery: <strong className={isDarkMode ? 'text-white' : 'text-zinc-950 font-black'}>{getDeliveryDateStr(false)}</strong></span>
+              {/* LEFT SIDEBAR FILTERS (FLIPKART STYLE - TRANSLUCENT) */}
+              <aside className={`lg:col-span-3 ${isMobileFilterOpen ? 'fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex justify-end' : 'hidden lg:block'}`}>
+                <div className={`w-full max-w-xs lg:max-w-none h-full lg:h-auto overflow-y-auto lg:overflow-visible p-5 rounded-xl border ${
+                  isDarkMode ? 'bg-black/30 backdrop-blur-md border-white/10 shadow-lg' : 'bg-white/50 backdrop-blur-md border-zinc-200 shadow-sm'
+                } space-y-6 sticky top-24`}>
+                  
+                  {/* Header: Filters + Clear All */}
+                  <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800/80">
+                    <div className="flex items-center space-x-2">
+                      <SlidersHorizontal style={{ color: CHERRY_PINK }} className="w-4 h-4" />
+                      <span className="font-bold text-sm uppercase tracking-wide">Filters</span>
                     </div>
-                  )}
-                </div>
-
-                {/* Short description */}
-                <p className={`${themeStyles.textSecondary} font-sans text-sm font-light leading-relaxed tracking-wide`}>
-                  {activeProduct?.description}
-                </p>
-
-                {/* Sizing selection (Apparel only) */}
-                {activeProduct?.category !== 'accessories' && (
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="font-mono text-[10px] text-zinc-400 tracking-widest font-extrabold uppercase">SELECT SIZE</span>
+                    <div className="flex items-center space-x-3">
                       <button
-                        id="size-guide-trigger"
-                        onClick={() => setIsSizeGuideOpen(true)}
-                        className="flex items-center space-x-1.5 font-mono text-[9px] text-zinc-400 hover:text-zinc-900 dark:hover:text-white tracking-widest cursor-pointer border-b border-zinc-400 dark:border-zinc-600 pb-0.5"
+                        id="clear-all-filters-btn"
+                        onClick={clearAllFilters}
+                        style={{ color: CHERRY_PINK }}
+                        className="text-xs hover:underline font-semibold cursor-pointer uppercase"
                       >
-                        <Ruler className="w-3.5 h-3.5" />
-                        <span>SIZE GUIDE</span>
+                        Clear All
                       </button>
-                    </div>
-
-                    <div className="grid grid-cols-6 gap-2">
-                      {(['XS', 'S', 'M', 'L', 'XL', 'XXL'] as const).map((sz) => (
-                        <button
-                          id={`size-option-${sz}`}
-                          key={sz}
-                          onClick={() => setSelectedSize(sz)}
-                          className={`py-3 font-mono text-xs font-bold border rounded-lg transition-all duration-300 cursor-pointer ${
-                            selectedSize === sz
-                              ? `${themeStyles.accentBg} text-zinc-950 border-white shadow-md scale-98`
-                              : `${themeStyles.bgCard} ${themeStyles.borderMuted} ${themeStyles.textPrimary} hover:border-zinc-500`
-                          }`}
-                        >
-                          {sz}
+                      {isMobileFilterOpen && (
+                        <button onClick={() => setIsMobileFilterOpen(false)} className="lg:hidden p-1 text-zinc-400">
+                          <X className="w-4 h-4" />
                         </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Filter 1: Ineffable Sakura Assured */}
+                  <div className="space-y-2">
+                    <label className="flex items-center space-x-2.5 cursor-pointer select-none">
+                      <input
+                        id="filter-sakura-assured"
+                        type="checkbox"
+                        checked={onlyAssured}
+                        onChange={(e) => setOnlyAssured(e.target.checked)}
+                        style={{ accentColor: CHERRY_PINK }}
+                        className="rounded w-4 h-4 cursor-pointer"
+                      />
+                      <div className="flex items-center space-x-1.5">
+                        <span className="text-xs font-bold">🌸 INEF Assured</span>
+                        <span 
+                          style={{ backgroundColor: 'rgba(250, 95, 136, 0.15)', color: CHERRY_PINK }}
+                          className="text-[10px] px-1.5 py-0.2 rounded font-bold"
+                        >
+                          PLUS
+                        </span>
+                      </div>
+                    </label>
+                    <p className="text-[11px] text-zinc-400 pl-6.5">Quality tested & express dispatch items</p>
+                  </div>
+
+                  {/* Filter 2: Categories */}
+                  <div className="space-y-3 pt-3 border-t border-zinc-200 dark:border-zinc-800/80">
+                    <span className="text-xs font-bold uppercase tracking-wider block text-zinc-400">Category</span>
+                    <div className="space-y-1.5 text-xs">
+                      {[
+                        { id: 'all', label: 'All Categories' },
+                        { id: 'hoodies', label: 'Hoodies & Knitwear' },
+                        { id: 'tees', label: 'Graphic T-Shirts' },
+                        { id: 'pants', label: 'Tactical Cargo Pants' },
+                        { id: 'jackets', label: 'Varsity & Outerwear' },
+                        { id: 'accessories', label: 'Caps & Accessories' }
+                      ].map((cat) => (
+                        <label key={cat.id} className="flex items-center space-x-2 cursor-pointer py-0.5">
+                          <input
+                            type="radio"
+                            name="category"
+                            checked={selectedCategory === cat.id}
+                            onChange={() => setSelectedCategory(cat.id)}
+                            style={{ accentColor: CHERRY_PINK }}
+                          />
+                          <span 
+                            style={selectedCategory === cat.id ? { color: CHERRY_PINK, fontWeight: 'bold' } : undefined}
+                            className={selectedCategory === cat.id ? '' : 'text-zinc-600 dark:text-zinc-300'}
+                          >
+                            {cat.label}
+                          </span>
+                        </label>
                       ))}
                     </div>
+                  </div>
+
+                  {/* Filter 3: Pink Cherry Capsule Only */}
+                  <div className="space-y-2 pt-3 border-t border-zinc-200 dark:border-zinc-800/80">
+                    <label className="flex items-center space-x-2.5 cursor-pointer">
+                      <input
+                        id="filter-only-sakura"
+                        type="checkbox"
+                        checked={onlySakura}
+                        onChange={(e) => setOnlySakura(e.target.checked)}
+                        style={{ accentColor: CHERRY_PINK }}
+                        className="rounded w-4 h-4 cursor-pointer"
+                      />
+                      <span style={{ color: CHERRY_PINK }} className="text-xs font-bold">
+                        🌸 Cherry Blossom Theme Only
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* Filter 4: Price Range */}
+                  <div className="space-y-3 pt-3 border-t border-zinc-200 dark:border-zinc-800/80">
+                    <span className="text-xs font-bold uppercase tracking-wider block text-zinc-400">Price Range</span>
+                    <div className="space-y-1.5 text-xs">
+                      {[
+                        { id: 'all', label: 'All Prices' },
+                        { id: 'under-50', label: 'Under $50' },
+                        { id: '50-100', label: '$50 to $100' },
+                        { id: '100-plus', label: '$100 & Above' }
+                      ].map((pr) => (
+                        <label key={pr.id} className="flex items-center space-x-2 cursor-pointer py-0.5">
+                          <input
+                            type="radio"
+                            name="priceRange"
+                            checked={priceRange === pr.id}
+                            onChange={() => setPriceRange(pr.id as any)}
+                            style={{ accentColor: CHERRY_PINK }}
+                          />
+                          <span 
+                            style={priceRange === pr.id ? { color: CHERRY_PINK, fontWeight: 'bold' } : undefined}
+                            className={priceRange === pr.id ? '' : 'text-zinc-600 dark:text-zinc-300'}
+                          >
+                            {pr.label}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Filter 5: Customer Ratings */}
+                  <div className="space-y-3 pt-3 border-t border-zinc-200 dark:border-zinc-800/80">
+                    <span className="text-xs font-bold uppercase tracking-wider block text-zinc-400">Customer Ratings</span>
+                    <div className="space-y-1.5 text-xs">
+                      {[
+                        { rating: 4.8, label: '4.8★ & above' },
+                        { rating: 4.5, label: '4.5★ & above' },
+                        { rating: 0, label: 'All Ratings' }
+                      ].map((r) => (
+                        <label key={r.rating} className="flex items-center space-x-2 cursor-pointer py-0.5">
+                          <input
+                            type="radio"
+                            name="rating"
+                            checked={minRating === r.rating}
+                            onChange={() => setMinRating(r.rating)}
+                            style={{ accentColor: CHERRY_PINK }}
+                          />
+                          <span 
+                            style={minRating === r.rating ? { color: CHERRY_PINK, fontWeight: 'bold' } : undefined}
+                            className={minRating === r.rating ? '' : 'text-zinc-600 dark:text-zinc-300'}
+                          >
+                            {r.label}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Filter 6: Size Filter */}
+                  <div className="space-y-3 pt-3 border-t border-zinc-200 dark:border-zinc-800/80">
+                    <span className="text-xs font-bold uppercase tracking-wider block text-zinc-400">Size</span>
+                    <div className="grid grid-cols-3 gap-1.5 text-xs">
+                      {['all', 'S', 'M', 'L', 'XL', 'XXL'].map((sz) => {
+                        const isSelected = selectedSizeFilter === sz;
+                        return (
+                          <button
+                            key={sz}
+                            onClick={() => setSelectedSizeFilter(sz)}
+                            style={isSelected ? { backgroundColor: CHERRY_PINK, color: '#ffffff', borderColor: CHERRY_PINK } : undefined}
+                            className={`py-1.5 rounded text-center border font-bold transition-colors cursor-pointer ${
+                              isSelected
+                                ? 'shadow-xs' 
+                                : 'bg-black/40 border-zinc-800 text-zinc-300 hover:border-[#FA5F88]'
+                            }`}
+                          >
+                            {sz === 'all' ? 'All' : sz}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Filter 7: In Stock Only */}
+                  <div className="space-y-2 pt-3 border-t border-zinc-200 dark:border-zinc-800/80">
+                    <label className="flex items-center space-x-2.5 cursor-pointer">
+                      <input
+                        id="filter-only-instock"
+                        type="checkbox"
+                        checked={onlyInStock}
+                        onChange={(e) => setOnlyInStock(e.target.checked)}
+                        style={{ accentColor: CHERRY_PINK }}
+                        className="rounded w-4 h-4 cursor-pointer"
+                      />
+                      <span className="text-xs font-semibold">In Stock Only</span>
+                    </label>
+                  </div>
+
+                  {/* Close for mobile */}
+                  {isMobileFilterOpen && (
+                    <button
+                      onClick={() => setIsMobileFilterOpen(false)}
+                      style={{ backgroundColor: CHERRY_PINK }}
+                      className="w-full py-2.5 rounded-lg text-white font-bold text-xs uppercase"
+                    >
+                      Apply Filters
+                    </button>
+                  )}
+
+                </div>
+              </aside>
+
+              {/* RIGHT SIDE: SORT STRIP + PRODUCTS LISTING (TRANSLUCENT SURFACES) */}
+              <main className="lg:col-span-9 space-y-4">
+                
+                {/* FLIPKART-STYLE HORIZONTAL SORT BAR WITH TRANSLUCENCY */}
+                <div className={`p-3 rounded-xl border ${
+                  isDarkMode 
+                    ? 'bg-black/30 backdrop-blur-md border-white/10 shadow-lg' 
+                    : 'bg-white/50 backdrop-blur-md border-zinc-200 shadow-sm'
+                } flex flex-wrap items-center justify-between gap-3`}>
+                  <div className="flex items-center space-x-2 text-xs">
+                    <span className="text-zinc-400 font-bold uppercase">Sort By:</span>
+                    <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto no-scrollbar">
+                      {[
+                        { id: 'popularity', label: 'Popularity' },
+                        { id: 'price-low', label: 'Price -- Low to High' },
+                        { id: 'price-high', label: 'Price -- High to Low' },
+                        { id: 'newest', label: 'Newest First' },
+                        { id: 'discount', label: 'Discount' }
+                      ].map((tab) => {
+                        const isActive = sortBy === tab.id;
+                        return (
+                          <button
+                            key={tab.id}
+                            id={`sort-tab-${tab.id}`}
+                            onClick={() => setSortBy(tab.id as any)}
+                            style={isActive ? { color: CHERRY_PINK, borderColor: CHERRY_PINK, backgroundColor: 'rgba(250, 95, 136, 0.12)' } : undefined}
+                            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                              isActive
+                                ? 'border-b-2 font-bold'
+                                : 'text-zinc-400 hover:text-white'
+                            }`}
+                          >
+                            {tab.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <span className="text-xs text-zinc-400 font-medium hidden sm:inline">
+                    Showing {sortedProducts.length} results
+                  </span>
+                </div>
+
+                {/* PRODUCTS LISTING */}
+                {sortedProducts.length === 0 ? (
+                  <div className={`py-20 px-6 rounded-xl border text-center ${
+                    isDarkMode ? 'bg-black/30 backdrop-blur-md border-white/10' : 'bg-white/50 backdrop-blur-md border-zinc-200'
+                  }`}>
+                    <div 
+                      style={{ backgroundColor: 'rgba(250, 95, 136, 0.15)', color: CHERRY_PINK }}
+                      className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
+                    >
+                      <Search className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-bold text-base mb-1">No products found</h3>
+                    <p className="text-xs text-zinc-400 max-w-sm mx-auto mb-4">
+                      Your search or selected filters did not match any items. Try clearing your filters.
+                    </p>
+                    <button
+                      onClick={clearAllFilters}
+                      style={{ backgroundColor: CHERRY_PINK }}
+                      className="px-4 py-2 rounded-lg text-white text-xs font-bold cursor-pointer hover:opacity-90"
+                    >
+                      Clear All Filters
+                    </button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {sortedProducts.map((product) => {
+                      const isWishlisted = wishlist.includes(product.id);
+                      const isSoldOut = product.stock <= 0;
+
+                      return (
+                        <div
+                          key={product.id}
+                          id={`product-card-${product.id}`}
+                          onClick={() => {
+                            setActiveProductId(product.id);
+                            setSelectedImageIdx(0);
+                            setSelectedSize(product.sizes[0] || 'M');
+                            setSelectedQty(1);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className={`group relative rounded-xl border transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden ${
+                            isDarkMode 
+                              ? 'bg-black/25 backdrop-blur-md border-white/10 hover:bg-black/40 hover:border-[#FA5F88]/60 hover:shadow-xl hover:shadow-[#FA5F88]/15' 
+                              : 'bg-white/45 backdrop-blur-md border-white/60 hover:bg-white/65 hover:border-[#FA5F88]/60 hover:shadow-md'
+                          }`}
+                        >
+                          {/* Image Container */}
+                          <div className={`relative h-64 overflow-hidden ${isDarkMode ? 'bg-black/10' : 'bg-white/10'}`}>
+                            <img
+                              src={product.images[0]}
+                              alt={product.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+
+                            {/* Wishlist Button in Cherry Pink */}
+                            <button
+                              id={`wishlist-btn-${product.id}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (onToggleWishlist) onToggleWishlist(product.id);
+                              }}
+                              style={isWishlisted ? { backgroundColor: CHERRY_PINK } : undefined}
+                              className={`absolute top-2.5 right-2.5 p-2 rounded-full transition-colors cursor-pointer ${
+                                isWishlisted 
+                                  ? 'text-white shadow-lg' 
+                                  : 'bg-black/70 text-zinc-300 hover:text-[#FA5F88]'
+                              }`}
+                              title="Add to Wishlist"
+                            >
+                              <Heart className={`w-3.5 h-3.5 ${isWishlisted ? 'fill-current' : ''}`} />
+                            </button>
+
+                            {/* Sakura Badge */}
+                            {product.isSakura && (
+                              <div 
+                                style={{ backgroundColor: CHERRY_PINK }}
+                                className="absolute top-2.5 left-2.5 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow"
+                              >
+                                🌸 SAKURA
+                              </div>
+                            )}
+
+                            {/* Sold Out Badge */}
+                            {isSoldOut && (
+                              <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
+                                <span className="bg-[#111111] text-white text-xs font-bold px-3 py-1 rounded border border-zinc-700">
+                                  OUT OF STOCK
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Card Info */}
+                          <div className="p-4 space-y-2 flex-grow flex flex-col justify-between bg-transparent">
+                            <div className="space-y-1.5">
+                              
+                              {/* Brand & Assured */}
+                              <div className="flex items-center justify-between">
+                                <span className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
+                                  INEFFABLE
+                                </span>
+                                {product.isAssured && (
+                                  <span 
+                                    style={{ color: CHERRY_PINK, backgroundColor: 'rgba(250, 95, 136, 0.12)' }}
+                                    className="text-[9px] font-extrabold px-1.5 py-0.5 rounded flex items-center space-x-1"
+                                  >
+                                    <span>INEF</span>
+                                    <span className="font-serif italic">Assured</span>
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Product Title */}
+                              <h3 className="font-semibold text-xs sm:text-sm line-clamp-2 leading-snug group-hover:text-[#FA5F88] transition-colors">
+                                {product.name}
+                              </h3>
+
+                              {/* Rating pill */}
+                              <div className="flex items-center space-x-2 pt-0.5">
+                                <span 
+                                  style={{ backgroundColor: CHERRY_PINK }}
+                                  className="inline-flex items-center space-x-1 text-white text-[10px] font-bold px-1.5 py-0.5 rounded"
+                                >
+                                  <span>{product.rating}</span>
+                                  <Star className="w-2.5 h-2.5 fill-current" />
+                                </span>
+                                <span className="text-[11px] text-zinc-500 font-medium">
+                                  ({product.reviewsCount})
+                                </span>
+                              </div>
+
+                              {/* Price Strip: Flipkart Style in Translucent Dark & Cherry Pink */}
+                              <div className="flex items-baseline space-x-2 pt-1">
+                                <span className="font-bold text-base text-zinc-900 dark:text-white">
+                                  ${product.price.toFixed(2)}
+                                </span>
+                                <span className="text-xs text-zinc-500 line-through">
+                                  ${product.originalPrice.toFixed(2)}
+                                </span>
+                                <span style={{ color: CHERRY_PINK }} className="text-xs font-bold">
+                                  {product.discount}% off
+                                </span>
+                              </div>
+
+                              {/* Free Delivery Tag */}
+                              <span className="text-[11px] text-emerald-400 font-semibold block">
+                                Free delivery by {getDeliveryDate()}
+                              </span>
+
+                              {/* Available Sizes Tag */}
+                              <div className="flex items-center space-x-1 pt-1 text-[10px] text-zinc-500">
+                                <span>Size:</span>
+                                <span className="font-medium text-zinc-300">
+                                  {product.sizes.join(', ')}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Quick Add To Cart Button */}
+                            <div className="pt-3 border-t border-zinc-800/80">
+                              <button
+                                id={`quick-add-btn-${product.id}`}
+                                disabled={isSoldOut}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleAddProductToCart(product);
+                                }}
+                                style={!isSoldOut ? { backgroundColor: CHERRY_PINK } : undefined}
+                                className={`w-full py-2 rounded-lg font-bold text-xs flex items-center justify-center space-x-1.5 transition-colors cursor-pointer ${
+                                  isSoldOut 
+                                    ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed' 
+                                    : 'hover:opacity-90 text-white shadow-md'
+                                }`}
+                              >
+                                <ShoppingCart className="w-3.5 h-3.5" />
+                                <span>{isSoldOut ? 'OUT OF STOCK' : 'ADD TO CART'}</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
 
-                {/* Quantity selection & Buy buttons */}
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    {/* Quantity count widget */}
-                    <div className="space-y-1.5 shrink-0">
-                      <span className="font-mono text-[10px] text-zinc-400 tracking-widest block uppercase font-bold">QTY</span>
-                      <div className={`flex items-center space-x-2 ${isDarkMode ? 'bg-zinc-950 border-zinc-900' : 'bg-white border-zinc-200'} border rounded-xl px-3 py-2 h-12`}>
-                        <button
-                          id="qty-dec-btn"
-                          disabled={selectedQty <= 1 || (activeProduct?.stock === 0)}
-                          onClick={() => setSelectedQty(selectedQty - 1)}
-                          className="p-1 text-zinc-400 hover:text-zinc-900 dark:hover:text-white disabled:opacity-30"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <span className="font-mono text-xs font-black w-6 text-center">{selectedQty}</span>
-                        <button
-                          id="qty-inc-btn"
-                          disabled={activeProduct ? selectedQty >= activeProduct.stock : true}
-                          onClick={() => setSelectedQty(selectedQty + 1)}
-                          className="p-1 text-zinc-400 hover:text-zinc-900 dark:hover:text-white disabled:opacity-30"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Master Buy / Add to Cart Button */}
-                    <div className="flex-grow pt-[18px]">
-                      <button
-                        id="add-cart-detail-btn"
-                        disabled={activeProduct ? activeProduct.stock === 0 : true}
-                        onClick={() => activeProduct && handleAddToCart(activeProduct, selectedSize, selectedQty)}
-                        className={`w-full h-12 font-mono text-xs tracking-widest font-black rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-lg ${
-                          activeProduct?.stock === 0
-                            ? 'bg-zinc-800/30 border border-zinc-800 text-zinc-500 cursor-not-allowed'
-                            : isDarkMode
-                              ? 'bg-white hover:bg-zinc-100 text-zinc-950 border-white'
-                              : 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-900'
-                        }`}
-                      >
-                        <ShoppingCart className="w-4 h-4" />
-                        <span>{activeProduct?.stock === 0 ? 'SOLD OUT' : 'ADD TO BASKET'}</span>
-                      </button>
-                    </div>
-
-                    {/* Favorite toggle button */}
-                    <div className="pt-[18px]">
-                      <button
-                        id="wishlist-toggle-detail"
-                        onClick={() => activeProduct && onToggleWishlist && onToggleWishlist(activeProduct.id)}
-                        className={`h-12 w-12 rounded-xl border flex items-center justify-center transition-colors cursor-pointer ${
-                          activeProduct && wishlist.includes(activeProduct.id)
-                            ? 'bg-rose-500 border-rose-400 text-white shadow-md'
-                            : `${themeStyles.bgCard} ${themeStyles.borderMuted} ${themeStyles.textSecondary} hover:text-rose-500 hover:border-rose-500/40`
-                        }`}
-                        title="Wishlist product"
-                      >
-                        <Heart className={`w-4 h-4 ${activeProduct && wishlist.includes(activeProduct.id) ? 'fill-current' : ''}`} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Collapsible Technical Specs / Accordion Details */}
-                <div id="product-specs-accordion" className="space-y-2 border-t border-zinc-800/20 pt-6">
-                  {/* Item 1: Material & Care */}
-                  <div className={`rounded-xl border ${expandedSection === 'fabric' ? `${themeStyles.borderHighlight} ${themeStyles.bgCard}` : 'border-zinc-800/10'} overflow-hidden`}>
-                    <button
-                      id="accordion-fabric-btn"
-                      onClick={() => setExpandedSection(expandedSection === 'fabric' ? null : 'fabric')}
-                      className={`w-full px-4 py-3 flex items-center justify-between font-mono text-[10px] tracking-widest font-bold uppercase text-left ${isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-500 hover:text-zinc-900'} transition-colors`}
-                    >
-                      <span>MATERIAL & FABRIC COMPLEXITY</span>
-                      {expandedSection === 'fabric' ? <ChevronLeft className="w-3.5 h-3.5 rotate-90" /> : <ChevronRight className="w-3.5 h-3.5" />}
-                    </button>
-                    {expandedSection === 'fabric' && (
-                      <div className="p-4 pt-1 font-sans text-xs font-light text-zinc-400 leading-relaxed border-t border-zinc-800/10 space-y-2">
-                        <p>{activeProduct?.fabric}</p>
-                        <p className="font-mono text-[9px] tracking-wide text-zinc-500 uppercase mt-2">CARE METHOD:</p>
-                        <p>{activeProduct?.care}</p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Item 2: Shipping Policy */}
-                  <div className={`rounded-xl border ${expandedSection === 'shipping' ? `${themeStyles.borderHighlight} ${themeStyles.bgCard}` : 'border-zinc-800/10'} overflow-hidden`}>
-                    <button
-                      id="accordion-shipping-btn"
-                      onClick={() => setExpandedSection(expandedSection === 'shipping' ? null : 'shipping')}
-                      className={`w-full px-4 py-3 flex items-center justify-between font-mono text-[10px] tracking-widest font-bold uppercase text-left ${isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-500 hover:text-zinc-900'} transition-colors`}
-                    >
-                      <span>SECURED WORLDWIDE DELIVERY</span>
-                      {expandedSection === 'shipping' ? <ChevronLeft className="w-3.5 h-3.5 rotate-90" /> : <ChevronRight className="w-3.5 h-3.5" />}
-                    </button>
-                    {expandedSection === 'shipping' && (
-                      <div className="p-4 pt-1 font-sans text-xs font-light text-zinc-400 leading-relaxed border-t border-zinc-800/10 space-y-2">
-                        <p>We provide tracked door-to-door express deliveries internationally. Items ship within 24-48 hours. Express shipping (DHL/FedEx) clears custom clearances rapidly.</p>
-                        <p>Standard Free Shipping takes 3-5 days. Express Shipping takes 1-2 days.</p>
-                      </div>
-                    )}
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            {/* Custom Customer Reviews Section */}
-            <div 
-              id="product-reviews-section" 
-              className={`rounded-2xl border ${isDarkMode ? `${themeStyles.borderMuted} ${themeStyles.bgCard}` : 'border-zinc-300/80 bg-zinc-100/70'} p-6 md:p-8 space-y-8 shadow-sm`}
-            >
-              <div className={`flex flex-col md:flex-row md:items-center justify-between gap-4 border-b ${isDarkMode ? 'border-zinc-800/20' : 'border-zinc-350/50'} pb-6`}>
-                <div className="space-y-1">
-                  <h3 className={`font-sans text-lg font-black uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>REVIEWS</h3>
-                  <p className={`${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'} font-mono text-[10px] tracking-wider uppercase`}>VERIFIED BUYER RESPONSES</p>
-                </div>
-                
-                {/* Visual aggregate */}
-                <div className="flex items-center space-x-4">
-                  <div className="text-right">
-                    <span className={`font-mono text-2xl font-black block leading-none ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{activeProduct?.rating}</span>
-                    <span className="text-zinc-500 font-mono text-[9px] tracking-widest uppercase">OUT OF 5.0</span>
-                  </div>
-                  <div className="flex flex-col items-start">
-                    <div className="flex items-center space-x-1">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <Star key={s} className="w-3 h-3 text-rose-500 fill-rose-500" />
-                      ))}
-                    </div>
-                    <span className="text-zinc-500 font-mono text-[9px] mt-1 tracking-wider uppercase">100% RECOMMENDATION</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Reviews List */}
-              <div className="space-y-6">
-                {REVIEWS_MOCK.map((rev) => (
-                  <div key={rev.id} className={`border-b ${isDarkMode ? themeStyles.borderMuted : 'border-zinc-300/60'} pb-6 last:border-0 last:pb-0 space-y-3`}>
-                    <div className="flex justify-between items-start">
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-2">
-                          <span className={`font-mono text-[10px] font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>{rev.author.toUpperCase()}</span>
-                          <span className={`font-mono text-[7px] tracking-widest px-1.5 py-0.5 rounded uppercase font-extrabold ${
-                            isDarkMode 
-                              ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400' 
-                              : 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-800'
-                          }`}>VERIFIED CLIENT</span>
-                        </div>
-                        <div className="flex items-center space-x-0.5">
-                          {Array.from({ length: rev.rating }).map((_, i) => (
-                            <Star key={i} className="w-3 h-3 text-rose-500 fill-rose-500" />
-                          ))}
-                        </div>
-                      </div>
-                      <span className={`${isDarkMode ? 'text-zinc-500' : 'text-zinc-600'} font-mono text-[9px]`}>{rev.date}</span>
-                    </div>
-                    <div className="space-y-1">
-                      <h4 className={`font-sans text-xs font-bold uppercase ${isDarkMode ? 'text-zinc-200' : 'text-zinc-900'}`}>{rev.title}</h4>
-                      <p className={`font-sans text-xs font-light ${isDarkMode ? themeStyles.textSecondary : 'text-zinc-700'} leading-relaxed`}>{rev.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Related Products carousel row */}
-            {relatedProducts.length > 0 && (
-              <div id="related-products-row" className="space-y-6 pt-6">
-                <div className="space-y-1">
-                  <span className="font-mono text-[8px] tracking-[0.3em] text-zinc-500 uppercase block font-extrabold">COMPLETE THE LOOK</span>
-                  <h3 className="font-sans text-lg font-black uppercase tracking-tight">RELATED STREETWEAR</h3>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  {relatedProducts.map((p) => (
-                    <div
-                      id={`related-product-${p.id}`}
-                      key={p.id}
-                      onClick={() => handleProductClick(p)}
-                      className={`group ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-500/30 p-4 rounded-2xl cursor-pointer transition-all duration-300 flex flex-col justify-between`}
-                    >
-                      <div className="h-48 rounded-xl overflow-hidden bg-zinc-950 mb-4 relative">
-                        <img
-                          src={p.images[0]}
-                          alt={p.name}
-                          referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute top-3 left-3">
-                          <span className="bg-zinc-950/80 backdrop-blur-md text-white border border-zinc-800/80 px-2 py-0.5 rounded font-mono text-[7px] tracking-widest uppercase">
-                            {p.badge}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-start gap-2">
-                          <h4 className={`font-sans text-xs font-bold uppercase ${isDarkMode ? 'text-zinc-200' : 'text-zinc-800'} line-clamp-1 group-hover:text-rose-400 transition-colors`}>{p.name}</h4>
-                          <span className={`font-mono text-xs font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>${p.price.toFixed(2)}</span>
-                        </div>
-                        <p className="text-zinc-500 text-[10px] font-light line-clamp-1 leading-normal">{p.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Recently Viewed carousel row */}
-            {recentlyViewedProducts.length > 0 && (
-              <div id="recently-viewed-row" className="space-y-6 border-t border-zinc-800/20 pt-12">
-                <div className="space-y-1">
-                  <span className="font-mono text-[8px] tracking-[0.3em] text-zinc-500 uppercase block font-extrabold">RETURNING CHANNELS</span>
-                  <h3 className="font-sans text-lg font-black uppercase tracking-tight">RECENTLY VIEWED COUTURE</h3>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  {recentlyViewedProducts.map((p) => (
-                    <div
-                      id={`recently-viewed-${p.id}`}
-                      key={p.id}
-                      onClick={() => handleProductClick(p)}
-                      className={`group ${themeStyles.bgCard} border ${themeStyles.borderMuted} hover:border-zinc-500/30 p-4 rounded-2xl cursor-pointer transition-all duration-300 flex flex-col justify-between`}
-                    >
-                      <div className="h-48 rounded-xl overflow-hidden bg-zinc-950 mb-4">
-                        <img
-                          src={p.images[0]}
-                          alt={p.name}
-                          referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-start gap-2">
-                          <h4 className={`font-sans text-xs font-bold uppercase ${isDarkMode ? 'text-zinc-200' : 'text-zinc-800'} line-clamp-1 group-hover:text-rose-400 transition-colors`}>{p.name}</h4>
-                          <span className={`font-mono text-xs font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>${p.price.toFixed(2)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Quick View Interactive Overlay Modal */}
-      <AnimatePresence>
-        {quickViewProduct && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            id="quick-view-overlay"
-            className="fixed inset-0 z-50 bg-zinc-950/80 backdrop-blur-md flex items-center justify-center p-4"
-            onClick={() => setQuickViewProduct(null)}
-          >
+              </main>
+            </motion.div>
+          ) : (
+            /* =========================================================================
+               FLIPKART PRODUCT DETAIL PAGE VIEW (COMPLETE SOLID BLACK + CHERRY PINK)
+               ========================================================================= */
             <motion.div
-              initial={{ scale: 0.95, y: 15 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              onClick={(e) => e.stopPropagation()}
-              className={`w-full max-w-3xl rounded-3xl ${themeStyles.bgCard} border ${themeStyles.borderMain} overflow-hidden shadow-2xl relative max-h-[90vh] overflow-y-auto`}
+              key="product-detail"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="space-y-6"
             >
-              <button
-                id="close-quick-view"
-                onClick={() => setQuickViewProduct(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-zinc-900/80 text-zinc-400 hover:text-white hover:scale-105 transition-transform z-10 border border-zinc-800"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
-              <div className="grid grid-cols-1 md:grid-cols-2">
-                {/* Left side: main image */}
-                <div className="h-64 md:h-auto bg-zinc-950 relative">
-                  <img
-                    src={quickViewProduct.images[0]}
-                    alt={quickViewProduct.name}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent" />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-zinc-950/80 backdrop-blur-md text-white border border-zinc-800/80 px-2.5 py-1 rounded font-mono text-[8px] tracking-widest uppercase">
-                      {quickViewProduct.badge}
-                    </span>
-                  </div>
+              {/* Back to Products Navigation Bar */}
+              <div className="flex items-center justify-between border-b pb-4 border-zinc-800/80">
+                <button
+                  id="back-to-catalog-btn"
+                  onClick={() => setActiveProductId(null)}
+                  style={{ color: CHERRY_PINK }}
+                  className="flex items-center space-x-2 text-xs font-bold hover:underline cursor-pointer uppercase"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Back to all products</span>
+                </button>
+                <div className="text-xs text-zinc-400">
+                  Home &gt; {activeProduct?.category} &gt; <span style={{ color: CHERRY_PINK }} className="font-semibold">{activeProduct?.name}</span>
                 </div>
+              </div>
 
-                {/* Right side: quick details */}
-                <div className="p-6 md:p-8 space-y-6 flex flex-col justify-between">
-                  <div className="space-y-4">
-                    <div className="space-y-1">
-                      <span className="font-mono text-[8px] tracking-[0.2em] text-rose-500 uppercase block font-bold">QUICK PREVIEW</span>
-                      <h3 className={`font-sans text-xl md:text-2xl font-black uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'} leading-tight`}>
-                        {quickViewProduct.name}
-                      </h3>
-                      <span className={`font-mono text-base font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'} block mt-1`}>${quickViewProduct.price.toFixed(2)}</span>
-                    </div>
-
-                    <p className="text-zinc-400 text-xs font-light leading-relaxed">
-                      {quickViewProduct.description}
-                    </p>
-
-                    <div className="space-y-1.5 font-mono text-[9px] text-zinc-500 uppercase">
-                      <div className="flex justify-between">
-                        <span>FABRIC SPEC</span>
-                        <span className="text-zinc-300 font-bold">{quickViewProduct.category}</span>
+              {/* FLIPKART 2-COLUMN DETAIL VIEW */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                {/* LEFT COLUMN: PRODUCT IMAGES + ADD TO CART & BUY NOW BUTTONS */}
+                <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-24">
+                  {/* Main Large Image */}
+                  <div className="relative h-96 rounded-xl overflow-hidden bg-black/25 backdrop-blur-md border border-white/10 shadow-2xl">
+                    <img
+                      src={activeProduct?.images[selectedImageIdx]}
+                      alt={activeProduct?.name}
+                      className="w-full h-full object-cover"
+                    />
+                    {activeProduct?.isSakura && (
+                      <div 
+                        style={{ backgroundColor: CHERRY_PINK }}
+                        className="absolute top-3 left-3 text-white text-xs font-bold px-2.5 py-1 rounded shadow"
+                      >
+                        🌸 SAKURA CAPSULE
                       </div>
-                      <div className="flex justify-between border-t border-zinc-800/30 pt-1.5">
-                        <span>STOCK LATENCY</span>
-                        <span className={quickViewProduct.stock > 0 ? 'text-emerald-400 font-bold' : 'text-red-400'}>
-                          {quickViewProduct.stock > 0 ? `IN STOCK [${quickViewProduct.stock}]` : 'SOLD OUT'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={`space-y-3 pt-4 border-t ${themeStyles.borderMuted}`}>
+                    )}
                     <button
-                      id={`quick-preview-add-btn-${quickViewProduct.id}`}
-                      disabled={quickViewProduct.stock === 0}
-                      onClick={() => {
-                        handleAddToCart(quickViewProduct, 'M', 1);
-                        setQuickViewProduct(null);
-                      }}
-                      className={`w-full py-3.5 font-mono text-[9px] tracking-widest font-black rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer ${
-                        quickViewProduct.stock === 0
-                          ? `${isDarkMode ? 'bg-zinc-800/30 border border-zinc-800' : 'bg-zinc-100 border border-zinc-200'} text-zinc-500 cursor-not-allowed`
-                          : isDarkMode
-                            ? 'bg-white text-zinc-950 hover:bg-zinc-100 shadow-lg'
-                            : 'bg-zinc-900 text-white hover:bg-zinc-800 shadow-lg'
+                      onClick={() => activeProduct && onToggleWishlist && onToggleWishlist(activeProduct.id)}
+                      style={activeProduct && wishlist.includes(activeProduct.id) ? { backgroundColor: CHERRY_PINK } : undefined}
+                      className={`absolute top-3 right-3 p-2.5 rounded-full cursor-pointer ${
+                        activeProduct && wishlist.includes(activeProduct.id)
+                          ? 'text-white shadow-md'
+                          : 'bg-black/70 text-zinc-300 hover:text-[#FA5F88]'
                       }`}
                     >
-                      <ShoppingCart className="w-3.5 h-3.5" />
-                      <span>{quickViewProduct.stock === 0 ? 'SOLD OUT' : 'ADD TO BASKET'}</span>
+                      <Heart className={`w-4 h-4 ${activeProduct && wishlist.includes(activeProduct.id) ? 'fill-current' : ''}`} />
                     </button>
+                  </div>
+
+                  {/* Thumbnails Row */}
+                  <div className="flex items-center space-x-3">
+                    {activeProduct?.images.map((img, idx) => {
+                      const isSelected = selectedImageIdx === idx;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedImageIdx(idx)}
+                          style={isSelected ? { borderColor: CHERRY_PINK } : undefined}
+                          className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all cursor-pointer bg-black/40 ${
+                            isSelected 
+                              ? 'shadow-md' 
+                              : 'border-zinc-800 opacity-70 hover:opacity-100'
+                          }`}
+                        >
+                          <img src={img} alt="thumbnail" className="w-full h-full object-cover" />
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* DUAL MASTER FLIPKART BUTTONS: ADD TO CART & BUY NOW */}
+                  <div className="grid grid-cols-2 gap-3 pt-2">
                     <button
-                      id={`quick-preview-details-btn-${quickViewProduct.id}`}
-                      onClick={() => {
-                        handleProductClick(quickViewProduct);
-                        setQuickViewProduct(null);
-                      }}
-                      className={`w-full py-3 border ${themeStyles.borderMain} ${isDarkMode ? 'bg-zinc-900/40 text-zinc-400 hover:text-white' : 'bg-zinc-50 text-zinc-600 hover:text-zinc-900'} font-mono text-[9px] tracking-widest font-bold rounded-xl transition-all cursor-pointer text-center block`}
+                      id="pdp-add-to-cart-btn"
+                      disabled={activeProduct ? activeProduct.stock <= 0 : true}
+                      onClick={() => activeProduct && handleAddProductToCart(activeProduct, selectedSize, selectedQty)}
+                      className="py-3.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs sm:text-sm uppercase flex items-center justify-center space-x-2 transition-colors cursor-pointer disabled:opacity-40 shadow-md"
                     >
-                      VIEW FULL DETAILS PAGE
+                      <ShoppingCart className="w-4 h-4" />
+                      <span>ADD TO CART</span>
+                    </button>
+                    
+                    <button
+                      id="pdp-buy-now-btn"
+                      disabled={activeProduct ? activeProduct.stock <= 0 : true}
+                      onClick={() => {
+                        if (!activeProduct) return;
+                        handleAddProductToCart(activeProduct, selectedSize, selectedQty);
+                        setCurrentPage('cart');
+                      }}
+                      style={{ backgroundColor: CHERRY_PINK }}
+                      className="py-3.5 rounded-lg hover:opacity-90 text-white font-bold text-xs sm:text-sm uppercase flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-lg disabled:opacity-40"
+                    >
+                      <Zap className="w-4 h-4" />
+                      <span>BUY NOW</span>
                     </button>
                   </div>
                 </div>
+
+                {/* RIGHT COLUMN: TITLES, PRICING, OFFERS, SIZING, SPECS (TRANSLUCENT) */}
+                <div className="lg:col-span-7 space-y-6">
+                  
+                  {/* Title & Brand */}
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">INEFFABLE</span>
+                      {activeProduct?.isAssured && (
+                        <span 
+                          style={{ color: CHERRY_PINK, backgroundColor: 'rgba(250, 95, 136, 0.12)' }}
+                          className="text-[10px] font-extrabold px-2 py-0.5 rounded flex items-center space-x-1"
+                        >
+                          <span>INEF</span>
+                          <span className="font-serif italic">Assured</span>
+                        </span>
+                      )}
+                    </div>
+                    <h1 className="text-xl sm:text-2xl font-bold leading-tight text-white">
+                      {activeProduct?.name}
+                    </h1>
+
+                    {/* Rating block */}
+                    <div className="flex items-center space-x-3 pt-1">
+                      <span 
+                        style={{ backgroundColor: CHERRY_PINK }}
+                        className="inline-flex items-center space-x-1 text-white text-xs font-bold px-2 py-0.5 rounded"
+                      >
+                        <span>{activeProduct?.rating}</span>
+                        <Star className="w-3 h-3 fill-current" />
+                      </span>
+                      <span className="text-xs text-zinc-400 font-medium">
+                        {activeProduct?.reviewsCount} Ratings & Reviews
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Price Display: Flipkart Style Translucent Card */}
+                  <div className={`p-4 rounded-xl border ${
+                    isDarkMode 
+                      ? 'bg-black/30 backdrop-blur-md border-white/10 shadow-lg' 
+                      : 'bg-white/50 backdrop-blur-md border-zinc-200 shadow-sm'
+                  } space-y-1`}>
+                    <span className="text-xs font-semibold text-emerald-400">Special Price</span>
+                    <div className="flex items-baseline space-x-3">
+                      <span className="text-3xl font-black text-white">
+                        ${activeProduct?.price.toFixed(2)}
+                      </span>
+                      <span className="text-sm text-zinc-500 line-through">
+                        ${activeProduct?.originalPrice.toFixed(2)}
+                      </span>
+                      <span style={{ color: CHERRY_PINK }} className="text-sm font-bold">
+                        {activeProduct?.discount}% off
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-zinc-500 block pt-1">Inclusive of all taxes</span>
+                  </div>
+
+                  {/* Available Offers: Flipkart Style */}
+                  <div className="space-y-2.5">
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">Available Offers</span>
+                    <div className="space-y-2 text-xs">
+                      {activeProduct?.offers.map((offer, oIdx) => (
+                        <div key={oIdx} className="flex items-start space-x-2">
+                          <Tag style={{ color: CHERRY_PINK }} className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                          <span className="text-zinc-300">{offer}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Delivery & Pincode Check: Flipkart Style Translucent Card */}
+                  <div className={`p-4 rounded-xl border ${
+                    isDarkMode 
+                      ? 'bg-black/30 backdrop-blur-md border-white/10 shadow-lg' 
+                      : 'bg-white/50 backdrop-blur-md border-zinc-200 shadow-sm'
+                  } space-y-3`}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center space-x-1.5">
+                        <MapPin style={{ color: CHERRY_PINK }} className="w-3.5 h-3.5" />
+                        <span>Delivery Options</span>
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <input
+                        id="pincode-input"
+                        type="text"
+                        value={pincode}
+                        onChange={(e) => setPincode(e.target.value)}
+                        placeholder="Enter Postal / Zip Code"
+                        className={`px-3 py-2 rounded-lg border text-xs w-48 focus:outline-none focus:border-[#FA5F88] ${
+                          isDarkMode 
+                            ? 'bg-black/50 border-zinc-800 text-white placeholder-zinc-500' 
+                            : 'bg-zinc-50 border-zinc-300 text-zinc-900 placeholder-zinc-400'
+                        }`}
+                      />
+                      <button
+                        id="check-pincode-btn"
+                        onClick={handleCheckPincode}
+                        className="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-[#FA5F88] text-white text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        Check
+                      </button>
+                    </div>
+
+                    {pincodeStatus ? (
+                      <div className="text-xs text-emerald-400 font-semibold flex items-center space-x-1.5">
+                        <Check className="w-3.5 h-3.5" />
+                        <span>{pincodeStatus}</span>
+                      </div>
+                    ) : (
+                      <div className="text-xs text-zinc-400 space-y-1">
+                        <p>Delivery by <strong className="text-white">{getDeliveryDate()}</strong> | Free Shipping</p>
+                        <p className="text-[11px] text-zinc-500">Cash on Delivery & Instant UPI/Card available</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Size Selector */}
+                  {activeProduct && activeProduct.sizes.length > 0 && activeProduct.sizes[0] !== 'Free Size' && (
+                    <div className="space-y-2.5">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+                          Select Size: <strong style={{ color: CHERRY_PINK }}>{selectedSize}</strong>
+                        </span>
+                        <button
+                          onClick={() => setIsSizeGuideOpen(true)}
+                          style={{ color: CHERRY_PINK }}
+                          className="text-xs font-bold underline flex items-center space-x-1 cursor-pointer"
+                        >
+                          <Ruler className="w-3.5 h-3.5" />
+                          <span>Size Chart</span>
+                        </button>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        {activeProduct.sizes.map((sz) => {
+                          const isSelected = selectedSize === sz;
+                          return (
+                            <button
+                              key={sz}
+                              id={`pdp-size-btn-${sz}`}
+                              onClick={() => setSelectedSize(sz)}
+                              style={isSelected ? { backgroundColor: CHERRY_PINK, borderColor: CHERRY_PINK } : undefined}
+                              className={`w-12 h-10 rounded-lg text-xs font-bold border transition-colors cursor-pointer ${
+                                isSelected
+                                  ? 'text-white shadow-md'
+                                  : 'bg-black/40 border-zinc-800 text-zinc-300 hover:border-[#FA5F88]'
+                              }`}
+                            >
+                              {sz}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Product Description */}
+                  <div className="space-y-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">Product Description</span>
+                    <p className="text-xs leading-relaxed text-zinc-300">
+                      {activeProduct?.description}
+                    </p>
+                  </div>
+
+                  {/* Flipkart Style Specifications Table (Translucent) */}
+                  <div className="space-y-3 pt-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">Specifications</span>
+                    <div className={`border rounded-xl overflow-hidden text-xs ${
+                      isDarkMode 
+                        ? 'border-white/10 bg-black/30 backdrop-blur-md' 
+                        : 'border-zinc-200 bg-white/50 backdrop-blur-md'
+                    }`}>
+                      <table className="w-full text-left">
+                        <tbody className="divide-y divide-zinc-800/40">
+                          {activeProduct && Object.entries(activeProduct.specs).map(([k, v], idx) => (
+                            <tr key={idx} className={idx % 2 === 0 ? (isDarkMode ? 'bg-white/[0.02]' : 'bg-zinc-50/40') : ''}>
+                              <td className="p-3 font-semibold text-zinc-400 w-1/3">{k}</td>
+                              <td className="p-3 text-zinc-200">{v}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  {/* Trust Badges */}
+                  <div className="grid grid-cols-3 gap-3 pt-3 border-t border-zinc-800/80 text-center">
+                    <div className={`p-3 rounded-lg border space-y-1 ${
+                      isDarkMode ? 'bg-black/30 backdrop-blur-md border-white/10' : 'bg-white/50 border-zinc-200'
+                    }`}>
+                      <ShieldCheck style={{ color: CHERRY_PINK }} className="w-4 h-4 mx-auto" />
+                      <span className="text-[11px] font-bold block text-white">100% Authentic</span>
+                    </div>
+                    <div className={`p-3 rounded-lg border space-y-1 ${
+                      isDarkMode ? 'bg-black/30 backdrop-blur-md border-white/10' : 'bg-white/50 border-zinc-200'
+                    }`}>
+                      <RotateCcw style={{ color: CHERRY_PINK }} className="w-4 h-4 mx-auto" />
+                      <span className="text-[11px] font-bold block text-white">7 Days Return</span>
+                    </div>
+                    <div className={`p-3 rounded-lg border space-y-1 ${
+                      isDarkMode ? 'bg-black/30 backdrop-blur-md border-white/10' : 'bg-white/50 border-zinc-200'
+                    }`}>
+                      <Truck style={{ color: CHERRY_PINK }} className="w-4 h-4 mx-auto" />
+                      <span className="text-[11px] font-bold block text-white">Free Shipping</span>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
 
-      {/* Sizing Guide modal */}
-      <AnimatePresence>
-        {isSizeGuideOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            id="size-guide-modal"
-            className="fixed inset-0 z-50 bg-zinc-950/80 backdrop-blur-md flex items-center justify-center p-4"
-            onClick={() => setIsSizeGuideOpen(false)}
-          >
+        {/* SIZING CHART MODAL */}
+        <AnimatePresence>
+          {isSizeGuideOpen && (
             <motion.div
-              initial={{ scale: 0.95, y: 15 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              onClick={(e) => e.stopPropagation()}
-              className={`w-full max-w-lg rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMain} p-6 space-y-6 shadow-2xl relative`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4"
+              onClick={() => setIsSizeGuideOpen(false)}
             >
-              <button
-                id="close-size-guide"
-                onClick={() => setIsSizeGuideOpen(false)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-zinc-900 text-zinc-400 hover:text-white"
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-md bg-[#0a0a0a] text-white rounded-xl p-6 space-y-4 shadow-2xl border border-zinc-800"
               >
-                <X className="w-4 h-4" />
-              </button>
+                <div className="flex justify-between items-center">
+                  <h3 className="font-bold text-sm uppercase">Size Chart (Inches)</h3>
+                  <button onClick={() => setIsSizeGuideOpen(false)} className="text-zinc-400 hover:text-white">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
 
-              <div className="space-y-1">
-                <span className="font-mono text-[8px] tracking-[0.2em] text-rose-500 uppercase block font-bold">METRICS AUDITS</span>
-                <h3 className={`font-sans text-xl font-black uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>STREETWEAR SIZE GUIDE</h3>
-                <p className="text-zinc-500 font-mono text-[9px] uppercase">Boxy Oversized Fits — All Measurements are in Inches</p>
-              </div>
-
-              {/* Sizing guide table */}
-              <div className={`overflow-x-auto border ${themeStyles.borderMuted} rounded-xl`}>
-                <table className={`w-full text-left font-mono text-[10px] ${themeStyles.textSecondary}`}>
-                  <thead className={`${isDarkMode ? 'bg-zinc-950 text-white' : 'bg-zinc-100 text-zinc-800'} uppercase tracking-wider text-[9px]`}>
-                    <tr className={`border-b ${themeStyles.borderMuted}`}>
-                      <th className="p-3">SIZE</th>
-                      <th className="p-3">CHEST</th>
-                      <th className="p-3">LENGTH</th>
-                      <th className="p-3">SLEEVE</th>
+                <table className="w-full text-xs text-left border border-zinc-800 rounded">
+                  <thead className="bg-[#141417] font-bold">
+                    <tr>
+                      <th className="p-2.5">Size</th>
+                      <th className="p-2.5">Chest</th>
+                      <th className="p-2.5">Length</th>
+                      <th className="p-2.5">Sleeve</th>
                     </tr>
                   </thead>
-                  <tbody className={`divide-y ${themeStyles.borderMuted}`}>
-                    <tr>
-                      <td className={`p-3 font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>XS</td>
-                      <td className="p-3">22.5</td>
-                      <td className="p-3">25.0</td>
-                      <td className="p-3">23.5</td>
+                  <tbody className="divide-y divide-zinc-800">
+                    <tr><td className="p-2.5 font-bold">S</td><td className="p-2.5">24.0"</td><td className="p-2.5">26.0"</td><td className="p-2.5">24.5"</td></tr>
+                    <tr style={{ backgroundColor: 'rgba(250, 95, 136, 0.15)', color: CHERRY_PINK }} className="font-bold">
+                      <td className="p-2.5">M</td><td className="p-2.5">25.5"</td><td className="p-2.5">27.0"</td><td className="p-2.5">25.5"</td>
                     </tr>
-                    <tr>
-                      <td className={`p-3 font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>S</td>
-                      <td className="p-3">24.0</td>
-                      <td className="p-3">26.0</td>
-                      <td className="p-3">24.5</td>
-                    </tr>
-                    <tr className="bg-rose-500/5">
-                      <td className="p-3 font-bold text-rose-400">M [STANDARD]</td>
-                      <td className={`p-3 ${isDarkMode ? 'text-rose-200' : 'text-rose-700'}`}>25.5</td>
-                      <td className={`p-3 ${isDarkMode ? 'text-rose-200' : 'text-rose-700'}`}>27.0</td>
-                      <td className={`p-3 ${isDarkMode ? 'text-rose-200' : 'text-rose-700'}`}>25.5</td>
-                    </tr>
-                    <tr>
-                      <td className={`p-3 font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>L</td>
-                      <td className="p-3">27.0</td>
-                      <td className="p-3">28.0</td>
-                      <td className="p-3">26.5</td>
-                    </tr>
-                    <tr>
-                      <td className={`p-3 font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>XL</td>
-                      <td className="p-3">28.5</td>
-                      <td className="p-3">29.0</td>
-                      <td className="p-3">27.5</td>
-                    </tr>
-                    <tr>
-                      <td className={`p-3 font-bold ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>XXL</td>
-                      <td className="p-3">30.0</td>
-                      <td className="p-3">30.0</td>
-                      <td className="p-3">28.5</td>
-                    </tr>
+                    <tr><td className="p-2.5 font-bold">L</td><td className="p-2.5">27.0"</td><td className="p-2.5">28.0"</td><td className="p-2.5">26.5"</td></tr>
+                    <tr><td className="p-2.5 font-bold">XL</td><td className="p-2.5">28.5"</td><td className="p-2.5">29.0"</td><td className="p-2.5">27.5"</td></tr>
                   </tbody>
                 </table>
-              </div>
-
-              <div className={`flex items-start space-x-2 rounded-xl ${isDarkMode ? 'bg-zinc-950/50' : 'bg-zinc-50'} p-3 border ${themeStyles.borderMuted}`}>
-                <Sparkles className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-                <span className="font-sans text-[10px] text-zinc-500 leading-normal">
-                  Our products generally sport a heavy boxy streetwear fit. If you prefer a traditional standard fitted outline, we highly recommend selecting <strong className={isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}>one size smaller</strong>.
-                </span>
+                <p className="text-[11px] text-zinc-400">Streetwear boxy cut. Select one size smaller for regular fit.</p>
               </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
 
-      {/* Order Tracking Modal */}
-      <AnimatePresence>
-        {isTrackOrderModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-zinc-950/80 backdrop-blur-md flex items-center justify-center p-4"
-            onClick={() => {
-              setIsTrackOrderModalOpen(false);
-              setOrderTrackingResult(null);
-            }}
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 15 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              onClick={(e) => e.stopPropagation()}
-              className={`w-full max-w-md rounded-2xl ${themeStyles.bgCard} border ${themeStyles.borderMain} p-6 shadow-2xl relative space-y-4 font-sans`}
-            >
-              <button
-                onClick={() => {
-                  setIsTrackOrderModalOpen(false);
-                  setOrderTrackingResult(null);
-                }}
-                className="absolute top-4 right-4 p-2 rounded-full bg-zinc-900/80 text-zinc-400 hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
-              <div className="space-y-1">
-                <span className="font-mono text-[9px] tracking-widest text-rose-500 uppercase font-bold block">ALL STAG // LOGISTICS</span>
-                <h3 className={`text-lg font-bold uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>Track Your Shipment</h3>
-                <p className="text-zinc-400 text-xs font-light">
-                  Enter your order number or tracking code (e.g. INF-2026-889) to view real-time courier status.
-                </p>
-              </div>
-
-              <div className="space-y-3 pt-2">
-                <input
-                  type="text"
-                  value={orderTrackingInput}
-                  onChange={(e) => setOrderTrackingInput(e.target.value)}
-                  placeholder="ORDER ID / TRACKING #"
-                  className={`w-full p-3 rounded-xl border ${themeStyles.bgCard} ${themeStyles.borderMuted} ${themeStyles.textPrimary} text-xs font-mono tracking-wider focus:outline-none`}
-                />
-                <button
-                  onClick={() => {
-                    if (!orderTrackingInput.trim()) return;
-                    setOrderTrackingResult(`Order #${orderTrackingInput.toUpperCase()} is DISPATCHED via DHL Express. Estimated Delivery: ${getDeliveryDateStr(true)}.`);
-                  }}
-                  className={`w-full py-3 rounded-xl font-mono text-xs font-bold tracking-widest uppercase transition-all cursor-pointer ${
-                    isDarkMode ? 'bg-white text-zinc-950 hover:bg-zinc-100' : 'bg-zinc-900 text-white hover:bg-zinc-800'
-                  }`}
-                >
-                  CHECK STATUS
-                </button>
-              </div>
-
-              {orderTrackingResult && (
-                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono leading-relaxed flex items-start space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>{orderTrackingResult}</span>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </div>
     </div>
   );
 };

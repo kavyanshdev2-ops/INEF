@@ -6,28 +6,17 @@
 import React, { useState } from 'react';
 import { AtmosphereConfig, CartItem } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import { MembershipCard, defaultRanks } from './MembershipCard';
 import {
-  Compass,
   Flame,
   Shield,
-  Users,
-  Radio,
   CheckCircle2,
   ShoppingCart,
   Sparkles,
-  Pickaxe,
-  Swords,
-  Crown,
-  Box,
   Gem,
-  Hammer,
-  Package,
-  Palette,
-  Terminal,
-  Zap,
-  ChevronRight
+  MessageSquare
 } from 'lucide-react';
+
+const CHERRY_PINK = '#FA5F88';
 
 interface MembershipViewProps {
   activeAtmosphere: AtmosphereConfig;
@@ -44,30 +33,17 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
 }) => {
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
   const [addedItemName, setAddedItemName] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'discord' | 'minecraft'>('minecraft');
 
-  // Interactive tab state for each Minecraft card
-  const [activeCardTabs, setActiveCardTabs] = useState<Record<string, 'utilities' | 'kits' | 'cosmetics'>>({
-    'diamond-rank': 'utilities',
-    'titanium-rank': 'utilities',
-    'mystical-rank': 'utilities',
-    'ineffable-rank': 'utilities'
-  });
-
-  const setCardTab = (cardId: string, tab: 'utilities' | 'kits' | 'cosmetics') => {
-    setActiveCardTabs(prev => ({ ...prev, [cardId]: tab }));
-  };
-
-  // Discord Tiers (Monthly subscription)
+  // Discord Community Tiers (Monthly subscription)
   const discordTiers = [
     {
       id: 'plat-access',
       name: 'Platinum Access',
       price: 3.00,
       period: 'month',
-      description: 'platinum role',
+      description: 'The essential starter tier. Unlock external stickers, soundboard permissions, and a signature Platinum badge.',
       icon: Gem,
-      tag: 'DIAMOND',
+      tag: 'PLATINUM',
       badgeBg: 'bg-teal-500/10 border-teal-500/20 text-teal-400',
       color: 'from-teal-500/15 via-emerald-500/5 to-transparent',
       border: 'hover:border-teal-400/60',
@@ -81,14 +57,13 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
         'External Reaction access in all general channels',
         'Elegant "Platinum" role badge in Discord'
       ],
-
     },
     {
       id: 'diam-access',
       name: 'Diamond Access',
       price: 9.00,
       period: 'month',
-      description: 'Our most popular, balanced premium tier. Stand out on voice and text with custom styling, high priority and unique access.',
+      description: 'Our most popular premium tier. Stand out on voice and text with custom HEX color styling, high priority and unique access.',
       icon: Flame,
       perks: [
         'All benefits included in Platinum Access',
@@ -98,8 +73,8 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
         'Double entry weight in all automated server giveaways',
         'Unique "Diamond" role badge & standout name color'
       ],
-      color: 'from-rose-500/10 via-rose-600/5 to-transparent',
-      border: 'hover:border-rose-400/50',
+      color: 'from-[#FA5F88]/15 via-rose-600/5 to-transparent',
+      border: 'hover:border-[#FA5F88]/60',
       tag: 'POPULAR',
       image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop'
     },
@@ -125,145 +100,7 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
     }
   ];
 
-  // Minecraft Donor Tiers (Lifetime Purchases, fully split and custom styled)
-  const minecraftTiers = [
-    {
-      id: 'diamond-rank',
-      name: 'Diamond Rank',
-      price: 10.00,
-      period: 'lifetime',
-      description: 'Step up your game with Diamond perks: Backpack capacity, multiple sethomes, daily currency allowances, and boat keys.',
-      icon: Gem,
-      tag: 'DIAMOND',
-      badgeBg: 'bg-teal-500/10 border-teal-500/20 text-teal-400',
-      color: 'from-teal-500/15 via-emerald-500/5 to-transparent',
-      border: 'hover:border-teal-400/60',
-      glow: 'shadow-teal-500/5',
-      accentColor: 'text-teal-400',
-      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop',
-      parts: {
-        utilities: [
-          '/sit and /crawl utility commands',
-          'Set up to 10 Unique Homes via /sethome',
-          'Virtual portable enderchest via /ec anywhere',
-          'Gain 2500 Land Claim Blocks to protect builds'
-        ],
-        kits: [
-          'Daily starter budget: $100 allowance',
-          '2x Boat Keys (one-time claim)'
-        ],
-        cosmetics: [
-          'Backpack virtual storage with 2 active rows',
-          'Sleek Diamond-White styled custom chat prefix'
-        ]
-      }
-    },
-    {
-      id: 'titanium-rank',
-      name: 'Titanium Rank',
-      price: 15.00,
-      period: 'lifetime',
-      description: 'Gain the power of Titanium: all Diamond benefits, larger virtual backpack, more homes, item repairs, and virtual smoker/grindstone access.',
-      icon: Shield,
-      tag: 'TITANIUM',
-      badgeBg: 'bg-sky-500/10 border-sky-500/20 text-sky-400',
-      color: 'from-sky-500/15 via-blue-500/5 to-transparent',
-      border: 'hover:border-sky-400/60',
-      glow: 'shadow-sky-500/5',
-      accentColor: 'text-sky-400',
-      image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop',
-      parts: {
-        utilities: [
-          'Includes all utility perks of Diamond Rank',
-          'Set up to 15 Unique Homes via /sethome',
-          '/fix command (Repair Your Item - 12hr Cooldown)',
-          'Virtual portable /smoker command access anywhere',
-          'Virtual portable /grindstone command access anywhere'
-        ],
-        kits: [
-          'Daily titanium budget: $200 allowance',
-          '2x Vote Keys (one-time claim)',
-          'Additional 2500 Land Claim Blocks (stacked)'
-        ],
-        cosmetics: [
-          'Backpack virtual storage with 3 active rows',
-          'Sleek Titanium-Blue styled custom chat prefix'
-        ]
-      }
-    },
-    {
-      id: 'mystical-rank',
-      name: 'Mystical Rank',
-      price: 25.00,
-      period: 'lifetime',
-      description: 'Ascend to the Mystical Tier: all Diamond & Titanium benefits, 4-row backpack, item renaming, virtual anvil, and feed command.',
-      icon: Sparkles,
-      tag: 'MYSTICAL',
-      badgeBg: 'bg-rose-500/10 border-rose-500/20 text-rose-400',
-      color: 'from-rose-500/15 via-pink-500/5 to-transparent',
-      border: 'hover:border-rose-400/60',
-      glow: 'shadow-rose-500/5',
-      accentColor: 'text-rose-400',
-      image: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=400&auto=format&fit=crop',
-      parts: {
-        utilities: [
-          'Includes all utility perks of Diamond & Titanium',
-          'Set up to 17 Unique Homes via /sethome',
-          '/rename command (Rename any item in hand)',
-          'Virtual /Anvil command access anywhere',
-          'Virtual /brewingstand command access anywhere',
-          '/feed command (Saturate hunger - 3hr Cooldown)'
-        ],
-        kits: [
-          'Daily mythical budget: $350 allowance',
-          '1x Rare Keys!! (one-time claim)',
-          'Gain 4500 Land Claim Blocks to protect builds'
-        ],
-        cosmetics: [
-          'Backpack virtual storage with 4 active rows',
-          '/sit, /crawl, and /spin command animations',
-          'Mystical-Yellow styled custom chat prefix'
-        ]
-      }
-    },
-    {
-      id: 'ineffable-rank',
-      name: 'Ineffable Rank',
-      price: 41.00,
-      period: 'lifetime',
-      description: 'Our ultimate Custom-grade tier of the network. All perks of Diamond, Titanium & Mystical with a massive 6-row backpack, 20 homes, reduced cooldowns, and custom Discord/Server roles.',
-      icon: Crown,
-      tag: 'CUSTOM',
-      badgeBg: 'bg-rose-500/10 border-rose-500/20 text-rose-400',
-      color: 'from-rose-500/15 via-pink-500/5 to-transparent',
-      border: 'hover:border-rose-400/60',
-      glow: 'shadow-rose-500/5',
-      accentColor: 'text-rose-400',
-      image: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=400&auto=format&fit=crop',
-      parts: {
-        utilities: [
-          'All utility perks of Diamond, Titanium & Mystical',
-          'Set up to 20 Unique Homes via /sethome',
-          '/fix command (Repair Your Item - reduced 7hr Cooldown)',
-          '/feed command (Saturate hunger - reduced 1hr Cooldown)',
-          '/tp commands access for instant teleportation'
-        ],
-        kits: [
-          'Daily supreme budget: $1000 allowance',
-          '2x Rare Keys!! (one-time claim)',
-          'Gain 7000 Land Claim Blocks to protect builds'
-        ],
-        cosmetics: [
-          'Backpack virtual storage with 6 active rows',
-          'Special Opportunity: Custom Role Name and Colour',
-          'Custom role in Discord Server linked automatically',
-          'Can apply to change the role name & color after a month'
-        ]
-      }
-    }
-  ];
-
-  const handleAddToCart = (tier: typeof discordTiers[0] | typeof minecraftTiers[0]) => {
+  const handleAddToCart = (tier: typeof discordTiers[0]) => {
     onAddToCart({
       id: tier.id,
       name: tier.name,
@@ -275,25 +112,22 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
     setTimeout(() => setAddedItemName(null), 2500);
   };
 
-  const pageTitle = activeTab === 'discord' ? 'COMMUNITY MEMBERSHIPS' : 'MINECRAFT SERVER RANKS';
-  const pageTagline = activeTab === 'discord' ? 'UPGRADES // MEMBERSHIP PLANS' : 'SERVER STORE // LIFETIME DONATIONS';
-  const pageSub = activeTab === 'discord'
-    ? 'Support Ineffable hosting and fund active development. Gain immediate, automated premium roles, custom cosmetic permissions, and exclusive Discord perks linked to your account.'
-    : 'Enhance your survival gameplay on the Ineffable SMP server with premium donor ranks. Experience fully customizable glassy cards featuring tabbed sub-sections for commands, kits, and cosmetics.';
-
   return (
     <div id="membership-view-container" className={`max-w-7xl mx-auto px-6 py-24 pt-32 ${themeStyles.textPrimary}`}>
 
       {/* Page Header */}
       <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <span className={`font-mono text-xs tracking-[0.3em] ${themeStyles.accentText} uppercase block`}>
-          {pageTagline}
+        <span 
+          style={{ color: CHERRY_PINK }}
+          className="font-mono text-xs tracking-[0.3em] uppercase block font-semibold"
+        >
+          UPGRADES // MEMBERSHIP PLANS
         </span>
         <h2 className="text-4xl md:text-6xl font-sans tracking-tight font-extrabold uppercase transition-all duration-300">
-          {pageTitle}
+          COMMUNITY MEMBERSHIPS
         </h2>
-        <p className={`${themeStyles.textSecondary} font-sans text-sm md:text-base font-light leading-relaxed h-16 transition-all duration-300`}>
-          {pageSub}
+        <p className={`${themeStyles.textSecondary} font-sans text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto transition-all duration-300`}>
+          Support Ineffable hosting and fund active development. Gain immediate, automated premium roles, custom cosmetic permissions, and exclusive Discord perks linked directly to your account.
         </p>
       </div>
 
@@ -308,152 +142,137 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
         </div>
       )}
 
-      {/* Segmented Controls (Tab Switcher) */}
-      <div id="membership-tab-switcher" className="flex justify-center mb-16">
-        <div className={`inline-flex p-1.5 rounded-2xl border ${themeStyles.borderMuted} ${themeStyles.bgCard} backdrop-blur-xl gap-2 shadow-inner`}>
-          <button
-            id="tab-discord-btn"
-            onClick={() => setActiveTab('discord')}
-            className={`px-6 py-3 rounded-xl font-mono text-[10px] tracking-wider transition-all cursor-pointer flex items-center space-x-2.5 ${activeTab === 'discord'
-              ? `${themeStyles.accentBg} ${isDarkMode ? 'text-zinc-950 font-bold' : 'text-white font-bold'} shadow-lg scale-102`
-              : `${isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-zinc-950'}`
-              }`}
-          >
-            <Radio className="w-4 h-4 shrink-0" />
-            <span>DISCORD MEMBERSHIPS</span>
-          </button>
-
-          <button
-            id="tab-minecraft-btn"
-            onClick={() => setActiveTab('minecraft')}
-            className={`px-6 py-3 rounded-xl font-mono text-[10px] tracking-wider transition-all cursor-pointer flex items-center space-x-2.5 ${activeTab === 'minecraft'
-              ? `${themeStyles.accentBg} ${isDarkMode ? 'text-zinc-950 font-bold' : 'text-white font-bold'} shadow-lg scale-102`
-              : `${isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-zinc-950'}`
-              }`}
-          >
-            <Pickaxe className="w-4 h-4 shrink-0" />
-            <span>MINECRAFT SERVER RANKS</span>
-          </button>
-        </div>
-      </div>
-
       {/* Tiers Grid */}
-      <div id="membership-tiers-grid" className={`grid grid-cols-1 md:grid-cols-2 ${activeTab === 'minecraft' ? 'lg:grid-cols-3 xl:grid-cols-4' : 'lg:grid-cols-3'} gap-6 items-stretch mb-20`}>
-        {activeTab === 'discord' ? (
-          discordTiers.map((tier) => {
-            const TierIcon = tier.icon;
-            return (
-              <div
-                id={`membership-tier-card-${tier.id}`}
-                key={tier.id}
-                className={`relative group ${themeStyles.bgCard} border ${themeStyles.borderMuted} ${tier.border} rounded-2xl p-8 flex flex-col justify-between overflow-hidden backdrop-blur-md transition-all duration-300 hover:shadow-2xl`}
-              >
-                {/* Top gradient glow overlay */}
-                <div className={`absolute top-0 left-0 right-0 h-48 bg-gradient-to-b ${tier.color} opacity-85 pointer-events-none`} />
+      <div id="membership-tiers-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mb-20">
+        {discordTiers.map((tier) => {
+          const TierIcon = tier.icon;
+          const isHighlighted = tier.tag === 'POPULAR';
 
-                <div className="relative z-10 space-y-6">
-                  {/* Badge Tag */}
-                  <div className="flex justify-between items-center">
-                    <span className={`font-mono text-[9px] tracking-[0.2em] ${themeStyles.textMuted} uppercase`}>
-                      {tier.tag}
+          return (
+            <div
+              id={`membership-tier-card-${tier.id}`}
+              key={tier.id}
+              className={`relative group rounded-2xl p-8 flex flex-col justify-between overflow-hidden backdrop-blur-md transition-all duration-300 border ${
+                isDarkMode 
+                  ? 'bg-black/30 border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/60 hover:shadow-2xl hover:shadow-[#FA5F88]/10' 
+                  : 'bg-white/60 border-zinc-200/80 hover:bg-white/80 hover:border-[#FA5F88]/60 hover:shadow-xl'
+              } ${isHighlighted ? 'ring-1 ring-[#FA5F88]/40' : ''}`}
+            >
+              {/* Top subtle glow overlay */}
+              <div className={`absolute top-0 left-0 right-0 h-48 bg-gradient-to-b ${tier.color} opacity-70 pointer-events-none`} />
+
+              <div className="relative z-10 space-y-6">
+                {/* Badge Tag */}
+                <div className="flex justify-between items-center">
+                  <span className={`font-mono text-[9px] tracking-[0.2em] uppercase font-semibold ${isHighlighted ? 'text-[#FA5F88]' : themeStyles.textMuted}`}>
+                    {tier.tag}
+                  </span>
+                  {isHighlighted && (
+                    <span 
+                      style={{ backgroundColor: 'rgba(250, 95, 136, 0.15)', color: CHERRY_PINK, borderColor: 'rgba(250, 95, 136, 0.3)' }}
+                      className="px-2.5 py-0.5 rounded-full font-mono text-[8px] tracking-wider font-bold border"
+                    >
+                      MOST POPULAR
                     </span>
-                    {(tier.tag === 'POPULAR' || tier.tag === 'ELITE') && (
-                      <span className="px-2.5 py-0.5 rounded-full font-mono text-[8px] tracking-wider font-semibold border bg-rose-500/10 text-rose-400 border-rose-500/20">
-                        RECOMMENDED
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Tier Name & Price */}
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-3">
-                      <div className={`p-2.5 rounded-xl border flex items-center justify-center bg-zinc-900/40 border-zinc-800/50 ${themeStyles.accentText}`}>
-                        <TierIcon className="w-5 h-5" />
-                      </div>
-                      <h3 className={`font-sans text-xl font-bold uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-zinc-900'
-                        }`}>
-                        {tier.name}
-                      </h3>
-                    </div>
-                    <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed h-12 overflow-hidden mt-2`}>
-                      {tier.description}
-                    </p>
-                  </div>
-
-                  {/* Price Display */}
-                  <div className={`py-4 border-b flex items-baseline space-x-1 ${isDarkMode ? 'border-zinc-900' : 'border-zinc-100'}`}>
-                    <span className={`text-3xl md:text-4xl font-extrabold tracking-tight font-mono ${isDarkMode ? 'text-white' : 'text-zinc-900'
-                      }`}>
-                      ${tier.price.toFixed(2)}
+                  )}
+                  {tier.tag === 'ELITE' && (
+                    <span className="px-2.5 py-0.5 rounded-full font-mono text-[8px] tracking-wider font-semibold border bg-zinc-500/10 text-zinc-300 border-zinc-500/20">
+                      VIP ACCESS
                     </span>
-                    <span className={`${themeStyles.textMuted} font-mono text-[10px] uppercase tracking-wider`}>
-                      / {tier.period}
-                    </span>
-                  </div>
-
-                  {/* Perks Checklist */}
-                  <div className="space-y-3.5 pt-2 h-[220px] overflow-y-auto pr-1 scrollbar-thin">
-                    {tier.perks.map((perk, idx) => (
-                      <div key={idx} className="flex items-start space-x-2.5">
-                        <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${themeStyles.accentText}`} />
-                        <span className={`${themeStyles.textSecondary} text-xs font-light leading-snug`}>
-                          {perk}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  )}
                 </div>
 
-                {/* Action Button */}
-                <button
-                  id={`add-cart-membership-${tier.id}`}
-                  onClick={() => handleAddToCart(tier)}
-                  className="relative z-10 w-full py-4 mt-8 font-mono text-xs tracking-widest font-bold rounded-xl bg-zinc-100 hover:bg-white text-zinc-950 transition-all cursor-pointer shadow-lg flex items-center justify-center space-x-2"
-                >
-                  <ShoppingCart className="w-4 h-4 text-zinc-950" />
-                  <span>ADD TO CART</span>
-                </button>
+                {/* Tier Name & Description */}
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-3">
+                    <div 
+                      style={isHighlighted ? { backgroundColor: 'rgba(250, 95, 136, 0.15)', color: CHERRY_PINK } : undefined}
+                      className={`p-2.5 rounded-xl border flex items-center justify-center ${
+                        isHighlighted 
+                          ? 'border-[#FA5F88]/30' 
+                          : 'bg-zinc-900/40 border-zinc-800/50 text-zinc-300'
+                      }`}
+                    >
+                      <TierIcon className="w-5 h-5" />
+                    </div>
+                    <h3 className={`font-sans text-xl font-bold uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
+                      {tier.name}
+                    </h3>
+                  </div>
+                  <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed h-12 overflow-hidden mt-2`}>
+                    {tier.description}
+                  </p>
+                </div>
+
+                {/* Price Display */}
+                <div className={`py-4 border-b flex items-baseline space-x-1 ${isDarkMode ? 'border-white/10' : 'border-zinc-200'}`}>
+                  <span className={`text-3xl md:text-4xl font-extrabold tracking-tight font-mono ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
+                    ${tier.price.toFixed(2)}
+                  </span>
+                  <span className={`${themeStyles.textMuted} font-mono text-[10px] uppercase tracking-wider`}>
+                    / {tier.period}
+                  </span>
+                </div>
+
+                {/* Perks Checklist */}
+                <div className="space-y-3.5 pt-2 h-[220px] overflow-y-auto pr-1 scrollbar-thin">
+                  {tier.perks.map((perk, idx) => (
+                    <div key={idx} className="flex items-start space-x-2.5">
+                      <CheckCircle2 
+                        style={{ color: CHERRY_PINK }}
+                        className="w-4 h-4 shrink-0 mt-0.5" 
+                      />
+                      <span className={`${themeStyles.textSecondary} text-xs font-light leading-snug`}>
+                        {perk}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            );
-          })
-        ) : (
-          defaultRanks.map((rank) => (
-            <MembershipCard
-              key={rank.id}
-              rank={rank}
-              activeAtmosphere={activeAtmosphere}
-              isDarkMode={isDarkMode}
-              onAddToCart={(item) => {
-                onAddToCart({
-                  id: item.id,
-                  name: item.name,
-                  price: item.price,
-                  image: item.image,
-                  type: 'membership'
-                });
-                setAddedItemName(item.name);
-                setTimeout(() => setAddedItemName(null), 2500);
-              }}
-            />
-          ))
-        )}
+
+              {/* Action Button */}
+              <button
+                id={`add-cart-membership-${tier.id}`}
+                onClick={() => handleAddToCart(tier)}
+                style={isHighlighted ? { backgroundColor: CHERRY_PINK } : undefined}
+                className={`relative z-10 w-full py-3.5 mt-8 font-mono text-xs tracking-widest font-bold rounded-xl transition-all cursor-pointer shadow-lg flex items-center justify-center space-x-2 ${
+                  isHighlighted 
+                    ? 'text-white hover:brightness-110' 
+                    : 'bg-zinc-100 hover:bg-white text-zinc-950'
+                }`}
+              >
+                <ShoppingCart className={`w-4 h-4 ${isHighlighted ? 'text-white' : 'text-zinc-950'}`} />
+                <span>ADD TO CART</span>
+              </button>
+            </div>
+          );
+        })}
       </div>
 
       {/* Perks Highlight Banner */}
-      <div id="membership-perks-highlight" className={`rounded-3xl border ${themeStyles.borderMuted} ${themeStyles.bgCard} p-8 md:p-12 relative overflow-hidden shadow-2xl`}>
-        <div className={`absolute top-0 right-0 w-[30%] h-full bg-gradient-to-l ${themeStyles.glowPrimary} blur-[80px] opacity-10 pointer-events-none`} />
+      <div id="membership-perks-highlight" className={`rounded-3xl border ${
+        isDarkMode 
+          ? 'bg-black/30 backdrop-blur-md border-white/10' 
+          : 'bg-white/60 backdrop-blur-md border-zinc-200'
+      } p-8 md:p-12 relative overflow-hidden shadow-2xl`}>
+        <div 
+          style={{ background: `radial-gradient(circle, rgba(250,95,136,0.12) 0%, transparent 70%)` }}
+          className="absolute top-0 right-0 w-[40%] h-full blur-[70px] pointer-events-none" 
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
-              <Sparkles className={`w-5 h-5 ${themeStyles.accentText}`} />
-              <span className={`font-mono text-xs tracking-[0.2em] uppercase ${isDarkMode ? 'text-white' : 'text-zinc-800'}`}>SYSTEM-LINKED SYNC</span>
+              <Sparkles style={{ color: CHERRY_PINK }} className="w-5 h-5" />
+              <span className={`font-mono text-xs tracking-[0.2em] uppercase font-bold ${isDarkMode ? 'text-white' : 'text-zinc-800'}`}>
+                SYSTEM-LINKED SYNC
+              </span>
             </div>
             <h4 className={`text-2xl md:text-3xl font-sans tracking-tight font-extrabold uppercase ${isDarkMode ? 'text-white' : 'text-zinc-900'}`}>
               Immediate Automated Account Provisioning
             </h4>
             <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed`}>
-              Once checked out, our automatic transaction gateways synchronize your purchases with your unique profiles. Discord roles are linked via our bot hub, and Minecraft ranks are synced directly to your Mojang uuid on the survival servers instantly.
+              Once checked out, our automatic transaction gateways synchronize your purchases with your unique profile. Discord roles, soundboard permissions, and custom cosmetic badges are linked via our bot hub instantly upon order confirmation.
             </p>
             <div className="flex items-center space-x-6 pt-4">
               <div className="space-y-1">
@@ -471,24 +290,29 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
             </div>
           </div>
 
-          <div className={`border rounded-2xl p-6 space-y-4 ${isDarkMode ? 'bg-zinc-950/40 border-zinc-900' : 'bg-zinc-50 border-zinc-200'
+          <div className={`border rounded-2xl p-6 space-y-4 ${
+            isDarkMode ? 'bg-black/40 border-white/10' : 'bg-white/80 border-zinc-200'
+          }`}>
+            <h5 className={`font-mono text-xs font-bold uppercase border-b pb-3 flex items-center space-x-2 ${
+              isDarkMode ? 'text-zinc-300 border-white/10' : 'text-zinc-800 border-zinc-200'
             }`}>
-            <h5 className={`font-mono text-xs font-bold uppercase border-b pb-3 ${isDarkMode ? 'text-zinc-300 border-zinc-900' : 'text-zinc-800 border-zinc-200'
-              }`}>
-              Minecraft Connection Info
+              <MessageSquare style={{ color: CHERRY_PINK }} className="w-4 h-4" />
+              <span>Discord Community Hub</span>
             </h5>
             <p className={`${themeStyles.textSecondary} text-xs font-light leading-relaxed`}>
-              Connect to the Survival server using our custom play address below. Ranks apply globally to all server areas and lobbies immediately.
+              Join over 12,000+ members in our official Discord community. Connect with active creators, participate in weekly events, and enjoy custom voice perks.
             </p>
-            <div className={`p-3 rounded-lg font-mono text-xs flex justify-between items-center ${isDarkMode ? 'bg-zinc-950 text-emerald-400 border border-zinc-900' : 'bg-white text-emerald-600 border border-zinc-200'
-              }`}>
-              <span>SERVER IP:</span>
-              <span className="font-bold tracking-widest">ineffable.mc-play.org</span>
+            <div className={`p-3 rounded-lg font-mono text-xs flex justify-between items-center ${
+              isDarkMode ? 'bg-black/60 text-zinc-200 border border-white/10' : 'bg-white text-zinc-800 border border-zinc-200'
+            }`}>
+              <span className="text-zinc-400">OFFICIAL SERVER:</span>
+              <span style={{ color: CHERRY_PINK }} className="font-bold tracking-wider">discord.gg/ineffable</span>
             </div>
             <button
               id="cta-membership-contact"
               onClick={() => setCurrentPage('shop')}
-              className={`w-full py-3.5 ${themeStyles.accentBg} ${themeStyles.accentBgHover} text-zinc-950 font-mono text-[10px] tracking-widest font-bold rounded-lg transition-colors cursor-pointer border ${themeStyles.borderHighlight}`}
+              style={{ backgroundColor: CHERRY_PINK }}
+              className="w-full py-3.5 text-white font-mono text-[10px] tracking-widest font-bold rounded-lg transition-all hover:brightness-110 cursor-pointer shadow-md"
             >
               EXPLORE PROMOTIONS IN SHOP
             </button>
