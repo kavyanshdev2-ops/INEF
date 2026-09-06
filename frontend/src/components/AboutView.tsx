@@ -9,21 +9,11 @@ import nancyAvatar from '../../sivyassets/nancy.png';
 import {
   Users,
   Shield,
-  Crown,
   Code,
   Sparkles,
   X,
-  ExternalLink,
-  MessageSquare,
   Award,
-  Heart,
-  UserCheck,
   Flame,
-  User,
-  Music,
-  Tv,
-  Settings,
-  RefreshCw
 } from 'lucide-react';
 
 interface AboutViewProps {
@@ -253,226 +243,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
   const [hoveredMember, setHoveredMember] = useState<string | null>(null);
   const [selectedMember, setSelectedMember] = useState<MemberProfile | null>(null);
 
-  // Lanyard Live Discord States
-  const [lanyardData, setLanyardData] = useState<any>(null);
-  const [isLanyardLoading, setIsLanyardLoading] = useState(false);
-  const [isLanyardError, setIsLanyardError] = useState(false);
-  const [activeTab, setActiveTab] = useState<'profile' | 'servers' | 'friends'>('profile');
-  const [customDiscordId, setCustomDiscordId] = useState<string>('');
-  const [isSyncingId, setIsSyncingId] = useState(false);
-  const [syncFeedback, setSyncFeedback] = useState<string>('');
-  const [spotifyProgress, setSpotifyProgress] = useState({ elapsed: 0, duration: 0, percentage: 0 });
-  const [simulatedTimeOffset, setSimulatedTimeOffset] = useState<number>(0);
-
-  // Helper formatters
-  const formatTime = (ms: number) => {
-    if (isNaN(ms) || ms < 0) return '0:00';
-    const totalSeconds = Math.floor(ms / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-
-  const formatElapsedTime = (startMs: number) => {
-    const diff = Date.now() - startMs;
-    const totalMinutes = Math.floor(diff / 60000);
-    if (totalMinutes < 60) return `${totalMinutes}m`;
-    const hours = Math.floor(totalMinutes / 60);
-    const mins = totalMinutes % 60;
-    return `${hours}h ${mins}m`;
-  };
-
-  // Resolve Discord Avatar URLs accurately
-  const getDiscordAvatarUrl = (user: any, fallbackUrl: string) => {
-    if (!user) return fallbackUrl;
-    if (user.avatar) {
-      const isAnimated = user.avatar.startsWith('a_');
-      const ext = isAnimated ? 'gif' : 'png';
-      return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=256`;
-    }
-    // Handle modern Discord username/id resolution
-    const defaultIndex = user.discriminator === '0' || !user.discriminator
-      ? Number(BigInt(user.id) >> 22n) % 6
-      : Number(user.discriminator) % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
-  };
-
-  // Resolve Game asset URLs
-  const getGameImageUrl = (appId: string, imageId: string) => {
-    if (!imageId) return '';
-    if (imageId.startsWith('mp:external/')) {
-      return 'https://' + imageId.replace(/^mp:external\//, '');
-    }
-    return `https://cdn.discordapp.com/app-assets/${appId}/${imageId}.png`;
-  };
-
-  // Live fetching
-  const fetchLanyardData = async (id: string) => {
-    if (!id) {
-      setLanyardData(null);
-      return;
-    }
-    setIsLanyardLoading(true);
-    setIsLanyardError(false);
-    try {
-      const response = await fetch(`https://api.lanyard.rest/v1/users/${id}`);
-      const json = await response.json();
-      if (json.success && json.data) {
-        setLanyardData(json.data);
-      } else {
-        setIsLanyardError(true);
-        setLanyardData(null);
-      }
-    } catch (err) {
-      setIsLanyardError(true);
-      setLanyardData(null);
-    } finally {
-      setIsLanyardLoading(false);
-    }
-  };
-
-  // Sync profile to custom ID
-  const handleSyncCustomId = async (id: string) => {
-    if (!id.trim()) {
-      setSyncFeedback('Please enter a valid Discord User ID');
-      return;
-    }
-    setIsSyncingId(true);
-    setSyncFeedback('Syncing live gateway...');
-    try {
-      const response = await fetch(`https://api.lanyard.rest/v1/users/${id}`);
-      const json = await response.json();
-      if (json.success && json.data) {
-        setLanyardData(json.data);
-        setSyncFeedback('Connected successfully!');
-        // Update local selectedMember's ID temporarily so we can track it
-        if (selectedMember) {
-          selectedMember.discordId = id;
-          // also write it into the main MEMBERS_DATA list
-          const match = MEMBERS_DATA.find(m => m.id === selectedMember.id);
-          if (match) match.discordId = id;
-        }
-      } else {
-        setSyncFeedback('ID not found or Lanyard server inactive for this user.');
-      }
-    } catch (err) {
-      setSyncFeedback('Gateway bridge failed. Check your internet connection.');
-    } finally {
-      setIsSyncingId(false);
-    }
-  };
-
-  // Fetch live Discord data when selectedMember is updated
-  React.useEffect(() => {
-    if (selectedMember) {
-      setActiveTab('profile');
-      setCustomDiscordId(selectedMember.discordId || '');
-      setSyncFeedback('');
-      setSimulatedTimeOffset(Date.now());
-      if (selectedMember.discordId) {
-        fetchLanyardData(selectedMember.discordId);
-      } else {
-        setLanyardData(null);
-      }
-    } else {
-      setLanyardData(null);
-    }
-  }, [selectedMember]);
-
-  // Live polling every 5 seconds to keep activities and status real-time
-  React.useEffect(() => {
-    let refreshInterval: NodeJS.Timeout;
-    if (selectedMember && selectedMember.discordId) {
-      refreshInterval = setInterval(() => {
-        // Only pull in background if not actively typing custom ID
-        if (!isSyncingId) {
-          fetchLanyardData(selectedMember.discordId!);
-        }
-      }, 5000);
-    }
-    return () => clearInterval(refreshInterval);
-  }, [selectedMember, isSyncingId]);
-
-  // Handle Spotify tick & progression (both real & simulated)
-  React.useEffect(() => {
-    let interval: NodeJS.Timeout;
-    const hasRealSpotify = lanyardData?.listening_to_spotify && lanyardData?.spotify;
-
-    const updateProgress = () => {
-      if (hasRealSpotify) {
-        const now = Date.now();
-        const start = lanyardData.spotify.timestamps.start;
-        const end = lanyardData.spotify.timestamps.end;
-        const duration = end - start;
-        const elapsed = Math.max(0, Math.min(duration, now - start));
-        const percentage = duration > 0 ? (elapsed / duration) * 100 : 0;
-        setSpotifyProgress({ elapsed, duration, percentage });
-      } else if (selectedMember) {
-        // Simulated Spotify progression
-        const totalDuration = selectedMember.category === 'founder' ? 214000
-          : selectedMember.category === 'cofounder' ? 180000
-            : selectedMember.category === 'techlead' ? 245000
-              : 195000;
-        const elapsedSinceOpen = Date.now() - simulatedTimeOffset;
-        const elapsed = elapsedSinceOpen % totalDuration;
-        const percentage = (elapsed / totalDuration) * 100;
-        setSpotifyProgress({ elapsed, duration: totalDuration, percentage });
-      }
-    };
-
-    updateProgress();
-    interval = setInterval(updateProgress, 1000);
-
-    return () => clearInterval(interval);
-  }, [lanyardData, selectedMember, simulatedTimeOffset]);
-
-  // Simulated Spotify info helper
-  const getSimulatedSpotify = (member: MemberProfile) => {
-    switch (member.category) {
-      case 'founder':
-        return {
-          song: "Convergence Gateway",
-          artist: "Ineffable Beats",
-          album: "Lattice Overdrive",
-          album_art_url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=150&auto=format&fit=crop",
-          track_id: ""
-        };
-      case 'cofounder':
-        return {
-          song: "Speedrunning Packets",
-          artist: "Kavyansh (runner)",
-          album: "Zero Latency EP",
-          album_art_url: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=150&auto=format&fit=crop",
-          track_id: ""
-        };
-      case 'techlead':
-        return {
-          song: "Petal Drift in C Minor",
-          artist: "Ineffable Synthesizer",
-          album: "Canvas Engine Blueprints",
-          album_art_url: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=150&auto=format&fit=crop",
-          track_id: ""
-        };
-      default:
-        return {
-          song: "Cyber Tea Lounge",
-          artist: "Yuki & Sora Tanaka",
-          album: "Neon Threads & Matcha",
-          album_art_url: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=150&auto=format&fit=crop",
-          track_id: ""
-        };
-    }
-  };
-
-  // Mock server lists for Mutual Servers tab
-  const MUTUAL_SERVERS = [
-    { id: '1', name: 'Ineffable Hub 🌐', members: '14,204', icon: 'IH', bgColor: 'bg-indigo-600', inviteUrl: 'https://discord.gg/ineffable' },
-    { id: '2', name: 'Developer Sanctuary 💻', members: '8,409', icon: 'DS', bgColor: 'bg-emerald-600', inviteUrl: 'https://discord.gg/ineffable' },
-    { id: '3', name: 'Cyber Couture Atelier 🪡', members: '3,212', icon: 'CC', bgColor: 'bg-pink-600', inviteUrl: 'https://discord.gg/ineffable' },
-    { id: '4', name: 'Quantum Esports 🎮', members: '5,022', icon: 'QE', bgColor: 'bg-orange-600', inviteUrl: 'https://discord.gg/ineffable' },
-    { id: '5', name: 'Lanyard Gateway 🔌', members: '18,504', icon: 'LY', bgColor: 'bg-sky-600', inviteUrl: 'https://discord.gg/ineffable' },
-  ];
-
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
   // Filter members
@@ -685,40 +455,25 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               className="fixed inset-0 bg-black/75 backdrop-blur-sm cursor-pointer z-[100]"
             />
 
-            {/* Glassy Theme-Adaptive Discord Popout Card */}
+            {/* Static profile card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className={`relative w-full max-w-[350px] max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl transition-all duration-300 ${
+              className={`relative w-full max-w-[620px] max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl transition-all duration-300 ${
                 isDarkMode
                   ? 'bg-zinc-950/90 text-zinc-100 border-zinc-800/80 shadow-black/80'
                   : 'bg-white/95 text-zinc-900 border-zinc-200/90 shadow-2xl'
               }`}
             >
-              {/* LIVE DISCORD GATEWAY CONNECTION HEADER BAR */}
+              {/* PROFILE HEADER */}
               <div className={`px-3.5 py-2 border-b flex items-center justify-between shrink-0 select-none backdrop-blur-md ${
                 isDarkMode ? 'bg-zinc-900/80 border-zinc-800/80 text-zinc-400' : 'bg-zinc-100/90 border-zinc-200/80 text-zinc-600'
               }`}>
-                <div className="flex items-center space-x-2">
-                  <span className={`w-1.5 h-1.5 rounded-full ${isLanyardLoading ? 'bg-amber-400 animate-pulse' :
-                    isLanyardError ? 'bg-rose-500' : 'bg-emerald-500 animate-pulse'
-                    }`} />
-                  <span className="font-mono text-[8px] font-black tracking-widest uppercase">
-                    {isLanyardLoading ? 'GATEWAY // LINKING...' :
-                      isLanyardError ? 'OFFLINE // SIMULATED MODE' : 'GATEWAY // LIVE CONNECTED'}
-                  </span>
-                </div>
-                <button
-                  onClick={() => selectedMember.discordId && fetchLanyardData(selectedMember.discordId)}
-                  className={`p-1 rounded transition-colors cursor-pointer ${
-                    isDarkMode ? 'hover:text-white hover:bg-zinc-800' : 'hover:text-zinc-900 hover:bg-zinc-200'
-                  }`}
-                  title="Force Reload Gateway"
-                >
-                  <RefreshCw className={`w-2.5 h-2.5 ${isLanyardLoading ? 'animate-spin' : ''}`} />
-                </button>
+                <span className="font-mono text-[8px] font-black tracking-widest uppercase">
+                  INEFFABLE // PROFILE
+                </span>
               </div>
 
               {/* BANNER WITH BACKGROUND IMAGE */}
@@ -734,10 +489,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 <div className={`absolute bottom-2.5 left-2.5 font-mono text-[9px] tracking-[0.2em] px-3 py-1.5 rounded-md border flex items-center space-x-2 shadow-lg backdrop-blur-md ${
                   isDarkMode ? 'bg-black/80 text-white border-zinc-800/80' : 'bg-white/90 text-zinc-950 border-zinc-200/80'
                 }`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${lanyardData ? 'bg-emerald-500 animate-pulse' : 'bg-indigo-500 animate-pulse'
-                    }`} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
                   <span className="font-extrabold">
-                    {lanyardData?.discord_user ? lanyardData.discord_user.username : selectedMember.discordTag}
+                    {selectedMember.discordTag}
                   </span>
                 </div>
 
@@ -760,7 +514,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 <div className="absolute top-[-44px] left-4">
                   <div className="relative">
                     <img
-                      src={lanyardData?.discord_user ? getDiscordAvatarUrl(lanyardData.discord_user, selectedMember.avatar) : selectedMember.avatar}
+                      src={selectedMember.avatar}
                       alt="Avatar"
                       referrerPolicy="no-referrer"
                       className={`w-[80px] h-[80px] rounded-full ring-[6px] object-cover ${
@@ -799,36 +553,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 </div>
               </div>
 
-              {/* AUTHENTIC TABBED NAVIGATION */}
-              <div className={`flex border-b px-4 shrink-0 gap-3 ${
-                isDarkMode ? 'bg-zinc-950/80 border-zinc-800/60' : 'bg-white/80 border-zinc-200/80'
-              }`}>
-                {[
-                  { id: 'profile', label: 'User Profile' },
-                  { id: 'servers', label: 'Mutual Servers' },
-                  { id: 'friends', label: `Mutual Friends` }
-                ].map(tab => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
-                    className={`pb-2 pt-1 text-[11px] font-bold px-1 border-b-2 transition-all duration-150 cursor-pointer ${activeTab === tab.id
-                      ? `${themeStyles.accentText} border-current font-extrabold`
-                      : `${isDarkMode ? 'text-zinc-400 hover:text-zinc-200' : 'text-zinc-500 hover:text-zinc-900'} border-transparent`
-                      }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-
               {/* DISCORD INNER CONTAINER PANEL */}
               <div className={`flex-1 overflow-y-auto scrollbar-none p-4 pt-3 pb-3 flex flex-col space-y-4 ${
                 isDarkMode ? 'bg-zinc-950/60' : 'bg-zinc-50/60'
               }`}>
 
-                {/* 1. USER PROFILE TAB */}
-                {activeTab === 'profile' && (
-                  <>
+                <>
                     {/* Names block */}
                     <div className={`p-4 rounded-xl border space-y-2 shadow-xs shrink-0 transition-colors ${
                       isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
@@ -837,174 +567,16 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         <h2 className={`text-lg font-bold tracking-wide font-sans flex items-center gap-1.5 ${
                           isDarkMode ? 'text-white' : 'text-zinc-900'
                         }`}>
-                          {lanyardData?.discord_user ? (lanyardData.discord_user.global_name || lanyardData.discord_user.username) : selectedMember.name}
+                          {selectedMember.name}
                         </h2>
                         <p className={`text-[11px] font-medium font-mono mt-0.5 ${
                           isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
                         }`}>
-                          @{lanyardData?.discord_user ? lanyardData.discord_user.username : selectedMember.discordTag}
+                          @{selectedMember.discordTag}
                         </p>
                       </div>
 
                     </div>
-
-                    {/* DYNAMIC ACTIVITY & SPOTIFY PANEL */}
-                    {(() => {
-                      const isSpotifyActive = lanyardData ? lanyardData.listening_to_spotify : true;
-                      const spotifyData = lanyardData?.spotify || getSimulatedSpotify(selectedMember);
-
-                      // Find any active game (type 0)
-                      const activeGame = lanyardData?.activities?.find((act: any) => act.type === 0);
-
-                      return (
-                        <div className="space-y-4">
-                          {/* 1. SPOTIFY ACTIVITY PLAYER */}
-                          {isSpotifyActive && spotifyData && (
-                            <div className={`p-4 rounded-xl border space-y-3.5 shadow-xs transition-colors ${
-                              isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
-                            }`}>
-                              <div className="flex items-center justify-between">
-                                <h4 className="text-[10px] font-extrabold tracking-wider text-emerald-500 uppercase font-mono flex items-center gap-1.5">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                                  Listening to Spotify
-                                </h4>
-                                <img
-                                  src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"
-                                  alt="Spotify Logo"
-                                  className="w-4 h-4 opacity-80"
-                                />
-                              </div>
-
-                              <div className="flex items-center space-x-3.5">
-                                <div className="relative shrink-0">
-                                  <img
-                                    src={spotifyData.album_art_url}
-                                    alt="Album Art"
-                                    className="w-16 h-16 rounded-md object-cover border border-zinc-500/20 shadow-md animate-[spin_20s_linear_infinite]"
-                                  />
-                                  <div className={`absolute -bottom-1 -right-1 p-0.5 rounded-full border ${
-                                    isDarkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'
-                                  }`}>
-                                    <div className="bg-emerald-500 p-0.5 rounded-full text-white">
-                                      <Music className="w-2.5 h-2.5" />
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="flex-1 min-w-0">
-                                  <a
-                                    href={spotifyData.track_id ? `https://open.spotify.com/track/${spotifyData.track_id}` : "https://open.spotify.com"}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={`text-xs font-bold font-sans truncate block hover:underline transition-colors ${
-                                      isDarkMode ? 'text-white hover:text-emerald-400' : 'text-zinc-900 hover:text-emerald-600'
-                                    }`}
-                                  >
-                                    {spotifyData.song}
-                                  </a>
-                                  <p className={`text-[11px] truncate mt-0.5 font-medium ${
-                                    isDarkMode ? 'text-zinc-300' : 'text-zinc-700'
-                                  }`}>
-                                    by {spotifyData.artist}
-                                  </p>
-                                  <p className={`text-[9px] truncate mt-0.5 italic font-light ${
-                                    isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                                  }`}>
-                                    on {spotifyData.album || 'Spotify'}
-                                  </p>
-                                </div>
-                              </div>
-
-                              {/* Progress bar */}
-                              <div className="space-y-1">
-                                <div className={`relative w-full h-1 rounded-full overflow-hidden ${
-                                  isDarkMode ? 'bg-zinc-800' : 'bg-zinc-200'
-                                }`}>
-                                  <div
-                                    className="absolute left-0 top-0 h-full bg-emerald-500 rounded-full transition-all duration-1000 ease-linear"
-                                    style={{ width: `${spotifyProgress.percentage}%` }}
-                                  />
-                                </div>
-                                <div className={`flex justify-between text-[9px] font-mono font-bold select-none ${
-                                  isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                                }`}>
-                                  <span>{formatTime(spotifyProgress.elapsed)}</span>
-                                  <span>{formatTime(spotifyProgress.duration)}</span>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-
-                          {/* 2. GAME RICH PRESENCE (IF PLAYING) */}
-                          {activeGame && (
-                            <div className={`p-4 rounded-xl border space-y-3 shadow-xs ${
-                              isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
-                            }`}>
-                              <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
-                                isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                              }`}>
-                                PLAYING A GAME
-                              </h4>
-                              <div className="flex space-x-3.5">
-                                {activeGame.assets?.large_image ? (
-                                  <div className="relative shrink-0">
-                                    <img
-                                      src={getGameImageUrl(activeGame.application_id, activeGame.assets.large_image)}
-                                      alt="Game Asset"
-                                      className="w-14 h-14 rounded-lg object-cover border border-zinc-500/20 shadow-inner"
-                                    />
-                                    {activeGame.assets.small_image && (
-                                      <img
-                                        src={getGameImageUrl(activeGame.application_id, activeGame.assets.small_image)}
-                                        alt="Small Game Asset"
-                                        className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-[3px] object-cover ${
-                                          isDarkMode ? 'border-zinc-900' : 'border-white'
-                                        }`}
-                                      />
-                                    )}
-                                  </div>
-                                ) : (
-                                  <div className={`w-14 h-14 rounded-lg flex items-center justify-center shrink-0 border ${
-                                    isDarkMode ? 'bg-zinc-800/80 text-white/40 border-zinc-700' : 'bg-zinc-100 text-zinc-400 border-zinc-200'
-                                  }`}>
-                                    <Tv className="w-6 h-6" />
-                                  </div>
-                                )}
-
-                                <div className="flex-1 min-w-0 space-y-0.5">
-                                  <h5 className={`text-xs font-bold font-sans truncate ${
-                                    isDarkMode ? 'text-white' : 'text-zinc-900'
-                                  }`}>
-                                    {activeGame.name}
-                                  </h5>
-                                  {activeGame.details && (
-                                    <p className={`text-[11px] truncate font-medium ${
-                                      isDarkMode ? 'text-zinc-300' : 'text-zinc-700'
-                                    }`}>
-                                      {activeGame.details}
-                                    </p>
-                                  )}
-                                  {activeGame.state && (
-                                    <p className={`text-[11px] truncate font-light ${
-                                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                                    }`}>
-                                      {activeGame.state}
-                                    </p>
-                                  )}
-                                  {activeGame.timestamps?.start && (
-                                    <p className={`text-[10px] font-mono font-medium mt-1 ${
-                                      isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                                    }`}>
-                                      elapsed: {formatElapsedTime(activeGame.timestamps.start)}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })()}
 
                     {/* ROLE CLUSTERS */}
                       <div className="space-y-2">
@@ -1030,160 +602,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         </div>
                       </div>
 
-                    {/* SYNC CUSTOM DISCORD ID PANEL */}
-                    <div className={`p-4 rounded-xl border space-y-2.5 shadow-xs ${
-                      isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
-                    }`}>
-                      <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono flex items-center gap-1 ${
-                        isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-                      }`}>
-                        <Settings className="w-3 h-3" />
-                        SYNC YOUR REAL DISCORD
-                      </h4>
-                      <p className={`text-[10px] leading-relaxed font-sans ${
-                        isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-                      }`}>
-                        Are you on Lanyard? Enter your Discord snowflake ID to sync your live status, game, and Spotify with this card!
-                      </p>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          placeholder="Enter Discord User ID..."
-                          value={customDiscordId}
-                          onChange={(e) => setCustomDiscordId(e.target.value)}
-                          className={`text-xs px-2.5 py-2 rounded-lg border font-mono transition-colors flex-1 ${
-                            isDarkMode
-                              ? 'bg-black/40 text-white placeholder-zinc-500 border-zinc-800 focus:outline-none focus:border-indigo-500'
-                              : 'bg-zinc-100 text-zinc-900 placeholder-zinc-400 border-zinc-300 focus:outline-none focus:border-indigo-500'
-                          }`}
-                        />
-                        <button
-                          onClick={() => handleSyncCustomId(customDiscordId)}
-                          disabled={isSyncingId}
-                          className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-zinc-600 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition-all cursor-pointer shrink-0 shadow-md"
-                        >
-                          {isSyncingId ? 'Syncing...' : 'Link'}
-                        </button>
-                      </div>
-                      {syncFeedback && (
-                        <p className={`text-[9px] font-mono ${syncFeedback.includes('successfully') || syncFeedback.includes('connected') ? 'text-emerald-400' : 'text-amber-500'
-                          } mt-1 font-semibold`}>
-                          {syncFeedback}
-                        </p>
-                      )}
-                    </div>
-                  </>
-                )}
-
-                {/* 2. MUTUAL SERVERS TAB */}
-                {activeTab === 'servers' && (
-                  <div className={`p-4 rounded-xl border space-y-4 shadow-xs flex-1 flex flex-col justify-between max-h-[360px] overflow-y-auto ${
-                    isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
-                  }`}>
-                    <div className="space-y-3.5">
-                      <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
-                        isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                      }`}>
-                        MUTUAL SERVERS ({MUTUAL_SERVERS.length})
-                      </h4>
-                      <div className="space-y-3">
-                        {MUTUAL_SERVERS.map(server => (
-                          <div key={server.id} className={`flex items-center justify-between group/server p-2 rounded-lg transition-colors ${
-                            isDarkMode ? 'hover:bg-zinc-800/60' : 'hover:bg-zinc-100'
-                          }`}>
-                            <div className="flex items-center space-x-3.5">
-                              <div className={`w-9 h-9 rounded-full ${server.bgColor} flex items-center justify-center text-white font-mono text-xs font-black shadow-md border border-zinc-500/20 relative group-hover/server:scale-105 transition-transform duration-200 select-none`}>
-                                {server.icon}
-                                <span className={`absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border-2 ${
-                                  isDarkMode ? 'border-zinc-900' : 'border-white'
-                                }`} />
-                              </div>
-                              <div>
-                                <h5 className={`text-xs font-bold transition-colors ${
-                                  isDarkMode ? 'text-white group-hover/server:text-indigo-400' : 'text-zinc-900 group-hover/server:text-indigo-600'
-                                }`}>
-                                  {server.name}
-                                </h5>
-                                <p className={`text-[9px] font-mono mt-0.5 font-bold ${
-                                  isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                                }`}>
-                                  {server.members} members
-                                </p>
-                              </div>
-                            </div>
-                            <a
-                              href={server.inviteUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={`text-[9px] font-sans font-bold px-3 py-1.5 rounded-md transition-all duration-150 shadow-xs ${
-                                isDarkMode ? 'bg-zinc-800 hover:bg-indigo-600 hover:text-white text-zinc-200' : 'bg-zinc-200 hover:bg-indigo-600 hover:text-white text-zinc-800'
-                              }`}
-                            >
-                              JOIN
-                            </a>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* 3. MUTUAL FRIENDS TAB */}
-                {activeTab === 'friends' && (
-                  <div className={`p-4 rounded-xl border space-y-4 shadow-xs flex-1 flex flex-col justify-between max-h-[360px] overflow-y-auto ${
-                    isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
-                  }`}>
-                    <div className="space-y-3.5">
-                      <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
-                        isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                      }`}>
-                        MUTUAL FRIENDS ({MEMBERS_DATA.filter(m => m.id !== selectedMember.id).length})
-                      </h4>
-                      <div className="grid grid-cols-1 gap-2.5">
-                        {MEMBERS_DATA
-                          .filter(friend => friend.id !== selectedMember.id)
-                          .map(friend => (
-                            <button
-                              key={friend.id}
-                              onClick={() => {
-                                setSelectedMember(friend);
-                              }}
-                              className={`w-full flex items-center justify-between p-2.5 rounded-lg border transition-all duration-200 text-left group/friend cursor-pointer shadow-xs ${
-                                isDarkMode
-                                  ? 'bg-zinc-950/40 hover:bg-zinc-900 border-zinc-800/60 hover:border-indigo-500/40'
-                                  : 'bg-zinc-50 hover:bg-zinc-100 border-zinc-200 hover:border-indigo-500/40'
-                              }`}
-                            >
-                              <div className="flex items-center space-x-3.5 min-w-0">
-                                <div className="relative shrink-0">
-                                  <img
-                                    src={friend.avatar}
-                                    alt={friend.name}
-                                    className="w-8 h-8 rounded-full object-cover border border-zinc-500/20"
-                                  />
-                                </div>
-                                <div className="min-w-0">
-                                  <h5 className={`text-xs font-bold transition-colors truncate ${
-                                    isDarkMode ? 'text-white group-hover/friend:text-indigo-400' : 'text-zinc-900 group-hover/friend:text-indigo-600'
-                                  }`}>
-                                    {friend.name}
-                                  </h5>
-                                  <p className={`text-[9px] font-mono truncate mt-0.5 ${
-                                    isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                                  }`}>
-                                    @{friend.discordTag}
-                                  </p>
-                                </div>
-                              </div>
-                              <span className="text-[8px] font-mono text-zinc-500 uppercase font-black tracking-widest opacity-0 group-hover/friend:opacity-100 transition-opacity duration-150">
-                                LINK // VIEW
-                              </span>
-                            </button>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
+                </>
 
               </div>
 
@@ -1201,7 +620,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       : 'bg-zinc-100 text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200 border-zinc-200'
                   }`}
                 >
-                  <span className="font-bold">Message @{lanyardData?.discord_user ? lanyardData.discord_user.username : selectedMember.discordTag}</span>
+                  <span className="font-bold">Message @{selectedMember.discordTag}</span>
                   <span className={`text-[8px] px-1.5 py-0.5 rounded font-mono font-bold tracking-widest uppercase border shadow-xs ${
                     isDarkMode ? 'bg-zinc-800 text-zinc-300 border-zinc-700' : 'bg-white text-zinc-800 border-zinc-300'
                   }`}>DM</span>
