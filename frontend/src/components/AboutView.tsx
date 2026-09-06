@@ -610,9 +610,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 >>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   return (
     <div className="relative min-h-screen py-24 pt-32 transition-colors duration-300">
-      
+
       {/* Background ambient glow matching theme */}
-      <div 
+      <div
         style={{
           background: `radial-gradient(ellipse at 50% 0%, rgba(250, 95, 136, 0.08) 0%, transparent 70%)`
         }}
@@ -626,20 +626,18 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             "About us" / "About the company"
         ======================================================== */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span 
+          <span
             style={{ color: CHERRY_PINK }}
             className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
           >
             About us
           </span>
-          <h1 className={`text-4xl md:text-6xl font-sans tracking-tight font-extrabold ${
-            isDarkMode ? 'text-white' : 'text-zinc-900'
-          }`}>
+          <h1 className={`text-4xl md:text-6xl font-sans tracking-tight font-extrabold ${isDarkMode ? 'text-white' : 'text-zinc-900'
+            }`}>
             About the company
           </h1>
-          <p className={`text-sm md:text-base font-light ${
-            isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-          } max-w-xl mx-auto`}>
+          <p className={`text-sm md:text-base font-light ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+            } max-w-xl mx-auto`}>
             Learn more about the company and the team behind it.
           </p>
         </div>
@@ -649,22 +647,21 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             Split 2-Column: Left Abstract Art, Right Journey + 2x2 Stats
         ======================================================== */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          
+
           {/* Left: Atmospheric Art / Gradient Canvas */}
           <div className="lg:col-span-6">
-            <div className={`relative aspect-[4/3] sm:aspect-square w-full rounded-2xl overflow-hidden border shadow-2xl ${
-              isDarkMode ? 'border-white/10 shadow-black/40' : 'border-zinc-200 shadow-xl'
-            }`}>
+            <div className={`relative aspect-[4/3] sm:aspect-square w-full rounded-2xl overflow-hidden border shadow-2xl ${isDarkMode ? 'border-white/10 shadow-black/40' : 'border-zinc-200 shadow-xl'
+              }`}>
               <img
                 src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop"
                 alt="Ineffable Creative Journey"
                 className="w-full h-full object-cover select-none"
               />
-              <div 
+              <div
                 style={{
                   background: `linear-gradient(135deg, rgba(250, 95, 136, 0.25) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(59, 130, 246, 0.3) 100%)`
                 }}
-                className="absolute inset-0 mix-blend-overlay" 
+                className="absolute inset-0 mix-blend-overlay"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
             </div>
@@ -673,25 +670,24 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
           {/* Right: Copy & 2x2 Big Numbers Grid */}
           <div className="lg:col-span-6 space-y-8">
             <div className="space-y-3">
-              <span 
+              <span
                 style={{ color: CHERRY_PINK }}
                 className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
               >
                 Build better, launch faster
               </span>
-              <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold leading-tight ${
-                isDarkMode ? 'text-white' : 'text-zinc-900'
-              }`}>
+              <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold leading-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
+                }`}>
                 We’re only just getting started on our journey
               </h2>
             </div>
 
             {/* 2x2 Stats Grid with Website Cherry Pink Accent */}
             <div className="grid grid-cols-2 gap-x-8 gap-y-10 pt-4">
-              
+
               {/* Stat 1 */}
               <div className="space-y-1.5">
-                <div 
+                <div
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
@@ -704,7 +700,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* Stat 2 */}
               <div className="space-y-1.5">
-                <div 
+                <div
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
@@ -716,18 +712,18 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               </div>
 
 <<<<<<< HEAD
-              {/* Stat 3 */}
-              <div className="space-y-1.5">
-                <div 
-                  style={{ color: CHERRY_PINK }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
-                >
-                  10k
-                </div>
-                <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  Global downloads
-                </div>
-              </div>
+  {/* Stat 3 */ }
+  <div className="space-y-1.5">
+    <div
+      style={{ color: CHERRY_PINK }}
+      className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
+    >
+      10k
+    </div>
+    <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+      Global downloads
+    </div>
+  </div>
 =======
                           {/* Avatar Section */}
                           <div className="relative shrink-0">
@@ -740,29 +736,29 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                           </div>
 >>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 
-              {/* Stat 4 */}
-              <div className="space-y-1.5">
-                <div 
-                  style={{ color: CHERRY_PINK }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
-                >
-                  200+
-                </div>
-                <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  5-star reviews
-                </div>
-              </div>
+  {/* Stat 4 */ }
+  <div className="space-y-1.5">
+    <div
+      style={{ color: CHERRY_PINK }}
+      className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
+    >
+      200+
+    </div>
+    <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+      5-star reviews
+    </div>
+  </div>
 
-            </div>
-          </div>
+            </div >
+          </div >
 
-        </div>
+        </div >
 
-        {/* ========================================================
+{/* ========================================================
             SECTION 3: BRAND / LOGOS SOCIAL PROOF BAR
             "From startups to the world's largest companies."
         ======================================================== */}
-        <div className="space-y-8 pt-6 pb-6 border-y border-white/5">
+  < div className = "space-y-8 pt-6 pb-6 border-y border-white/5" >
           <p className={`text-center text-xs md:text-sm font-light ${
             isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
           }`}>
@@ -818,360 +814,348 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             </div>
 
           </div>
-        </div>
+        </div >
 
-        {/* ========================================================
+{/* ========================================================
             SECTION 4: MEET OUR TEAM (EXACT FORMAT FROM SCREENSHOT)
             With Circular Avatars, Centered Bios, Social Icons,
             and Huge Openable Profile on Click
         ======================================================== */}
-        <div id="meet-our-team-section" className="space-y-12">
-          
-          <div className="text-center max-w-3xl mx-auto space-y-4">
-            <span 
-              style={{ color: CHERRY_PINK }}
-              className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
-            >
-              We're hiring!
-            </span>
-            <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${
-              isDarkMode ? 'text-white' : 'text-zinc-900'
-            }`}>
-              Meet our team
-            </h2>
-            <p className={`text-sm md:text-base font-light leading-relaxed ${
-              isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-            } max-w-2xl mx-auto`}>
-              Our philosophy is simple—hire a team of diverse, passionate people and foster a culture that empowers you to do your best work.
-            </p>
+  < div id = "meet-our-team-section" className = "space-y-12" >
 
-            {/* Action Buttons: About us & Open positions (opens Google Form link) */}
-            <div className="flex items-center justify-center gap-3 pt-2">
-              <button
-                onClick={scrollToTop}
-                className={`px-5 py-2 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer border ${
-                  isDarkMode
-                    ? 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10 hover:text-white'
-                    : 'bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-50'
-                }`}
-              >
-                About us
-              </button>
+    <div className="text-center max-w-3xl mx-auto space-y-4">
+      <span
+        style={{ color: CHERRY_PINK }}
+        className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
+      >
+        We're hiring!
+      </span>
+      <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${isDarkMode ? 'text-white' : 'text-zinc-900'
+        }`}>
+        Meet our team
+      </h2>
+      <p className={`text-sm md:text-base font-light leading-relaxed ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+        } max-w-2xl mx-auto`}>
+        Our philosophy is simple—hire a team of diverse, passionate people and foster a culture that empowers you to do your best work.
+      </p>
 
-              <a
-                id="join-our-team-btn"
-                href={GOOGLE_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ backgroundColor: CHERRY_PINK }}
-                className="px-5 py-2 rounded-lg text-xs md:text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer shadow-md shadow-[#FA5F88]/20 inline-flex items-center space-x-1.5"
-              >
-                <span>Open positions</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
+      {/* Action Buttons: About us & Open positions (opens Google Form link) */}
+      <div className="flex items-center justify-center gap-3 pt-2">
+        <button
+          onClick={scrollToTop}
+          className={`px-5 py-2 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer border ${isDarkMode
+              ? 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10 hover:text-white'
+              : 'bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-50'
+            }`}
+        >
+          About us
+        </button>
 
-          {/* Role Filter Tabs Strip */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 border-b border-white/5 pb-6">
-            {FILTER_TABS.map((tab) => {
-              const count = tab.id === 'all'
-                ? ALL_TEAM_MEMBERS.length
-                : ALL_TEAM_MEMBERS.filter(m => m.category === tab.id).length;
-              const isActive = selectedCategory === tab.id;
+        <a
+          id="join-our-team-btn"
+          href={GOOGLE_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ backgroundColor: CHERRY_PINK }}
+          className="px-5 py-2 rounded-lg text-xs md:text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer shadow-md shadow-[#FA5F88]/20 inline-flex items-center space-x-1.5"
+        >
+          <span>Open positions</span>
+          <ArrowUpRight className="w-3.5 h-3.5" />
+        </a>
+      </div>
+    </div>
 
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setSelectedCategory(tab.id)}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer border ${
-                    isActive
-                      ? 'bg-[#FA5F88] text-white border-[#FA5F88] shadow-md shadow-[#FA5F88]/20 font-bold'
-                      : isDarkMode
-                        ? 'bg-black/30 border-white/10 text-zinc-400 hover:text-white hover:bg-white/5'
-                        : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:text-zinc-900'
-                  }`}
-                >
-                  {tab.label} ({count})
-                </button>
-              );
-            })}
-          </div>
+{/* Role Filter Tabs Strip */ }
+<div className="flex flex-wrap items-center justify-center gap-2 pt-2 border-b border-white/5 pb-6">
+  {FILTER_TABS.map((tab) => {
+    const count = tab.id === 'all'
+      ? ALL_TEAM_MEMBERS.length
+      : ALL_TEAM_MEMBERS.filter(m => m.category === tab.id).length;
+    const isActive = selectedCategory === tab.id;
 
-          {/* 4-Column Team Card Grid matching the exact screenshot layout */}
-          <motion.div 
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredMembers.map((member) => (
-                <motion.div
-                  key={member.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
-                  onClick={() => setSelectedMember(member)}
-                  className={`p-6 sm:p-7 rounded-2xl border flex flex-col items-center text-center transition-all duration-300 group cursor-pointer ${
-                    isDarkMode 
-                      ? 'bg-black/30 backdrop-blur-md border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/50 hover:shadow-xl hover:shadow-[#FA5F88]/10' 
-                      : 'bg-white/70 backdrop-blur-md border-zinc-200/80 hover:bg-white hover:border-[#FA5F88]/50 hover:shadow-lg'
-                  } hover:-translate-y-1`}
-                >
-                  {/* Circular Avatar */}
-                  <div className="relative mb-5">
-                    <img
-                      src={member.avatar}
-                      alt={member.name}
-                      referrerPolicy="no-referrer"
-                      className={`w-20 h-20 rounded-full object-cover ring-2 transition-transform duration-300 group-hover:scale-105 shadow-md ${
-                        isDarkMode ? 'ring-white/10' : 'ring-zinc-200'
-                      }`}
-                    />
-                    {/* Active pulse status */}
-                    <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-zinc-950 rounded-full" />
-                  </div>
+    return (
+      <button
+        key={tab.id}
+        onClick={() => setSelectedCategory(tab.id)}
+        className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer border ${isActive
+            ? 'bg-[#FA5F88] text-white border-[#FA5F88] shadow-md shadow-[#FA5F88]/20 font-bold'
+            : isDarkMode
+              ? 'bg-black/30 border-white/10 text-zinc-400 hover:text-white hover:bg-white/5'
+              : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:text-zinc-900'
+          }`}
+      >
+        {tab.label} ({count})
+      </button>
+    );
+  })}
+</div>
 
-                  {/* Name */}
-                  <h3 className={`text-base font-bold font-sans tracking-tight ${
-                    isDarkMode ? 'text-white' : 'text-zinc-900'
-                  }`}>
-                    {member.name}
-                  </h3>
-
-                  {/* Role in Signature Cherry Pink Theme */}
-                  <span 
-                    style={{ color: CHERRY_PINK }}
-                    className="text-xs font-semibold mt-1 mb-2.5 block"
-                  >
-                    {member.role}
-                  </span>
-
-                  {/* Short Bio */}
-                  <p className={`text-xs font-light leading-relaxed flex-grow mb-6 ${
-                    isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-                  } line-clamp-3 min-h-[3rem]`}>
-                    {member.bio}
-                  </p>
-
-                  {/* Social Media Links: Twitter/X, LinkedIn, Web (matching screenshot) */}
-                  <div 
-                    className="flex items-center space-x-3 pt-4 border-t border-white/5 w-full justify-center"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <a
-                      href={member.twitter || 'https://x.com'}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`p-1.5 rounded-md transition-colors ${
-                        isDarkMode 
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                      }`}
-                      aria-label={`${member.name} on X`}
-                    >
-                      <XIcon className="w-4 h-4" />
-                    </a>
-                    
-                    <a
-                      href={member.linkedin || 'https://linkedin.com'}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`p-1.5 rounded-md transition-colors ${
-                        isDarkMode 
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                      }`}
-                      aria-label={`${member.name} on LinkedIn`}
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
-
-                    <a
-                      href={member.website || 'https://ineffable.store'}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`p-1.5 rounded-md transition-colors ${
-                        isDarkMode 
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                      }`}
-                      aria-label={`${member.name} website`}
-                    >
-                      <Globe className="w-4 h-4" />
-                    </a>
-                  </div>
-
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-
+{/* 4-Column Team Card Grid matching the exact screenshot layout */ }
+<motion.div
+  layout
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+>
+  <AnimatePresence mode="popLayout">
+    {filteredMembers.map((member) => (
+      <motion.div
+        key={member.id}
+        layout
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.3 }}
+        onClick={() => setSelectedMember(member)}
+        className={`p-6 sm:p-7 rounded-2xl border flex flex-col items-center text-center transition-all duration-300 group cursor-pointer ${isDarkMode
+            ? 'bg-black/30 backdrop-blur-md border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/50 hover:shadow-xl hover:shadow-[#FA5F88]/10'
+            : 'bg-white/70 backdrop-blur-md border-zinc-200/80 hover:bg-white hover:border-[#FA5F88]/50 hover:shadow-lg'
+          } hover:-translate-y-1`}
+      >
+        {/* Circular Avatar */}
+        <div className="relative mb-5">
+          <img
+            src={member.avatar}
+            alt={member.name}
+            referrerPolicy="no-referrer"
+            className={`w-20 h-20 rounded-full object-cover ring-2 transition-transform duration-300 group-hover:scale-105 shadow-md ${isDarkMode ? 'ring-white/10' : 'ring-zinc-200'
+              }`}
+          />
+          {/* Active pulse status */}
+          <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-zinc-950 rounded-full" />
         </div>
 
-      </div>
+        {/* Name */}
+        <h3 className={`text-base font-bold font-sans tracking-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
+          }`}>
+          {member.name}
+        </h3>
 
-      {/* ========================================================
+        {/* Role in Signature Cherry Pink Theme */}
+        <span
+          style={{ color: CHERRY_PINK }}
+          className="text-xs font-semibold mt-1 mb-2.5 block"
+        >
+          {member.role}
+        </span>
+
+        {/* Short Bio */}
+        <p className={`text-xs font-light leading-relaxed flex-grow mb-6 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+          } line-clamp-3 min-h-[3rem]`}>
+          {member.bio}
+        </p>
+
+        {/* Social Media Links: Twitter/X, LinkedIn, Web (matching screenshot) */}
+        <div
+          className="flex items-center space-x-3 pt-4 border-t border-white/5 w-full justify-center"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <a
+            href={member.twitter || 'https://x.com'}
+            target="_blank"
+            rel="noreferrer"
+            className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+              }`}
+            aria-label={`${member.name} on X`}
+          >
+            <XIcon className="w-4 h-4" />
+          </a>
+
+          <a
+            href={member.linkedin || 'https://linkedin.com'}
+            target="_blank"
+            rel="noreferrer"
+            className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+              }`}
+            aria-label={`${member.name} on LinkedIn`}
+          >
+            <Linkedin className="w-4 h-4" />
+          </a>
+
+          <a
+            href={member.website || 'https://ineffable.store'}
+            target="_blank"
+            rel="noreferrer"
+            className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+              }`}
+            aria-label={`${member.name} website`}
+          >
+            <Globe className="w-4 h-4" />
+          </a>
+        </div>
+
+      </motion.div>
+    ))}
+  </AnimatePresence>
+</motion.div>
+
+        </div >
+
+      </div >
+
+  {/* ========================================================
           HUGE EXPANSIVE PROFILE MODAL WITH SMOOTH ANIMATION
       ======================================================== */}
-      <AnimatePresence>
-        {selectedMember && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            
-            {/* Smooth animated backdrop blur */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => setSelectedMember(null)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer z-[100]"
-            />
+  <AnimatePresence>
+{
+  selectedMember && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+
+      {/* Smooth animated backdrop blur */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        onClick={() => setSelectedMember(null)}
+        className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer z-[100]"
+      />
 
 <<<<<<< HEAD
-            {/* Huge Profile Card */}
+  {/* Huge Profile Card */ }
 =======
             {/* Static profile card */}
 >>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
+  <motion.div
+    initial={{ opacity: 0, scale: 0.92, y: 20 }}
+    animate={{ opacity: 1, scale: 1, y: 0 }}
 <<<<<<< HEAD
-              exit={{ opacity: 0, scale: 0.94, y: 15 }}
-              transition={{ type: "spring", damping: 28, stiffness: 280 }}
-              className={`relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl my-auto ${
-=======
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className={`relative w-full max-w-[620px] max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl transition-all duration-300 ${
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-                isDarkMode
-                  ? 'bg-zinc-950/95 text-zinc-100 border-white/10 shadow-black/90'
-                  : 'bg-white/95 text-zinc-900 border-zinc-200 shadow-2xl'
-              }`}
-            >
+    exit={{ opacity: 0, scale: 0.94, y: 15 }}
+    transition={{ type: "spring", damping: 28, stiffness: 280 }}
+    className={`relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl my-auto ${isDarkMode
+        ? 'bg-zinc-950/95 text-zinc-100 border-white/10 shadow-black/90'
+        : 'bg-white/95 text-zinc-900 border-zinc-200 shadow-2xl'
+      }`}
+  >
 <<<<<<< HEAD
-              
-              {/* Modal Top Mini Bar */}
-              <div className={`px-4 py-2 border-b flex items-center justify-between shrink-0 select-none ${
-                isDarkMode ? 'bg-zinc-900/60 border-white/10 text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-600'
-              }`}>
-                <div className="flex items-center space-x-2">
-                  <span className="w-2 h-2 rounded-full bg-[#FA5F88] animate-pulse" />
-                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase">
-                    INEFFABLE // MEMBER IDENTITY CARD
-                  </span>
-                </div>
-                
-                {/* Close Button */}
-                <button
-                  onClick={() => setSelectedMember(null)}
-                  className="p-1 rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
-                  aria-label="Close"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+
+  {/* Modal Top Mini Bar */ }
+  <div className={`px-4 py-2 border-b flex items-center justify-between shrink-0 select-none ${isDarkMode ? 'bg-zinc-900/60 border-white/10 text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-600'
+    }`}>
+    <div className="flex items-center space-x-2">
+      <span className="w-2 h-2 rounded-full bg-[#FA5F88] animate-pulse" />
+      <span className="font-mono text-[9px] font-bold tracking-widest uppercase">
+        INEFFABLE // MEMBER IDENTITY CARD
+      </span>
+    </div>
+
+    {/* Close Button */}
+    <button
+      onClick={() => setSelectedMember(null)}
+      className="p-1 rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+      aria-label="Close"
+    >
+      <X className="w-4 h-4" />
+    </button>
 =======
               {/* PROFILE HEADER */}
-              <div className={`px-3.5 py-2 border-b flex items-center justify-between shrink-0 select-none backdrop-blur-md ${
-                isDarkMode ? 'bg-zinc-900/80 border-zinc-800/80 text-zinc-400' : 'bg-zinc-100/90 border-zinc-200/80 text-zinc-600'
-              }`}>
-                <span className="font-mono text-[8px] font-black tracking-widest uppercase">
-                  INEFFABLE // PROFILE
-                </span>
+    <div className={`px-3.5 py-2 border-b flex items-center justify-between shrink-0 select-none backdrop-blur-md ${isDarkMode ? 'bg-zinc-900/80 border-zinc-800/80 text-zinc-400' : 'bg-zinc-100/90 border-zinc-200/80 text-zinc-600'
+      }`}>
+      <span className="font-mono text-[8px] font-black tracking-widest uppercase">
+        INEFFABLE // PROFILE
+      </span>
 >>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-              </div>
+    </div>
 
-              {/* Huge Banner Header */}
-              <div className="relative h-44 sm:h-52 w-full overflow-hidden shrink-0 bg-zinc-900">
-                <img
-                  src={selectedMember.banner}
-                  alt="Discord Banner"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover select-none pointer-events-none filter brightness-90 transition-transform duration-700 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+    {/* Huge Banner Header */}
+    <div className="relative h-44 sm:h-52 w-full overflow-hidden shrink-0 bg-zinc-900">
+      <img
+        src={selectedMember.banner}
+        alt="Discord Banner"
+        referrerPolicy="no-referrer"
+        className="w-full h-full object-cover select-none pointer-events-none filter brightness-90 transition-transform duration-700 hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
 <<<<<<< HEAD
-                {/* Glassy Tag Badge Overlay on Banner */}
-                <div className="absolute bottom-3 left-4 flex items-center space-x-2 font-mono text-[10px] tracking-wider px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md text-white shadow-lg">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <span className="font-bold">@{selectedMember.discordTag}</span>
+  {/* Glassy Tag Badge Overlay on Banner */ }
+  <div className="absolute bottom-3 left-4 flex items-center space-x-2 font-mono text-[10px] tracking-wider px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md text-white shadow-lg">
+    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+    <span className="font-bold">@{selectedMember.discordTag}</span>
 =======
                 {/* Glassy Badge Overlay for Discord Name on the Banner */}
-                <div className={`absolute bottom-2.5 left-2.5 font-mono text-[9px] tracking-[0.2em] px-3 py-1.5 rounded-md border flex items-center space-x-2 shadow-lg backdrop-blur-md ${
-                  isDarkMode ? 'bg-black/80 text-white border-zinc-800/80' : 'bg-white/90 text-zinc-950 border-zinc-200/80'
-                }`}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                  <span className="font-extrabold">
-                    {selectedMember.discordTag}
-                  </span>
+    <div className={`absolute bottom-2.5 left-2.5 font-mono text-[9px] tracking-[0.2em] px-3 py-1.5 rounded-md border flex items-center space-x-2 shadow-lg backdrop-blur-md ${isDarkMode ? 'bg-black/80 text-white border-zinc-800/80' : 'bg-white/90 text-zinc-950 border-zinc-200/80'
+      }`}>
+      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+      <span className="font-extrabold">
+        {selectedMember.discordTag}
+      </span>
 >>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-                </div>
+    </div>
 
-                <div className="absolute top-3 right-4 font-mono text-[9px] tracking-widest px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-zinc-300">
-                  {selectedMember.since}
-                </div>
-              </div>
+    <div className="absolute top-3 right-4 font-mono text-[9px] tracking-widest px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-zinc-300">
+      {selectedMember.since}
+    </div>
+  </div>
 
-              {/* Overlapping Avatar & Badges Section */}
-              <div className={`relative px-6 pb-2 shrink-0 ${isDarkMode ? 'bg-zinc-950/90' : 'bg-white/90'}`}>
-                
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-3">
-                  
-                  {/* Avatar with glowing ring */}
-                  <div className="relative">
-                    <img
-                      src={selectedMember.avatar}
+  {/* Overlapping Avatar & Badges Section */ }
+  <div className={`relative px-6 pb-2 shrink-0 ${isDarkMode ? 'bg-zinc-950/90' : 'bg-white/90'}`}>
+
+    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-3">
+
+      {/* Avatar with glowing ring */}
+      <div className="relative">
+        <img
+          src={selectedMember.avatar}
 <<<<<<< HEAD
-                      alt={selectedMember.name}
+          alt={selectedMember.name}
 =======
                       alt="Avatar"
 >>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-                      referrerPolicy="no-referrer"
-                      className={`w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover ring-4 shadow-2xl ${
-                        isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
-                      }`}
-                    />
+          referrerPolicy="no-referrer"
+          className={`w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover ring-4 shadow-2xl ${isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
+            }`}
+        />
 <<<<<<< HEAD
-                    <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-3 border-zinc-950 rounded-full" />
+  <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-3 border-zinc-950 rounded-full" />
 =======
 >>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-                  </div>
+                  </div >
 
-                  {/* Discord Staff & Achievement Badges */}
-                  <div className="flex items-center space-x-2 pt-2">
-                    {selectedMember.badges.includes('staff') && (
-                      <div className="p-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 flex items-center space-x-1.5" title="Ineffable Staff">
-                        <Shield className="w-4 h-4" />
-                        <span className="text-[10px] font-mono font-bold hidden sm:inline">STAFF</span>
-                      </div>
-                    )}
-                    {selectedMember.badges.includes('developer') && (
-                      <div className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-400 flex items-center space-x-1.5" title="Core Developer">
-                        <Code className="w-4 h-4" />
-                        <span className="text-[10px] font-mono font-bold hidden sm:inline">DEVELOPER</span>
-                      </div>
-                    )}
-                    {selectedMember.badges.includes('booster') && (
-                      <div className="p-2 rounded-xl border border-pink-500/30 bg-pink-500/10 text-pink-400 flex items-center space-x-1.5" title="Server Booster">
-                        <Flame className="w-4 h-4" />
-                        <span className="text-[10px] font-mono font-bold hidden sm:inline">BOOSTER</span>
-                      </div>
-                    )}
-                    {selectedMember.badges.includes('supporter') && (
-                      <div className="p-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-400 flex items-center space-x-1.5" title="Tier Supporter">
-                        <Award className="w-4 h-4" />
-                        <span className="text-[10px] font-mono font-bold hidden sm:inline">SUPPORTER</span>
-                      </div>
-                    )}
-                  </div>
+    {/* Discord Staff & Achievement Badges */ }
+    < div className = "flex items-center space-x-2 pt-2" >
+    {
+      selectedMember.badges.includes('staff') && (
+        <div className="p-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 flex items-center space-x-1.5" title="Ineffable Staff">
+          <Shield className="w-4 h-4" />
+          <span className="text-[10px] font-mono font-bold hidden sm:inline">STAFF</span>
+        </div>
+      )
+    }
+  {
+    selectedMember.badges.includes('developer') && (
+      <div className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-400 flex items-center space-x-1.5" title="Core Developer">
+        <Code className="w-4 h-4" />
+        <span className="text-[10px] font-mono font-bold hidden sm:inline">DEVELOPER</span>
+      </div>
+    )
+  }
+  {
+    selectedMember.badges.includes('booster') && (
+      <div className="p-2 rounded-xl border border-pink-500/30 bg-pink-500/10 text-pink-400 flex items-center space-x-1.5" title="Server Booster">
+        <Flame className="w-4 h-4" />
+        <span className="text-[10px] font-mono font-bold hidden sm:inline">BOOSTER</span>
+      </div>
+    )
+  }
+  {
+    selectedMember.badges.includes('supporter') && (
+      <div className="p-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-400 flex items-center space-x-1.5" title="Tier Supporter">
+        <Award className="w-4 h-4" />
+        <span className="text-[10px] font-mono font-bold hidden sm:inline">SUPPORTER</span>
+      </div>
+    )
+  }
+                  </div >
 
-                </div>
+                </div >
 
-                {/* Name & Role */}
-                <div className="space-y-1">
+    {/* Name & Role */ }
+    < div className = "space-y-1" >
                   <div className="flex items-center space-x-3">
                     <h2 className={`text-2xl sm:text-3xl font-bold font-sans tracking-tight ${
                       isDarkMode ? 'text-white' : 'text-zinc-900'
@@ -1188,16 +1172,16 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   <p className="font-mono text-xs text-zinc-400">
                     @{selectedMember.discordTag}
                   </p>
-                </div>
+                </div >
 
-              </div>
+              </div >
 
 <<<<<<< HEAD
-              {/* Body Content */}
-              <div className="p-6 space-y-6 overflow-y-auto max-h-[40vh]">
-                
-                {/* About Me / Bio */}
-                <div className="space-y-2">
+    {/* Body Content */ }
+    < div className = "p-6 space-y-6 overflow-y-auto max-h-[40vh]" >
+
+      {/* About Me / Bio */ }
+      < div className = "space-y-2" >
                   <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-400">
                     ABOUT ME
                   </h4>
@@ -1206,12 +1190,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   }`}>
                     {selectedMember.bio}
                   </p>
-                </div>
+                </div >
 
-                {/* Role Sector details */}
-                <div className={`p-4 rounded-2xl border ${
-                  isDarkMode ? 'bg-zinc-900/40 border-white/5' : 'bg-zinc-50 border-zinc-200'
-                } space-y-3`}>
+    {/* Role Sector details */ }
+    < div className = {`p-4 rounded-2xl border ${isDarkMode ? 'bg-zinc-900/40 border-white/5' : 'bg-zinc-50 border-zinc-200'
+      } space-y-3`
+}>
                   <div className="flex items-center justify-between text-xs font-mono">
                     <span className="text-zinc-400">OFFICIAL SECTOR:</span>
                     <span style={{ color: CHERRY_PINK }} className="font-bold uppercase tracking-wider">
@@ -1231,10 +1215,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       <span>Active in Community</span>
                     </span>
                   </div>
-                </div>
+                </div >
 
-                {/* Action Controls */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+  {/* Action Controls */ }
+  < div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2" >
                   <button
                     onClick={() => handleCopyDiscord(selectedMember.discordTag)}
                     className={`py-3 px-4 rounded-xl border text-xs font-mono font-bold tracking-wider transition-all flex items-center justify-center space-x-2 cursor-pointer ${
@@ -1269,7 +1253,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     <span>CONNECT ON DISCORD</span>
                     <ExternalLink className="w-3 h-3 ml-1 opacity-75" />
                   </a>
-                </div>
+                </div >
 =======
               {/* DISCORD INNER CONTAINER PANEL */}
               <div className={`flex-1 overflow-y-auto scrollbar-none p-4 pt-3 pb-3 flex flex-col space-y-4 ${
@@ -1323,13 +1307,13 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 </>
 >>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 
-              </div>
+              </div >
 
-            </motion.div>
-          </div>
+            </motion.div >
+          </div >
         )}
-      </AnimatePresence>
+      </AnimatePresence >
 
-    </div>
+    </div >
   );
 };
