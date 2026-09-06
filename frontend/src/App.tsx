@@ -19,6 +19,8 @@ import { GamingView } from './components/GamingView';
 import { AboutView } from './components/AboutView';
 import { PaymentSuccessView } from './components/PaymentSuccessView';
 import { PaymentFailedView } from './components/PaymentFailedView';
+import { LoadingScreen } from './components/LoadingScreen';
+import { PageReloader } from './components/PageReloader';
 import { getThemeStyles } from './lib/theme';
 import { Disc, Sparkles, MapPin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
 import { supabase, isSupabaseConfigured, getDBWishlist, toggleDBWishlist, getDBCart, saveDBCart, getWebsiteSettings } from './lib/supabase';
@@ -79,6 +81,23 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
   const [websiteSettings, setWebsiteSettings] = useState<Record<string, any>>({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleReload = (type: 'soft' | 'hard' = 'soft') => {
+    if (type === 'hard') {
+      window.location.reload();
+      return;
+    }
+    setIsLoading(true);
+    // Re-fetch website settings
+    getWebsiteSettings()
+      .then((settings) => {
+        if (settings) setWebsiteSettings(settings);
+      })
+      .catch((err) => console.error('Error re-fetching website settings:', err));
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleToggleDarkMode = () => {
     setIsThemeTransitioning(true);
@@ -501,6 +520,7 @@ export default function App() {
         cartCount={totalCartCount}
         currentUser={currentUser}
         websiteSettings={websiteSettings}
+        onReload={() => handleReload('soft')}
       />
 
       {/* Main Render Views */}
@@ -693,6 +713,22 @@ export default function App() {
 
         </div>
       </footer>
+
+      {/* Atmospheric Loading Screen */}
+      <LoadingScreen
+        isLoading={isLoading}
+        onFinished={() => setIsLoading(false)}
+        activeAtmosphere={atmosphere}
+        isDarkMode={isDarkMode}
+        websiteSettings={websiteSettings}
+      />
+
+      {/* Floating System Page Reloader */}
+      <PageReloader
+        onReload={handleReload}
+        activeAtmosphere={atmosphere}
+        isDarkMode={isDarkMode}
+      />
     </div>
   );
 }

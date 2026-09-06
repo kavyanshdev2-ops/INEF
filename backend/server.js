@@ -45,7 +45,7 @@ app.post('/api/v1/payment/create-order', async (req, res) => {
   if (!customerName || !customerEmail || !customerPhone || !userId || !Array.isArray(cartItems) || cartItems.length === 0) {
     return res.status(400).json({ message: 'Customer details and cart items are required.' });
   }
-  if (!/^\\d{10}$/.test(String(customerPhone).replace(/\\D/g, ''))) {
+  if (!/^\d{10}$/.test(String(customerPhone).replace(/\D/g, ''))) {
     return res.status(400).json({ message: 'Enter a valid 10-digit phone number.' });
   }
 
@@ -76,7 +76,7 @@ app.post('/api/v1/payment/create-order', async (req, res) => {
           customer_id: String(userId),
           customer_name: String(customerName).slice(0, 100),
           customer_email: String(customerEmail).slice(0, 150),
-          customer_phone: String(customerPhone).replace(/\\D/g, '')
+          customer_phone: String(customerPhone).replace(/\D/g, '')
         },
         order_meta: {
           return_url: `${frontendUrl}/payment/success?order_id={order_id}`,

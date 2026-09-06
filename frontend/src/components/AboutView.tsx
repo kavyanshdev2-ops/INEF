@@ -10,7 +10,6 @@ import {
   ArrowUpRight,
   Shield,
   Code,
-<<<<<<< HEAD
   Flame,
   Award,
   X,
@@ -20,12 +19,6 @@ import {
   MessageSquare,
   Linkedin,
   Globe
-=======
-  Sparkles,
-  X,
-  Award,
-  Flame,
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 } from 'lucide-react';
 
 const CHERRY_PINK = '#FA5F88';
@@ -45,7 +38,6 @@ export interface TeamMemberProfile {
   category: 'founder' | 'cofounder' | 'owner' | 'coowner' | 'executive';
   avatar: string;
   banner: string;
-<<<<<<< HEAD
   discordTag: string;
   discordId?: string;
   badges: ('staff' | 'developer' | 'booster' | 'supporter')[];
@@ -54,9 +46,6 @@ export interface TeamMemberProfile {
   twitter?: string;
   linkedin?: string;
   website?: string;
-=======
-  badges: ('staff' | 'booster' | 'developer' | 'supporter')[];
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 }
 
 // Custom X icon (Twitter)
@@ -74,7 +63,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Founder',
     category: 'founder',
     avatar: akarshAvatar,
-<<<<<<< HEAD
     banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'akarsh.arya',
     discordId: '121287965938483200',
@@ -84,10 +72,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'booster', 'supporter'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
 
   // ================= CO FOUNDER =================
@@ -99,27 +83,18 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'Harshil_joshi',
-<<<<<<< HEAD
     badges: ['staff', 'developer'],
     bio: 'Co-founder driving strategic planning, operations, and ecosystem expansion.',
     since: 'EST. 2020 // CO-FOUNDING',
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    role: 'Co founder',
-    category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'developer'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'abhi',
     name: 'Abhi',
     role: 'Co founder',
     category: 'cofounder',
-<<<<<<< HEAD
     avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'abhi_quantum',
@@ -129,32 +104,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'developer'],
-  },
-  {
-    id: 'ankeet',
-    name: 'Ankeet',
-    discordTag: 'ankeet_primal',
-    role: 'Owner',
-    category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'booster'],
-  },
-  {
-    id: 'kavyansh',
-    name: 'Kavyansh',
-    discordTag: 'kavyanshshakya',
-    discordId: '241214041187123201',
-    role: 'Owner',
-    category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'developer', 'booster'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'rajarshi',
@@ -164,7 +113,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'rajarshi_mukherjee',
-<<<<<<< HEAD
     badges: ['staff', 'supporter'],
     bio: 'Co-founder leading brand strategy, public relations, and partnerships.',
     since: 'EST. 2021 // STRATEGY',
@@ -219,20 +167,12 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    role: 'Co founder',
-    category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'supporter'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'vixen',
     name: 'Vixen',
     role: 'Owner',
     category: 'owner',
-<<<<<<< HEAD
     avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'vixen_cyber',
@@ -242,11 +182,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'booster'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'kiwi',
@@ -256,7 +191,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=400&auto=format&fit=crop',
     banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'kiwi_slice',
-<<<<<<< HEAD
     badges: ['staff', 'booster'],
     bio: 'Owner supervising event planning, member coordination, and custom perks.',
     since: 'EST. 2022 // DIRECTOR',
@@ -295,28 +229,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    role: 'Owner',
-    category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'booster'],
-  },
-  {
-    id: 'Nancy',
-    name: 'Nancy',
-    discordTag: 'aw.nvm',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: nancyAvatar,
-    banner: '',
-    badges: ['staff'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'aris',
     name: 'Aris',
-<<<<<<< HEAD
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
@@ -347,34 +263,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
   {
     id: 'lavanya',
     name: 'Lavanya Singh',
-=======
-    discordTag: 'aris_couture',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'supporter'],
-  },
-  {
-    id: 'viiiv',
-    name: 'Viiv',
-    discordTag: 'viiiv_3',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'supporter', 'booster'],
-  },
-  {
-    id: 'lavanya-singh',
-    name: 'Lavanya Singh',
-    discordTag: 'lavanya_singh',
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
     role: 'Co owner',
     category: 'coowner',
     avatar: lavanyaAvatar,
     banner: lavanyaBanner,
-<<<<<<< HEAD
     discordTag: 'lavanya_singh',
     badges: ['staff', 'supporter'],
     bio: 'Co-owner and community moderator facilitating member onboarding.',
@@ -382,34 +274,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    badges: ['staff'],
-  },
-  {
-    id: 'aarav',
-    name: 'Aarav',
-    discordTag: 'aarav',
-    role: 'Co founder',
-    category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'developer'],
-  },
-  {
-    id: 'poppy',
-    name: 'Poppy',
-    discordTag: 'poppy',
-    role: 'Owner',
-    category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'supporter'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'aloo-puri',
     name: 'Aloo Puri',
-<<<<<<< HEAD
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
@@ -421,19 +289,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    discordTag: 'aloo_puri',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'supporter'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'machi',
     name: 'Machi',
-<<<<<<< HEAD
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
@@ -462,29 +321,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    discordTag: 'machi',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'booster'],
-  },
-  {
-    id: 'kiara',
-    name: 'Kiara',
-    discordTag: 'kiara',
-    role: 'Executive',
-    category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'supporter'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'wayne',
     name: 'Wayne',
-<<<<<<< HEAD
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop',
@@ -496,19 +336,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    discordTag: 'wayne',
-    role: 'Executive',
-    category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'developer'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'kaz',
     name: 'Kaz',
-<<<<<<< HEAD
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&auto=format&fit=crop',
@@ -520,19 +351,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    discordTag: 'kaz',
-    role: 'Executive',
-    category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'supporter'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   },
   {
     id: 'ritwik',
     name: 'Ritwik',
-<<<<<<< HEAD
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop',
@@ -544,14 +366,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
-=======
-    discordTag: 'ritwik',
-    role: 'Executive',
-    category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop',
-    badges: ['staff', 'booster'],
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   }
 ];
 
@@ -565,15 +379,9 @@ const FILTER_TABS: { id: MemberCategory; label: string }[] = [
 ];
 
 export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMode }) => {
-<<<<<<< HEAD
   const [selectedCategory, setSelectedCategory] = useState<MemberCategory>('all');
   const [selectedMember, setSelectedMember] = useState<TeamMemberProfile | null>(null);
   const [copiedId, setCopiedId] = useState(false);
-=======
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'founder' | 'co-founder' | 'owner' | 'co-owner' | 'techlead' | 'executive' | 'admin'>('all');
-  const [hoveredMember, setHoveredMember] = useState<string | null>(null);
-  const [selectedMember, setSelectedMember] = useState<MemberProfile | null>(null);
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
 
   const themeStyles = getThemeStyles(activeAtmosphere.colorTheme, isDarkMode);
 
@@ -593,26 +401,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
     return member.category === selectedCategory;
   });
 
-<<<<<<< HEAD
-=======
-  // Category counts
-  const categoryCounts = {
-    all: MEMBERS_DATA.length,
-    founder: MEMBERS_DATA.filter(m => m.category === 'founder').length,
-    cofounder: MEMBERS_DATA.filter(m => m.category === 'cofounder').length,
-    owner: MEMBERS_DATA.filter(m => m.category === 'owner').length,
-    coowner: MEMBERS_DATA.filter(m => m.category === 'coowner').length,
-    techlead: MEMBERS_DATA.filter(m => m.category === 'techlead').length,
-    executive: MEMBERS_DATA.filter(m => m.category === 'executive').length,
-    admin: MEMBERS_DATA.filter(m => m.category === 'admin').length,
-  };
-
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
   return (
     <div className="relative min-h-screen py-24 pt-32 transition-colors duration-300">
-
+      
       {/* Background ambient glow matching theme */}
-      <div
+      <div 
         style={{
           background: `radial-gradient(ellipse at 50% 0%, rgba(250, 95, 136, 0.08) 0%, transparent 70%)`
         }}
@@ -626,18 +419,20 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             "About us" / "About the company"
         ======================================================== */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span
+          <span 
             style={{ color: CHERRY_PINK }}
             className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
           >
             About us
           </span>
-          <h1 className={`text-4xl md:text-6xl font-sans tracking-tight font-extrabold ${isDarkMode ? 'text-white' : 'text-zinc-900'
-            }`}>
+          <h1 className={`text-4xl md:text-6xl font-sans tracking-tight font-extrabold ${
+            isDarkMode ? 'text-white' : 'text-zinc-900'
+          }`}>
             About the company
           </h1>
-          <p className={`text-sm md:text-base font-light ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-            } max-w-xl mx-auto`}>
+          <p className={`text-sm md:text-base font-light ${
+            isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+          } max-w-xl mx-auto`}>
             Learn more about the company and the team behind it.
           </p>
         </div>
@@ -647,21 +442,22 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             Split 2-Column: Left Abstract Art, Right Journey + 2x2 Stats
         ======================================================== */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-
+          
           {/* Left: Atmospheric Art / Gradient Canvas */}
           <div className="lg:col-span-6">
-            <div className={`relative aspect-[4/3] sm:aspect-square w-full rounded-2xl overflow-hidden border shadow-2xl ${isDarkMode ? 'border-white/10 shadow-black/40' : 'border-zinc-200 shadow-xl'
-              }`}>
+            <div className={`relative aspect-[4/3] sm:aspect-square w-full rounded-2xl overflow-hidden border shadow-2xl ${
+              isDarkMode ? 'border-white/10 shadow-black/40' : 'border-zinc-200 shadow-xl'
+            }`}>
               <img
                 src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop"
                 alt="Ineffable Creative Journey"
                 className="w-full h-full object-cover select-none"
               />
-              <div
+              <div 
                 style={{
                   background: `linear-gradient(135deg, rgba(250, 95, 136, 0.25) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(59, 130, 246, 0.3) 100%)`
                 }}
-                className="absolute inset-0 mix-blend-overlay"
+                className="absolute inset-0 mix-blend-overlay" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
             </div>
@@ -670,24 +466,25 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
           {/* Right: Copy & 2x2 Big Numbers Grid */}
           <div className="lg:col-span-6 space-y-8">
             <div className="space-y-3">
-              <span
+              <span 
                 style={{ color: CHERRY_PINK }}
                 className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
               >
                 Build better, launch faster
               </span>
-              <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold leading-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
-                }`}>
+              <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold leading-tight ${
+                isDarkMode ? 'text-white' : 'text-zinc-900'
+              }`}>
                 We’re only just getting started on our journey
               </h2>
             </div>
 
             {/* 2x2 Stats Grid with Website Cherry Pink Accent */}
             <div className="grid grid-cols-2 gap-x-8 gap-y-10 pt-4">
-
+              
               {/* Stat 1 */}
               <div className="space-y-1.5">
-                <div
+                <div 
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
@@ -700,7 +497,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* Stat 2 */}
               <div className="space-y-1.5">
-                <div
+                <div 
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
@@ -711,54 +508,42 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 </div>
               </div>
 
-<<<<<<< HEAD
-  {/* Stat 3 */ }
-  <div className="space-y-1.5">
-    <div
-      style={{ color: CHERRY_PINK }}
-      className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
-    >
-      10k
-    </div>
-    <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-      Global downloads
-    </div>
-  </div>
-=======
-                          {/* Avatar Section */}
-                          <div className="relative shrink-0">
-                            <img
-                              src={member.avatar}
-                              alt={member.name}
-                              referrerPolicy="no-referrer"
-                              className="w-10 h-10 object-cover rounded-md border border-zinc-500/15"
-                            />
-                          </div>
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
+              {/* Stat 3 */}
+              <div className="space-y-1.5">
+                <div 
+                  style={{ color: CHERRY_PINK }}
+                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
+                >
+                  10k
+                </div>
+                <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                  Global downloads
+                </div>
+              </div>
 
-  {/* Stat 4 */ }
-  <div className="space-y-1.5">
-    <div
-      style={{ color: CHERRY_PINK }}
-      className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
-    >
-      200+
-    </div>
-    <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-      5-star reviews
-    </div>
-  </div>
+              {/* Stat 4 */}
+              <div className="space-y-1.5">
+                <div 
+                  style={{ color: CHERRY_PINK }}
+                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
+                >
+                  200+
+                </div>
+                <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                  5-star reviews
+                </div>
+              </div>
 
-            </div >
-          </div >
+            </div>
+          </div>
 
-        </div >
+        </div>
 
-{/* ========================================================
+        {/* ========================================================
             SECTION 3: BRAND / LOGOS SOCIAL PROOF BAR
             "From startups to the world's largest companies."
         ======================================================== */}
-  < div className = "space-y-8 pt-6 pb-6 border-y border-white/5" >
+        <div className="space-y-8 pt-6 pb-6 border-y border-white/5">
           <p className={`text-center text-xs md:text-sm font-light ${
             isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
           }`}>
@@ -814,348 +599,322 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             </div>
 
           </div>
-        </div >
+        </div>
 
-{/* ========================================================
+        {/* ========================================================
             SECTION 4: MEET OUR TEAM (EXACT FORMAT FROM SCREENSHOT)
             With Circular Avatars, Centered Bios, Social Icons,
             and Huge Openable Profile on Click
         ======================================================== */}
-  < div id = "meet-our-team-section" className = "space-y-12" >
+        <div id="meet-our-team-section" className="space-y-12">
+          
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <span 
+              style={{ color: CHERRY_PINK }}
+              className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
+            >
+              We're hiring!
+            </span>
+            <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${
+              isDarkMode ? 'text-white' : 'text-zinc-900'
+            }`}>
+              Meet our team
+            </h2>
+            <p className={`text-sm md:text-base font-light leading-relaxed ${
+              isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+            } max-w-2xl mx-auto`}>
+              Our philosophy is simple—hire a team of diverse, passionate people and foster a culture that empowers you to do your best work.
+            </p>
 
-    <div className="text-center max-w-3xl mx-auto space-y-4">
-      <span
-        style={{ color: CHERRY_PINK }}
-        className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
-      >
-        We're hiring!
-      </span>
-      <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${isDarkMode ? 'text-white' : 'text-zinc-900'
-        }`}>
-        Meet our team
-      </h2>
-      <p className={`text-sm md:text-base font-light leading-relaxed ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-        } max-w-2xl mx-auto`}>
-        Our philosophy is simple—hire a team of diverse, passionate people and foster a culture that empowers you to do your best work.
-      </p>
+            {/* Action Buttons: About us & Open positions (opens Google Form link) */}
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={scrollToTop}
+                className={`px-5 py-2 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer border ${
+                  isDarkMode
+                    ? 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10 hover:text-white'
+                    : 'bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-50'
+                }`}
+              >
+                About us
+              </button>
 
-      {/* Action Buttons: About us & Open positions (opens Google Form link) */}
-      <div className="flex items-center justify-center gap-3 pt-2">
-        <button
-          onClick={scrollToTop}
-          className={`px-5 py-2 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer border ${isDarkMode
-              ? 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10 hover:text-white'
-              : 'bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-50'
-            }`}
-        >
-          About us
-        </button>
+              <a
+                id="join-our-team-btn"
+                href={GOOGLE_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ backgroundColor: CHERRY_PINK }}
+                className="px-5 py-2 rounded-lg text-xs md:text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer shadow-md shadow-[#FA5F88]/20 inline-flex items-center space-x-1.5"
+              >
+                <span>Open positions</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
 
-        <a
-          id="join-our-team-btn"
-          href={GOOGLE_FORM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ backgroundColor: CHERRY_PINK }}
-          className="px-5 py-2 rounded-lg text-xs md:text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer shadow-md shadow-[#FA5F88]/20 inline-flex items-center space-x-1.5"
-        >
-          <span>Open positions</span>
-          <ArrowUpRight className="w-3.5 h-3.5" />
-        </a>
+          {/* Role Filter Tabs Strip */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 border-b border-white/5 pb-6">
+            {FILTER_TABS.map((tab) => {
+              const count = tab.id === 'all'
+                ? ALL_TEAM_MEMBERS.length
+                : ALL_TEAM_MEMBERS.filter(m => m.category === tab.id).length;
+              const isActive = selectedCategory === tab.id;
+
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedCategory(tab.id)}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer border ${
+                    isActive
+                      ? 'bg-[#FA5F88] text-white border-[#FA5F88] shadow-md shadow-[#FA5F88]/20 font-bold'
+                      : isDarkMode
+                        ? 'bg-black/30 border-white/10 text-zinc-400 hover:text-white hover:bg-white/5'
+                        : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:text-zinc-900'
+                  }`}
+                >
+                  {tab.label} ({count})
+                </button>
+              );
+            })}
+          </div>
+
+          {/* 4-Column Team Card Grid matching the exact screenshot layout */}
+          <motion.div 
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredMembers.map((member) => (
+                <motion.div
+                  key={member.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => setSelectedMember(member)}
+                  className={`p-6 sm:p-7 rounded-2xl border flex flex-col items-center text-center transition-all duration-300 group cursor-pointer ${
+                    isDarkMode 
+                      ? 'bg-black/30 backdrop-blur-md border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/50 hover:shadow-xl hover:shadow-[#FA5F88]/10' 
+                      : 'bg-white/70 backdrop-blur-md border-zinc-200/80 hover:bg-white hover:border-[#FA5F88]/50 hover:shadow-lg'
+                  } hover:-translate-y-1`}
+                >
+                  {/* Circular Avatar */}
+                  <div className="relative mb-5">
+                    <img
+                      src={member.avatar}
+                      alt={member.name}
+                      referrerPolicy="no-referrer"
+                      className={`w-20 h-20 rounded-full object-cover ring-2 transition-transform duration-300 group-hover:scale-105 shadow-md ${
+                        isDarkMode ? 'ring-white/10' : 'ring-zinc-200'
+                      }`}
+                    />
+                    {/* Active pulse status */}
+                    <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-zinc-950 rounded-full" />
+                  </div>
+
+                  {/* Name */}
+                  <h3 className={`text-base font-bold font-sans tracking-tight ${
+                    isDarkMode ? 'text-white' : 'text-zinc-900'
+                  }`}>
+                    {member.name}
+                  </h3>
+
+                  {/* Role in Signature Cherry Pink Theme */}
+                  <span 
+                    style={{ color: CHERRY_PINK }}
+                    className="text-xs font-semibold mt-1 mb-2.5 block"
+                  >
+                    {member.role}
+                  </span>
+
+                  {/* Short Bio */}
+                  <p className={`text-xs font-light leading-relaxed flex-grow mb-6 ${
+                    isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+                  } line-clamp-3 min-h-[3rem]`}>
+                    {member.bio}
+                  </p>
+
+                  {/* Social Media Links: Twitter/X, LinkedIn, Web (matching screenshot) */}
+                  <div 
+                    className="flex items-center space-x-3 pt-4 border-t border-white/5 w-full justify-center"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <a
+                      href={member.twitter || 'https://x.com'}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`p-1.5 rounded-md transition-colors ${
+                        isDarkMode 
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
+                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                      }`}
+                      aria-label={`${member.name} on X`}
+                    >
+                      <XIcon className="w-4 h-4" />
+                    </a>
+                    
+                    <a
+                      href={member.linkedin || 'https://linkedin.com'}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`p-1.5 rounded-md transition-colors ${
+                        isDarkMode 
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
+                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                      }`}
+                      aria-label={`${member.name} on LinkedIn`}
+                    >
+                      <Linkedin className="w-4 h-4" />
+                    </a>
+
+                    <a
+                      href={member.website || 'https://ineffable.store'}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`p-1.5 rounded-md transition-colors ${
+                        isDarkMode 
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
+                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                      }`}
+                      aria-label={`${member.name} website`}
+                    >
+                      <Globe className="w-4 h-4" />
+                    </a>
+                  </div>
+
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+        </div>
+
       </div>
-    </div>
 
-{/* Role Filter Tabs Strip */ }
-<div className="flex flex-wrap items-center justify-center gap-2 pt-2 border-b border-white/5 pb-6">
-  {FILTER_TABS.map((tab) => {
-    const count = tab.id === 'all'
-      ? ALL_TEAM_MEMBERS.length
-      : ALL_TEAM_MEMBERS.filter(m => m.category === tab.id).length;
-    const isActive = selectedCategory === tab.id;
-
-    return (
-      <button
-        key={tab.id}
-        onClick={() => setSelectedCategory(tab.id)}
-        className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer border ${isActive
-            ? 'bg-[#FA5F88] text-white border-[#FA5F88] shadow-md shadow-[#FA5F88]/20 font-bold'
-            : isDarkMode
-              ? 'bg-black/30 border-white/10 text-zinc-400 hover:text-white hover:bg-white/5'
-              : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:text-zinc-900'
-          }`}
-      >
-        {tab.label} ({count})
-      </button>
-    );
-  })}
-</div>
-
-{/* 4-Column Team Card Grid matching the exact screenshot layout */ }
-<motion.div
-  layout
-  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
->
-  <AnimatePresence mode="popLayout">
-    {filteredMembers.map((member) => (
-      <motion.div
-        key={member.id}
-        layout
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        transition={{ duration: 0.3 }}
-        onClick={() => setSelectedMember(member)}
-        className={`p-6 sm:p-7 rounded-2xl border flex flex-col items-center text-center transition-all duration-300 group cursor-pointer ${isDarkMode
-            ? 'bg-black/30 backdrop-blur-md border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/50 hover:shadow-xl hover:shadow-[#FA5F88]/10'
-            : 'bg-white/70 backdrop-blur-md border-zinc-200/80 hover:bg-white hover:border-[#FA5F88]/50 hover:shadow-lg'
-          } hover:-translate-y-1`}
-      >
-        {/* Circular Avatar */}
-        <div className="relative mb-5">
-          <img
-            src={member.avatar}
-            alt={member.name}
-            referrerPolicy="no-referrer"
-            className={`w-20 h-20 rounded-full object-cover ring-2 transition-transform duration-300 group-hover:scale-105 shadow-md ${isDarkMode ? 'ring-white/10' : 'ring-zinc-200'
-              }`}
-          />
-          {/* Active pulse status */}
-          <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-zinc-950 rounded-full" />
-        </div>
-
-        {/* Name */}
-        <h3 className={`text-base font-bold font-sans tracking-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
-          }`}>
-          {member.name}
-        </h3>
-
-        {/* Role in Signature Cherry Pink Theme */}
-        <span
-          style={{ color: CHERRY_PINK }}
-          className="text-xs font-semibold mt-1 mb-2.5 block"
-        >
-          {member.role}
-        </span>
-
-        {/* Short Bio */}
-        <p className={`text-xs font-light leading-relaxed flex-grow mb-6 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-          } line-clamp-3 min-h-[3rem]`}>
-          {member.bio}
-        </p>
-
-        {/* Social Media Links: Twitter/X, LinkedIn, Web (matching screenshot) */}
-        <div
-          className="flex items-center space-x-3 pt-4 border-t border-white/5 w-full justify-center"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <a
-            href={member.twitter || 'https://x.com'}
-            target="_blank"
-            rel="noreferrer"
-            className={`p-1.5 rounded-md transition-colors ${isDarkMode
-                ? 'text-zinc-400 hover:text-white hover:bg-white/5'
-                : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-              }`}
-            aria-label={`${member.name} on X`}
-          >
-            <XIcon className="w-4 h-4" />
-          </a>
-
-          <a
-            href={member.linkedin || 'https://linkedin.com'}
-            target="_blank"
-            rel="noreferrer"
-            className={`p-1.5 rounded-md transition-colors ${isDarkMode
-                ? 'text-zinc-400 hover:text-white hover:bg-white/5'
-                : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-              }`}
-            aria-label={`${member.name} on LinkedIn`}
-          >
-            <Linkedin className="w-4 h-4" />
-          </a>
-
-          <a
-            href={member.website || 'https://ineffable.store'}
-            target="_blank"
-            rel="noreferrer"
-            className={`p-1.5 rounded-md transition-colors ${isDarkMode
-                ? 'text-zinc-400 hover:text-white hover:bg-white/5'
-                : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-              }`}
-            aria-label={`${member.name} website`}
-          >
-            <Globe className="w-4 h-4" />
-          </a>
-        </div>
-
-      </motion.div>
-    ))}
-  </AnimatePresence>
-</motion.div>
-
-        </div >
-
-      </div >
-
-  {/* ========================================================
+      {/* ========================================================
           HUGE EXPANSIVE PROFILE MODAL WITH SMOOTH ANIMATION
       ======================================================== */}
-  <AnimatePresence>
-{
-  selectedMember && (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <AnimatePresence>
+        {selectedMember && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+            
+            {/* Smooth animated backdrop blur */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setSelectedMember(null)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer z-[100]"
+            />
 
-      {/* Smooth animated backdrop blur */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.25 }}
-        onClick={() => setSelectedMember(null)}
-        className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer z-[100]"
-      />
+            {/* Huge Profile Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 15 }}
+              transition={{ type: "spring", damping: 28, stiffness: 280 }}
+              className={`relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl my-auto ${
+                isDarkMode
+                  ? 'bg-zinc-950/95 text-zinc-100 border-white/10 shadow-black/90'
+                  : 'bg-white/95 text-zinc-900 border-zinc-200 shadow-2xl'
+              }`}
+            >
+              
+              {/* Modal Top Mini Bar */}
+              <div className={`px-4 py-2 border-b flex items-center justify-between shrink-0 select-none ${
+                isDarkMode ? 'bg-zinc-900/60 border-white/10 text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-600'
+              }`}>
+                <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 rounded-full bg-[#FA5F88] animate-pulse" />
+                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase">
+                    INEFFABLE // MEMBER IDENTITY CARD
+                  </span>
+                </div>
+                
+                {/* Close Button */}
+                <button
+                  onClick={() => setSelectedMember(null)}
+                  className="p-1 rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  aria-label="Close"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
 
-<<<<<<< HEAD
-  {/* Huge Profile Card */ }
-=======
-            {/* Static profile card */}
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-  <motion.div
-    initial={{ opacity: 0, scale: 0.92, y: 20 }}
-    animate={{ opacity: 1, scale: 1, y: 0 }}
-<<<<<<< HEAD
-    exit={{ opacity: 0, scale: 0.94, y: 15 }}
-    transition={{ type: "spring", damping: 28, stiffness: 280 }}
-    className={`relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl my-auto ${isDarkMode
-        ? 'bg-zinc-950/95 text-zinc-100 border-white/10 shadow-black/90'
-        : 'bg-white/95 text-zinc-900 border-zinc-200 shadow-2xl'
-      }`}
-  >
-<<<<<<< HEAD
+              {/* Huge Banner Header */}
+              <div className="relative h-44 sm:h-52 w-full overflow-hidden shrink-0 bg-zinc-900">
+                <img
+                  src={selectedMember.banner}
+                  alt="Discord Banner"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover select-none pointer-events-none filter brightness-90 transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-  {/* Modal Top Mini Bar */ }
-  <div className={`px-4 py-2 border-b flex items-center justify-between shrink-0 select-none ${isDarkMode ? 'bg-zinc-900/60 border-white/10 text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-600'
-    }`}>
-    <div className="flex items-center space-x-2">
-      <span className="w-2 h-2 rounded-full bg-[#FA5F88] animate-pulse" />
-      <span className="font-mono text-[9px] font-bold tracking-widest uppercase">
-        INEFFABLE // MEMBER IDENTITY CARD
-      </span>
-    </div>
+                {/* Glassy Tag Badge Overlay on Banner */}
+                <div className="absolute bottom-3 left-4 flex items-center space-x-2 font-mono text-[10px] tracking-wider px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md text-white shadow-lg">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <span className="font-bold">@{selectedMember.discordTag}</span>
+                </div>
 
-    {/* Close Button */}
-    <button
-      onClick={() => setSelectedMember(null)}
-      className="p-1 rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
-      aria-label="Close"
-    >
-      <X className="w-4 h-4" />
-    </button>
-=======
-              {/* PROFILE HEADER */}
-    <div className={`px-3.5 py-2 border-b flex items-center justify-between shrink-0 select-none backdrop-blur-md ${isDarkMode ? 'bg-zinc-900/80 border-zinc-800/80 text-zinc-400' : 'bg-zinc-100/90 border-zinc-200/80 text-zinc-600'
-      }`}>
-      <span className="font-mono text-[8px] font-black tracking-widest uppercase">
-        INEFFABLE // PROFILE
-      </span>
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-    </div>
+                <div className="absolute top-3 right-4 font-mono text-[9px] tracking-widest px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-zinc-300">
+                  {selectedMember.since}
+                </div>
+              </div>
 
-    {/* Huge Banner Header */}
-    <div className="relative h-44 sm:h-52 w-full overflow-hidden shrink-0 bg-zinc-900">
-      <img
-        src={selectedMember.banner}
-        alt="Discord Banner"
-        referrerPolicy="no-referrer"
-        className="w-full h-full object-cover select-none pointer-events-none filter brightness-90 transition-transform duration-700 hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              {/* Overlapping Avatar & Badges Section */}
+              <div className={`relative px-6 pb-2 shrink-0 ${isDarkMode ? 'bg-zinc-950/90' : 'bg-white/90'}`}>
+                
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-3">
+                  
+                  {/* Avatar with glowing ring */}
+                  <div className="relative">
+                    <img
+                      src={selectedMember.avatar}
+                      alt={selectedMember.name}
+                      referrerPolicy="no-referrer"
+                      className={`w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover ring-4 shadow-2xl ${
+                        isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
+                      }`}
+                    />
+                    <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-3 border-zinc-950 rounded-full" />
+                  </div>
 
-<<<<<<< HEAD
-  {/* Glassy Tag Badge Overlay on Banner */ }
-  <div className="absolute bottom-3 left-4 flex items-center space-x-2 font-mono text-[10px] tracking-wider px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md text-white shadow-lg">
-    <span className="w-2 h-2 rounded-full bg-emerald-400" />
-    <span className="font-bold">@{selectedMember.discordTag}</span>
-=======
-                {/* Glassy Badge Overlay for Discord Name on the Banner */}
-    <div className={`absolute bottom-2.5 left-2.5 font-mono text-[9px] tracking-[0.2em] px-3 py-1.5 rounded-md border flex items-center space-x-2 shadow-lg backdrop-blur-md ${isDarkMode ? 'bg-black/80 text-white border-zinc-800/80' : 'bg-white/90 text-zinc-950 border-zinc-200/80'
-      }`}>
-      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-      <span className="font-extrabold">
-        {selectedMember.discordTag}
-      </span>
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-    </div>
+                  {/* Discord Staff & Achievement Badges */}
+                  <div className="flex items-center space-x-2 pt-2">
+                    {selectedMember.badges.includes('staff') && (
+                      <div className="p-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 flex items-center space-x-1.5" title="Ineffable Staff">
+                        <Shield className="w-4 h-4" />
+                        <span className="text-[10px] font-mono font-bold hidden sm:inline">STAFF</span>
+                      </div>
+                    )}
+                    {selectedMember.badges.includes('developer') && (
+                      <div className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-400 flex items-center space-x-1.5" title="Core Developer">
+                        <Code className="w-4 h-4" />
+                        <span className="text-[10px] font-mono font-bold hidden sm:inline">DEVELOPER</span>
+                      </div>
+                    )}
+                    {selectedMember.badges.includes('booster') && (
+                      <div className="p-2 rounded-xl border border-pink-500/30 bg-pink-500/10 text-pink-400 flex items-center space-x-1.5" title="Server Booster">
+                        <Flame className="w-4 h-4" />
+                        <span className="text-[10px] font-mono font-bold hidden sm:inline">BOOSTER</span>
+                      </div>
+                    )}
+                    {selectedMember.badges.includes('supporter') && (
+                      <div className="p-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-400 flex items-center space-x-1.5" title="Tier Supporter">
+                        <Award className="w-4 h-4" />
+                        <span className="text-[10px] font-mono font-bold hidden sm:inline">SUPPORTER</span>
+                      </div>
+                    )}
+                  </div>
 
-    <div className="absolute top-3 right-4 font-mono text-[9px] tracking-widest px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-zinc-300">
-      {selectedMember.since}
-    </div>
-  </div>
+                </div>
 
-  {/* Overlapping Avatar & Badges Section */ }
-  <div className={`relative px-6 pb-2 shrink-0 ${isDarkMode ? 'bg-zinc-950/90' : 'bg-white/90'}`}>
-
-    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-3">
-
-      {/* Avatar with glowing ring */}
-      <div className="relative">
-        <img
-          src={selectedMember.avatar}
-<<<<<<< HEAD
-          alt={selectedMember.name}
-=======
-                      alt="Avatar"
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-          referrerPolicy="no-referrer"
-          className={`w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover ring-4 shadow-2xl ${isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
-            }`}
-        />
-<<<<<<< HEAD
-  <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-3 border-zinc-950 rounded-full" />
-=======
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-                  </div >
-
-    {/* Discord Staff & Achievement Badges */ }
-    < div className = "flex items-center space-x-2 pt-2" >
-    {
-      selectedMember.badges.includes('staff') && (
-        <div className="p-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 flex items-center space-x-1.5" title="Ineffable Staff">
-          <Shield className="w-4 h-4" />
-          <span className="text-[10px] font-mono font-bold hidden sm:inline">STAFF</span>
-        </div>
-      )
-    }
-  {
-    selectedMember.badges.includes('developer') && (
-      <div className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-400 flex items-center space-x-1.5" title="Core Developer">
-        <Code className="w-4 h-4" />
-        <span className="text-[10px] font-mono font-bold hidden sm:inline">DEVELOPER</span>
-      </div>
-    )
-  }
-  {
-    selectedMember.badges.includes('booster') && (
-      <div className="p-2 rounded-xl border border-pink-500/30 bg-pink-500/10 text-pink-400 flex items-center space-x-1.5" title="Server Booster">
-        <Flame className="w-4 h-4" />
-        <span className="text-[10px] font-mono font-bold hidden sm:inline">BOOSTER</span>
-      </div>
-    )
-  }
-  {
-    selectedMember.badges.includes('supporter') && (
-      <div className="p-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-400 flex items-center space-x-1.5" title="Tier Supporter">
-        <Award className="w-4 h-4" />
-        <span className="text-[10px] font-mono font-bold hidden sm:inline">SUPPORTER</span>
-      </div>
-    )
-  }
-                  </div >
-
-                </div >
-
-    {/* Name & Role */ }
-    < div className = "space-y-1" >
+                {/* Name & Role */}
+                <div className="space-y-1">
                   <div className="flex items-center space-x-3">
                     <h2 className={`text-2xl sm:text-3xl font-bold font-sans tracking-tight ${
                       isDarkMode ? 'text-white' : 'text-zinc-900'
@@ -1172,16 +931,15 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   <p className="font-mono text-xs text-zinc-400">
                     @{selectedMember.discordTag}
                   </p>
-                </div >
+                </div>
 
-              </div >
+              </div>
 
-<<<<<<< HEAD
-    {/* Body Content */ }
-    < div className = "p-6 space-y-6 overflow-y-auto max-h-[40vh]" >
-
-      {/* About Me / Bio */ }
-      < div className = "space-y-2" >
+              {/* Body Content */}
+              <div className="p-6 space-y-6 overflow-y-auto max-h-[40vh]">
+                
+                {/* About Me / Bio */}
+                <div className="space-y-2">
                   <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-400">
                     ABOUT ME
                   </h4>
@@ -1190,12 +948,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   }`}>
                     {selectedMember.bio}
                   </p>
-                </div >
+                </div>
 
-    {/* Role Sector details */ }
-    < div className = {`p-4 rounded-2xl border ${isDarkMode ? 'bg-zinc-900/40 border-white/5' : 'bg-zinc-50 border-zinc-200'
-      } space-y-3`
-}>
+                {/* Role Sector details */}
+                <div className={`p-4 rounded-2xl border ${
+                  isDarkMode ? 'bg-zinc-900/40 border-white/5' : 'bg-zinc-50 border-zinc-200'
+                } space-y-3`}>
                   <div className="flex items-center justify-between text-xs font-mono">
                     <span className="text-zinc-400">OFFICIAL SECTOR:</span>
                     <span style={{ color: CHERRY_PINK }} className="font-bold uppercase tracking-wider">
@@ -1215,10 +973,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       <span>Active in Community</span>
                     </span>
                   </div>
-                </div >
+                </div>
 
-  {/* Action Controls */ }
-  < div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2" >
+                {/* Action Controls */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <button
                     onClick={() => handleCopyDiscord(selectedMember.discordTag)}
                     className={`py-3 px-4 rounded-xl border text-xs font-mono font-bold tracking-wider transition-all flex items-center justify-center space-x-2 cursor-pointer ${
@@ -1253,67 +1011,15 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     <span>CONNECT ON DISCORD</span>
                     <ExternalLink className="w-3 h-3 ml-1 opacity-75" />
                   </a>
-                </div >
-=======
-              {/* DISCORD INNER CONTAINER PANEL */}
-              <div className={`flex-1 overflow-y-auto scrollbar-none p-4 pt-3 pb-3 flex flex-col space-y-4 ${
-                isDarkMode ? 'bg-zinc-950/60' : 'bg-zinc-50/60'
-              }`}>
+                </div>
 
-                <>
-                    {/* Names block */}
-                    <div className={`p-4 rounded-xl border space-y-2 shadow-xs shrink-0 transition-colors ${
-                      isDarkMode ? 'bg-zinc-900/60 border-zinc-800/60' : 'bg-white/90 border-zinc-200/80'
-                    }`}>
-                      <div>
-                        <h2 className={`text-lg font-bold tracking-wide font-sans flex items-center gap-1.5 ${
-                          isDarkMode ? 'text-white' : 'text-zinc-900'
-                        }`}>
-                          {selectedMember.name}
-                        </h2>
-                        <p className={`text-[11px] font-medium font-mono mt-0.5 ${
-                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                        }`}>
-                          @{selectedMember.discordTag}
-                        </p>
-                      </div>
+              </div>
 
-                    </div>
-
-                    {/* ROLE CLUSTERS */}
-                      <div className="space-y-2">
-                        <h4 className={`text-[10px] font-extrabold tracking-wider uppercase font-mono ${
-                          isDarkMode ? 'text-zinc-400' : 'text-zinc-500'
-                        }`}>
-                          ROLES
-                        </h4>
-                        <div className="flex flex-wrap gap-1.5">
-                          <span className={`text-[10px] font-sans px-2.5 py-1 rounded-md font-semibold flex items-center space-x-1.5 border ${
-                            isDarkMode ? 'bg-zinc-800/80 text-zinc-200 border-zinc-700/60' : 'bg-zinc-100 text-zinc-800 border-zinc-300'
-                          }`}>
-                            <span className={`w-2 h-2 rounded-full ${selectedMember.category === 'founder' ? 'bg-[#f1c40f]' :
-                              selectedMember.category === 'cofounder' ? 'bg-[#e67e22]' :
-                                selectedMember.category === 'owner' ? 'bg-[#9b59b6]' :
-                                  selectedMember.category === 'coowner' ? 'bg-[#34495e]' :
-                                    selectedMember.category === 'techlead' ? 'bg-[#1abc9c]' :
-                                      selectedMember.category === 'executive' ? 'bg-[#e91e63]' :
-                                        selectedMember.category === 'admin' ? 'bg-[#3498db]' : 'bg-[#2ecc71]'
-                              }`} />
-                            <span>{selectedMember.role}</span>
-                          </span>
-                        </div>
-                      </div>
-
-                </>
->>>>>>> 9059298422b6fbb200ed5bbc5fdba211cfa25c6c
-
-              </div >
-
-            </motion.div >
-          </div >
+            </motion.div>
+          </div>
         )}
-      </AnimatePresence >
+      </AnimatePresence>
 
-    </div >
+    </div>
   );
 };
