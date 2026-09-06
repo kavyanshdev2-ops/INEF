@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
+import akarshAvatar from '../../sivyassets/akarsh.webp';
+import lavanyaAvatar from '../../sivyassets/lavanya.webp';
+import lavanyaBanner from '../../sivyassets/lavanya_banner.webp';
+import nancyAvatar from '../../sivyassets/nancy.png';
 import {
   Users,
   Shield,
@@ -47,7 +51,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     discordId: '121287965938483200',
     role: 'Founder',
     category: 'founder',
-    avatar: '/sivyassets/akarsh.webp',
+    avatar: akarshAvatar,
     banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
     badges: ['staff', 'booster', 'supporter'],
   },
@@ -128,7 +132,7 @@ const MEMBERS_DATA: MemberProfile[] = [
     discordTag: 'aw.nvm',
     role: 'Co owner',
     category: 'coowner',
-    avatar: '/sivyassets/nancy.png',
+    avatar: nancyAvatar,
     banner: '',
     badges: ['staff'],
   },
@@ -158,8 +162,8 @@ const MEMBERS_DATA: MemberProfile[] = [
     discordTag: 'lavanya_singh',
     role: 'Co owner',
     category: 'coowner',
-    avatar: '/sivyassets/lavanya.webp',
-    banner: '/sivyassets/lavanya_banner.webp',
+    avatar: lavanyaAvatar,
+    banner: lavanyaBanner,
     badges: ['staff'],
   },
   {
