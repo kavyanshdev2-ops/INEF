@@ -19,7 +19,6 @@ import { GamingView } from './components/GamingView';
 import { AboutView } from './components/AboutView';
 import { PaymentSuccessView } from './components/PaymentSuccessView';
 import { PaymentFailedView } from './components/PaymentFailedView';
-import { LoadingScreen } from './components/LoadingScreen';
 import { PageReloader } from './components/PageReloader';
 import { getThemeStyles } from './lib/theme';
 import { Disc, Sparkles, MapPin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
@@ -713,15 +712,6 @@ export default function App() {
 
         </div>
       </footer>
-
-      {/* Atmospheric Loading Screen */}
-      <LoadingScreen
-        isLoading={isLoading}
-        onFinished={() => setIsLoading(false)}
-        activeAtmosphere={atmosphere}
-        isDarkMode={isDarkMode}
-        websiteSettings={websiteSettings}
-      />
 
       {/* Floating System Page Reloader */}
       <PageReloader
