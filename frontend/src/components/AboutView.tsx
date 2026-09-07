@@ -457,13 +457,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             <div className="space-y-3">
               <span
                 style={{ color: CHERRY_PINK }}
-                className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
-              >
-                Build better, launch faster
+                className="font-mono text-xs md:text-sm font-semibold tracking-wide block">
               </span>
               <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold leading-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
                 }`}>
-                We’re only just getting started on our journey
+                We love the way You are!!!
               </h2>
             </div>
 
@@ -476,10 +474,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
-                  400+
+                  100+
                 </div>
                 <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  Projects completed
+                  Daily online
                 </div>
               </div>
 
@@ -489,10 +487,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
-                  600%
+                  100%
                 </div>
                 <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  Return on investment
+                  ENJOYMENT
                 </div>
               </div>
 
@@ -502,10 +500,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
-                  10k
+                  13k
                 </div>
                 <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  Global downloads
+                  Members
                 </div>
               </div>
 
@@ -518,7 +516,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   200+
                 </div>
                 <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  5-star reviews
+                  Eat 5-Star join INEF
                 </div>
               </div>
 
@@ -531,62 +529,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             SECTION 3: BRAND / LOGOS SOCIAL PROOF BAR
             "From startups to the world's largest companies."
         ======================================================== */}
-        <div className="space-y-8 pt-6 pb-6 border-y border-white/5">
-          <p className={`text-center text-xs md:text-sm font-light ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-            }`}>
-            From startups to the world’s largest companies.
-          </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 lg:gap-16 opacity-80 hover:opacity-100 transition-opacity">
-
-            {/* OdeaoLabs */}
-            <div className="flex items-center space-x-2 font-bold tracking-tight text-sm md:text-base">
-              <div className="flex space-x-0.5">
-                <span className="w-2 h-2 rounded-xs bg-[#FA5F88]" />
-                <span className="w-2 h-2 rounded-xs bg-indigo-500" />
-                <span className="w-2 h-2 rounded-xs bg-sky-400" />
-              </div>
-              <span className={isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}>OdeaoLabs</span>
-            </div>
-
-            {/* Kintsugi */}
-            <div className="flex items-center space-x-2 font-bold tracking-tight text-sm md:text-base">
-              <span style={{ color: CHERRY_PINK }} className="text-lg">✹</span>
-              <span className={isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}>Kintsugi</span>
-            </div>
-
-            {/* Stacked Lab */}
-            <div className="flex items-center space-x-2 font-bold tracking-tight text-sm md:text-base">
-              <svg className="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="m12 2 10 5-10 5L2 7l10-5Z" />
-                <path d="m2 17 10 5 10-5" />
-                <path d="m2 12 10 5 10-5" />
-              </svg>
-              <span className={isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}>Stacked Lab</span>
-            </div>
-
-            {/* Magnolia */}
-            <div className="flex items-center space-x-2 font-bold tracking-tight text-sm md:text-base">
-              <span style={{ color: CHERRY_PINK }} className="text-base font-serif font-black">✿</span>
-              <span className={isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}>Magnolia</span>
-            </div>
-
-            {/* Warpspeed */}
-            <div className="flex items-center space-x-2 font-bold tracking-tight text-sm md:text-base">
-              <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-              </svg>
-              <span className={isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}>Warpspeed</span>
-            </div>
-
-            {/* Sisyphus */}
-            <div className="flex items-center space-x-2 font-bold tracking-tight text-sm md:text-base">
-              <span className="w-2.5 h-2.5 rounded-full bg-teal-400" />
-              <span className={isDarkMode ? 'text-zinc-200' : 'text-zinc-800'}>Sisyphus</span>
-            </div>
-
-          </div>
-        </div>
 
         {/* ========================================================
             SECTION 4: MEET OUR TEAM (EXACT FORMAT FROM SCREENSHOT)
@@ -976,9 +919,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     style={{ backgroundColor: CHERRY_PINK }}
                     className="py-3 px-4 rounded-xl text-xs font-mono font-bold tracking-wider text-white transition-all hover:brightness-110 flex items-center justify-center space-x-2 cursor-pointer shadow-md shadow-[#FA5F88]/20"
                   >
-                    <MessageSquare className="w-4 h-4" />
-                    <span>CONNECT ON DISCORD</span>
-                    <ExternalLink className="w-3 h-3 ml-1 opacity-75" />
                   </a>
                 </div>
 
