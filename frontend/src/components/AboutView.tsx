@@ -10,6 +10,7 @@ import nancyAvatar from '../../sivyassets/nancy.png';
 import aaravAvatar from '../../sivyassets/kamodpfp.jpg';
 import ArchieAvatar from '../../sivyassets/harshil.png';
 import RunnerAvatar from '../../sivyassets/RUNNER.jpg';
+import Ritvikavatar from '../../sivyassets/ritivik.png';
 
 import {
   ArrowUpRight,
@@ -51,6 +52,7 @@ export interface TeamMemberProfile {
   twitter?: string;
   linkedin?: string;
   website?: string;
+  instagram?: string;
 }
 
 // Custom X icon (Twitter)
@@ -74,9 +76,9 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     badges: ['staff', 'developer', 'booster', 'supporter'],
     bio: 'A trend not a cult',
     since: '2020',
-    twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
-    website: 'https://ineffable.store'
+    twitter: ' https://x.com/8bitAkarsH69',
+    instagram: ' https://www.instagram.com/8bitakarsh69 ',
+    website: 'https://linktr.ee/8bitAkarsH69',
   },
 
   // ================= CO FOUNDER =================
@@ -347,7 +349,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Ritwik',
     role: 'Executive',
     category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop',
+    avatar: Ritvikavatar,
     banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'ritwik',
     badges: ['staff', 'booster'],
