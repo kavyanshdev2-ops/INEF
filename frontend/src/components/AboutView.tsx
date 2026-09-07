@@ -67,8 +67,8 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     discordTag: 'akarsh.arya',
     discordId: '121287965938483200',
     badges: ['staff', 'developer', 'booster', 'supporter'],
-    bio: 'Supreme architect, visionary founder, and lead system creator of Ineffable.',
-    since: 'EST. 2020 // ARCHITECT',
+    bio: 'A trend not a cult',
+    since: '2020',
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
@@ -125,7 +125,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Aarav',
     role: 'Co founder',
     category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop',
+    avatar: '/sivyassets/kamodpfp.jpg',
     banner: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'aarav',
     badges: ['staff', 'developer'],
@@ -138,21 +138,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
 
   // ================= OWNER =================
   {
-    id: 'ankeet',
-    name: 'Ankeet',
-    role: 'Owner',
-    category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-    discordTag: 'ankeet_primal',
-    badges: ['staff', 'booster'],
-    bio: 'Ultimate owner guiding digital convergence, governance, and stability.',
-    since: 'EST. 2021 // OWNER',
-    twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
-    website: 'https://ineffable.store'
-  },
-  {
     id: 'kavyansh',
     name: 'Kavyansh',
     role: 'Owner',
@@ -163,7 +148,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     discordId: '241214041187123201',
     badges: ['staff', 'developer', 'booster'],
     bio: 'Owner & lead web engineer building full-stack applications and cloud services.',
-    since: 'EST. 2021 // LEAD DEV',
+    since: 'EST. 2020 // LEAD DEV',
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
@@ -403,9 +388,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
   return (
     <div className="relative min-h-screen py-24 pt-32 transition-colors duration-300">
-      
+
       {/* Background ambient glow matching theme */}
-      <div 
+      <div
         style={{
           background: `radial-gradient(ellipse at 50% 0%, rgba(250, 95, 136, 0.08) 0%, transparent 70%)`
         }}
@@ -419,20 +404,18 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             "About us" / "About the company"
         ======================================================== */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span 
+          <span
             style={{ color: CHERRY_PINK }}
             className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
           >
             About us
           </span>
-          <h1 className={`text-4xl md:text-6xl font-sans tracking-tight font-extrabold ${
-            isDarkMode ? 'text-white' : 'text-zinc-900'
-          }`}>
+          <h1 className={`text-4xl md:text-6xl font-sans tracking-tight font-extrabold ${isDarkMode ? 'text-white' : 'text-zinc-900'
+            }`}>
             About the company
           </h1>
-          <p className={`text-sm md:text-base font-light ${
-            isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-          } max-w-xl mx-auto`}>
+          <p className={`text-sm md:text-base font-light ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+            } max-w-xl mx-auto`}>
             Learn more about the company and the team behind it.
           </p>
         </div>
@@ -442,22 +425,21 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             Split 2-Column: Left Abstract Art, Right Journey + 2x2 Stats
         ======================================================== */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          
+
           {/* Left: Atmospheric Art / Gradient Canvas */}
           <div className="lg:col-span-6">
-            <div className={`relative aspect-[4/3] sm:aspect-square w-full rounded-2xl overflow-hidden border shadow-2xl ${
-              isDarkMode ? 'border-white/10 shadow-black/40' : 'border-zinc-200 shadow-xl'
-            }`}>
+            <div className={`relative aspect-[4/3] sm:aspect-square w-full rounded-2xl overflow-hidden border shadow-2xl ${isDarkMode ? 'border-white/10 shadow-black/40' : 'border-zinc-200 shadow-xl'
+              }`}>
               <img
                 src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop"
                 alt="Ineffable Creative Journey"
                 className="w-full h-full object-cover select-none"
               />
-              <div 
+              <div
                 style={{
                   background: `linear-gradient(135deg, rgba(250, 95, 136, 0.25) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(59, 130, 246, 0.3) 100%)`
                 }}
-                className="absolute inset-0 mix-blend-overlay" 
+                className="absolute inset-0 mix-blend-overlay"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
             </div>
@@ -466,25 +448,24 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
           {/* Right: Copy & 2x2 Big Numbers Grid */}
           <div className="lg:col-span-6 space-y-8">
             <div className="space-y-3">
-              <span 
+              <span
                 style={{ color: CHERRY_PINK }}
                 className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
               >
                 Build better, launch faster
               </span>
-              <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold leading-tight ${
-                isDarkMode ? 'text-white' : 'text-zinc-900'
-              }`}>
+              <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold leading-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
+                }`}>
                 We’re only just getting started on our journey
               </h2>
             </div>
 
             {/* 2x2 Stats Grid with Website Cherry Pink Accent */}
             <div className="grid grid-cols-2 gap-x-8 gap-y-10 pt-4">
-              
+
               {/* Stat 1 */}
               <div className="space-y-1.5">
-                <div 
+                <div
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
@@ -497,7 +478,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* Stat 2 */}
               <div className="space-y-1.5">
-                <div 
+                <div
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
@@ -510,7 +491,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* Stat 3 */}
               <div className="space-y-1.5">
-                <div 
+                <div
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
@@ -523,7 +504,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* Stat 4 */}
               <div className="space-y-1.5">
-                <div 
+                <div
                   style={{ color: CHERRY_PINK }}
                   className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
                 >
@@ -544,14 +525,13 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             "From startups to the world's largest companies."
         ======================================================== */}
         <div className="space-y-8 pt-6 pb-6 border-y border-white/5">
-          <p className={`text-center text-xs md:text-sm font-light ${
-            isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-          }`}>
+          <p className={`text-center text-xs md:text-sm font-light ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+            }`}>
             From startups to the world’s largest companies.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 lg:gap-16 opacity-80 hover:opacity-100 transition-opacity">
-            
+
             {/* OdeaoLabs */}
             <div className="flex items-center space-x-2 font-bold tracking-tight text-sm md:text-base">
               <div className="flex space-x-0.5">
@@ -607,22 +587,20 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             and Huge Openable Profile on Click
         ======================================================== */}
         <div id="meet-our-team-section" className="space-y-12">
-          
+
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <span 
+            <span
               style={{ color: CHERRY_PINK }}
               className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
             >
               We're hiring!
             </span>
-            <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${
-              isDarkMode ? 'text-white' : 'text-zinc-900'
-            }`}>
+            <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold ${isDarkMode ? 'text-white' : 'text-zinc-900'
+              }`}>
               Meet our team
             </h2>
-            <p className={`text-sm md:text-base font-light leading-relaxed ${
-              isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-            } max-w-2xl mx-auto`}>
+            <p className={`text-sm md:text-base font-light leading-relaxed ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+              } max-w-2xl mx-auto`}>
               Our philosophy is simple—hire a team of diverse, passionate people and foster a culture that empowers you to do your best work.
             </p>
 
@@ -630,11 +608,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             <div className="flex items-center justify-center gap-3 pt-2">
               <button
                 onClick={scrollToTop}
-                className={`px-5 py-2 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer border ${
-                  isDarkMode
+                className={`px-5 py-2 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer border ${isDarkMode
                     ? 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10 hover:text-white'
                     : 'bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-50'
-                }`}
+                  }`}
               >
                 About us
               </button>
@@ -665,13 +642,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 <button
                   key={tab.id}
                   onClick={() => setSelectedCategory(tab.id)}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer border ${
-                    isActive
+                  className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer border ${isActive
                       ? 'bg-[#FA5F88] text-white border-[#FA5F88] shadow-md shadow-[#FA5F88]/20 font-bold'
                       : isDarkMode
                         ? 'bg-black/30 border-white/10 text-zinc-400 hover:text-white hover:bg-white/5'
                         : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:text-zinc-900'
-                  }`}
+                    }`}
                 >
                   {tab.label} ({count})
                 </button>
@@ -680,7 +656,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
           </div>
 
           {/* 4-Column Team Card Grid matching the exact screenshot layout */}
-          <motion.div 
+          <motion.div
             layout
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
           >
@@ -694,11 +670,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
                   onClick={() => setSelectedMember(member)}
-                  className={`p-6 sm:p-7 rounded-2xl border flex flex-col items-center text-center transition-all duration-300 group cursor-pointer ${
-                    isDarkMode 
-                      ? 'bg-black/30 backdrop-blur-md border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/50 hover:shadow-xl hover:shadow-[#FA5F88]/10' 
+                  className={`p-6 sm:p-7 rounded-2xl border flex flex-col items-center text-center transition-all duration-300 group cursor-pointer ${isDarkMode
+                      ? 'bg-black/30 backdrop-blur-md border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/50 hover:shadow-xl hover:shadow-[#FA5F88]/10'
                       : 'bg-white/70 backdrop-blur-md border-zinc-200/80 hover:bg-white hover:border-[#FA5F88]/50 hover:shadow-lg'
-                  } hover:-translate-y-1`}
+                    } hover:-translate-y-1`}
                 >
                   {/* Circular Avatar */}
                   <div className="relative mb-5">
@@ -706,23 +681,21 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       src={member.avatar}
                       alt={member.name}
                       referrerPolicy="no-referrer"
-                      className={`w-20 h-20 rounded-full object-cover ring-2 transition-transform duration-300 group-hover:scale-105 shadow-md ${
-                        isDarkMode ? 'ring-white/10' : 'ring-zinc-200'
-                      }`}
+                      className={`w-20 h-20 rounded-full object-cover ring-2 transition-transform duration-300 group-hover:scale-105 shadow-md ${isDarkMode ? 'ring-white/10' : 'ring-zinc-200'
+                        }`}
                     />
                     {/* Active pulse status */}
                     <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-zinc-950 rounded-full" />
                   </div>
 
                   {/* Name */}
-                  <h3 className={`text-base font-bold font-sans tracking-tight ${
-                    isDarkMode ? 'text-white' : 'text-zinc-900'
-                  }`}>
+                  <h3 className={`text-base font-bold font-sans tracking-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
+                    }`}>
                     {member.name}
                   </h3>
 
                   {/* Role in Signature Cherry Pink Theme */}
-                  <span 
+                  <span
                     style={{ color: CHERRY_PINK }}
                     className="text-xs font-semibold mt-1 mb-2.5 block"
                   >
@@ -730,14 +703,13 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   </span>
 
                   {/* Short Bio */}
-                  <p className={`text-xs font-light leading-relaxed flex-grow mb-6 ${
-                    isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
-                  } line-clamp-3 min-h-[3rem]`}>
+                  <p className={`text-xs font-light leading-relaxed flex-grow mb-6 ${isDarkMode ? 'text-zinc-400' : 'text-zinc-600'
+                    } line-clamp-3 min-h-[3rem]`}>
                     {member.bio}
                   </p>
 
                   {/* Social Media Links: Twitter/X, LinkedIn, Web (matching screenshot) */}
-                  <div 
+                  <div
                     className="flex items-center space-x-3 pt-4 border-t border-white/5 w-full justify-center"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -745,25 +717,23 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       href={member.twitter || 'https://x.com'}
                       target="_blank"
                       rel="noreferrer"
-                      className={`p-1.5 rounded-md transition-colors ${
-                        isDarkMode 
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
+                      className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
                           : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                      }`}
+                        }`}
                       aria-label={`${member.name} on X`}
                     >
                       <XIcon className="w-4 h-4" />
                     </a>
-                    
+
                     <a
                       href={member.linkedin || 'https://linkedin.com'}
                       target="_blank"
                       rel="noreferrer"
-                      className={`p-1.5 rounded-md transition-colors ${
-                        isDarkMode 
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
+                      className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
                           : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                      }`}
+                        }`}
                       aria-label={`${member.name} on LinkedIn`}
                     >
                       <Linkedin className="w-4 h-4" />
@@ -773,11 +743,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       href={member.website || 'https://ineffable.store'}
                       target="_blank"
                       rel="noreferrer"
-                      className={`p-1.5 rounded-md transition-colors ${
-                        isDarkMode 
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5' 
+                      className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
                           : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                      }`}
+                        }`}
                       aria-label={`${member.name} website`}
                     >
                       <Globe className="w-4 h-4" />
@@ -799,7 +768,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
       <AnimatePresence>
         {selectedMember && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            
+
             {/* Smooth animated backdrop blur */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -816,24 +785,22 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 15 }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
-              className={`relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl my-auto ${
-                isDarkMode
+              className={`relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl my-auto ${isDarkMode
                   ? 'bg-zinc-950/95 text-zinc-100 border-white/10 shadow-black/90'
                   : 'bg-white/95 text-zinc-900 border-zinc-200 shadow-2xl'
-              }`}
+                }`}
             >
-              
+
               {/* Modal Top Mini Bar */}
-              <div className={`px-4 py-2 border-b flex items-center justify-between shrink-0 select-none ${
-                isDarkMode ? 'bg-zinc-900/60 border-white/10 text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-600'
-              }`}>
+              <div className={`px-4 py-2 border-b flex items-center justify-between shrink-0 select-none ${isDarkMode ? 'bg-zinc-900/60 border-white/10 text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-600'
+                }`}>
                 <div className="flex items-center space-x-2">
                   <span className="w-2 h-2 rounded-full bg-[#FA5F88] animate-pulse" />
                   <span className="font-mono text-[9px] font-bold tracking-widest uppercase">
                     INEFFABLE // MEMBER IDENTITY CARD
                   </span>
                 </div>
-                
+
                 {/* Close Button */}
                 <button
                   onClick={() => setSelectedMember(null)}
@@ -867,18 +834,17 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* Overlapping Avatar & Badges Section */}
               <div className={`relative px-6 pb-2 shrink-0 ${isDarkMode ? 'bg-zinc-950/90' : 'bg-white/90'}`}>
-                
+
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-3">
-                  
+
                   {/* Avatar with glowing ring */}
                   <div className="relative">
                     <img
                       src={selectedMember.avatar}
                       alt={selectedMember.name}
                       referrerPolicy="no-referrer"
-                      className={`w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover ring-4 shadow-2xl ${
-                        isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
-                      }`}
+                      className={`w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover ring-4 shadow-2xl ${isDarkMode ? 'ring-zinc-950 bg-zinc-900' : 'ring-white bg-zinc-100'
+                        }`}
                     />
                     <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-3 border-zinc-950 rounded-full" />
                   </div>
@@ -916,12 +882,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 {/* Name & Role */}
                 <div className="space-y-1">
                   <div className="flex items-center space-x-3">
-                    <h2 className={`text-2xl sm:text-3xl font-bold font-sans tracking-tight ${
-                      isDarkMode ? 'text-white' : 'text-zinc-900'
-                    }`}>
+                    <h2 className={`text-2xl sm:text-3xl font-bold font-sans tracking-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
+                      }`}>
                       {selectedMember.name}
                     </h2>
-                    <span 
+                    <span
                       style={{ backgroundColor: 'rgba(250, 95, 136, 0.15)', color: CHERRY_PINK, borderColor: 'rgba(250, 95, 136, 0.3)' }}
                       className="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase border"
                     >
@@ -937,23 +902,21 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
 
               {/* Body Content */}
               <div className="p-6 space-y-6 overflow-y-auto max-h-[40vh]">
-                
+
                 {/* About Me / Bio */}
                 <div className="space-y-2">
                   <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-400">
                     ABOUT ME
                   </h4>
-                  <p className={`text-sm leading-relaxed font-light ${
-                    isDarkMode ? 'text-zinc-300' : 'text-zinc-700'
-                  }`}>
+                  <p className={`text-sm leading-relaxed font-light ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'
+                    }`}>
                     {selectedMember.bio}
                   </p>
                 </div>
 
                 {/* Role Sector details */}
-                <div className={`p-4 rounded-2xl border ${
-                  isDarkMode ? 'bg-zinc-900/40 border-white/5' : 'bg-zinc-50 border-zinc-200'
-                } space-y-3`}>
+                <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-zinc-900/40 border-white/5' : 'bg-zinc-50 border-zinc-200'
+                  } space-y-3`}>
                   <div className="flex items-center justify-between text-xs font-mono">
                     <span className="text-zinc-400">OFFICIAL SECTOR:</span>
                     <span style={{ color: CHERRY_PINK }} className="font-bold uppercase tracking-wider">
@@ -979,13 +942,12 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <button
                     onClick={() => handleCopyDiscord(selectedMember.discordTag)}
-                    className={`py-3 px-4 rounded-xl border text-xs font-mono font-bold tracking-wider transition-all flex items-center justify-center space-x-2 cursor-pointer ${
-                      copiedId
+                    className={`py-3 px-4 rounded-xl border text-xs font-mono font-bold tracking-wider transition-all flex items-center justify-center space-x-2 cursor-pointer ${copiedId
                         ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                         : isDarkMode
                           ? 'bg-zinc-900 border-white/10 text-white hover:bg-zinc-800'
                           : 'bg-zinc-100 border-zinc-200 text-zinc-900 hover:bg-zinc-200'
-                    }`}
+                      }`}
                   >
                     {copiedId ? (
                       <>

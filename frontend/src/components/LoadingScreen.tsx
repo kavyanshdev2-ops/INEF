@@ -18,11 +18,7 @@ interface LoadingScreenProps {
 }
 
 const BOOT_STAGES = [
-  { progress: 15, text: 'INITIALIZING DIGITAL GATEWAY', sector: 'SECTOR // 01' },
-  { progress: 38, text: 'ESTABLISHING CYBER CONVERGENCE', sector: 'SECTOR // 02' },
-  { progress: 64, text: 'SYNCHRONIZING SAKURA DRIFT ENGINE', sector: 'SECTOR // 03' },
-  { progress: 88, text: 'CALIBRATING CYBER COUTURE ARCHIVES', sector: 'SECTOR // 04' },
-  { progress: 100, text: 'CONVERGENCE VERIFIED // SYSTEM READY', sector: 'SECTOR // 05' },
+  { progress: 15, text: 'WORK IN PROGRESS CUITIEEE', sector: 'MUWAH' }, ,
 ];
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({
@@ -100,9 +96,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
           }}
           className="fixed inset-0 z-[99999] flex flex-col items-center justify-center overflow-hidden select-none bg-black/95 text-white"
           style={{
-            backgroundImage: `radial-gradient(circle at center, ${
-              isDarkMode ? 'rgba(250, 95, 136, 0.12)' : 'rgba(250, 95, 136, 0.18)'
-            } 0%, rgba(10, 10, 14, 0.98) 70%, #050508 100%)`,
+            backgroundImage: `radial-gradient(circle at center, ${isDarkMode ? 'rgba(250, 95, 136, 0.12)' : 'rgba(250, 95, 136, 0.18)'
+              } 0%, rgba(10, 10, 14, 0.98) 70%, #050508 100%)`,
           }}
         >
           {/* Decorative Grid Overlay */}
@@ -123,9 +118,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
           <div className="absolute top-6 left-6 right-6 flex items-center justify-between font-mono text-[10px] tracking-[0.25em] text-zinc-400">
             <div className="flex items-center space-x-2">
               <span className="w-2 h-2 rounded-full bg-[#FA5F88] animate-pulse" />
-              <span className="text-[#FA5F88] font-bold">INEFFABLE OS</span>
+              <span className="text-[#FA5F88] font-bold">INEFFABLE</span>
               <span className="opacity-40">//</span>
-              <span className="hidden sm:inline">BOOT SEQUENCE 4.2</span>
+              <span className="hidden sm:inline">BOOT</span>
             </div>
             <div className="flex items-center space-x-4">
               <span className="flex items-center space-x-1">
@@ -166,7 +161,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
               INEFFABLE
             </h1>
             <p className="font-mono text-[10px] md:text-[11px] tracking-[0.25em] text-zinc-400 uppercase mb-8 text-center">
-              DIGITAL CONVERGENCE ARCHIVE // EST. 2020
+              Kavyansh
             </p>
 
             {/* Progress Bar Container */}
@@ -201,9 +196,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
                 <span>{BOOT_STAGES[stageIndex]?.sector || 'SECTOR // 01'}</span>
                 <span className="flex items-center space-x-1">
                   <Zap className="w-2.5 h-2.5 text-amber-400" />
-                  <span>MEMORY: 128MB</span>
+                  <span>MUWAHAHAHA</span>
                 </span>
-                <span>CHERRY BLOSSOM ENGINE</span>
+                <span>MUWAH</span>
               </div>
             </div>
 
@@ -222,12 +217,12 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
 
           {/* Bottom Telemetry Bar */}
           <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between font-mono text-[9px] tracking-[0.2em] text-zinc-400">
-            <span>COORDINATES // 18.97°N 72.81°E</span>
+            <span></span>
             <div className="flex items-center space-x-1 text-[#FA5F88]">
               <Sparkles className="w-3 h-3" />
               <span>INEF ON TOP</span>
             </div>
-            <span>FRAME RATE: 60 FPS</span>
+            <span></span>
           </div>
         </motion.div>
       )}
