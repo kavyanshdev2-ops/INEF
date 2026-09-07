@@ -8,8 +8,9 @@ import lavanyaAvatar from '../../sivyassets/lavanya.webp';
 import lavanyaBanner from '../../sivyassets/lavanya_banner.webp';
 import nancyAvatar from '../../sivyassets/nancy.png';
 import aaravAvatar from '../../sivyassets/kamodpfp.jpg';
-import ArchieAvatar from '../../sivyassets/archie.png';
+import ArchieAvatar from '../../sivyassets/harshil.png';
 import RunnerAvatar from '../../sivyassets/RUNNER.jpg';
+
 import {
   ArrowUpRight,
   Shield,
