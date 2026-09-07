@@ -8,7 +8,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { PageId, ApparelItem, AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
 import { MembershipCard, defaultRanks } from './MembershipCard';
-import { ScrollDissolveReveal, TextScrollDissolveReveal } from './ScrollDissolveReveal';
 import { KineticText } from '@/registry/magicui/kinetic-text';
 import {
   ArrowUpRight,
@@ -375,13 +374,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
               />
             </div>
 
-            {/* Short Description */}
-            <TextScrollDissolveReveal
-              text="INEFFABLE bridges high-end streetwear architecture, cyber-couture craftsmanship, and an exclusive global community sanctuary running strong for 6 years."
-              className="max-w-xl text-base md:text-lg mt-4 font-normal tracking-wide opacity-90"
-              wordClassName={`${themeStyles.textSecondary} font-sans`}
-            />
-
             {/* CTA Buttons */}
             <div id="hero-actions" className="flex flex-wrap justify-center items-center gap-4 mt-10">
               <a
@@ -448,11 +440,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
           <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-zinc-950 dark:text-white">
             Community Spheres & Culture
           </h2>
-          <TextScrollDissolveReveal
-            text="Designed for those who appreciate high craftsmanship, collaborative gaming, and effortless digital lifestyle connection."
-            className="max-w-xl text-sm md:text-base font-light"
-            wordClassName="text-zinc-600 dark:text-zinc-400 font-sans"
-          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
