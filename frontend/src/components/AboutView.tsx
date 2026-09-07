@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
-import akarshAvatar from '../../sivyassets/akarsh.webp';
+import akarshAvatar from '../../sivyassets/akarsh.jpg';
+import akarshBanner from '../../sivyassets/akarshbanner.jpg';
 import lavanyaAvatar from '../../sivyassets/lavanya.webp';
 import lavanyaBanner from '../../sivyassets/lavanya_banner.webp';
 import nancyAvatar from '../../sivyassets/nancy.png';
+import aaravAvatar from '../../sivyassets/kamodpfp.jpg';
+import ArchieAvatar from '../../sivyassets/archie.png';
+import RunnerAvatar from '../../sivyassets/RUNNER.jpg';
 import {
   ArrowUpRight,
   Shield,
@@ -80,7 +84,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Harshil Joshi',
     role: 'Co founder',
     category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
+    avatar: ArchieAvatar,
     banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'Harshil_joshi',
     badges: ['staff', 'developer'],
@@ -125,7 +129,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Aarav',
     role: 'Co founder',
     category: 'cofounder',
-    avatar: '/sivyassets/kamodpfp.jpg',
+    avatar: 'aaravAvatar',
     banner: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'aarav',
     badges: ['staff', 'developer'],
@@ -142,13 +146,13 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Kavyansh',
     role: 'Owner',
     category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=400&auto=format&fit=crop',
+    avatar: RunnerAvatar,
     banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop',
     discordTag: 'kavyanshshakya',
     discordId: '241214041187123201',
     badges: ['staff', 'developer', 'booster'],
     bio: 'Owner & lead web engineer building full-stack applications and cloud services.',
-    since: 'EST. 2020 // LEAD DEV',
+    since: ' 2020 // LEAD DEV',
     twitter: 'https://x.com',
     linkedin: 'https://linkedin.com',
     website: 'https://ineffable.store'
@@ -609,8 +613,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               <button
                 onClick={scrollToTop}
                 className={`px-5 py-2 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer border ${isDarkMode
-                    ? 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10 hover:text-white'
-                    : 'bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-50'
+                  ? 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10 hover:text-white'
+                  : 'bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-50'
                   }`}
               >
                 About us
@@ -643,10 +647,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   key={tab.id}
                   onClick={() => setSelectedCategory(tab.id)}
                   className={`px-4 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer border ${isActive
-                      ? 'bg-[#FA5F88] text-white border-[#FA5F88] shadow-md shadow-[#FA5F88]/20 font-bold'
-                      : isDarkMode
-                        ? 'bg-black/30 border-white/10 text-zinc-400 hover:text-white hover:bg-white/5'
-                        : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:text-zinc-900'
+                    ? 'bg-[#FA5F88] text-white border-[#FA5F88] shadow-md shadow-[#FA5F88]/20 font-bold'
+                    : isDarkMode
+                      ? 'bg-black/30 border-white/10 text-zinc-400 hover:text-white hover:bg-white/5'
+                      : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:text-zinc-900'
                     }`}
                 >
                   {tab.label} ({count})
@@ -671,8 +675,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   transition={{ duration: 0.3 }}
                   onClick={() => setSelectedMember(member)}
                   className={`p-6 sm:p-7 rounded-2xl border flex flex-col items-center text-center transition-all duration-300 group cursor-pointer ${isDarkMode
-                      ? 'bg-black/30 backdrop-blur-md border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/50 hover:shadow-xl hover:shadow-[#FA5F88]/10'
-                      : 'bg-white/70 backdrop-blur-md border-zinc-200/80 hover:bg-white hover:border-[#FA5F88]/50 hover:shadow-lg'
+                    ? 'bg-black/30 backdrop-blur-md border-white/10 hover:bg-black/45 hover:border-[#FA5F88]/50 hover:shadow-xl hover:shadow-[#FA5F88]/10'
+                    : 'bg-white/70 backdrop-blur-md border-zinc-200/80 hover:bg-white hover:border-[#FA5F88]/50 hover:shadow-lg'
                     } hover:-translate-y-1`}
                 >
                   {/* Circular Avatar */}
@@ -718,8 +722,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       target="_blank"
                       rel="noreferrer"
                       className={`p-1.5 rounded-md transition-colors ${isDarkMode
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                        ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                        : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
                         }`}
                       aria-label={`${member.name} on X`}
                     >
@@ -731,8 +735,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       target="_blank"
                       rel="noreferrer"
                       className={`p-1.5 rounded-md transition-colors ${isDarkMode
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                        ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                        : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
                         }`}
                       aria-label={`${member.name} on LinkedIn`}
                     >
@@ -744,8 +748,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       target="_blank"
                       rel="noreferrer"
                       className={`p-1.5 rounded-md transition-colors ${isDarkMode
-                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                        ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                        : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
                         }`}
                       aria-label={`${member.name} website`}
                     >
@@ -786,8 +790,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               exit={{ opacity: 0, scale: 0.94, y: 15 }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
               className={`relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl z-[101] border font-sans flex flex-col backdrop-blur-2xl my-auto ${isDarkMode
-                  ? 'bg-zinc-950/95 text-zinc-100 border-white/10 shadow-black/90'
-                  : 'bg-white/95 text-zinc-900 border-zinc-200 shadow-2xl'
+                ? 'bg-zinc-950/95 text-zinc-100 border-white/10 shadow-black/90'
+                : 'bg-white/95 text-zinc-900 border-zinc-200 shadow-2xl'
                 }`}
             >
 
@@ -943,10 +947,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   <button
                     onClick={() => handleCopyDiscord(selectedMember.discordTag)}
                     className={`py-3 px-4 rounded-xl border text-xs font-mono font-bold tracking-wider transition-all flex items-center justify-center space-x-2 cursor-pointer ${copiedId
-                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
-                        : isDarkMode
-                          ? 'bg-zinc-900 border-white/10 text-white hover:bg-zinc-800'
-                          : 'bg-zinc-100 border-zinc-200 text-zinc-900 hover:bg-zinc-200'
+                      ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                      : isDarkMode
+                        ? 'bg-zinc-900 border-white/10 text-white hover:bg-zinc-800'
+                        : 'bg-zinc-100 border-zinc-200 text-zinc-900 hover:bg-zinc-200'
                       }`}
                   >
                     {copiedId ? (
