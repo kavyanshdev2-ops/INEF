@@ -115,8 +115,7 @@ export default function App() {
     }
   }, [isDarkMode]);
 
-
-
+  
   // Background smooth mouse parallax effect (high performance, bypasses react renders)
   useEffect(() => {
     const bgElement = bgRef.current;

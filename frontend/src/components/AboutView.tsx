@@ -777,9 +777,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   <span className="font-bold">@{selectedMember.discordTag}</span>
                 </div>
 
-                <div className="absolute top-3 right-4 font-mono text-[9px] tracking-widest px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-zinc-300">
-                  {selectedMember.since}
-                </div>
               </div>
 
               {/* Overlapping Avatar & Badges Section */}
@@ -797,34 +794,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         }`}
                     />
                     <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-3 border-zinc-950 rounded-full" />
-                  </div>
-
-                  {/* Discord Staff & Achievement Badges */}
-                  <div className="flex items-center space-x-2 pt-2">
-                    {selectedMember.badges.includes('staff') && (
-                      <div className="p-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 flex items-center space-x-1.5" title="Ineffable Staff">
-                        <Shield className="w-4 h-4" />
-                        <span className="text-[10px] font-mono font-bold hidden sm:inline">STAFF</span>
-                      </div>
-                    )}
-                    {selectedMember.badges.includes('developer') && (
-                      <div className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-400 flex items-center space-x-1.5" title="Core Developer">
-                        <Code className="w-4 h-4" />
-                        <span className="text-[10px] font-mono font-bold hidden sm:inline">DEVELOPER</span>
-                      </div>
-                    )}
-                    {selectedMember.badges.includes('booster') && (
-                      <div className="p-2 rounded-xl border border-pink-500/30 bg-pink-500/10 text-pink-400 flex items-center space-x-1.5" title="Server Booster">
-                        <Flame className="w-4 h-4" />
-                        <span className="text-[10px] font-mono font-bold hidden sm:inline">BOOSTER</span>
-                      </div>
-                    )}
-                    {selectedMember.badges.includes('supporter') && (
-                      <div className="p-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-400 flex items-center space-x-1.5" title="Tier Supporter">
-                        <Award className="w-4 h-4" />
-                        <span className="text-[10px] font-mono font-bold hidden sm:inline">SUPPORTER</span>
-                      </div>
-                    )}
                   </div>
 
                 </div>
