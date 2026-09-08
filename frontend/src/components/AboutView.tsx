@@ -11,6 +11,7 @@ import aaravAvatar from '../../sivyassets/kamodpfp.jpg';
 import ArchieAvatar from '../../sivyassets/harshil.png';
 import RunnerAvatar from '../../sivyassets/RUNNER.jpg';
 import Ritvikavatar from '../../sivyassets/ritivik.png';
+import srvBanner from '../../sivyassets/srvbanner.png';
 
 import {
   ArrowUpRight,
@@ -438,7 +439,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             <div className={`relative aspect-[4/3] sm:aspect-square w-full rounded-2xl overflow-hidden border shadow-2xl ${isDarkMode ? 'border-white/10 shadow-black/40' : 'border-zinc-200 shadow-xl'
               }`}>
               <img
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop"
+                src={srvBanner}
                 alt="Ineffable Creative Journey"
                 className="w-full h-full object-cover select-none"
               />
