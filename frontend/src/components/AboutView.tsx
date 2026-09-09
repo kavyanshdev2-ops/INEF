@@ -7,7 +7,7 @@ import akarshBanner from '../../sivyassets/akarshbanner.jpg';
 import lavanyaAvatar from '../../sivyassets/lavanya.webp';
 import lavanyaBanner from '../../sivyassets/lavanya_banner.webp';
 import nancyAvatar from '../../sivyassets/nancy.png';
-import aaravAvatar from '../../sivyassets/kamodpfp.jpg';
+import aaravAvatar from '../../sivyassets/aarav.jpg';
 import ArchieAvatar from '../../sivyassets/harshil.png';
 import RunnerAvatar from '../../sivyassets/RUNNER.jpg';
 import Ritvikavatar from '../../sivyassets/ritivik.png';
@@ -15,6 +15,16 @@ import rajshreeAvatar from '../../sivyassets/rajshree.png';
 import srvbanner from '../../sivyassets/srvbanner.png';
 import abhiAvatar from '../../sivyassets/abhiavatar.png';
 import emptybanner from '../../sivyassets/emptybanner.png';
+import kiwi from '../../sivyassets/kiwi.png';
+import kiwibanner from '../../sivyassets/kiwibanner.jpg';
+import viiv from '../../sivyassets/viiv.webp';
+import viivbanner from '../../sivyassets/viivbanner.jpg';
+import aris from '../../sivyassets/aris.jpg';
+import aloopuri from '../../sivyassets/aloopuri.jpg';
+import anuj from '../../sivyassets/anuj.jpg';
+import kavish from '../../sivyassets/kaz.jpg';
+import poppy from '../../sivyassets/poppy.jpg';
+import vixen from '../../sivyassets/vixen.jpg';
 
 
 import {
@@ -201,11 +211,11 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     website: 'https://ineffable.store'
   },
   {
-    id: 'vixen',
-    name: 'Vixen',
+    id: 'Kookie',
+    name: 'kookie',
     role: 'Owner',
     category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=400&auto=format&fit=crop',
+    avatar: vixen,
     banner: emptybanner,
     discordTag: 'vixen_cyber',
     badges: ['staff', 'booster'],
@@ -220,7 +230,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Kiwi',
     role: 'Owner',
     category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=400&auto=format&fit=crop',
+    avatar: kiwi,
     banner: emptybanner,
     discordTag: 'kiwi_slice',
     badges: ['staff', 'booster'],
@@ -235,7 +245,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Poppy',
     role: 'Owner',
     category: 'owner',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop',
+    avatar: poppy,
     banner: emptybanner,
     discordTag: 'poppy',
     badges: ['staff', 'supporter'],
@@ -267,7 +277,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Aris',
     role: 'Co owner',
     category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
+    avatar: aris,
     banner: emptybanner,
     discordTag: 'aris_couture',
     badges: ['staff', 'supporter'],
@@ -282,7 +292,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Viiv',
     role: 'Co owner',
     category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
+    avatar: viiv,
     banner: emptybanner,
     discordTag: 'viiiv_3',
     badges: ['staff', 'supporter', 'booster'],
@@ -308,11 +318,11 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     website: 'https://ineffable.store'
   },
   {
-    id: 'aloo-puri',
+    id: 'arpita',
     name: 'Aloo Puri',
     role: 'Co owner',
     category: 'coowner',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
+    avatar: aloopuri,
     banner: emptybanner,
     discordTag: 'aloo_puri',
     badges: ['staff', 'supporter'],
@@ -355,11 +365,11 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     website: 'https://ineffable.store'
   },
   {
-    id: 'wayne',
-    name: 'Wayne',
+    id: 'anuj',
+    name: 'Anuj',
     role: 'Executive',
     category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop',
+    avatar: anuj,
     banner: emptybanner,
     discordTag: 'wayne',
     badges: ['staff', 'developer'],
@@ -370,11 +380,11 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     website: 'https://ineffable.store'
   },
   {
-    id: 'kaz',
-    name: 'Kaz',
+    id: 'kavish',
+    name: 'kavish',
     role: 'Executive',
     category: 'executive',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&auto=format&fit=crop',
+    avatar: kavish,
     banner: emptybanner,
     discordTag: 'kaz',
     badges: ['staff', 'supporter'],
