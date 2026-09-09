@@ -55,16 +55,34 @@ export interface TeamMemberProfile {
   bio: string;
   since: string;
   twitter?: string;
-  linkedin?: string;
   website?: string;
   instagram?: string;
   github?: string;
+  email?: string;
 }
 
 // Custom X icon (Twitter)
 const XIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-4" }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+// instagram
+const InstagramIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-4" }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm-.19 2A3.56 3.56 0 0 0 4 7.56v8.88A3.56 3.56 0 0 0 7.56 20h8.88A3.56 3.56 0 0 0 20 16.44V7.56A3.56 3.56 0 0 0 16.44 4H7.56Zm9.94 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 6.75A5.25 5.25 0 1 1 6.75 12 5.25 5.25 0 0 1 12 6.75Zm0 2A3.25 3.25 0 1 0 15.25 12 3.25 3.25 0 0 0 12 8.75Z" />
+  </svg>
+);
+// github
+const GitHubIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-4" }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12 2C6.477 2 2 6.589 2 12.253c0 4.53 2.865 8.37 6.839 9.726.5.095.683-.223.683-.496 0-.245-.009-1.058-.014-1.92-2.782.62-3.369-1.224-3.369-1.224-.455-1.184-1.11-1.5-1.11-1.5-.908-.639.069-.626.069-.626 1.004.072 1.532 1.058 1.532 1.058.892 1.566 2.341 1.114 2.91.852.091-.666.349-1.114.635-1.37-2.221-.26-4.556-1.14-4.556-5.072 0-1.12.39-2.035 1.03-2.753-.104-.26-.447-1.31.098-2.73 0 0 .84-.276 2.75 1.052A9.32 9.32 0 0 1 12 6.88c.85.004 1.705.118 2.503.347 1.91-1.328 2.748-1.052 2.748-1.052.547 1.42.203 2.47.1 2.73.64.718 1.028 1.633 1.028 2.753 0 3.942-2.339 4.809-4.566 5.064.359.32.678.949.678 1.912 0 1.381-.012 2.494-.012 2.834 0 .276.18.596.688.495C19.138 20.62 22 16.781 22 12.253 22 6.589 17.523 2 12 2Z" />
+  </svg>
+);
+//gmail
+const GmailIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-4" }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v13a2.5 2.5 0 0 1-2.5 2.5H16V9.5l-4 3-4-3V21H5.5A2.5 2.5 0 0 1 3 18.5v-13ZM5 6.1v.9l7 5.25L19 7v-.9L12 11.35 5 6.1Z" />
   </svg>
 );
 
@@ -100,7 +118,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder driving strategic planning, operations, and ecosystem expansion.',
     since: 'EST. 2020 // CO-FOUNDING',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -115,7 +133,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder managing technical infrastructure, bot development, and systems.',
     since: 'EST. 2021 // CORE DEV',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -130,7 +148,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder leading brand strategy, public relations, and partnerships.',
     since: 'EST. 2021 // STRATEGY',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -145,14 +163,14 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder directing community software deployments and web experiences.',
     since: 'EST. 2021 // OPERATIONS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
 
   // ================= OWNER =================
   {
     id: 'kavyansh',
-    name: 'Kavyansh',
+    name: 'kavyansh',
     role: 'Owner',
     category: 'owner',
     avatar: RunnerAvatar,
@@ -163,7 +181,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner & lead web engineer building full-stack applications and cloud services.',
     since: ' 2020 // LEAD DEV',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -178,7 +196,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner overseeing server culture, security policies, and community events.',
     since: 'EST. 2022 // EXECUTIVE',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -193,7 +211,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner supervising event planning, member coordination, and custom perks.',
     since: 'EST. 2022 // DIRECTOR',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -208,7 +226,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner providing hospitality, member onboarding, and special gaming sessions.',
     since: 'EST. 2022 // COMMUNITY',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
 
@@ -225,7 +243,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner and community supervisor ensuring safe, engaging environments.',
     since: 'EST. 2022 // CO-OWNER',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -240,7 +258,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner maintaining server activities, tournament coordination, and roles.',
     since: 'EST. 2022 // OPERATIONS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -255,7 +273,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner overseeing media channels, announcements, and Nitro perks.',
     since: 'EST. 2022 // MEDIA LEAD',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -270,7 +288,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner and community moderator facilitating member onboarding.',
     since: 'EST. 2022 // MODERATION',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -285,7 +303,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner organizing internal games, interactive sessions, and voice lounges.',
     since: 'EST. 2023 // EVENTS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -300,7 +318,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner leading guild collaborations and community engagement.',
     since: 'EST. 2023 // GUILD OPS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
 
@@ -317,7 +335,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Executive coordinator directing creative artworks, event execution, and spotlights.',
     since: 'EST. 2023 // CREATIVE',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -332,7 +350,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Executive handling livestream productions, media bots, and integrations.',
     since: 'EST. 2023 // STREAM OPS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -347,7 +365,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Executive overseeing creative promotions, design assets, and voice channels.',
     since: 'EST. 2023 // PROMOTIONS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -362,7 +380,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Executive monitoring server stability, community channels, and tournaments.',
     since: 'EST. 2023 // TOURNAMENTS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   }
 ];
@@ -450,7 +468,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               />
               <div
                 style={{
-                  background: `linear-gradient(135deg, rgba(250, 95, 136, 0.25) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(59, 130, 246, 0.3) 100%)`
+                  background: `linear-gradient(135deg, 100%)`
                 }}
                 className="absolute inset-0 mix-blend-overlay"
               />
@@ -612,7 +630,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     {member.bio}
                   </p>
 
-                  {/* Social Media Links: Twitter/X, LinkedIn, Web (matching screenshot) */}
+                  {/* Social Media Links */}
                   <div
                     className="flex items-center space-x-3 pt-4 border-t border-white/5 w-full justify-center"
                     onClick={(e) => e.stopPropagation()}
@@ -630,21 +648,50 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       <XIcon className="w-4 h-4" />
                     </a>
 
-                    <a
-                      href={member.linkedin || 'https://linkedin.com'}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`p-1.5 rounded-md transition-colors ${isDarkMode
-                        ? 'text-zinc-400 hover:text-white hover:bg-white/5'
-                        : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                        }`}
-                      aria-label={`${member.name} on LinkedIn`}
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
+                    {member.instagram && (
+                      <a
+                        href={member.instagram.trim()}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                          }`}
+                        aria-label={`${member.name} on Instagram`}
+                      >
+                        <InstagramIcon className="w-4 h-4" />
+                      </a>
+                    )}
 
+                    {member.github && (
+                      <a
+                        href={member.github.trim()}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                          }`}
+                        aria-label={`${member.name} on GitHub`}
+                      >
+                        <GitHubIcon className="w-4 h-4" />
+                      </a>
+                    )}
+
+                    {member.email && (
+                      <a
+                        href={`mailto:${member.email}`}
+                        className={`p-1.5 rounded-md transition-colors ${isDarkMode
+                          ? 'text-zinc-400 hover:text-white hover:bg-white/5'
+                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                          }`}
+                        aria-label={`Email ${member.name}`}
+                      >
+                        <GmailIcon className="w-4 h-4" />
+                      </a>
+                    )}
                     <a
-                      href={member.website || 'https://ineffable.store'}
+                      href={member.website || 'https://inef/store'}
                       target="_blank"
                       rel="noreferrer"
                       className={`p-1.5 rounded-md transition-colors ${isDarkMode
