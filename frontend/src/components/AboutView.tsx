@@ -468,7 +468,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               />
               <div
                 style={{
-                  background: `linear-gradient(135deg, rgba(250, 95, 136, 0.25) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(59, 130, 246, 0.3) 100%)`
+                  background: `linear-gradient(135deg, 100%)`
                 }}
                 className="absolute inset-0 mix-blend-overlay"
               />
