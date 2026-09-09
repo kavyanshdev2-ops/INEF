@@ -11,9 +11,11 @@ import aaravAvatar from '../../sivyassets/kamodpfp.jpg';
 import ArchieAvatar from '../../sivyassets/harshil.png';
 import RunnerAvatar from '../../sivyassets/RUNNER.jpg';
 import Ritvikavatar from '../../sivyassets/ritivik.png';
-import srvBanner from '../../sivyassets/srvbanner.png';
+import rajshreeAvatar from '../../sivyassets/rajshree.png';
+import srvbanner from '../../sivyassets/srvbanner.png';
 import abhiAvatar from '../../sivyassets/abhiavatar.png';
-import emptyBanner from '../../sivyassets/emptybanner.png';
+import emptybanner from '../../sivyassets/emptybanner.png';
+
 
 import {
   ArrowUpRight,
@@ -56,6 +58,7 @@ export interface TeamMemberProfile {
   linkedin?: string;
   website?: string;
   instagram?: string;
+  github?: string;
 }
 
 // Custom X icon (Twitter)
@@ -73,11 +76,11 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Founder',
     category: 'founder',
     avatar: akarshAvatar,
-    banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',
+    banner: akarshBanner,
     discordTag: 'akarsh.arya',
     discordId: '121287965938483200',
     badges: ['staff', 'developer', 'booster', 'supporter'],
-    bio: 'A trend not a cult',
+    bio: 'A 24 yr old Student, entrepreneur, gamer, athlete, medical enthusiast, anatomy aficionado, visionary.',
     since: '2020',
     twitter: ' https://x.com/8bitAkarsH69',
     instagram: ' https://www.instagram.com/8bitakarsh69 ',
@@ -91,7 +94,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co founder',
     category: 'cofounder',
     avatar: ArchieAvatar,
-    banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'Harshil_joshi',
     badges: ['staff', 'developer'],
     bio: 'Co-founder driving strategic planning, operations, and ecosystem expansion.',
@@ -106,7 +109,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co founder',
     category: 'cofounder',
     avatar: abhiAvatar,
-    banner: emptyBanner,
+    banner: emptybanner,
     discordTag: 'abhi_quantum',
     badges: ['staff', 'developer'],
     bio: 'Co-founder managing technical infrastructure, bot development, and systems.',
@@ -120,8 +123,8 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Rajarshi Mukherjee',
     role: 'Co founder',
     category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop',
+    avatar: rajshreeAvatar,
+    banner: emptybanner,
     discordTag: 'rajarshi_mukherjee',
     badges: ['staff', 'supporter'],
     bio: 'Co-founder leading brand strategy, public relations, and partnerships.',
@@ -136,7 +139,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co founder',
     category: 'cofounder',
     avatar: aaravAvatar,
-    banner: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'aarav',
     badges: ['staff', 'developer'],
     bio: 'Co-founder directing community software deployments and web experiences.',
@@ -153,7 +156,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Owner',
     category: 'owner',
     avatar: RunnerAvatar,
-    banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'kavyanshshakya',
     discordId: '241214041187123201',
     badges: ['staff', 'developer', 'booster'],
@@ -169,7 +172,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Owner',
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'vixen_cyber',
     badges: ['staff', 'booster'],
     bio: 'Owner overseeing server culture, security policies, and community events.',
@@ -184,7 +187,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Owner',
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'kiwi_slice',
     badges: ['staff', 'booster'],
     bio: 'Owner supervising event planning, member coordination, and custom perks.',
@@ -199,7 +202,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Owner',
     category: 'owner',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'poppy',
     badges: ['staff', 'supporter'],
     bio: 'Owner providing hospitality, member onboarding, and special gaming sessions.',
@@ -216,7 +219,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co owner',
     category: 'coowner',
     avatar: nancyAvatar,
-    banner: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'aw.nvm',
     badges: ['staff', 'booster'],
     bio: 'Co-owner and community supervisor ensuring safe, engaging environments.',
@@ -231,7 +234,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'aris_couture',
     badges: ['staff', 'supporter'],
     bio: 'Co-owner maintaining server activities, tournament coordination, and roles.',
@@ -246,7 +249,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'viiiv_3',
     badges: ['staff', 'supporter', 'booster'],
     bio: 'Co-owner overseeing media channels, announcements, and Nitro perks.',
@@ -276,7 +279,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'aloo_puri',
     badges: ['staff', 'supporter'],
     bio: 'Co-owner organizing internal games, interactive sessions, and voice lounges.',
@@ -291,7 +294,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co owner',
     category: 'coowner',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'machi',
     badges: ['staff', 'booster'],
     bio: 'Co-owner leading guild collaborations and community engagement.',
@@ -308,7 +311,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'kiara',
     badges: ['staff', 'supporter'],
     bio: 'Executive coordinator directing creative artworks, event execution, and spotlights.',
@@ -323,7 +326,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'wayne',
     badges: ['staff', 'developer'],
     bio: 'Executive handling livestream productions, media bots, and integrations.',
@@ -338,7 +341,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Executive',
     category: 'executive',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'kaz',
     badges: ['staff', 'supporter'],
     bio: 'Executive overseeing creative promotions, design assets, and voice channels.',
@@ -353,7 +356,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Executive',
     category: 'executive',
     avatar: Ritvikavatar,
-    banner: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop',
+    banner: emptybanner,
     discordTag: 'ritwik',
     badges: ['staff', 'booster'],
     bio: 'Executive monitoring server stability, community channels, and tournaments.',
@@ -441,8 +444,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             <div className={`relative aspect-[4/3] sm:aspect-square w-full rounded-2xl overflow-hidden border shadow-2xl ${isDarkMode ? 'border-white/10 shadow-black/40' : 'border-zinc-200 shadow-xl'
               }`}>
               <img
-                src={srvBanner}
-                alt="Ineffable Creative Journey"
+                src={srvbanner}
+                alt="srvbanner"
                 className="w-full h-full object-cover select-none"
               />
               <div
@@ -455,74 +458,22 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
             </div>
           </div>
 
-          {/* Right: Copy & 2x2 Big Numbers Grid */}
-          <div className="lg:col-span-6 space-y-8">
-            <div className="space-y-3">
+          {/* Right: Copy block */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="space-y-4">
               <span
                 style={{ color: CHERRY_PINK }}
-                className="font-mono text-xs md:text-sm font-semibold tracking-wide block">
+                className="font-mono text-xs md:text-sm font-semibold tracking-wide block"
+              >
+                Community-first culture
               </span>
               <h2 className={`text-3xl md:text-5xl font-sans tracking-tight font-extrabold leading-tight ${isDarkMode ? 'text-white' : 'text-zinc-900'
                 }`}>
-                We love the way You are!!!
+                A place to create, compete, and belong.
               </h2>
-            </div>
-
-            {/* 2x2 Stats Grid with Website Cherry Pink Accent */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-10 pt-4">
-
-              {/* Stat 1 */}
-              <div className="space-y-1.5">
-                <div
-                  style={{ color: CHERRY_PINK }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
-                >
-                  100+
-                </div>
-                <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  Daily online
-                </div>
-              </div>
-
-              {/* Stat 2 */}
-              <div className="space-y-1.5">
-                <div
-                  style={{ color: CHERRY_PINK }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
-                >
-                  100%
-                </div>
-                <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  ENJOYMENT
-                </div>
-              </div>
-
-              {/* Stat 3 */}
-              <div className="space-y-1.5">
-                <div
-                  style={{ color: CHERRY_PINK }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
-                >
-                  13k
-                </div>
-                <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  Members
-                </div>
-              </div>
-
-              {/* Stat 4 */}
-              <div className="space-y-1.5">
-                <div
-                  style={{ color: CHERRY_PINK }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-sans"
-                >
-                  200+
-                </div>
-                <div className={`text-xs md:text-sm font-medium ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                  Eat 5-Star join INEF
-                </div>
-              </div>
-
+              <p className={`text-base md:text-lg leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                INEF brings together creators, gamers, and builders through shared events, digital experiences, and a culture designed around support, creativity, and momentum.
+              </p>
             </div>
           </div>
 
@@ -780,6 +731,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   <span className="font-bold">@{selectedMember.discordTag}</span>
                 </div>
 
+                <div className="absolute top-3 right-4 font-mono text-[9px] tracking-widest px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-zinc-300">
+                  {selectedMember.since}
+                </div>
               </div>
 
               {/* Overlapping Avatar & Badges Section */}
@@ -797,6 +751,34 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         }`}
                     />
                     <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-500 border-3 border-zinc-950 rounded-full" />
+                  </div>
+
+                  {/* Discord Staff & Achievement Badges */}
+                  <div className="flex items-center space-x-2 pt-2">
+                    {selectedMember.badges.includes('staff') && (
+                      <div className="p-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 flex items-center space-x-1.5" title="Ineffable Staff">
+                        <Shield className="w-4 h-4" />
+                        <span className="text-[10px] font-mono font-bold hidden sm:inline">STAFF</span>
+                      </div>
+                    )}
+                    {selectedMember.badges.includes('developer') && (
+                      <div className="p-2 rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-400 flex items-center space-x-1.5" title="Core Developer">
+                        <Code className="w-4 h-4" />
+                        <span className="text-[10px] font-mono font-bold hidden sm:inline">DEVELOPER</span>
+                      </div>
+                    )}
+                    {selectedMember.badges.includes('booster') && (
+                      <div className="p-2 rounded-xl border border-pink-500/30 bg-pink-500/10 text-pink-400 flex items-center space-x-1.5" title="Server Booster">
+                        <Flame className="w-4 h-4" />
+                        <span className="text-[10px] font-mono font-bold hidden sm:inline">BOOSTER</span>
+                      </div>
+                    )}
+                    {selectedMember.badges.includes('supporter') && (
+                      <div className="p-2 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-400 flex items-center space-x-1.5" title="Tier Supporter">
+                        <Award className="w-4 h-4" />
+                        <span className="text-[10px] font-mono font-bold hidden sm:inline">SUPPORTER</span>
+                      </div>
+                    )}
                   </div>
 
                 </div>
