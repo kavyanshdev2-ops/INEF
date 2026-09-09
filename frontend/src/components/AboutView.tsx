@@ -35,6 +35,22 @@ import {
 const CHERRY_PINK = '#FA5F88';
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScJoinIneffableTeam/viewform';
 
+const CATEGORY_COLORS: Record<TeamMemberProfile['category'], string> = {
+  founder: '#D97706',
+  cofounder: '#581C87',
+  owner: '#E11D48',
+  coowner: '#1D4ED8',
+  executive: '#EA580C',
+};
+
+/** Convert a hex color (#RRGGBB) to an rgba() string for translucent backgrounds/borders */
+const hexToRgba = (hex: string, alpha: number): string => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 interface AboutViewProps {
   activeAtmosphere: AtmosphereConfig;
   isDarkMode: boolean;
@@ -616,9 +632,9 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                     {member.name}
                   </h3>
 
-                  {/* Role in Signature Cherry Pink Theme */}
+                  {/* Role colored by member category */}
                   <span
-                    style={{ color: CHERRY_PINK }}
+                    style={{ color: CATEGORY_COLORS[member.category] }}
                     className="text-xs font-semibold mt-1 mb-2.5 block"
                   >
                     {member.role}
@@ -838,7 +854,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                       {selectedMember.name}
                     </h2>
                     <span
-                      style={{ backgroundColor: 'rgba(250, 95, 136, 0.15)', color: CHERRY_PINK, borderColor: 'rgba(250, 95, 136, 0.3)' }}
+                      style={{
+                        backgroundColor: hexToRgba(CATEGORY_COLORS[selectedMember.category], 0.15),
+                        color: CATEGORY_COLORS[selectedMember.category],
+                        borderColor: hexToRgba(CATEGORY_COLORS[selectedMember.category], 0.3),
+                      }}
                       className="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase border"
                     >
                       {selectedMember.role}
@@ -870,7 +890,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                   } space-y-3`}>
                   <div className="flex items-center justify-between text-xs font-mono">
                     <span className="text-zinc-400">OFFICIAL SECTOR:</span>
-                    <span style={{ color: CHERRY_PINK }} className="font-bold uppercase tracking-wider">
+                    <span style={{ color: CATEGORY_COLORS[selectedMember.category] }} className="font-bold uppercase tracking-wider">
                       {selectedMember.category.toUpperCase()}
                     </span>
                   </div>
