@@ -158,7 +158,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co founder',
     category: 'cofounder',
     avatar: rajshreeAvatar,
-    banner: emptybanner,
+    banner: rajreebanner,
     discordTag: 'rajarshi_mukherjee',
     badges: ['staff', 'supporter'],
     bio: 'Co-founder leading brand .',
