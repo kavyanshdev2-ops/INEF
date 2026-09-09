@@ -15,7 +15,7 @@ import rajshreeAvatar from '../../sivyassets/rajshree.png';
 import srvbanner from '../../sivyassets/srvbanner.png';
 import abhiAvatar from '../../sivyassets/abhiavatar.png';
 import emptybanner from '../../sivyassets/emptybanner.png';
-
+import rajreebanner from '../../sivyassets/rajreebanner.png';
 
 import {
   ArrowUpRight,
