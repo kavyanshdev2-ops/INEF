@@ -55,7 +55,6 @@ export interface TeamMemberProfile {
   bio: string;
   since: string;
   twitter?: string;
-  linkedin?: string;
   website?: string;
   instagram?: string;
   github?: string;
@@ -119,7 +118,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder driving strategic planning, operations, and ecosystem expansion.',
     since: 'EST. 2020 // CO-FOUNDING',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -134,7 +133,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder managing technical infrastructure, bot development, and systems.',
     since: 'EST. 2021 // CORE DEV',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -149,7 +148,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder leading brand strategy, public relations, and partnerships.',
     since: 'EST. 2021 // STRATEGY',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -164,7 +163,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder directing community software deployments and web experiences.',
     since: 'EST. 2021 // OPERATIONS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
 
@@ -182,7 +181,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner & lead web engineer building full-stack applications and cloud services.',
     since: ' 2020 // LEAD DEV',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -197,7 +196,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner overseeing server culture, security policies, and community events.',
     since: 'EST. 2022 // EXECUTIVE',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -212,7 +211,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner supervising event planning, member coordination, and custom perks.',
     since: 'EST. 2022 // DIRECTOR',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -227,7 +226,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner providing hospitality, member onboarding, and special gaming sessions.',
     since: 'EST. 2022 // COMMUNITY',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
 
@@ -244,7 +243,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner and community supervisor ensuring safe, engaging environments.',
     since: 'EST. 2022 // CO-OWNER',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -259,7 +258,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner maintaining server activities, tournament coordination, and roles.',
     since: 'EST. 2022 // OPERATIONS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -274,7 +273,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner overseeing media channels, announcements, and Nitro perks.',
     since: 'EST. 2022 // MEDIA LEAD',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -289,7 +288,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner and community moderator facilitating member onboarding.',
     since: 'EST. 2022 // MODERATION',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -304,7 +303,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner organizing internal games, interactive sessions, and voice lounges.',
     since: 'EST. 2023 // EVENTS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -319,7 +318,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner leading guild collaborations and community engagement.',
     since: 'EST. 2023 // GUILD OPS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
 
@@ -336,7 +335,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Executive coordinator directing creative artworks, event execution, and spotlights.',
     since: 'EST. 2023 // CREATIVE',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -351,7 +350,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Executive handling livestream productions, media bots, and integrations.',
     since: 'EST. 2023 // STREAM OPS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -366,7 +365,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Executive overseeing creative promotions, design assets, and voice channels.',
     since: 'EST. 2023 // PROMOTIONS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   },
   {
@@ -381,7 +380,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Executive monitoring server stability, community channels, and tournaments.',
     since: 'EST. 2023 // TOURNAMENTS',
     twitter: 'https://x.com',
-    linkedin: 'https://linkedin.com',
+    instagram: 'https://instagram.com',
     website: 'https://ineffable.store'
   }
 ];
@@ -691,20 +690,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
                         <GmailIcon className="w-4 h-4" />
                       </a>
                     )}
-
-                    <a
-                      href={member.linkedin || 'https://linkedin.com'}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`p-1.5 rounded-md transition-colors ${isDarkMode
-                        ? 'text-zinc-400 hover:text-white hover:bg-white/5'
-                        : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                        }`}
-                      aria-label={`${member.name} on LinkedIn`}
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
-
                     <a
                       href={member.website || 'https://inef/store'}
                       target="_blank"
