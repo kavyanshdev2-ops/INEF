@@ -12,6 +12,8 @@ import ArchieAvatar from '../../sivyassets/harshil.png';
 import RunnerAvatar from '../../sivyassets/RUNNER.jpg';
 import Ritvikavatar from '../../sivyassets/ritivik.png';
 import srvBanner from '../../sivyassets/srvbanner.png';
+import abhiAvatar from '../../sivyassets/abhiavatar.png';
+import emptyBanner from '../../sivyassets/emptybanner.png';
 
 import {
   ArrowUpRight,
@@ -103,8 +105,8 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     name: 'Abhi',
     role: 'Co founder',
     category: 'cofounder',
-    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=400&auto=format&fit=crop',
-    banner: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
+    avatar: abhiAvatar,
+    banner: emptyBanner,
     discordTag: 'abhi_quantum',
     badges: ['staff', 'developer'],
     bio: 'Co-founder managing technical infrastructure, bot development, and systems.',
