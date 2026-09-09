@@ -26,7 +26,6 @@ import kavish from '../../sivyassets/kaz.jpg';
 import poppy from '../../sivyassets/poppy.jpg';
 import vixen from '../../sivyassets/vixen.jpg';
 
-
 import {
   ArrowUpRight,
   Shield,
@@ -171,7 +170,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'rajarshi_mukherjee',
     badges: ['staff', 'supporter'],
-    bio: 'Co-founder leading brand .',
+    bio: 'Co-founder leading brand, events and musical team.',
     since: 'EST. 2021 // STRATEGY',
     twitter: 'https://x.com',
     instagram: 'https://www.instagram.com/ikoshi_senpaii/',
