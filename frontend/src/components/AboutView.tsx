@@ -59,10 +59,7 @@ export interface TeamMemberProfile {
   website?: string;
   instagram?: string;
   github?: string;
-<<<<<<< Updated upstream
-=======
   email?: string;
->>>>>>> Stashed changes
 }
 
 // Custom X icon (Twitter)
