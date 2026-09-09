@@ -134,7 +134,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-founder driving strategic planning, operations, and ecosystem expansion.',
     since: 'EST. 2020 // CO-FOUNDING',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/harshil._2105/',
     website: 'https://ineffable.store'
   },
   {
@@ -161,10 +161,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'rajarshi_mukherjee',
     badges: ['staff', 'supporter'],
-    bio: 'Co-founder leading brand strategy, public relations, and partnerships.',
+    bio: 'Co-founder leading brand .',
     since: 'EST. 2021 // STRATEGY',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/ikoshi_senpaii/',
     website: 'https://ineffable.store'
   },
   {
@@ -176,10 +176,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'aarav',
     badges: ['staff', 'developer'],
-    bio: 'Co-founder directing community software deployments and web experiences.',
+    bio: 'Co-owner leading guild collaborations and community engagement.',
     since: 'EST. 2021 // OPERATIONS',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/z9h6zx/',
     website: 'https://ineffable.store'
   },
 
@@ -197,7 +197,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner & lead web engineer building full-stack applications and cloud services.',
     since: ' 2020 // LEAD DEV',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/whos.kavyansh/',
     website: 'https://ineffable.store'
   },
   {
@@ -212,7 +212,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner overseeing server culture, security policies, and community events.',
     since: 'EST. 2022 // EXECUTIVE',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/mnisuze/',
     website: 'https://ineffable.store'
   },
   {
@@ -227,7 +227,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner supervising event planning, member coordination, and custom perks.',
     since: 'EST. 2022 // DIRECTOR',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/kiwiiriiee/',
     website: 'https://ineffable.store'
   },
   {
@@ -242,7 +242,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Owner providing hospitality, member onboarding, and special gaming sessions.',
     since: 'EST. 2022 // COMMUNITY',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/khushalmhatre3/',
     website: 'https://ineffable.store'
   },
 
@@ -274,7 +274,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     bio: 'Co-owner maintaining server activities, tournament coordination, and roles.',
     since: 'EST. 2022 // OPERATIONS',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/nashe.me.hu.yaar/',
     website: 'https://ineffable.store'
   },
   {
@@ -286,10 +286,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'viiiv_3',
     badges: ['staff', 'supporter', 'booster'],
-    bio: 'Co-owner overseeing media channels, announcements, and Nitro perks.',
+    bio: 'Executive monitoring server stability, community channels, and tournaments.',
     since: 'EST. 2022 // MEDIA LEAD',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/viiivstatic/',
     website: 'https://ineffable.store'
   },
   {
@@ -316,10 +316,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'aloo_puri',
     badges: ['staff', 'supporter'],
-    bio: 'Co-owner organizing internal games, interactive sessions, and voice lounges.',
+    bio: 'Co-owner coordinator directing creative artworks, event execution, and spotlights.',
     since: 'EST. 2023 // EVENTS',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/velvetmeowz/',
     website: 'https://ineffable.store'
   },
   {
@@ -331,7 +331,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'machi',
     badges: ['staff', 'booster'],
-    bio: 'Co-owner leading guild collaborations and community engagement.',
+    bio: 'Co-owner leading with software development with arch reverse engeineering',
     since: 'EST. 2023 // GUILD OPS',
     twitter: 'https://x.com',
     instagram: 'https://instagram.com',
@@ -348,10 +348,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'kiara',
     badges: ['staff', 'supporter'],
-    bio: 'Executive coordinator directing creative artworks, event execution, and spotlights.',
+    bio: 'excecutive organizing internal games, interactive sessions, and voice lounges.',
     since: 'EST. 2023 // CREATIVE',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/kiara_romeve_098',
     website: 'https://ineffable.store'
   },
   {
@@ -363,10 +363,10 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'wayne',
     badges: ['staff', 'developer'],
-    bio: 'Executive handling livestream productions, media bots, and integrations.',
+    bio: 'Executive handling chat integrations and media bots.',
     since: 'EST. 2023 // STREAM OPS',
     twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
+    instagram: 'https://www.instagram.com/donniedarko89278/',
     website: 'https://ineffable.store'
   },
   {
@@ -393,7 +393,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     banner: emptybanner,
     discordTag: 'ritwik',
     badges: ['staff', 'booster'],
-    bio: 'Executive monitoring server stability, community channels, and tournaments.',
+    bio: 'Executive overseeing media channels, announcements, and Nitro perks.',
     since: 'EST. 2023 // TOURNAMENTS',
     twitter: 'https://x.com',
     instagram: 'https://instagram.com',
@@ -484,7 +484,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ activeAtmosphere, isDarkMo
               />
               <div
                 style={{
-                  background: `linear-gradient(135deg, 100%)`
+                  background: `linear-gradient(135deg, rgba(250, 95, 136, 0.25) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(59, 130, 246, 0.3) 100%)`
                 }}
                 className="absolute inset-0 mix-blend-overlay"
               />
