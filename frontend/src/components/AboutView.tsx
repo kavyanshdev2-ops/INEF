@@ -15,7 +15,7 @@ import rajshreeAvatar from '../../sivyassets/rajshree.png';
 import srvbanner from '../../sivyassets/srvbanner.png';
 import abhiAvatar from '../../sivyassets/abhiavatar.png';
 import emptybanner from '../../sivyassets/emptybanner.png';
-
+import rajreebanner from '../../sivyassets/rajreebanner.png';
 
 import {
   ArrowUpRight,
@@ -158,7 +158,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     role: 'Co founder',
     category: 'cofounder',
     avatar: rajshreeAvatar,
-    banner: emptybanner,
+    banner: rajreebanner,
     discordTag: 'rajarshi_mukherjee',
     badges: ['staff', 'supporter'],
     bio: 'Co-founder leading brand .',
