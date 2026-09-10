@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { AtmosphereConfig } from '../types';
 import { getThemeStyles } from '../lib/theme';
 import akarshAvatar from '../../sivyassets/akarsh.jpg';
-import akarshBanner from '../../sivyassets/akarshbanner.jpg';
+import akarshBanner from '../../sivyassets/AKARSH.png';
 import lavanyaAvatar from '../../sivyassets/lavanya.webp';
 import lavanyaBanner from '../../sivyassets/lavanya_banner.webp';
 import nancyAvatar from '../../sivyassets/nancy.png';
