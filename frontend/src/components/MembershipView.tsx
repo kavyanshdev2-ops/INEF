@@ -245,7 +245,6 @@ export const MembershipView: React.FC<MembershipViewProps> = ({
           );
         })}
       </div>
-
     </div>
   );
 };
