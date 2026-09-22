@@ -200,7 +200,7 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     category: 'owner',
     avatar: RunnerAvatar,
     banner: emptybanner,
-    discordTag: 'kavyanshshakya',
+    discordTag: 'someone u dont know ',
     discordId: '241214041187123201',
     badges: ['staff', 'developer', 'booster'],
     bio: 'Owner & lead web engineer building full-stack applications and cloud services.',
@@ -225,21 +225,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     website: 'https://ineffable.store'
   },
   {
-    id: 'kiwi',
-    name: 'Kiwi',
-    role: 'Owner',
-    category: 'owner',
-    avatar: kiwi,
-    banner: emptybanner,
-    discordTag: 'kiwi_slice',
-    badges: ['staff', 'booster'],
-    bio: 'Owner supervising event planning, member coordination, and custom perks.',
-    since: 'EST. 2022 // DIRECTOR',
-    twitter: 'https://x.com',
-    instagram: 'https://www.instagram.com/kiwiiriiee/',
-    website: 'https://ineffable.store'
-  },
-  {
     id: 'poppy',
     name: 'Poppy',
     role: 'Owner',
@@ -256,21 +241,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
   },
 
   // ================= CO OWNER =================
-  {
-    id: 'nancy',
-    name: 'Nancy',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: nancyAvatar,
-    banner: emptybanner,
-    discordTag: 'aw.nvm',
-    badges: ['staff', 'booster'],
-    bio: 'Co-owner and community supervisor ensuring safe, engaging environments.',
-    since: 'EST. 2022 // CO-OWNER',
-    twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
-    website: 'https://ineffable.store'
-  },
   {
     id: 'aris',
     name: 'Aris',
@@ -299,36 +269,6 @@ const ALL_TEAM_MEMBERS: TeamMemberProfile[] = [
     since: 'EST. 2022 // MEDIA LEAD',
     twitter: 'https://x.com',
     instagram: 'https://www.instagram.com/viiivstatic/',
-    website: 'https://ineffable.store'
-  },
-  {
-    id: 'lavanya',
-    name: 'Lavanya Singh',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: lavanyaAvatar,
-    banner: lavanyaBanner,
-    discordTag: 'lavanya_singh',
-    badges: ['staff', 'supporter'],
-    bio: 'Co-owner and community moderator facilitating member onboarding.',
-    since: 'EST. 2022 // MODERATION',
-    twitter: 'https://x.com',
-    instagram: 'https://instagram.com',
-    website: 'https://ineffable.store'
-  },
-  {
-    id: 'arpita',
-    name: 'Aloo Puri',
-    role: 'Co owner',
-    category: 'coowner',
-    avatar: aloopuri,
-    banner: emptybanner,
-    discordTag: 'aloo_puri',
-    badges: ['staff', 'supporter'],
-    bio: 'Co-owner coordinator directing creative artworks, event execution, and spotlights.',
-    since: 'EST. 2023 // EVENTS',
-    twitter: 'https://x.com',
-    instagram: 'https://www.instagram.com/velvetmeowz/',
     website: 'https://ineffable.store'
   },
   {

@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS products (
     barcode VARCHAR(100),
     brand VARCHAR(255),
     stock_quantity INTEGER DEFAULT 0,
-    weight DECIMAL(10, 2),
+    weight DECIMAL(10,2),
     is_visible BOOLEAN NOT NULL DEFAULT true,
     is_featured BOOLEAN NOT NULL DEFAULT false,
     is_trending BOOLEAN NOT NULL DEFAULT false,

@@ -90,7 +90,7 @@ class CustomTimer {
   private delta: number = 0;
   private elapsed: number = 0;
 
-  connect(_doc: Document) {}
+  connect(_doc: Document) { }
 
   update(timestamp?: number) {
     const now = (timestamp !== undefined ? timestamp : performance.now()) / 1000;
@@ -108,7 +108,7 @@ class CustomTimer {
     return this.elapsed;
   }
 
-  dispose() {}
+  dispose() { }
 }
 
 const OPEN_BTN_OFF = ['opacity-0', 'scale-[0.94]'];
@@ -177,6 +177,7 @@ export function BooksShowcase({
         this.vel = 0;
         this.k = k || 120;
         this.d = d || 14;
+
       }
       set(v: number) {
         this.v = v;
@@ -332,7 +333,7 @@ export function BooksShowcase({
           material.needsUpdate = true;
         },
         undefined,
-        () => console.warn('Cover image failed to load, kept fallback cover:', imageURL),
+        () => console.warn('Cover image:', imageURL),
       );
     }
 

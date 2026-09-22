@@ -515,7 +515,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div className="space-y-3">
             <span className="font-mono text-xs tracking-[0.3em] text-rose-700 dark:text-rose-400 font-bold uppercase block">
-              02 // EXCLUSIVE CHANNELS
+              02 // CHANNELS
             </span>
             <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-zinc-950 dark:text-white">
               Featured Services
@@ -562,7 +562,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setCurrentPage, activeAtmosp
                   <h3 className="font-display text-base font-bold text-zinc-950 dark:text-white">
                     {item.name}
                   </h3>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-2 mt-2 font-light leading-relaxed">
+                  <p className="text-xs text-zinc-650 dark:text-zinc-400 line-clamp-2 mt-2 font-light leading-relaxed">
                     {item.description}
                   </p>
                 </div>
